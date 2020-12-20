@@ -1,0 +1,46 @@
+Saturn Tablet
+=============
+
+Translation
+-----------
+
+    1'     [Year 1 of Kand]alanu, ⌜month⌝ [..., day ..., last appearance.]
+    2'  [Year 1, mont]h 4, day 24, in fr[ont of ... the Crab, first appearance.]
+    3'     [Ye]ar 2, month 4, day 10+[x, ..., last appearance.]
+    4'  [Year 2, mon]th 5, broken, in the head of the Lion, first appearance; not [observed?.]
+    5'     [Ye]ar 3, month 4, day 7, [last appearance.]
+    6'  [Year 3], month 5, day 16, in the Lion behind the King (= α Leonis), [first appearance]; ⌜high⌝.
+    7'     [Year] ⌜4⌝, at the end of month 4, last appearance; (because of) cloud not observed.
+    8'  [Year 4, month 6?], day [x], in the middle of the Lion, first appearance; high.
+    9'     [Year 5], month 5, day 23, last appearance.
+    10' [Year 5], at the end of month 6, first appearance; intercalary Ululu.
+    11'    Year 6, month 5, day 20, last appearance.
+    12' [Year 6], month 6, day 22, behind  ⌜the rear foot of⌝ the Lion (= β Virginis), behind AN.GÚ.ME.MAR, first appearance.
+    13'    Year 7, month 6, day 10+[x], last appearance.
+    14' [Year 7], month 7, day 15, ⌜in front of⌝ the Furrow (α+ Virginis), first appearance.
+    15'    Year 8, month 6, day 5, behind the Furrow (α+ Virginis), last appearance.
+    16' [Year 8], month 7, day 5, ⌜between⌝ the Furrow (α+ Virginis) and the Balance (Libra), first appearance.
+    17'    [Year] ⌜9, month 6⌝, [day] ⌜27/28?⌝, last appearance.
+
+    Reverse
+
+    18' [Year 9, month 8, day x]+1, ⌜within?⌝ the Balance,... [..., first appearance].
+    19'    Year 10, month] ⌜7⌝, day 20, behind the Balance, [last appearance].
+    20' [Year 10, month 8, day] 23, in front of the Forehead of the Scorpion, on the north side, first appearance; it was bright; intercalary Addaru.
+    21'    [Year 11, month] 7, day 13, last appearance.
+    22' [Year 11, month 8, day] ⌜15⌝, above Lisi (= α Scorpii) ⌜6½ degrees⌝, first appearance; with reference to Lisi a little in front(?).
+    23'    [Year 12, month] 8, day 5, last appearance;⌜because of⌝ cloud computed.
+    24' [Year 12, month] 9, day 5, at the beginning of Pabilsag (= Sagittarius + part of Ophiuchus), [first appearance?];... 1 degree?...
+    25'    [Year] 13, month 8, day 26, last appearance; [cloud?], not [observed?].
+    26' [Year 13, month] 10, day 1, in the middle of Pabilsag, [first appearance;...]
+    27'    [Year] ⌜14⌝, month ⌜8⌝, ⌜day 20⌝, [last appearance;...]
+    28' [Year 14, month 9, day] ⌜20⌝[+?,...] ... [..., first appearance;...]
+
+\[1, p. 64\]
+
+References
+----------
+
+\[1\] C. B. Walker, “Babylonian observations of saturn during the reign
+of kandalanu,” *Ancient Astronomy and Celestial Divination*, pp. 61–76,
+1999.
