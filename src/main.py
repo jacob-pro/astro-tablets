@@ -1,5 +1,6 @@
 import argparse
 import os
+import pathlib
 from distutils.util import strtobool
 
 import tablets
@@ -27,9 +28,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     data = AstroData()
-    fn = tablets.match(args.tablet.lower())
+    match = tablets.match(args.tablet.lower())
 
-    db_file = args.db if args.db is not None else "./output/{}.db".format(args.tablet.lower())
+    default_path = pathlib.Path(__file__).parent.parent.absolute() / "./output/{}.db".format(args.tablet.lower())
+    db_file = args.db if args.db is not None else default_path.as_posix()
     if os.path.isfile(db_file):
         if args.overwrite or get_answer("Database file already exists, overwrite?"):
             os.remove(db_file)
@@ -37,5 +39,9 @@ if __name__ == "__main__":
             exit(1)
     db = Database(db_file)
 
-    fn(data, db, args.start, args.end)
+    start = match[1] if args.start is None else args.start
+    end = match[2] if args.end is None else args.end
+    assert start <= end
+    print("Computing ephemeris for {} between {} and {}".format(args.tablet, start, end))
+    match[0](data, db, start, end)
     db.close()

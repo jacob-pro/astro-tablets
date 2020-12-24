@@ -12,16 +12,21 @@ class Test(TestCase):
     def setUpClass(cls):
         cls.data = AstroData()
 
-    # Confirm equinox accurate to 1hr
-    # https://stellafane.org/misc/equinox.html (Uses mixed calendar)
     def test_vernal_equinox(self):
-        result = vernal_equinox(self.data, 1000)
-        expected = self.data.timescale.utc(1000, 3, 14, 23, 11, 47)
-        self.assertLessEqual(diff_secs(result, expected), 3600)
+        expected = self.data.timescale.utc(-600, 3, 27, 7, 29)
+        self.assertLessEqual(diff_hours(vernal_equinox(self.data, -600), expected), 6)
 
-        result = vernal_equinox(self.data, 2020)
+        expected = self.data.timescale.utc(-599, 3, 27, 13, 17)
+        self.assertLessEqual(diff_hours(vernal_equinox(self.data, -599), expected), 6)
+
+        expected = self.data.timescale.utc(-598, 3, 27, 19, 4)
+        self.assertLessEqual(diff_hours(vernal_equinox(self.data, -598), expected), 6)
+
+        expected = self.data.timescale.utc(1000, 3, 14, 23, 11, 47)
+        self.assertLessEqual(diff_secs(vernal_equinox(self.data, 1000), expected), 3600)
+
         expected = self.data.timescale.utc(2020, 3, 20, 3, 49, 35)
-        self.assertLessEqual(diff_secs(result, expected), 3600)
+        self.assertLessEqual(diff_secs(vernal_equinox(self.data, 2020), expected), 3600)
 
     # Altitude at sunset calculated in Starry Night 6.4.4
     def test_altitude_of_moon(self):
