@@ -3,6 +3,7 @@ import os
 
 from skyfield.timelib import Time
 
+from lunar_calendar import BabylonianDay
 from planet_events import SynodicEvent
 from typing import *
 
@@ -19,7 +20,7 @@ class Database(object):
 
     def setup(self):
         self.cursor.execute("""
-        CREATE TABLE calendar (
+        CREATE TABLE days (
             sunset FLOAT,
             sunrise FLOAT,
             first_visibility SMALLINT,
@@ -50,6 +51,11 @@ class Database(object):
         for e in events:
             self.cursor.execute("INSERT INTO events (body, event, time) VALUES (?, ?, ?)",
                                 (body, e.type.value, e.time.tt))
+
+    def save_days(self, events: List[BabylonianDay]):
+        for e in events:
+            self.cursor.execute("INSERT INTO days (sunset, sunrise, first_visibility) VALUES (?, ?, ?)",
+                                (e.sunset.tt, e.sunrise.tt, e.first_visibility))
 
     def save_equinox(self, time: Time):
         self.cursor.execute("INSERT INTO events (body, event, time) VALUES ('Sun', 'VernalEquinox', ?)",

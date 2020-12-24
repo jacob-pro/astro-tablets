@@ -24,10 +24,7 @@ def vernal_equinox(data: AstroData, year: int) -> Time:
     return times[0]
 
 
-BabylonianDay = namedtuple('BabylonianDay', 'sunset sunrise')
-
-
-def sunset_and_rise_for_date(data: AstroData, year: int, month: int, day: int) -> BabylonianDay:
+def sunset_and_rise_for_date(data: AstroData, year: int, month: int, day: int) -> Tuple[Time, Time]:
     """
     For a given date find the time of sunset in Babylon
     """
@@ -37,7 +34,7 @@ def sunset_and_rise_for_date(data: AstroData, year: int, month: int, day: int) -
     assert len(times) == 2
     assert types[0] == 0  # 0 = Sunset
     assert types[1] == 1  # 1 = Sunrise
-    return BabylonianDay(times[0], times[1])
+    return times[0], times[1]
 
 
 def altitude_of_moon(data: AstroData, t0: Time) -> Angle:
@@ -51,50 +48,30 @@ def altitude_of_moon(data: AstroData, t0: Time) -> Angle:
     return alt
 
 
-class LunarMonth(object):
-
-    def __init__(self):
-        self.days = []  # type: List[BabylonianDay]
-        self.nisan_candidate = False
+BabylonianDay = namedtuple('BabylonianDay', 'sunset sunrise first_visibility')
 
 
-def months_for_year(data: AstroData, year: int, intercalary: bool) -> List[LunarMonth]:
-    """
-    For a given year return a list of possible Lunar Months
-    The earliest months will be possible candidates for Nisan (if they fall within 30 days of equinox)
-    11 or 12 additional months will be computed following the last possible Nisan
-    """
-    equinox = vernal_equinox(data, year)
-    position = data.timescale.tt_jd(int(equinox.tt - 31))
-    end_nisan_search = data.timescale.tt_jd(int(equinox.tt + 30))
-    non_nisan_month_count = 0
-    prev_alt = float("inf")
-    results = []  # type: List[LunarMonth]
-    current_month = None
-    non_nisan_limit = 12 if intercalary else 11
-    while True:
+def days_in_range(data: AstroData, start: Time, end: Time) -> List[BabylonianDay]:
+    assert start.tt < end.tt
+    position = data.timescale.tt_jd(start.tt - 2)
+    end = data.timescale.tt_jd(end.tt + 1)
+    prev_altitude = float("inf")
+    results = []  # type: List[BabylonianDay]
+
+    while position.tt < end.tt:
         # Sunset for this day
-        cal_date = compute_calendar_date(position.tt, GREGORIAN_START)
-        day = sunset_and_rise_for_date(data, *cal_date)
-        alt = altitude_of_moon(data, day.sunset)
+        cal_date = compute_calendar_date(int(position.tt), GREGORIAN_START)
+        ss = sunset_and_rise_for_date(data, *cal_date)
+        alt = altitude_of_moon(data, ss[0])
         # If first visibility
-        if alt.degrees >= LUNAR_VISIBILITY > prev_alt:
-            if non_nisan_month_count >= non_nisan_limit:
-                break
-            x = LunarMonth()
-            x.days.append(day)
-            x.nisan_candidate = day.sunset.tt < end_nisan_search.tt
-            if not x.nisan_candidate:
-                non_nisan_month_count += 1
-            results.append(x)
-            current_month = x
-        elif current_month is not None:
-            current_month.days.append(day)
-            pass
+        if prev_altitude < LUNAR_VISIBILITY <= alt.degrees:
+            first_visibility = True
+        else:
+            first_visibility = False
         # Next day
+        results.append(BabylonianDay(ss[0], ss[1], first_visibility))
         position = data.timescale.tt_jd(int(position.tt + 1))
-        prev_alt = alt.degrees
-    assert 2 <= len(list(filter(lambda x: (x.nisan_candidate == True), results))) <= 3
-    for x in results:
-        assert 29 <= len(x.days) <= 30
+        prev_altitude = alt.degrees
+
+    results = list(filter(lambda x: x.sunset.tt >= start.tt and x.sunrise.tt <= end.tt, results))
     return results

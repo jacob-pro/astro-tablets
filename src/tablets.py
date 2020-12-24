@@ -3,7 +3,7 @@ from typing import *
 from constants import OuterPlanetArcusVisionis, InnerPlanetArcusVisionis
 from data import AstroData
 from database import Database
-from lunar_calendar import vernal_equinox
+from lunar_calendar import vernal_equinox, days_in_range
 from planet_events import outer_planet_events, inner_planet_events
 
 FN_TYPE = Callable[[AstroData, Database, int, int], None]
@@ -16,7 +16,7 @@ def match(tablet: str) -> Tuple[FN_TYPE, int, int]:
 
 
 def mercury(data: AstroData, db: Database, start: int, end: int):
-    print("Working on Mercury events...")
+    print("Computing Mercury visibility...")
     events = inner_planet_events(data, data.get_body("Mercury"),
                                  data.timescale.utc(start, 1, 1),
                                  data.timescale.utc(end + 1, 6, 1),
@@ -25,7 +25,7 @@ def mercury(data: AstroData, db: Database, start: int, end: int):
 
 
 def mars(data: AstroData, db: Database, start: int, end: int):
-    print("Working on Mars events...")
+    print("Computing Mars visibility...")
     events = outer_planet_events(data, data.get_body("Mars"),
                                  data.timescale.utc(start, 1, 1),
                                  data.timescale.utc(end + 1, 6, 1),
@@ -34,7 +34,7 @@ def mars(data: AstroData, db: Database, start: int, end: int):
 
 
 def saturn(data: AstroData, db: Database, start: int, end: int):
-    print("Working on Saturn events...")
+    print("Computing Saturn visibility...")
     events = outer_planet_events(data, data.get_body("Saturn"),
                                  data.timescale.utc(start, 1, 1),
                                  data.timescale.utc(end + 1, 6, 1),
@@ -43,9 +43,13 @@ def saturn(data: AstroData, db: Database, start: int, end: int):
 
 
 def calendar(data: AstroData, db: Database, start: int, end: int):
-    print("Working on Calendar...")
+    print("Computing lunar calendar...")
     for i in range(start, end + 1):
         db.save_equinox(vernal_equinox(data, i))
+    begin = data.timescale.tt_jd(vernal_equinox(data, start).tt - 31)
+    end = data.timescale.tt_jd(vernal_equinox(data, end + 1).tt + 31)
+    days = days_in_range(data, begin, end)
+    db.save_days(days)
 
 
 def bm32312(data: AstroData, db: Database, start: int, end: int):
