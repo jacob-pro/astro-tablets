@@ -1,30 +1,10 @@
 LUNAR_VISIBILITY = 7.5
 
-BABYLON_COORDS = ('32.468 N', '44.550 E')
+BABYLON_COORDS = ("32.55 N", "44.42 E")
 
 FINGER = 0.092
 CUBIT = 2.2
 HALO = 22.0
-
-
-def convert_angle(value) -> float:
-    if type(value) == int:
-        return float(value)
-    if type(value) == float:
-        return value
-    if type(value) == str:
-        split = value.lower().split()
-        if len(split) == 4 and split[1] == "cubits" and split[3] == "fingers":
-            return int(split[0]) * CUBIT + int(split[2]) * FINGER
-        if len(split) == 4 and split[1] == "fingers" and split[3] == "cubits":
-            return int(split[0]) * FINGER + int(split[2]) * CUBIT
-        if len(split) == 2 and split[1] == "cubits":
-            return int(split[0]) * CUBIT
-        if len(split) == 2 and split[1] == "fingers":
-            return int(split[0]) * FINGER
-        if value.lower() == "halo":
-            return HALO
-    raise ValueError
 
 
 class InnerPlanetArcusVisionis(object):

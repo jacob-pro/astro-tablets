@@ -1,4 +1,7 @@
+import pathlib
 from unittest import TestCase
+from bs4 import BeautifulSoup
+from parse import parse
 
 from planet_events import *
 from src.util import diff_hours
@@ -72,61 +75,65 @@ class Test(TestCase):
         self.assertEqual(events[9].type, InnerPlanetPhenomena.MF)
         self.assertLessEqual(diff_hours(events[9].time, self.data.timescale.utc(-600, 8, 9)), 24)
 
-    def test_mars(self):
-        start = self.data.timescale.utc(646, 9, 19)
-        end = self.data.timescale.utc(648, 7, 16)
-        mars = self.data.get_body("Mars")
-        events = outer_planet_events(self.data, mars, start, end, OuterPlanetArcusVisionis.mars())
+    def test_mars_visibility(self):
+        expected = self.parse_plsv_outer("plsv_mars.html")
+        start = self.data.timescale.utc(-750, 1, 1)
+        end = self.data.timescale.utc(-741, 12, 31)
+        body = self.data.get_body("Mars")
+        events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.mars())
+        filtered = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
+        for idx, val in enumerate(expected):
+            actual = filtered[idx]
+            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
+            self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
 
-        self.assertEqual(events[0].type, OuterPlanetPhenomena.FA)
-        self.assertLessEqual(diff_hours(events[0].time, self.data.timescale.utc(646, 9, 20)), 24)
+    def test_jupiter_visibility(self):
+        expected = self.parse_plsv_outer("plsv_jupiter.html")
+        start = self.data.timescale.utc(-600, 1, 1)
+        end = self.data.timescale.utc(-591, 12, 31)
+        body = self.data.get_body("Jupiter")
+        events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.jupiter())
+        filtered = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
+        for idx, val in enumerate(expected):
+            actual = filtered[idx]
+            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
+            self.assertLessEqual(diff_hours(val.time, actual.time), 30, msg="Expected {} Got {}".format(val, actual))
 
-        self.assertEqual(events[1].type, OuterPlanetPhenomena.ST)
+    def test_saturn_visibility(self):
+        expected = self.parse_plsv_outer("plsv_saturn.html")
+        start = self.data.timescale.utc(-550, 1, 1)
+        end = self.data.timescale.utc(-540, 1, 1)
+        body = self.data.get_body("Saturn")
+        events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.saturn())
+        filtered = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
+        for idx, val in enumerate(expected):
+            actual = filtered[idx]
+            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
+            self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
 
-        self.assertEqual(events[2].type, OuterPlanetPhenomena.AR)
-        self.assertLessEqual(diff_hours(events[2].time, self.data.timescale.utc(647, 9, 17)), 24)
-
-        self.assertEqual(events[3].type, OuterPlanetPhenomena.ST)
-
-        self.assertEqual(events[4].type, OuterPlanetPhenomena.LA)
-        self.assertLessEqual(diff_hours(events[4].time, self.data.timescale.utc(648, 7, 15)), 24)
-
-    def test_saturn(self):
-        start = self.data.timescale.utc(1000, 6, 7)
-        end = self.data.timescale.utc(1001, 5, 15)
-        saturn = self.data.get_body("Saturn")
-        events = outer_planet_events(self.data, saturn, start, end, OuterPlanetArcusVisionis.saturn())
-
-        self.assertEqual(events[0].type, OuterPlanetPhenomena.FA)
-        self.assertLessEqual(diff_hours(events[0].time, self.data.timescale.utc(1000, 6, 8)), 24)
-
-        self.assertEqual(events[1].type, OuterPlanetPhenomena.ST)
-
-        self.assertEqual(events[2].type, OuterPlanetPhenomena.AR)
-        self.assertLessEqual(diff_hours(events[2].time, self.data.timescale.utc(1000, 11, 11)), 24)
-
-        self.assertEqual(events[3].type, OuterPlanetPhenomena.ST)
-
-        self.assertEqual(events[4].type, OuterPlanetPhenomena.LA)
-        self.assertLessEqual(diff_hours(events[4].time, self.data.timescale.utc(1001, 5, 14)), 24)
-
-    def test_jupiter(self):
-        start = self.data.timescale.utc(1501, 4, 15)
-        end = self.data.timescale.utc(1502, 4, 19)
-        jupiter = self.data.get_body("Jupiter")
-        events = outer_planet_events(self.data, jupiter, start, end, OuterPlanetArcusVisionis.jupiter())
-
-        self.assertEqual(events[0].type, OuterPlanetPhenomena.FA)
-        self.assertLessEqual(diff_hours(events[0].time, self.data.timescale.utc(1501, 4, 16)), 24)
-
-        self.assertEqual(events[1].type, OuterPlanetPhenomena.ST)
-
-        self.assertEqual(events[2].type, OuterPlanetPhenomena.AR)
-        self.assertLessEqual(diff_hours(events[2].time, self.data.timescale.utc(1501, 10, 5)), 24)
-
-        self.assertEqual(events[3].type, OuterPlanetPhenomena.ST)
-
-        self.assertEqual(events[4].type, OuterPlanetPhenomena.LA)
-        self.assertLessEqual(diff_hours(events[4].time, self.data.timescale.utc(1502, 4, 18)), 24)
-
-
+    def parse_plsv_outer(self, name: str) -> List[SynodicEvent]:
+        path = pathlib.Path(__file__).parent / 'data' / name
+        with open(path.as_posix()) as f:
+            soup = BeautifulSoup(f, "html.parser")
+        table = soup.findAll("table")[1]
+        rows = table.findAll("tr")[1:]
+        filtered = list(filter(lambda x: len(list(x.children)) == 15, rows))
+        expected = []
+        for v in filtered:
+            name = v.contents[1].string
+            date = v.contents[3].string
+            time = v.contents[5].string
+            if name == "last visibility":
+                type = OuterPlanetPhenomena.LA
+            elif name == "first visibility":
+                type = OuterPlanetPhenomena.FA
+            elif name == "acronychal rising":
+                type = OuterPlanetPhenomena.AR
+            elif name == "cosmical setting":
+                continue    # Skip these
+            else:
+                raise ValueError
+            x = parse("{:d}-{:d}-{:d} {:d}:{:d}", "{} {}".format(date, time))
+            time = self.data.timescale.utc(*x.fixed)
+            expected.append(SynodicEvent(time, type))
+        return expected

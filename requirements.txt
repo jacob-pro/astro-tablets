@@ -1,2 +1,4 @@
 skyfield==1.34
 pandas==0.25.3
+beautifulsoup4==4.9.3
+parse==1.18.0
