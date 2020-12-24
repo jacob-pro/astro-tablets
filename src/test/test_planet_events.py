@@ -89,6 +89,21 @@ class Test(TestCase):
             self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
             self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
 
+        stations = list(filter(lambda x: x.type == OuterPlanetPhenomena.ST, events))
+        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
+            self.data.timescale.utc(-750, 12, 31, 20, 21),
+            self.data.timescale.utc(-749, 3, 22, 3, 35),
+            self.data.timescale.utc(-747, 2, 11, 6, 33),
+            self.data.timescale.utc(-747, 4, 28, 19, 57),
+            self.data.timescale.utc(-745, 4, 11, 3, 33),
+            self.data.timescale.utc(-745, 6, 17, 9, 21),
+            self.data.timescale.utc(-743, 6, 29, 0, 59),
+            self.data.timescale.utc(-743, 8, 28, 21, 34),
+        ]
+        for idx, val in enumerate(expected_stations):
+            actual = stations[idx]
+            self.assertLessEqual(diff_hours(val, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+
     def test_jupiter(self):
         expected = self.parse_plsv_outer("plsv_jupiter.html")
         start = self.data.timescale.utc(-600, 1, 1)
@@ -101,6 +116,19 @@ class Test(TestCase):
             self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
             self.assertLessEqual(diff_hours(val.time, actual.time), 30, msg="Expected {} Got {}".format(val, actual))
 
+        stations = list(filter(lambda x: x.type == OuterPlanetPhenomena.ST, events))
+        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
+            self.data.timescale.utc(-600, 6, 8, 2, 29),
+            self.data.timescale.utc(-600, 10, 4, 21, 26),
+            self.data.timescale.utc(-599, 7, 15, 18, 41),
+            self.data.timescale.utc(-599, 11, 10, 13, 46),
+            self.data.timescale.utc(-598, 8, 21, 3, 53),
+            self.data.timescale.utc(-598, 12, 16, 23, 39)
+        ]
+        for idx, val in enumerate(expected_stations):
+            actual = stations[idx]
+            self.assertLessEqual(diff_hours(val, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+
     def test_saturn(self):
         expected = self.parse_plsv_outer("plsv_saturn.html")
         start = self.data.timescale.utc(-550, 1, 1)
@@ -112,6 +140,22 @@ class Test(TestCase):
             actual = visibilities[idx]
             self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
             self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+
+        stations = list(filter(lambda x: x.type == OuterPlanetPhenomena.ST, events))
+        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
+            self.data.timescale.utc(-550, 1, 17, 15, 43),
+            self.data.timescale.utc(-550, 6, 7, 1, 59),
+            self.data.timescale.utc(-549, 1, 29, 7, 43),
+            self.data.timescale.utc(-549, 6, 19, 6, 16),
+            self.data.timescale.utc(-548, 2, 9, 21, 0),
+            self.data.timescale.utc(-548, 6, 30, 6, 1),
+            self.data.timescale.utc(-547, 2, 20, 10, 0),
+            self.data.timescale.utc(-547, 7, 12, 2, 21),
+        ]
+        for idx, val in enumerate(expected_stations):
+            actual = stations[idx]
+            self.assertLessEqual(diff_hours(val, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+
 
     def parse_plsv_inner(self, name: str) -> List[SynodicEvent]:
         path = pathlib.Path(__file__).parent / 'data' / name
