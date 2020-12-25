@@ -28,7 +28,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     data = AstroData()
-    match = tablets.match(args.tablet.lower())
+    t_class = tablets.get_tablet_class(args.tablet.lower())
 
     default_path = pathlib.Path(__file__).parent.parent.absolute() / "./output/{}.db".format(args.tablet.lower())
     db_file = args.db if args.db is not None else default_path.as_posix()
@@ -39,9 +39,7 @@ if __name__ == "__main__":
             exit(1)
     db = Database(db_file)
 
-    start = match[1] if args.start is None else args.start
-    end = match[2] if args.end is None else args.end
-    assert start <= end
-    print("Computing ephemeris for {} between {} and {}".format(args.tablet, start, end))
-    match[0](data, db, start, end)
+    obj = t_class(data, db, args.start, args.end)
+    obj.compute()
+
     db.close()
