@@ -24,7 +24,7 @@ def sunset_for_day(t0, expected):
     for ti, yi in zip(t, y):
         if yi == 0:
             diff_mins = int(abs(ti.tt - expected.tt) * 60 * 24)
-            print("Got {}, expected {}, diff mins {}, alt {}"
+            print("Got {}, expected {}, diff mins {}, alt {:.2f}"
                   .format(ti.utc_iso(), expected.utc_iso(), diff_mins, altitude_of_sun(ti).degrees))
 
 if __name__ == "__main__":
