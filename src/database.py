@@ -14,7 +14,7 @@ class Database(object):
 
     def __init__(self, file: str):
         directory = os.path.dirname(file)
-        if not os.path.exists(directory):
+        if not os.path.exists(directory) and len(directory) > 0:
             os.makedirs(directory)
         self.conn = sqlite3.connect(file, isolation_level=None)
         self.cursor = self.conn.cursor()

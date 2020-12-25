@@ -1,4 +1,5 @@
 import sys
+import time
 from abc import ABC
 from typing import *
 
@@ -76,6 +77,7 @@ class Tablet(ABC):
         print("")
 
     def compute(self):
+        self.start_time = time.time()
         print("Computing {} for {} to {}".format(type(self).__name__, self.start_year, self.end_year))
         self.start_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.start_year).tt - 32)
         self.end_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.end_year + 1).tt + 32)
@@ -83,6 +85,8 @@ class Tablet(ABC):
 
     def post_compute(self):
         self.db.save_info(type(self).__name__, self.start_year, self.end_year)
+        elapsed = time.time() - self.start_time
+        print("Completed in", time.strftime("%H:%M:%S", time.gmtime(elapsed)))
 
     @staticmethod
     def print_progress(prefix: str, progress: float):
@@ -100,16 +104,16 @@ class BM32312(Tablet):
         super(BM32312, self).compute()
         # Mercury’s last appearance in the east behind Pisces
         # Mercury’s first appearance in the east in Pisces
-        self.mercury()
-        self.separation("Mercury", "58 Piscium")
-        # Saturn’s last appearance behind Pisces
-        self.saturn()
-        self.separation("Saturn", "58 Piscium")
-        # Mars became stationary in the area of the Lip of the Scorpion
-        self.mars()
-        # it came close to the bright star of the Scorpion’s head
-        self.separation("Mars", "Antares")
-        # Venus stood in the region of Aries, 10 fingers behind Mars
-        self.separation("Venus", "Mars")
-        # Mars was 1 finger to the left of the front? of Aries
-        self.separation("Mars", "Nu Arietis")
+        # self.mercury()
+        # self.separation("Mercury", "58 Piscium")
+        # # Saturn’s last appearance behind Pisces
+        # self.saturn()
+        # self.separation("Saturn", "58 Piscium")
+        # # Mars became stationary in the area of the Lip of the Scorpion
+        # self.mars()
+        # # it came close to the bright star of the Scorpion’s head
+        # self.separation("Mars", "Antares")
+        # # Venus stood in the region of Aries, 10 fingers behind Mars
+        # self.separation("Venus", "Mars")
+        # # Mars was 1 finger to the left of the front? of Aries
+        # self.separation("Mars", "Nu Arietis")
