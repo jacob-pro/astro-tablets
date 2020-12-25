@@ -1,4 +1,9 @@
+import subprocess
+
 from skyfield.timelib import Time
+from typing import *
+
+OPTIONAL_PROGRESS = Union[None, Callable[[float], None]]
 
 
 def diff_mins(t1: Time, t2: Time) -> float:
@@ -29,3 +34,17 @@ def change_in_longitude(old: float, new: float) -> float:
         return a
     else:
         return b
+
+
+def get_git_hash() -> str:
+    try:
+        return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode("utf-8").partition('\n')[0]
+    except subprocess.CalledProcessError as e:
+        return "unknown"
+
+
+def get_git_changes() -> bool:
+    try:
+        subprocess.check_output(['git', 'diff', '--exit-code'], stderr=subprocess.PIPE)
+    except subprocess.CalledProcessError as e:
+        return True

@@ -7,6 +7,7 @@ from typing import *
 
 from constants import LUNAR_VISIBILITY
 from data import AstroData
+from util import OPTIONAL_PROGRESS
 
 
 def vernal_equinox(data: AstroData, year: int) -> Time:
@@ -51,7 +52,7 @@ def altitude_of_moon(data: AstroData, t0: Time) -> Angle:
 BabylonianDay = namedtuple('BabylonianDay', 'sunset sunrise first_visibility')
 
 
-def days_in_range(data: AstroData, start: Time, end: Time) -> List[BabylonianDay]:
+def days_in_range(data: AstroData, start: Time, end: Time, progress: OPTIONAL_PROGRESS = None) -> List[BabylonianDay]:
     assert start.tt < end.tt
     position = data.timescale.tt_jd(start.tt - 2)
     end = data.timescale.tt_jd(end.tt + 1)
@@ -72,6 +73,8 @@ def days_in_range(data: AstroData, start: Time, end: Time) -> List[BabylonianDay
         results.append(BabylonianDay(ss[0], ss[1], first_visibility))
         position = data.timescale.tt_jd(int(position.tt + 1))
         prev_altitude = alt.degrees
+        if progress is not None:
+            progress((position.tt - start.tt) / (end.tt - start.tt))
 
     results = list(filter(lambda x: x.sunset.tt >= start.tt and x.sunrise.tt <= end.tt, results))
     return results

@@ -41,5 +41,6 @@ if __name__ == "__main__":
 
     obj = t_class(data, db, args.start, args.end)
     obj.compute()
+    obj.post_compute()
 
     db.close()

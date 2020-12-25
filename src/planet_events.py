@@ -8,7 +8,7 @@ from skyfield.units import Angle
 
 from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis
 from data import AstroData
-from util import same_sign, change_in_longitude
+from util import same_sign, change_in_longitude, OPTIONAL_PROGRESS
 
 
 def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
@@ -40,13 +40,16 @@ class OuterPlanetPhenomena(Enum):
 SynodicEvent = namedtuple('SynodicEvent', 'time type')
 
 
-def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis) -> List[SynodicEvent]:
+def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis,
+                        progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an inner planet
     Evening/Morning Last is the night of last visibility (not first invisible)
     Note stations are not precise, but at the time of nearest/rise set
     """
     assert t0.tt < t1.tt
+    if progress is not None:
+        progress(0)
     f = almanac.risings_and_settings(data.ephemeris, body, data.babylon)
     times, types = almanac.find_discrete(data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f)
 
@@ -120,16 +123,22 @@ def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlan
 
             yesterday_set = time
 
+        if progress is not None:
+            progress(idx / len(zipped))
+
     events = list(filter(lambda x: t0.tt <= x.time.tt <= t1.tt, events))
     return events
 
 
-def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis) -> List[SynodicEvent]:
+def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis,
+                        progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an outer planet
     Note stations are not precise, but at the time of nearest/rise set
     """
     assert t0.tt < t1.tt
+    if progress is not None:
+        progress(0)
     f = almanac.risings_and_settings(data.ephemeris, body, data.babylon)
     times, types = almanac.find_discrete(data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f)
 
@@ -190,6 +199,9 @@ def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlan
                 evening_set = False
 
             yesterday_set = time
+
+        if progress is not None:
+            progress(idx / len(zipped))
 
     events = list(filter(lambda x: t0.tt <= x.time.tt <= t1.tt, events))
     return events

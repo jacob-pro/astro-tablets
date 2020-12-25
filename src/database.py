@@ -1,12 +1,13 @@
-import sqlite3
 import os
+import sqlite3
+from typing import *
 
 from skyfield.timelib import Time
 
 from angular_separation import AngularSeparationResult
 from lunar_calendar import BabylonianDay
 from planet_events import SynodicEvent
-from typing import *
+from util import get_git_hash, get_git_changes
 
 
 class Database(object):
@@ -43,6 +44,14 @@ class Database(object):
             time FLOAT,
             PRIMARY KEY (from_body, to_body, time)
         );""")
+        self.cursor.execute("""
+        CREATE TABLE db_info (
+            tablet VARCHAR(255),
+            start_year INT,
+            end_year INT,
+            git VARCHAR,
+            time DATETIME DEFAULT CURRENT_TIMESTAMP
+        );""")
 
     def close(self):
         self.cursor.close()
@@ -65,3 +74,11 @@ class Database(object):
     def save_separation(self, of: str, to: str, res: AngularSeparationResult, time: Time):
         self.cursor.execute("INSERT INTO separations (from_body, to_body, angle, position, time) VALUES (?, ?, ?, ?, ?)",
                             (of, to, res.angle.degrees, res.position.value, time.tt))
+
+    def save_info(self, tablet: str, start: int, end: int):
+        hash = get_git_hash()
+        if hash is not None:
+            if get_git_changes():
+                hash = hash + " (modified)"
+        self.cursor.execute("INSERT INTO db_info (tablet, start_year, end_year, git) VALUES (?, ?, ?, ?)",
+                            (tablet, start, end, hash))

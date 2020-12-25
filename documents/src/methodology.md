@@ -45,7 +45,7 @@ Where the diaries translate to "halo" I will map this to a 22° radius.
 
 ### Constellations
 
-Where the tablets describe a body as being within or behind/ahead of a constellation, I will approximate that position
+Where the tablets describe a body as being within a constellation, I will approximate that position
 by drawing an appropriate radius around a star within that constellation. 
 
 Pisces: Centre: 58 Piscium, Radius: 50° 
