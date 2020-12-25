@@ -18,8 +18,8 @@ def match(tablet: str) -> Tuple[FN_TYPE, int, int]:
 def mercury(data: AstroData, db: Database, start: int, end: int):
     print("Computing Mercury visibility...")
     events = inner_planet_events(data, data.get_body("Mercury"),
-                                 data.timescale.utc(start, 1, 1),
-                                 data.timescale.utc(end + 1, 6, 1),
+                                 data.timescale.ut1(start, 1, 1),
+                                 data.timescale.ut1(end + 1, 6, 1),
                                  InnerPlanetArcusVisionis.mercury())
     db.save_synodic_events("Saturn", events)
 
@@ -27,8 +27,8 @@ def mercury(data: AstroData, db: Database, start: int, end: int):
 def mars(data: AstroData, db: Database, start: int, end: int):
     print("Computing Mars visibility...")
     events = outer_planet_events(data, data.get_body("Mars"),
-                                 data.timescale.utc(start, 1, 1),
-                                 data.timescale.utc(end + 1, 6, 1),
+                                 data.timescale.ut1(start, 1, 1),
+                                 data.timescale.ut1(end + 1, 6, 1),
                                  OuterPlanetArcusVisionis.mars())
     db.save_synodic_events("Mars", events)
 
@@ -36,8 +36,8 @@ def mars(data: AstroData, db: Database, start: int, end: int):
 def saturn(data: AstroData, db: Database, start: int, end: int):
     print("Computing Saturn visibility...")
     events = outer_planet_events(data, data.get_body("Saturn"),
-                                 data.timescale.utc(start, 1, 1),
-                                 data.timescale.utc(end + 1, 6, 1),
+                                 data.timescale.ut1(start, 1, 1),
+                                 data.timescale.ut1(end + 1, 6, 1),
                                  OuterPlanetArcusVisionis.saturn())
     db.save_synodic_events("Saturn", events)
 

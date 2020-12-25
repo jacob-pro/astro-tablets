@@ -1,10 +1,10 @@
 from skyfield.timelib import Time
 
 
-def diff_secs(t1: Time, t2: Time) -> float:
+def diff_mins(t1: Time, t2: Time) -> float:
     jdiff = abs(t1 - t2)
-    seconds_in_day = 60 * 60 * 24
-    return jdiff * seconds_in_day
+    mins_in_day = 60 * 24
+    return jdiff * mins_in_day
 
 
 def diff_hours(t1: Time, t2: Time) -> float:

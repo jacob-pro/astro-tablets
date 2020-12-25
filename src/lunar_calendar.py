@@ -15,8 +15,8 @@ def vernal_equinox(data: AstroData, year: int) -> Time:
     """
     before = data.timescale.julian_calendar_cutoff
     data.timescale.julian_calendar_cutoff = None
-    t0 = data.timescale.utc(year, 3, 16)
-    t1 = data.timescale.utc(year, 3, 26)
+    t0 = data.timescale.ut1(year, 3, 16)
+    t1 = data.timescale.ut1(year, 3, 26)
     data.timescale.julian_calendar_cutoff = before
     times, types = almanac.find_discrete(t0, t1, almanac.seasons(data.ephemeris))
     assert len(times) == 1
@@ -28,7 +28,7 @@ def sunset_and_rise_for_date(data: AstroData, year: int, month: int, day: int) -
     """
     For a given date find the time of sunset in Babylon
     """
-    t0 = data.timescale.utc(year, month, day, 12)
+    t0 = data.timescale.ut1(year, month, day, 12)
     t1 = data.timescale.tt_jd(t0.tt + 1)
     times, types = almanac.find_discrete(t0, t1, almanac.sunrise_sunset(data.ephemeris, data.babylon))
     assert len(times) == 2

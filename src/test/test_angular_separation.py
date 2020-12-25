@@ -14,7 +14,7 @@ class Test(TestCase):
 
     # Starry Night 6.4.4
     def test_angular_separation(self):
-        time = sunset_and_rise_for_date(self.data, 2020, 12, 17).sunset
+        time = sunset_and_rise_for_date(self.data, 2020, 12, 17)[0]
 
         moon = self.data.ephemeris['moon']
         mercury = self.data.get_body("Mercury")
