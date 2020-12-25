@@ -36,14 +36,14 @@ class AstroData:
         if name == "Moon":
             return self.ephemeris["moon"]
         # Stars
-        if name == "Sheratan" or name == "β Arietis":
+        if name == "Sheratan": # β Arietis
             return Star.from_dataframe(self.stars.loc[8903])
-        if name == "Antares" or name == "α Scorpii":
+        if name == "Antares":  # α Scorpii
             return Star.from_dataframe(self.stars.loc[80763])
         if name == "Nu Arietis":
             return Star.from_dataframe(self.stars.loc[12332])
         if name == "58 Piscium":
             return Star.from_dataframe(self.stars.loc[3675])
-        if name == "Epsilon Piscium" or name == "ε Piscium":
+        if name == "Epsilon Piscium":
             return Star.from_dataframe(self.stars.loc[4906])
         raise ValueError

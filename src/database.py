@@ -3,6 +3,7 @@ import os
 
 from skyfield.timelib import Time
 
+from angular_separation import AngularSeparationResult
 from lunar_calendar import BabylonianDay
 from planet_events import SynodicEvent
 from typing import *
@@ -60,3 +61,7 @@ class Database(object):
     def save_equinox(self, time: Time):
         self.cursor.execute("INSERT INTO events (body, event, time) VALUES ('Sun', 'VernalEquinox', ?)",
                             (time.tt, ))
+
+    def save_separation(self, of: str, to: str, res: AngularSeparationResult, time: Time):
+        self.cursor.execute("INSERT INTO separations (from_body, to_body, angle, position, time) VALUES (?, ?, ?, ?, ?)",
+                            (of, to, res.angle.degrees, res.position.value, time.tt))
