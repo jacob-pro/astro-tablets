@@ -66,14 +66,14 @@ class Tablet(ABC):
                                      OuterPlanetArcusVisionis.mars(),
                                      lambda x: self.print_progress("Computing Mars visibility", x))
         self.db.save_synodic_events("Mars", events)
-        self.print_progress("Computing Saturn visibility", 1)
+        print("")
 
     def saturn(self,):
         events = outer_planet_events(self.data, self.data.get_body("Saturn"), self.start_day, self.end_day,
                                      OuterPlanetArcusVisionis.saturn(),
                                      lambda x: self.print_progress("Computing Saturn visibility", x))
         self.db.save_synodic_events("Saturn", events)
-        self.print_progress("Computing Saturn visibility", 1)
+        print("")
 
     def compute(self):
         print("Computing {} for {} to {}".format(type(self).__name__, self.start_year, self.end_year))
