@@ -1,1 +1,1 @@
-./src/test linguist-vendored
+src/test/* linguist-vendored
