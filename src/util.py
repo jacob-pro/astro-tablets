@@ -1,7 +1,8 @@
+import os
 import subprocess
+from typing import *
 
 from skyfield.timelib import Time
-from typing import *
 
 OPTIONAL_PROGRESS = Union[None, Callable[[float], None]]
 
@@ -37,6 +38,9 @@ def change_in_longitude(old: float, new: float) -> float:
 
 
 def get_git_hash() -> str:
+    hash = os.getenv('GIT_HASH')
+    if hash is not None and len(hash) > 0:
+        return hash
     try:
         return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode("utf-8").partition('\n')[0]
     except subprocess.CalledProcessError as e:
