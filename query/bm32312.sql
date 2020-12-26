@@ -37,6 +37,20 @@ WHERE days.sunset >= nisan_1
 AND days.sunset <= 2 + (SELECT MAX(sunset)
 FROM (SELECT sunset FROM days WHERE days.first_visibility==1 AND sunset >= nisan_1 ORDER BY sunset LIMIT 12));
 
+DROP TABLE IF EXISTS month_a_results;
+CREATE TEMPORARY TABLE month_a_results (
+    nisan_1 FLOAT,
+    sunset_1 FLOAT,
+    year INT,
+    MercuryMorningLast14 FLOAT,
+    MercuryInPisces14 FLOAT,
+    SaturnLastAppearance14 FLOAT,
+    SaturnInPisces14 FLOAT,
+    MarsStationary17 FLOAT,
+    MarsScorpionHead17 FLOAT,
+    score INT
+);
+INSERT INTO month_a_results
 SELECT *,
        (CASE WHEN MercuryMorningLast14 IS NOT NULL THEN 1 ELSE 0 END) +
        (CASE WHEN MercuryInPisces14 IS NOT NULL THEN 1 ELSE 0 END) +
@@ -75,25 +89,68 @@ FROM (SELECT nisan_1, sunset as sunset_1, year,
         AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 17))
         LIMIT 1) as MarsScorpionHead17
 
-    FROM potential_months)
-ORDER BY score DESC;
+    FROM potential_months);
 
+DROP TABLE IF EXISTS month_b_results;
+CREATE TEMPORARY TABLE month_b_results (
+    nisan_1 FLOAT,
+    sunset_1 FLOAT,
+    year INT,
+    MorningFirst5 FLOAT,
+    MercuryInPisces5 FLOAT,
+    VenusBehindMars19 FLOAT,
+    MarsInAries19 FLOAT,
+    MarsInAries20 FLOAT,
+    score INT
+);
+INSERT INTO month_b_results
 SELECT *,
        (CASE WHEN MorningFirst5 IS NOT NULL THEN 1 ELSE 0 END) +
        (CASE WHEN MercuryInPisces5 IS NOT NULL THEN 1 ELSE 0 END) +
        (CASE WHEN VenusBehindMars19 IS NOT NULL THEN 1 ELSE 0 END) +
        (CASE WHEN MarsInAries19 IS NOT NULL THEN 1 ELSE 0 END) +
-       (CASE WHEN MarsInAries20 IS NOT NULL THEN 1 ELSE 0 END) as score
+       (CASE WHEN MarsInAries20 IS NOT NULL THEN 1 ELSE 0 END) as B_SCORE
 FROM (SELECT nisan_1, sunset as sunset_1, year,
+
     (SELECT time FROM events WHERE body="Mercury" AND event="MorningFirst"
         AND time >= (sunset + 4 -  5) AND time <= (sunrise + 4 + 5) LIMIT 1) as MorningFirst5,
-    (SELECT time FROM separations WHERE from_body="Mercury" AND to_body="58 Piscium"
-        AND angle < 50 AND time >= (sunset + 4) AND time <= (sunrise + 4) ORDER BY angle LIMIT 1) as MercuryInPisces5,
-    (SELECT time FROM separations WHERE from_body="Venus" AND to_body="Mars" AND position="behind"
-        AND angle < 5 AND time >= (sunset + 18) AND time <= (sunrise + 18) ORDER BY angle LIMIT 1) as VenusBehindMars19,
-    (SELECT time FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis"
-        AND angle < 30 AND time >= (sunset + 18) AND time <= (sunrise + 18) ORDER BY angle LIMIT 1) as MarsInAries19,
-    (SELECT time FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis"
-        AND angle < 20 AND time >= (sunset + 19) AND time <= (sunrise + 19) ORDER BY angle LIMIT 1) as MarsInAries20
-    FROM potential_months)
-ORDER BY score DESC;
+
+    (SELECT MIN(angle) FROM separations WHERE from_body="Mercury" AND to_body="58 Piscium" AND angle < 50
+        AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 5))
+        AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 5))
+        LIMIT 1) as MercuryInPisces5,
+
+    (SELECT time FROM separations WHERE from_body="Venus" AND to_body="Mars" AND position="behind" AND angle < 5
+        AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
+        AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
+        LIMIT 1) as VenusBehindMars19,
+
+    (SELECT time FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis" AND angle < 30
+        AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
+        AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
+        LIMIT 1) as MarsInAries19,
+
+    (SELECT time FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis" AND angle < 20
+        AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 20))
+        AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 20))
+        LIMIT 1) as MarsInAries20
+
+    FROM potential_months);
+
+SELECT *, a_results.score + b_results.score as total_score FROM
+(SELECT * FROM (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY year ORDER BY score DESC) as position
+    FROM month_a_results)
+WHERE position <= 1) as a_results
+INNER JOIN
+(SELECT * FROM (
+    SELECT *,
+           ROW_NUMBER() OVER (PARTITION BY year ORDER BY score DESC) as position
+    FROM month_b_results)
+WHERE position <= 1) as b_results
+ON a_results.year = b_results.year
+ORDER BY total_score DESC;
+
+
+
