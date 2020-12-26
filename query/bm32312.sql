@@ -40,7 +40,7 @@ FROM (SELECT sunset FROM days WHERE days.first_visibility==1 AND sunset >= nisan
 DROP TABLE IF EXISTS month_a_results;
 CREATE TEMPORARY TABLE month_a_results (
     nisan_1 FLOAT,
-    sunset_1 FLOAT,
+    a_sunset_1 FLOAT,
     year INT,
     MercuryMorningLast14 FLOAT,
     MercuryInPisces14 FLOAT,
@@ -94,7 +94,7 @@ FROM (SELECT nisan_1, sunset as sunset_1, year,
 DROP TABLE IF EXISTS month_b_results;
 CREATE TEMPORARY TABLE month_b_results (
     nisan_1 FLOAT,
-    sunset_1 FLOAT,
+    b_sunset_1 FLOAT,
     year INT,
     MorningFirst5 FLOAT,
     MercuryInPisces5 FLOAT,
@@ -120,37 +120,63 @@ FROM (SELECT nisan_1, sunset as sunset_1, year,
         AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 5))
         LIMIT 1) as MercuryInPisces5,
 
-    (SELECT time FROM separations WHERE from_body="Venus" AND to_body="Mars" AND position="behind" AND angle < 5
+    (SELECT MIN(angle) FROM separations WHERE from_body="Venus" AND to_body="Mars" AND position="behind" AND angle < 5
         AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
         AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
         LIMIT 1) as VenusBehindMars19,
 
-    (SELECT time FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis" AND angle < 30
+    (SELECT MIN(angle) FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis" AND angle < 30
         AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
         AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 19))
         LIMIT 1) as MarsInAries19,
 
-    (SELECT time FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis" AND angle < 20
+    (SELECT MIN(angle) FROM separations WHERE from_body="Mars" AND to_body="Nu Arietis" AND angle < 20
         AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 20))
         AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 20))
         LIMIT 1) as MarsInAries20
 
     FROM potential_months);
 
-SELECT *, a_results.score + b_results.score as total_score FROM
+
+DROP TABLE IF EXISTS joined_results;
+CREATE TEMPORARY TABLE joined_results (
+    year INT,
+    nisan_1 FLOAT,
+    a_sunset_1 FLOAT,
+    MercuryMorningLast14 FLOAT,
+    MercuryInPisces14 FLOAT,
+    SaturnLastAppearance14 FLOAT,
+    SaturnInPisces14 FLOAT,
+    MarsStationary17 FLOAT,
+    MarsScorpionHead17 FLOAT,
+    b_sunset_1 FLOAT,
+    MorningFirst5 FLOAT,
+    MercuryInPisces5 FLOAT,
+    VenusBehindMars19 FLOAT,
+    MarsInAries19 FLOAT,
+    MarsInAries20 FLOAT,
+    total_score INT
+);
+INSERT INTO joined_results
+SELECT a_results.year, a_results.nisan_1, a_sunset_1,
+       MercuryMorningLast14, MercuryInPisces14, SaturnLastAppearance14, SaturnInPisces14, MarsStationary17, MarsScorpionHead17,
+       b_results.nisan_1, MorningFirst5, MercuryInPisces5, VenusBehindMars19, MarsInAries19, MarsInAries20,
+       a_results.score + b_results.score as total_score FROM
 (SELECT * FROM (
     SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY year ORDER BY score DESC) as position
+           ROW_NUMBER() OVER (PARTITION BY nisan_1 ORDER BY score DESC) as position
     FROM month_a_results)
 WHERE position <= 1) as a_results
 INNER JOIN
 (SELECT * FROM (
     SELECT *,
-           ROW_NUMBER() OVER (PARTITION BY year ORDER BY score DESC) as position
+           ROW_NUMBER() OVER (PARTITION BY nisan_1 ORDER BY score DESC) as position
     FROM month_b_results)
 WHERE position <= 1) as b_results
-ON a_results.year = b_results.year
-ORDER BY total_score DESC;
+ON a_results.nisan_1 = b_results.nisan_1;
 
-
-
+SELECT * FROM joined_results o
+WHERE o.total_score = (
+    SELECT MAX(total_score) FROM joined_results x WHERE x.year=o.year ORDER BY x.nisan_1=x.a_sunset_1 LIMIT 1
+)
+ORDER BY total_score DESC

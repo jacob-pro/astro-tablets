@@ -43,13 +43,13 @@ class Tablet(ABC):
         print("")
         return days
 
-    def separation(self, of: str, to: str):
+    def separation_during_night(self, of: str, to: str, intervals: int):
         b1 = self.data.get_body(of)
         b2 = self.data.get_body(to)
         for idx, day in enumerate(self.days):
             night_len = day.sunrise.tt - day.sunset.tt
-            for i in range(4):
-                time = self.data.timescale.tt_jd(day.sunset.tt + (i/4 * night_len))
+            for i in range(intervals):
+                time = self.data.timescale.tt_jd(day.sunset.tt + (i/intervals * night_len))
                 res = angular_separation(self.data, b1, b2, time)
                 self.db.save_separation(of, to, res, time)
             self.print_progress("Computing separation between {} and {}".format(of, to), idx / len(self.days))
@@ -105,15 +105,15 @@ class BM32312(Tablet):
         # Mercury’s last appearance in the east behind Pisces
         # Mercury’s first appearance in the east in Pisces
         self.mercury()
-        self.separation("Mercury", "58 Piscium")
+        self.separation_during_night("Mercury", "58 Piscium", 4)
         # Saturn’s last appearance behind Pisces
         self.saturn()
-        self.separation("Saturn", "58 Piscium")
+        self.separation_during_night("Saturn", "58 Piscium", 4)
         # Mars became stationary in the area of the Lip of the Scorpion
         self.mars()
         # it came close to the bright star of the Scorpion’s head
-        self.separation("Mars", "Antares")
+        self.separation_during_night("Mars", "Antares", 4)
         # Venus stood in the region of Aries, 10 fingers behind Mars
-        self.separation("Venus", "Mars")
+        self.separation_during_night("Venus", "Mars", 4)
         # Mars was 1 finger to the left of the front? of Aries
-        self.separation("Mars", "Nu Arietis")
+        self.separation_during_night("Mars", "Nu Arietis", 4)
