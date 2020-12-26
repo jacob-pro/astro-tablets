@@ -26,6 +26,7 @@ class Database(object):
             sunset FLOAT,
             sunrise FLOAT,
             first_visibility SMALLINT,
+            year INT,
             PRIMARY KEY (sunset)
         );""")
         self.cursor.execute("""
@@ -64,8 +65,8 @@ class Database(object):
 
     def save_days(self, events: List[BabylonianDay]):
         for e in events:
-            self.cursor.execute("INSERT INTO days (sunset, sunrise, first_visibility) VALUES (?, ?, ?)",
-                                (e.sunset.tt, e.sunrise.tt, e.first_visibility))
+            self.cursor.execute("INSERT INTO days (sunset, sunrise, `year`, first_visibility) VALUES (?, ?, ?, ?)",
+                                (e.sunset.tt, e.sunrise.tt, int(e.sunset.utc.year), e.first_visibility))
 
     def save_equinox(self, time: Time):
         self.cursor.execute("INSERT INTO events (body, event, time) VALUES ('Sun', 'VernalEquinox', ?)",

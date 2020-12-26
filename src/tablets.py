@@ -104,16 +104,16 @@ class BM32312(Tablet):
         super(BM32312, self).compute()
         # Mercury’s last appearance in the east behind Pisces
         # Mercury’s first appearance in the east in Pisces
-        # self.mercury()
-        # self.separation("Mercury", "58 Piscium")
-        # # Saturn’s last appearance behind Pisces
-        # self.saturn()
-        # self.separation("Saturn", "58 Piscium")
-        # # Mars became stationary in the area of the Lip of the Scorpion
-        # self.mars()
-        # # it came close to the bright star of the Scorpion’s head
-        # self.separation("Mars", "Antares")
-        # # Venus stood in the region of Aries, 10 fingers behind Mars
-        # self.separation("Venus", "Mars")
-        # # Mars was 1 finger to the left of the front? of Aries
-        # self.separation("Mars", "Nu Arietis")
+        self.mercury()
+        self.separation("Mercury", "58 Piscium")
+        # Saturn’s last appearance behind Pisces
+        self.saturn()
+        self.separation("Saturn", "58 Piscium")
+        # Mars became stationary in the area of the Lip of the Scorpion
+        self.mars()
+        # it came close to the bright star of the Scorpion’s head
+        self.separation("Mars", "Antares")
+        # Venus stood in the region of Aries, 10 fingers behind Mars
+        self.separation("Venus", "Mars")
+        # Mars was 1 finger to the left of the front? of Aries
+        self.separation("Mars", "Nu Arietis")
