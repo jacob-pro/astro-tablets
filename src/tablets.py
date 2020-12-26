@@ -59,7 +59,7 @@ class Tablet(ABC):
         events = inner_planet_events(self.data, self.data.get_body("Mercury"), self.start_day, self.end_day,
                                      InnerPlanetArcusVisionis.mercury(),
                                      lambda x: self.print_progress("Computing Mercury visibility", x))
-        self.db.save_synodic_events("Saturn", events)
+        self.db.save_synodic_events("Mercury", events)
         print("")
 
     def mars(self):
