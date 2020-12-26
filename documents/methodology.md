@@ -57,7 +57,8 @@ Where the tablets describe a body as being within a constellation, I
 will approximate that position by drawing an appropriate radius around a
 star within that constellation.
 
-Pisces: Centre: 58 Piscium, Radius: 50° Aries: Centre: Nu Arietis
+-   Pisces: Centre: 58 Piscium, Radius: 50°
+-   Aries: Centre: Nu Arietis
 
 References
 ----------
