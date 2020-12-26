@@ -1,13 +1,13 @@
 # Astro Tablets
 
 A tool designed for dating the events in ancient Babylonian Astronomical Texts
-independent from any external assumptions about their chronology. 
+whilst making as few assumptions as possible about their chronology. 
 (See [Methodology](./documents/methodology.md) for more info about how the texts are interpreted)
 
 Using the [Skyfield](https://rhodesmill.org/skyfield/) library for Python we 
 generate tables of data to covering all the events in a specific tablet. 
 
-The data is saved in an SQLite db which can then be queried for the best match.
+The data tables are saved in a SQLite db which can then be queried for the best match.
 
 ## Features
 
