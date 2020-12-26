@@ -167,7 +167,7 @@ CREATE TEMPORARY TABLE joined_results (
 INSERT INTO joined_results
 SELECT a_results.year, a_results.nisan_1, a_sunset_1,
        MercuryMorningLast14, MercuryInPisces14, SaturnLastAppearance14, SaturnInPisces14, MarsStationary17, MarsScorpionHead17,
-       b_results.nisan_1, MorningFirst5, MercuryInPisces5, VenusBehindMars19, MarsInAries19, MarsInAries20,
+       b_sunset_1, MorningFirst5, MercuryInPisces5, VenusBehindMars19, MarsInAries19, MarsInAries20,
        a_results.score + b_results.score as total_score FROM
 (SELECT * FROM (
     SELECT *,
