@@ -11,12 +11,12 @@ The data tables are saved in a SQLite db which can then be queried for the best 
 
 ## Features
 
-Planned support for these texts:
-- [BM 32312](./documents/bm32312.md)
-- [VAT 4956](./documents/vat4956.md)
-- [Lunar Text No.3](./documents/lunar3.md)
-- [Planetary Text No. 52](./documents/planet52.md)
-- [Saturn Tablet](./documents/saturn.md)
+Support for these texts:
+- [X] [BM 32312](./documents/bm32312.md)
+- [ ] [VAT 4956](./documents/vat4956.md)
+- [ ] [Lunar Text No.3](./documents/lunar3.md)
+- [ ] [Planetary Text No. 52](./documents/planet52.md)
+- [ ] [Saturn Tablet](./documents/saturn.md)
 
 Supported features
 - Compute a lunar calendar (sunrise, sunset, first visibility, spring equinox)
