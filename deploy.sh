@@ -1,12 +1,13 @@
 if cat /proc/version | grep microsoft; then
-  CMD="cmd.exe /c"
+  DOCKER="docker.exe"
 else
-  CMD=
+  DOCKER=docker
 fi
 
 set -e
 REGISTRY=registry.jhalsey.com
 TAG=$REGISTRY/astro-tablets:latest
-$CMD docker build -t $TAG --build-arg=GIT_HASH=$(git rev-parse --short HEAD) .
-$CMD docker login $REGISTRY
-$CMD docker push $TAG
+GIT_HASH=$(git rev-parse --short HEAD)
+$DOCKER build -t $TAG --build-arg GIT_HASH="${GIT_HASH}" .
+$DOCKER login $REGISTRY
+$DOCKER push $TAG
