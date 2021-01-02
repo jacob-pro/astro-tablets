@@ -36,7 +36,7 @@ Planetary Visibilty
 
 When computing planetary visibility events I am using the default fixed
 arcus visionis parameters that are used in Alcyone Planetary, Stellar
-and Lunar Visibility \[4\]
+and Lunar Visibility \[4\].
 
 Conversions
 -----------
@@ -66,20 +66,25 @@ References
 \[1\] M. Ossendrijver, “Translating babylonian astronomical diaries and
 procedure texts,” *Translating Writings of Early Scholars in the Ancient
 Near East, Egypt, Greece and Rome: Methodological Aspects with
-Examples*, vol. 344, p. 125, 2016.
+Examples*, vol. 344, p. 125, 2016, \[Online\]. Available:
+<https://www.degruyter.com/view/book/9783110448818/10.1515/9783110448818-005.xml>.
 
 \[2\] W. H. Dubberstein and R. A. Parker, “Babylonian chronology 626
-b.c.-A.D. 75.” Brown University Press, 1956.
+b.c.-A.D. 75.” Brown University Press, 1956, \[Online\]. Available:
+<https://webspace.science.uu.nl/~gent0113/babylon/downloads/babylonian_chronology_pd_1971.pdf>.
 
 \[3\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
-danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007.
+danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007,
+\[Online\]. Available:
+<http://adsabs.harvard.edu/full/2007Obs...127...53S>.
 
 \[4\] Alcyone, “Planetary, stellar and lunar visibility.” \[Online\].
 Available:
 <http://www.alcyone.de/planetary_lunar_and_stellar_visibility.html>.
 
 \[5\] L. J. Fatoohi and F. R. Stephenson, “Angular measurements in
-babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997.
+babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
+\[Online\]. Available: <https://www.jstor.org/stable/41670130>.
 
 \[6\] H. Hunger and A. Sachs, *Astronomical diaries and related texts
 from babylonia. Vol. 1, diaries from 652 b.c. To 262 b.c. : Plates*.

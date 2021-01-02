@@ -28,7 +28,7 @@ I will take into account the following constraints:
 ## Planetary Visibilty
 
 When computing planetary visibility events I am using the default fixed arcus visionis parameters
-that are used in Alcyone Planetary, Stellar and Lunar Visibility [@alcyoneplsv]
+that are used in Alcyone Planetary, Stellar and Lunar Visibility [@alcyoneplsv].
 
 ## Conversions
 
