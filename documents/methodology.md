@@ -69,9 +69,8 @@ Near East, Egypt, Greece and Rome: Methodological Aspects with
 Examples*, vol. 344, p. 125, 2016, \[Online\]. Available:
 <https://www.degruyter.com/view/book/9783110448818/10.1515/9783110448818-005.xml>.
 
-\[2\] W. H. Dubberstein and R. A. Parker, “Babylonian chronology 626
-b.c.-A.D. 75.” Brown University Press, 1956, \[Online\]. Available:
-<https://webspace.science.uu.nl/~gent0113/babylon/downloads/babylonian_chronology_pd_1971.pdf>.
+\[2\] W. H. Dubberstein and R. A. Parker, *Babylonian chronology 626
+b.c.-A.D. 75*. Brown University Press, 1956.
 
 \[3\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
 danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007,
