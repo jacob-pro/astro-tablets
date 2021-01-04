@@ -1,6 +1,8 @@
 Lunar Text No.3
 ===============
 
+First Published: 1955 by T G Pinches as LBAT 1415, 1416 and 1417 \[1\]
+
 Obverse Translation
 -------------------
 
@@ -63,11 +65,15 @@ Obverse Translation
     5 20° onset, maximal phase, [and clearing ....]
     6 behind α Scorpii [it was eclipsed.]
 
-\[1, p. 8\]
+\[2, p. 8\]
 
 References
 ----------
 
-\[1\] H. Hunger, *Astronomical diaries and related texts from babylonia.
+\[1\] T. Pinches, A. Sachs, and J. Strassmaier, *Late babylonian
+astronomical and related texts: Copied by t.g. Pinches and j.n.
+Strassmaier*. Brown University Press, 1955.
+
+\[2\] H. Hunger, *Astronomical diaries and related texts from babylonia.
 Volume v, lunar and planetary texts*. Verlag der Österreichischen
 Akademie der Wissenschaften, 2001.

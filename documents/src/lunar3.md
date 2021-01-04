@@ -1,5 +1,7 @@
 # Lunar Text No.3
 
+First Published: 1955 by T G Pinches as LBAT 1415, 1416 and 1417 [@pinches1955late]
+
 ## Obverse Translation
 ```
 Obv.

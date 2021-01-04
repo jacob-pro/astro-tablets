@@ -17,6 +17,7 @@ Support for these texts:
 - [ ] [Lunar Text No.3](./documents/lunar3.md)
 - [ ] [Planetary Text No. 52](./documents/planet52.md)
 - [ ] [Saturn Tablet](./documents/saturn.md)
+- [ ] [BM 33066](./documents/bm33066.md)
 
 Supported features
 - Compute a lunar calendar (sunrise, sunset, first visibility, spring equinox)
