@@ -48,6 +48,9 @@ def get_git_hash() -> str:
 
 
 def get_git_changes() -> bool:
+    modified = os.getenv('GIT_MODIFIED')
+    if modified is not None:
+        return modified == "1"
     try:
         subprocess.check_output(['git', 'diff', '--exit-code'], stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:

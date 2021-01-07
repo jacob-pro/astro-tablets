@@ -5,9 +5,14 @@ else
 fi
 
 set -e
+
 REGISTRY=registry.jhalsey.com
 TAG=$REGISTRY/astro-tablets:latest
+
 GIT_HASH=$(git rev-parse --short HEAD)
-$DOCKER build -t $TAG --build-arg GIT_HASH="${GIT_HASH}" .
+git diff --exit-code --quiet
+GIT_MODIFIED=$?
+
+$DOCKER build -t $TAG --build-arg GIT_HASH="${GIT_HASH}" --build-arg GIT_MODIFIED="${GIT_MODIFIED}" .
 $DOCKER login $REGISTRY
 $DOCKER push $TAG
