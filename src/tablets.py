@@ -117,3 +117,35 @@ class BM32312(Tablet):
         self.separation_during_night("Venus", "Mars", 4)
         # Mars was 1 finger to the left of the front? of Aries
         self.separation_during_night("Mars", "Nu Arietis", 4)
+
+
+class BM41222(Tablet):
+    default_start = -726
+    default_end = -576
+
+    def compute(self):
+        super(BM41222, self).compute()
+        # Mercury's first appearance in the west
+        self.mercury()
+        # in the area of the Swallow = Pisces
+        self.separation_during_night("Mercury", "58 Piscium", 4)
+        # mars was in [the area?] of the Old Man = Perseus
+        self.separation_during_night("Mars", "36 Persei", 4)
+        # to the right of Mercury
+        self.separation_during_night("Mars", "Mercury", 4)
+        # Mercury stood for ⅔ cubit above? Mars
+        # Mercury was in the back of Mars?
+        # Mercury stood 1 cubit 4 fingers behind Mars.
+        # Mercury was balanced 6 fingers above Mars.
+        self.separation_during_night("Mercury", "Mars", 4)
+        #  Mercury, in the area of Pleiades
+        self.separation_during_night("Mercury", "Alcyone", 4)
+        # Mars was with Pleiades
+        self.separation_during_night("Mars", "Alcyone", 4)
+        # Mars was ⅔ cubit above the Chariot [....] = Auriga.
+        self.separation_during_night("Mars", "Nu Aurigae", 4)
+        # Mars was [....] above α Leonis.
+        self.separation_during_night("Mars", "Regulus", 4)
+        # with β Virginis
+        self.separation_during_night("Mars", "Beta Virginis", 4)
+

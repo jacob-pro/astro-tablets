@@ -46,4 +46,14 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[3675])
         if name == "Epsilon Piscium":
             return Star.from_dataframe(self.stars.loc[4906])
+        if name == "36 Persei":
+            return Star.from_dataframe(self.stars.loc[16499])
+        if name == "Alcyone":
+            return Star.from_dataframe(self.stars.loc[17702])
+        if name == "Nu Aurigae":
+            return Star.from_dataframe(self.stars.loc[27673])
+        if name == "Regulus":
+            return Star.from_dataframe(self.stars.loc[49669])
+        if name == "Beta Virginis":
+            return Star.from_dataframe(self.stars.loc[57757])
         raise ValueError
