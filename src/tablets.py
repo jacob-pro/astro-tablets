@@ -14,6 +14,8 @@ from planet_events import outer_planet_events, inner_planet_events
 def get_tablet_class(tablet: str):
     if tablet == "bm32312":
         return BM32312
+    if tablet == "bm41222":
+        return BM41222
     raise ValueError("Unknown tablet name")
 
 
