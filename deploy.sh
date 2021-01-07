@@ -1,7 +1,9 @@
 if cat /proc/version | grep microsoft; then
   DOCKER="docker.exe"
+  GIT="git.exe"
 else
   DOCKER=docker
+  GIT=git
 fi
 
 set -e
@@ -11,9 +13,9 @@ TAG=$REGISTRY/astro-tablets:latest
 
 GIT_HASH=$(git rev-parse --short HEAD)
 set +e
-git diff --exit-code --quiet
-set -e
+$GIT diff --exit-code --quiet
 GIT_MODIFIED=$?
+set -e
 
 $DOCKER build -t $TAG --build-arg GIT_HASH="${GIT_HASH}" --build-arg GIT_MODIFIED="${GIT_MODIFIED}" .
 $DOCKER login $REGISTRY
