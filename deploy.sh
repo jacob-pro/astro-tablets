@@ -17,6 +17,8 @@ $GIT diff --exit-code --quiet
 GIT_MODIFIED=$?
 set -e
 
+echo "$GIT_HASH modified = $GIT_MODIFIED"
+
 $DOCKER build -t $TAG --build-arg GIT_HASH="${GIT_HASH}" --build-arg GIT_MODIFIED="${GIT_MODIFIED}" .
 $DOCKER login $REGISTRY
 $DOCKER push $TAG
