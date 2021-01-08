@@ -68,7 +68,7 @@ FROM (SELECT nisan_1, sunset as sunset_1, year,
     /* Between sunset-sunrise of the 14th */
     (SELECT MIN(angle) FROM separations WHERE from_body="Mercury" AND to_body="58 Piscium" AND angle < 50
         AND time >= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 14))
-        AND time <= (SELECT MAX(sunset) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 14))
+        AND time <= (SELECT MAX(sunrise) FROM (SELECT * FROM days as dz WHERE dz.sunset >= potential_months.sunset ORDER BY dz.sunset LIMIT 14))
         LIMIT 1) as MercuryInPisces14,
 
      /* 14th Day ±10 Days */
