@@ -6,7 +6,7 @@ from skyfield.units import Angle
 from typing import *
 
 from constants import LUNAR_VISIBILITY
-from data import AstroData
+from data import AstroData, MOON
 from generate import OPTIONAL_PROGRESS
 
 
@@ -42,8 +42,8 @@ def altitude_of_moon(data: AstroData, t0: Time) -> Angle:
     """
     For a given time find the altitude of the moon visible from Babylon
     """
-    moon = data.ephemeris['moon']
-    babylon = data.ephemeris['earth'] + data.babylon
+    moon = data.get_body(MOON)
+    babylon = data.ephemeris['EARTH'] + data.babylon
     apparent = babylon.at(t0).observe(moon).apparent()
     alt, az, distance = apparent.altaz()
     return alt

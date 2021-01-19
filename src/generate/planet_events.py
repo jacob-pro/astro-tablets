@@ -13,8 +13,8 @@ from generate import OPTIONAL_PROGRESS
 
 
 def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
-    babylon = data.ephemeris['earth'] + data.babylon
-    sun = data.ephemeris['sun']
+    babylon = data.ephemeris['EARTH'] + data.babylon
+    sun = data.ephemeris['SUN']
     apparent = babylon.at(t0).observe(sun).apparent()
     alt, az, distance = apparent.altaz()
     return alt
@@ -71,7 +71,7 @@ def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlan
 
         # https://astronomy.stackexchange.com/a/18833/34119
         # retrograde motion of a planet as seen from Earth means that its ecliptic longitude is decreasing
-        _, eclon, _ = data.ephemeris["earth"].at(time).observe(body).ecliptic_latlon()
+        _, eclon, _ = data.ephemeris["EARTH"].at(time).observe(body).ecliptic_latlon()
         if previous_eclon is not None:
             change = change_in_longitude(previous_eclon, eclon.degrees)
             if previous_eclon_change is not None and not same_sign(previous_eclon_change, change):
@@ -159,7 +159,7 @@ def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlan
 
         # https://astronomy.stackexchange.com/a/18833/34119
         # retrograde motion of a planet as seen from Earth means that its ecliptic longitude is decreasing
-        _, eclon, _ = data.ephemeris["earth"].at(time).observe(body).ecliptic_latlon()
+        _, eclon, _ = data.ephemeris["EARTH"].at(time).observe(body).ecliptic_latlon()
         if previous_eclon is not None:
             change = change_in_longitude(previous_eclon, eclon.degrees)
             if previous_eclon_change is not None and not same_sign(previous_eclon_change, change):

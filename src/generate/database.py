@@ -10,7 +10,7 @@ from generate.planet_events import SynodicEvent
 from util import get_git_hash, get_git_changes
 
 
-class Database(object):
+class Database:
 
     def __init__(self, file: str):
         directory = os.path.dirname(file)

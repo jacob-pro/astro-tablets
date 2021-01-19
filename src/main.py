@@ -3,11 +3,12 @@ import os
 import pathlib
 import unittest
 from distutils.util import strtobool
-
-from generate import tablets
-from data import AstroData
-from generate.database import Database
 from typing import *
+
+import src.query as query_pkg
+from data import AstroData
+from generate import tablets
+from generate.database import Database
 
 
 def get_answer(question: str) -> bool:
@@ -27,7 +28,7 @@ def database_path(tablet: str, db: Union[str, None]) -> str:
 
 def generate(tablet: str, db: Union[str, None], overwrite: bool, start: Union[int, None], end: Union[int, None]):
     data = AstroData()
-    tablet_gen_class = tablets.get_tablet_class(tablet.lower())
+    tablet_gen_class = tablets.get_tablet_class(tablet)
     db_file = database_path(tablet, db)
     if os.path.isfile(db_file):
         if overwrite or get_answer("Database file already exists, overwrite?"):
@@ -44,6 +45,7 @@ def generate(tablet: str, db: Union[str, None], overwrite: bool, start: Union[in
 def query(tablet: str, db: Union[str, None]):
     data = AstroData(time_only=True)
     db_file = database_path(tablet, db)
+    tablet_query_class = query_pkg.get_tablet_class(tablet)(data, None)
 
 
 def test():

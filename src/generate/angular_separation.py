@@ -35,7 +35,7 @@ def angular_separation(data: AstroData, body1, body2, t0: Time) -> AngularSepara
     Computes angle between the two bodies
     And also the position of body1 relative to body2 along the ecliptic
     """
-    babylon = data.ephemeris['earth'] + data.babylon
+    babylon = data.ephemeris['EARTH'] + data.babylon
     p1 = babylon.at(t0).observe(body1).apparent()
     p2 = babylon.at(t0).observe(body2).apparent()
     sep = p1.separation_from(p2)

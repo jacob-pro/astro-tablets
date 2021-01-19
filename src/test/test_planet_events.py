@@ -3,6 +3,7 @@ from unittest import TestCase
 from bs4 import BeautifulSoup
 from parse import parse
 
+from data import *
 from generate.planet_events import *
 from util import diff_hours
 
@@ -17,7 +18,7 @@ class PlanetEventsTest(TestCase):
         expected_visibity = self.parse_plsv_inner("plsv_mercury.html")
         start = self.data.timescale.ut1(-610, 1, 1)
         end = self.data.timescale.ut1(-600, 12, 31)
-        body = self.data.get_body("Mercury")
+        body = self.data.get_body(MERCURY)
         events = inner_planet_events(self.data, body, start, end, InnerPlanetArcusVisionis.mercury())
 
         visibilities = list(filter(lambda x: x.type not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
@@ -48,7 +49,7 @@ class PlanetEventsTest(TestCase):
         expected_visibity = self.parse_plsv_inner("plsv_venus.html")
         start = self.data.timescale.ut1(-610, 1, 1)
         end = self.data.timescale.ut1(-601, 12, 31)
-        body = self.data.get_body("Venus")
+        body = self.data.get_body(VENUS)
         events = inner_planet_events(self.data, body, start, end, InnerPlanetArcusVisionis.venus())
 
         visibilities = list(filter(lambda x: x.type not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
@@ -81,7 +82,7 @@ class PlanetEventsTest(TestCase):
         expected = self.parse_plsv_outer("plsv_mars.html")
         start = self.data.timescale.ut1(-750, 1, 1)
         end = self.data.timescale.ut1(-741, 12, 31)
-        body = self.data.get_body("Mars")
+        body = self.data.get_body(MARS)
         events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.mars())
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
@@ -108,7 +109,7 @@ class PlanetEventsTest(TestCase):
         expected = self.parse_plsv_outer("plsv_jupiter.html")
         start = self.data.timescale.ut1(-600, 1, 1)
         end = self.data.timescale.ut1(-591, 12, 31)
-        body = self.data.get_body("Jupiter")
+        body = self.data.get_body(JUPITER)
         events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.jupiter())
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
@@ -133,7 +134,7 @@ class PlanetEventsTest(TestCase):
         expected = self.parse_plsv_outer("plsv_saturn.html")
         start = self.data.timescale.ut1(-550, 1, 1)
         end = self.data.timescale.ut1(-540, 1, 1)
-        body = self.data.get_body("Saturn")
+        body = self.data.get_body(SATURN)
         events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.saturn())
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):

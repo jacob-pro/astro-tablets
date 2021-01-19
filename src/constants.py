@@ -7,7 +7,7 @@ CUBIT = 2.2
 HALO = 22.0
 
 
-class InnerPlanetArcusVisionis(object):
+class InnerPlanetArcusVisionis:
 
     def __init__(self, mf, ml, ef, el):
         self.mf = mf
@@ -24,7 +24,7 @@ class InnerPlanetArcusVisionis(object):
         return InnerPlanetArcusVisionis(5.7, 6.0, 6.0, 5.2)
 
 
-class OuterPlanetArcusVisionis(object):
+class OuterPlanetArcusVisionis:
 
     def __init__(self, hr, hs, ar, cs):
         self.hr = hr

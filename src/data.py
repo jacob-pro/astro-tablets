@@ -8,6 +8,24 @@ from skyfield.toposlib import Topos
 
 from constants import BABYLON_COORDS
 
+MERCURY = "mercury"
+VENUS = "venus"
+MARS = "mars"
+SATURN = "saturn"
+JUPITER = "jupiter"
+MOON = "moon"
+
+SHERATAN = "sheratan"
+ANTARES = "antares"
+NU_ARIETIS = "nu arietis"
+FIFTY_EIGHT_PISCIUM = "58 piscium"
+EPSILON_PISCIUM = "epsilon piscium"
+THIRTY_SIX_PERSEI = "36 persei"
+ALCYONE = "alcyone"
+NU_AURIGAE = "nu aurigae"
+REGULUS = "regulus"
+BETA_VIRGINIS = "beta virginis"
+
 
 class AstroData:
 
@@ -23,38 +41,40 @@ class AstroData:
                 self.stars = hipparcos.load_dataframe(f)
 
     def get_body(self, name: str):
-        # Solar System
-        if name == "Mercury":
-            return self.ephemeris["mercury BARYCENTER"]
-        if name == "Venus":
-            return self.ephemeris["venus BARYCENTER"]
-        if name == "Mars":
-            return self.ephemeris["mars BARYCENTER"]
-        if name == "Saturn":
-            return self.ephemeris["saturn BARYCENTER"]
-        if name == "Jupiter":
-            return self.ephemeris["jupiter BARYCENTER"]
-        if name == "Moon":
-            return self.ephemeris["moon"]
-        # Stars
-        if name == "Sheratan": # β Arietis
+        name = name.lower()
+
+        if name == MERCURY:
+            return self.ephemeris["MERCURY BARYCENTER"]
+        if name == VENUS:
+            return self.ephemeris["VENUS BARYCENTER"]
+        if name == MARS:
+            return self.ephemeris["MARS BARYCENTER"]
+        if name == SATURN:
+            return self.ephemeris["SATURN BARYCENTER"]
+        if name == JUPITER:
+            return self.ephemeris["JUPITER BARYCENTER"]
+        if name == MOON:
+            return self.ephemeris["MOON"]
+
+        if name == SHERATAN:
             return Star.from_dataframe(self.stars.loc[8903])
-        if name == "Antares":  # α Scorpii
+        if name == ANTARES:
             return Star.from_dataframe(self.stars.loc[80763])
-        if name == "Nu Arietis":
+        if name == NU_ARIETIS:
             return Star.from_dataframe(self.stars.loc[12332])
-        if name == "58 Piscium":
+        if name == FIFTY_EIGHT_PISCIUM:
             return Star.from_dataframe(self.stars.loc[3675])
-        if name == "Epsilon Piscium":
+        if name == EPSILON_PISCIUM:
             return Star.from_dataframe(self.stars.loc[4906])
-        if name == "36 Persei":
+        if name == THIRTY_SIX_PERSEI:
             return Star.from_dataframe(self.stars.loc[16499])
-        if name == "Alcyone":
+        if name == ALCYONE:
             return Star.from_dataframe(self.stars.loc[17702])
-        if name == "Nu Aurigae":
+        if name == NU_AURIGAE:
             return Star.from_dataframe(self.stars.loc[27673])
-        if name == "Regulus":
+        if name == REGULUS:
             return Star.from_dataframe(self.stars.loc[49669])
-        if name == "Beta Virginis":
+        if name == BETA_VIRGINIS:
             return Star.from_dataframe(self.stars.loc[57757])
+
         raise ValueError
