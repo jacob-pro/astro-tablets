@@ -1,9 +1,7 @@
 import os
 import subprocess
-from typing import *
 
 from skyfield.timelib import Time
-
 
 
 def diff_mins(t1: Time, t2: Time) -> float:
