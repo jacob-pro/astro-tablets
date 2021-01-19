@@ -3,12 +3,12 @@ import time
 from abc import ABC
 from typing import *
 
-from angular_separation import angular_separation
+from src.generate.angular_separation import angular_separation
 from constants import OuterPlanetArcusVisionis, InnerPlanetArcusVisionis
 from data import AstroData
-from database import Database
-from lunar_calendar import vernal_equinox, days_in_range
-from planet_events import outer_planet_events, inner_planet_events
+from generate.database import Database
+from generate.lunar_calendar import vernal_equinox, days_in_range
+from generate.planet_events import outer_planet_events, inner_planet_events
 
 
 def get_tablet_class(tablet: str):

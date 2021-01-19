@@ -11,15 +11,16 @@ from constants import BABYLON_COORDS
 
 class AstroData:
 
-    def __init__(self):
+    def __init__(self, time_only=False):
         path = pathlib.Path(__file__).parent.parent.absolute() / 'skyfield-data'
         load = Loader(path.as_posix())
         self.timescale = load.timescale()
         self.timescale.julian_calendar_cutoff = GREGORIAN_START
-        self.ephemeris = load('de431t.bsp')
-        self.babylon = Topos(*BABYLON_COORDS)
-        with load.open(hipparcos.URL) as f:
-            self.stars = hipparcos.load_dataframe(f)
+        if not time_only:
+            self.ephemeris = load('de431t.bsp')
+            self.babylon = Topos(*BABYLON_COORDS)
+            with load.open(hipparcos.URL) as f:
+                self.stars = hipparcos.load_dataframe(f)
 
     def get_body(self, name: str):
         # Solar System

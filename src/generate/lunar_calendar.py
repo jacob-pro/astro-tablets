@@ -7,7 +7,7 @@ from typing import *
 
 from constants import LUNAR_VISIBILITY
 from data import AstroData
-from util import OPTIONAL_PROGRESS
+from generate import OPTIONAL_PROGRESS
 
 
 def vernal_equinox(data: AstroData, year: int) -> Time:

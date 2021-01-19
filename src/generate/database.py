@@ -4,9 +4,9 @@ from typing import *
 
 from skyfield.timelib import Time
 
-from angular_separation import AngularSeparationResult
-from lunar_calendar import BabylonianDay
-from planet_events import SynodicEvent
+from generate.angular_separation import AngularSeparationResult
+from generate.lunar_calendar import BabylonianDay
+from generate.planet_events import SynodicEvent
 from util import get_git_hash, get_git_changes
 
 

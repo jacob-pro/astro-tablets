@@ -1,5 +1,5 @@
 from common import *
-from data import TimeData
+from data import AstroData
 
 
 def year_14_results(conn, year_14):
@@ -11,7 +11,7 @@ def year_14_results(conn, year_14):
     pass
 
 
-def bm41222(conn: sqlite3.Connection, time_data: TimeData):
+def bm41222(conn: sqlite3.Connection, data: AstroData):
     years = get_years(conn)
     items = list(years.items())
     for i in range(0, len(years) - 5):

@@ -2,11 +2,11 @@ from unittest import TestCase
 
 from skyfield.starlib import Star
 
-from angular_separation import *
-from lunar_calendar import sunset_and_rise_for_date
+from generate.angular_separation import *
+from generate.lunar_calendar import sunset_and_rise_for_date
 
 
-class Test(TestCase):
+class AngularSeparationTest(TestCase):
 
     @classmethod
     def setUpClass(cls):

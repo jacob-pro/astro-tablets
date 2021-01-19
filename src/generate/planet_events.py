@@ -8,7 +8,8 @@ from skyfield.units import Angle
 
 from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis
 from data import AstroData
-from util import same_sign, change_in_longitude, OPTIONAL_PROGRESS
+from util import same_sign, change_in_longitude
+from generate import OPTIONAL_PROGRESS
 
 
 def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:

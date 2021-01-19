@@ -5,11 +5,11 @@ from bs4 import BeautifulSoup
 from parse import parse
 from skyfield.timelib import CalendarTuple
 
-from lunar_calendar import *
-from src.util import *
+from generate.lunar_calendar import *
+from util import *
 
 
-class Test(TestCase):
+class LunarCalendarTest(TestCase):
 
     @classmethod
     def setUpClass(cls):

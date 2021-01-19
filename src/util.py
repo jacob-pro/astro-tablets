@@ -4,7 +4,6 @@ from typing import *
 
 from skyfield.timelib import Time
 
-OPTIONAL_PROGRESS = Union[None, Callable[[float], None]]
 
 
 def diff_mins(t1: Time, t2: Time) -> float:

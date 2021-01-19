@@ -3,7 +3,7 @@ from unittest import TestCase
 from util import *
 
 
-class Test(TestCase):
+class UtilTest(TestCase):
 
     def test_change_in_longitude(self):
         self.assertEqual(change_in_longitude(350, 360), +10)

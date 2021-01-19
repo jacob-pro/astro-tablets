@@ -3,11 +3,11 @@ from unittest import TestCase
 from bs4 import BeautifulSoup
 from parse import parse
 
-from planet_events import *
-from src.util import diff_hours
+from generate.planet_events import *
+from util import diff_hours
 
 
-class Test(TestCase):
+class PlanetEventsTest(TestCase):
 
     @classmethod
     def setUpClass(cls):

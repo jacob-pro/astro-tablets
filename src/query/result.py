@@ -2,7 +2,7 @@ import sqlite3
 from abc import ABC
 from skyfield.timelib import Time
 
-from data import TimeData
+from data import AstroData
 
 
 class Result(ABC):
@@ -22,7 +22,7 @@ class PlanetPhenomenaResult(Result):
         self.event = event
 
     @staticmethod
-    def test(conn: sqlite3.Connection, time_data: TimeData, comment: str, expected_time: float, planet: str, event: str):
+    def test(conn: sqlite3.Connection, data: AstroData, comment: str, expected_time: float, planet: str, event: str):
         cursor = conn.cursor()
         cursor.execute(""" 
         SELECT time FROM events WHERE body=? AND event=? ORDER BY ABS(time - ?) DESC LIMIT 1""",
