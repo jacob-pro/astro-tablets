@@ -8,7 +8,9 @@ from typing import *
 import src.query as query_pkg
 from data import AstroData
 from generate import tablets
-from generate.database import Database
+from generate.database import Database as GenerateDatabase
+from query.database import Database as QueryDatabase
+
 
 
 def get_answer(question: str) -> bool:
@@ -35,7 +37,7 @@ def generate(tablet: str, db: Union[str, None], overwrite: bool, start: Union[in
             os.remove(db_file)
         else:
             exit(1)
-    db = Database(db_file)
+    db = GenerateDatabase(db_file)
     obj = tablet_gen_class(data, db, start, end)
     obj.compute()
     obj.post_compute()
@@ -45,7 +47,10 @@ def generate(tablet: str, db: Union[str, None], overwrite: bool, start: Union[in
 def query(tablet: str, db: Union[str, None]):
     data = AstroData(time_only=True)
     db_file = database_path(tablet, db)
-    tablet_query_class = query_pkg.get_tablet_class(tablet)(data, None)
+    db = QueryDatabase(db_file)
+    tablet = query_pkg.get_tablet_class(tablet)(data, db)
+    tablet.query()
+
 
 
 def test():
