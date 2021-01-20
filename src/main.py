@@ -12,7 +12,6 @@ from generate.database import Database as GenerateDatabase
 from query.database import Database as QueryDatabase
 
 
-
 def get_answer(question: str) -> bool:
     while True:
         print("{} [Y/N]".format(question))
@@ -50,7 +49,6 @@ def query(tablet: str, db: Union[str, None]):
     db = QueryDatabase(db_file)
     tablet = query_pkg.get_tablet_class(tablet)(data, db)
     tablet.query()
-
 
 
 def test():

@@ -1,5 +1,7 @@
 import os
 import subprocess
+from collections import OrderedDict
+from typing import *
 
 from skyfield.timelib import Time
 
@@ -52,3 +54,14 @@ def get_git_changes() -> bool:
         subprocess.check_output(['git', 'diff', '--exit-code'], stderr=subprocess.PIPE)
     except subprocess.CalledProcessError as e:
         return True
+
+
+def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
+    res = OrderedDict()
+    for item in input:
+        key = key_fn(item)
+        if key in res:
+            res[key].append(item)
+        else:
+            res[key] = [item]
+    return res

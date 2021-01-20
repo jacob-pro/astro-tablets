@@ -1,9 +1,9 @@
 from collections import namedtuple
+from typing import *
 
 from skyfield import almanac
 from skyfield.timelib import Time, GREGORIAN_START, compute_calendar_date
 from skyfield.units import Angle
-from typing import *
 
 from constants import LUNAR_VISIBILITY
 from data import AstroData, MOON
@@ -31,7 +31,7 @@ def sunset_and_rise_for_date(data: AstroData, year: int, month: int, day: int) -
     """
     t0 = data.timescale.ut1(year, month, day, 12)
     t1 = data.timescale.tt_jd(t0.tt + 1)
-    times, types = almanac.find_discrete(t0, t1, almanac.sunrise_sunset(data.ephemeris, data.babylon))
+    times, types = almanac.find_discrete(t0, t1, almanac.sunrise_sunset(data.ephemeris, data.babylon_topos))
     assert len(times) == 2
     assert types[0] == 0  # 0 = Sunset
     assert types[1] == 1  # 1 = Sunrise
@@ -43,8 +43,7 @@ def altitude_of_moon(data: AstroData, t0: Time) -> Angle:
     For a given time find the altitude of the moon visible from Babylon
     """
     moon = data.get_body(MOON)
-    babylon = data.ephemeris['EARTH'] + data.babylon
-    apparent = babylon.at(t0).observe(moon).apparent()
+    apparent = data.get_babylon().at(t0).observe(moon).apparent()
     alt, az, distance = apparent.altaz()
     return alt
 

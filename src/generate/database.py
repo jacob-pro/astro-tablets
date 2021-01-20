@@ -69,7 +69,7 @@ class Database:
                                 (e.sunset.tt, e.sunrise.tt, int(e.sunset.utc.year), e.first_visibility))
 
     def save_equinox(self, time: Time):
-        self.cursor.execute("INSERT INTO events (body, event, time) VALUES ('Sun', 'VernalEquinox', ?)",
+        self.cursor.execute("INSERT INTO events (body, event, time) VALUES (SUN, 'VernalEquinox', ?)",
                             (time.tt, ))
 
     def save_separation(self, of: str, to: str, res: AngularSeparationResult, time: Time):

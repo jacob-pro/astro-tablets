@@ -10,10 +10,12 @@ from constants import BABYLON_COORDS
 
 MERCURY = "mercury"
 VENUS = "venus"
+EARTH = "earth"
 MARS = "mars"
 SATURN = "saturn"
 JUPITER = "jupiter"
 MOON = "moon"
+SUN = "sun"
 
 SHERATAN = "sheratan"
 ANTARES = "antares"
@@ -36,7 +38,7 @@ class AstroData:
         self.timescale.julian_calendar_cutoff = GREGORIAN_START
         if not time_only:
             self.ephemeris = load('de431t.bsp')
-            self.babylon = Topos(*BABYLON_COORDS)
+            self.babylon_topos = Topos(*BABYLON_COORDS)
             with load.open(hipparcos.URL) as f:
                 self.stars = hipparcos.load_dataframe(f)
 
@@ -47,6 +49,8 @@ class AstroData:
             return self.ephemeris["MERCURY BARYCENTER"]
         if name == VENUS:
             return self.ephemeris["VENUS BARYCENTER"]
+        if name == EARTH:
+            return self.ephemeris["EARTH"]
         if name == MARS:
             return self.ephemeris["MARS BARYCENTER"]
         if name == SATURN:
@@ -55,6 +59,8 @@ class AstroData:
             return self.ephemeris["JUPITER BARYCENTER"]
         if name == MOON:
             return self.ephemeris["MOON"]
+        if name == SUN:
+            return self.ephemeris["SUN"]
 
         if name == SHERATAN:
             return Star.from_dataframe(self.stars.loc[8903])
@@ -78,3 +84,6 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[57757])
 
         raise ValueError
+
+    def get_babylon(self):
+        return self.get_body(EARTH) + self.babylon_topos

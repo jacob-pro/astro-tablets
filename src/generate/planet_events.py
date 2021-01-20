@@ -7,15 +7,14 @@ from skyfield.timelib import Time
 from skyfield.units import Angle
 
 from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis
-from data import AstroData
+from data import AstroData, SUN, EARTH
 from util import same_sign, change_in_longitude
 from generate import OPTIONAL_PROGRESS
 
 
 def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
-    babylon = data.ephemeris['EARTH'] + data.babylon
-    sun = data.ephemeris['SUN']
-    apparent = babylon.at(t0).observe(sun).apparent()
+    sun = data.get_body(SUN)
+    apparent = data.get_babylon().at(t0).observe(sun).apparent()
     alt, az, distance = apparent.altaz()
     return alt
 
@@ -51,7 +50,7 @@ def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlan
     assert t0.tt < t1.tt
     if progress is not None:
         progress(0)
-    f = almanac.risings_and_settings(data.ephemeris, body, data.babylon)
+    f = almanac.risings_and_settings(data.ephemeris, body, data.babylon_topos)
     times, types = almanac.find_discrete(data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f)
 
     zipped = list(zip(times, types))
@@ -71,7 +70,7 @@ def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlan
 
         # https://astronomy.stackexchange.com/a/18833/34119
         # retrograde motion of a planet as seen from Earth means that its ecliptic longitude is decreasing
-        _, eclon, _ = data.ephemeris["EARTH"].at(time).observe(body).ecliptic_latlon()
+        _, eclon, _ = data.get_body(EARTH).at(time).observe(body).ecliptic_latlon()
         if previous_eclon is not None:
             change = change_in_longitude(previous_eclon, eclon.degrees)
             if previous_eclon_change is not None and not same_sign(previous_eclon_change, change):
@@ -140,7 +139,7 @@ def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlan
     assert t0.tt < t1.tt
     if progress is not None:
         progress(0)
-    f = almanac.risings_and_settings(data.ephemeris, body, data.babylon)
+    f = almanac.risings_and_settings(data.ephemeris, body, data.babylon_topos)
     times, types = almanac.find_discrete(data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f)
 
     zipped = list(zip(times, types))
@@ -159,7 +158,7 @@ def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlan
 
         # https://astronomy.stackexchange.com/a/18833/34119
         # retrograde motion of a planet as seen from Earth means that its ecliptic longitude is decreasing
-        _, eclon, _ = data.ephemeris["EARTH"].at(time).observe(body).ecliptic_latlon()
+        _, eclon, _ = data.get_body(EARTH).at(time).observe(body).ecliptic_latlon()
         if previous_eclon is not None:
             change = change_in_longitude(previous_eclon, eclon.degrees)
             if previous_eclon_change is not None and not same_sign(previous_eclon_change, change):
