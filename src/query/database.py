@@ -1,42 +1,55 @@
 import sqlite3
-from collections import OrderedDict
+from collections import OrderedDict, namedtuple
 from typing import *
 
 from data import SUN
+from generate.lunar_calendar import VERNAL_EQUINOX
 from util import array_group_by
+
+
+BabylonianDay = namedtuple('BabylonianDay', 'sunset sunrise')
 
 
 class Database:
 
     def __init__(self, file: str):
         self.conn = sqlite3.connect("file:{}?mode=ro".format(file), isolation_level=None, uri=True)
-
-    def get_day(self, month: float, day_number: int) -> Tuple[float, float]:
-        """
-        Get the sunset and sunrise on a particular day of the month
-        The month should be the time of sunset on the first day / start of the month
-        """
-        assert 1 <= day_number <= 30
         cursor = self.conn.cursor()
         cursor.execute("""
-            SELECT MAX(sunset), MAX(sunrise) 
-                FROM (SELECT * FROM days as dz WHERE dz.sunset >= ? ORDER BY dz.sunset LIMIT ?)""",
-                       (month, day_number))
-        res = cursor.fetchone()
+            SELECT * FROM db_info""")
+        res = self.fetch_one_as_dict(cursor)
+        print("Opened database generated on {} for {} covering {} to {}".format(res['time'], res['tablet'], res['start_year'], res['end_year']))
+        self.tablet_name = res['tablet']
+
+    def get_days(self, month_sunset_1: float) -> List[BabylonianDay]:
+        """
+        Get days in a given month
+        @param month_sunset_1: The time of sunset on the first day of the month
+        """
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 30""",
+                       (month_sunset_1,))
+        res = cursor.fetchall()
+        res = list(map(lambda x: BabylonianDay(*x), res))
+        assert res[0].sunset == month_sunset_1
+        assert len(res) == 30
         return res
 
-    def get_months(self, nisan_1: float, count=12) -> List[float]:
+    def get_months(self, nisan_1_sunset: float, count=12) -> List[float]:
         """
         Get a list of months for a given Nisan I sunset time
-        Returns a list of the sunset times that each month would begin at
+        @param nisan_1_sunset: The time of sunset on the first day of the year
+        @param count:
+        @return: List of the sunset times that each month would begin at
         """
         cursor = self.conn.cursor()
         cursor.execute("""
             SELECT sunset FROM days WHERE days.first_visibility==1 AND sunset >= ? ORDER BY sunset LIMIT ?""",
-                       (nisan_1, count))
+                       (nisan_1_sunset, count))
         res = cursor.fetchall()
         res = list(map(lambda x: x[0], res))
-        assert res[0] == nisan_1
+        assert res[0] == nisan_1_sunset
         return res
 
     def get_years(self) -> OrderedDict:
@@ -52,13 +65,19 @@ class Database:
             FROM events equinox
             INNER JOIN
                 days ON days.sunset >= (equinox.time - 31) and days.sunset <= (equinox.time + 31) and days.first_visibility==1
-            WHERE equinox.event="VernalEquinox" and equinox.body=?
-            AND days.year <= (SELECT end_year FROM db_info LIMIT 1)""", (SUN, ))
-        res = self.fetch_all_dict(cursor)
+            WHERE equinox.event=? and equinox.body=?
+            AND days.year <= (SELECT end_year FROM db_info LIMIT 1)""",
+                       (VERNAL_EQUINOX, SUN, ))
+        res = self.fetch_all_as_dict(cursor)
         return array_group_by(res, lambda x: x["year"])
 
     @staticmethod
-    def fetch_all_dict(cursor: sqlite3.Cursor):
+    def fetch_all_as_dict(cursor: sqlite3.Cursor) -> List[Dict]:
         columns = [col[0] for col in cursor.description]
         rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
         return rows
+
+    @staticmethod
+    def fetch_one_as_dict(cursor: sqlite3.Cursor) -> Dict:
+        columns = [col[0] for col in cursor.description]
+        return dict(zip(columns, cursor.fetchone()))

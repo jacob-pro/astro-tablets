@@ -9,6 +9,8 @@ from constants import LUNAR_VISIBILITY
 from data import AstroData, MOON
 from generate import OPTIONAL_PROGRESS
 
+VERNAL_EQUINOX = "vernal_equinox"
+
 
 def vernal_equinox(data: AstroData, year: int) -> Time:
     """

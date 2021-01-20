@@ -4,8 +4,9 @@ from typing import *
 
 from skyfield.timelib import Time
 
+from data import SUN
 from generate.angular_separation import AngularSeparationResult
-from generate.lunar_calendar import BabylonianDay
+from generate.lunar_calendar import BabylonianDay, VERNAL_EQUINOX
 from generate.planet_events import SynodicEvent
 from util import get_git_hash, get_git_changes
 
@@ -69,8 +70,8 @@ class Database:
                                 (e.sunset.tt, e.sunrise.tt, int(e.sunset.utc.year), e.first_visibility))
 
     def save_equinox(self, time: Time):
-        self.cursor.execute("INSERT INTO events (body, event, time) VALUES (SUN, 'VernalEquinox', ?)",
-                            (time.tt, ))
+        self.cursor.execute("INSERT INTO events (body, event, time) VALUES (?, ?, ?)",
+                            (SUN, VERNAL_EQUINOX, time.tt, ))
 
     def save_separation(self, of: str, to: str, res: AngularSeparationResult, time: Time):
         self.cursor.execute("INSERT INTO separations (from_body, to_body, angle, position, time) VALUES (?, ?, ?, ?, ?)",

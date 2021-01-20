@@ -47,6 +47,7 @@ def query(tablet: str, db: Union[str, None]):
     data = AstroData(time_only=True)
     db_file = database_path(tablet, db)
     db = QueryDatabase(db_file)
+    assert db.tablet_name.lower() == tablet.lower(), "Database info table doesn't match the requested tablet"
     tablet = query_pkg.get_tablet_class(tablet)(data, db)
     tablet.query()
 

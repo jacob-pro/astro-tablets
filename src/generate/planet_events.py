@@ -21,20 +21,20 @@ def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
 
 @unique
 class InnerPlanetPhenomena(Enum):
-    EF = "EveningFirst"     # Appear in the west
-    ES = "EveningStation"   # Stationary in the west
-    EL = "EveningLast"      # Set in the west
-    MF = "MorningFirst"     # Appear in the east
-    MS = "MorningStation"   # Stationary in the east
-    ML = "MorningLast"      # Set in the east
+    EF = "evening_first"     # Appear in the west
+    ES = "evening_station"   # Stationary in the west
+    EL = "evening_last"      # Set in the west
+    MF = "morning_first"     # Appear in the east
+    MS = "morning_station"   # Stationary in the east
+    ML = "morning_last"      # Set in the east
 
 
 @unique
 class OuterPlanetPhenomena(Enum):
-    FA = "FirstAppearance"  # To appear
-    AR = "AcronychalRising" # To rise to daylight
-    LA = "LastAppearance"   # To set
-    ST = "Stationary"       # Either stationary point
+    FA = "first_appearance"  # To appear
+    AR = "acronychal_rising" # To rise to daylight
+    LA = "last_appearance"   # To set
+    ST = "stationary"       # Either stationary point
 
 
 SynodicEvent = namedtuple('SynodicEvent', 'time type')
