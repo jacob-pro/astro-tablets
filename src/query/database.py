@@ -15,10 +15,10 @@ class Database:
     def __init__(self, file: str):
         self.conn = sqlite3.connect("file:{}?mode=ro".format(file), isolation_level=None, uri=True)
         cursor = self.conn.cursor()
-        cursor.execute("""
-            SELECT * FROM db_info""")
+        cursor.execute("SELECT * FROM db_info")
         res = self.fetch_one_as_dict(cursor)
-        print("Opened database generated on {} for {} covering {} to {}".format(res['time'], res['tablet'], res['start_year'], res['end_year']))
+        print("Opened database generated on {} for {} covering {} to {}"
+              .format(res['time'], res['tablet'], res['start_year'], res['end_year']))
         self.tablet_name = res['tablet']
 
     def get_days(self, month_sunset_1: float) -> List[BabylonianDay]:
@@ -27,13 +27,11 @@ class Database:
         @param month_sunset_1: The time of sunset on the first day of the month
         """
         cursor = self.conn.cursor()
-        cursor.execute("""
-            SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 30""",
+        cursor.execute("""SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 31""",
                        (month_sunset_1,))
         res = cursor.fetchall()
         res = list(map(lambda x: BabylonianDay(*x), res))
         assert res[0].sunset == month_sunset_1
-        assert len(res) == 30
         return res
 
     def get_months(self, nisan_1_sunset: float, count=12) -> List[float]:
@@ -63,13 +61,22 @@ class Database:
         cursor.execute("""
             SELECT days.sunset as nisan_1, days.year as year
             FROM events equinox
-            INNER JOIN
-                days ON days.sunset >= (equinox.time - 31) and days.sunset <= (equinox.time + 31) and days.first_visibility==1
+            INNER JOIN days 
+            ON days.sunset >= (equinox.time - 31) and days.sunset <= (equinox.time + 31) and days.first_visibility==1
             WHERE equinox.event=? and equinox.body=?
             AND days.year <= (SELECT end_year FROM db_info LIMIT 1)""",
                        (VERNAL_EQUINOX, SUN, ))
         res = self.fetch_all_as_dict(cursor)
         return array_group_by(res, lambda x: x["year"])
+
+    def nearest_event_match_to_time(self, body: str, event: str, time: float) -> Union[float, None]:
+        cursor = self.conn.cursor()
+        cursor.execute("""SELECT time FROM events WHERE body=? AND event=? ORDER BY ABS(time - ?) LIMIT 1""",
+                       (body, event, time,))
+        time = cursor.fetchone()
+        if time is not None:
+            return time[0]
+        return None
 
     @staticmethod
     def fetch_all_as_dict(cursor: sqlite3.Cursor) -> List[Dict]:
