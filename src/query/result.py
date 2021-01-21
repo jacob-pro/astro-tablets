@@ -9,7 +9,7 @@ from query.database import Database
 @dataclass
 class TargetTime:
     nisan_1: float
-    month_1: float
+    month_offset: int
     start: float
     end: float
     date: str

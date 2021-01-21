@@ -1,5 +1,6 @@
 import sqlite3
-from collections import OrderedDict, namedtuple
+from collections import OrderedDict
+from dataclasses import dataclass
 from typing import *
 
 from data import SUN
@@ -7,7 +8,10 @@ from generate.lunar_calendar import VERNAL_EQUINOX
 from util import array_group_by
 
 
-BabylonianDay = namedtuple('BabylonianDay', 'sunset sunrise')
+@dataclass
+class BabylonianDay:
+    sunset: float
+    sunrise: float
 
 
 class Database:
@@ -27,7 +31,7 @@ class Database:
         @param month_sunset_1: The time of sunset on the first day of the month
         """
         cursor = self.conn.cursor()
-        cursor.execute("""SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 31""",
+        cursor.execute("SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 31",
                        (month_sunset_1,))
         res = cursor.fetchall()
         res = list(map(lambda x: BabylonianDay(*x), res))

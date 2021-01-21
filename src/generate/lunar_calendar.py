@@ -1,4 +1,4 @@
-from collections import namedtuple
+from dataclasses import dataclass
 from typing import *
 
 from skyfield import almanac
@@ -50,7 +50,11 @@ def altitude_of_moon(data: AstroData, t0: Time) -> Angle:
     return alt
 
 
-BabylonianDay = namedtuple('BabylonianDay', 'sunset sunrise first_visibility')
+@dataclass
+class BabylonianDay:
+    sunset: Time
+    sunrise: Time
+    first_visibility: bool
 
 
 def days_in_range(data: AstroData, start: Time, end: Time, progress: OPTIONAL_PROGRESS = None) -> List[BabylonianDay]:

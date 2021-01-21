@@ -1,8 +1,9 @@
-from collections import namedtuple
+from dataclasses import dataclass
 from enum import unique, Enum
 
 from skyfield.framelib import ecliptic_frame
 from skyfield.timelib import Time
+from skyfield.units import Angle
 
 from data import AstroData
 from util import change_in_longitude
@@ -27,7 +28,13 @@ def _ecliptic_position(deg_above: float, deg_ahead: float) -> EclipticPosition:
         return EclipticPosition.AHEAD
 
 
-AngularSeparationResult = namedtuple('AngularSeparationResult', 'angle position')
+@dataclass
+class AngularSeparationResult:
+    angle: Angle
+    position: EclipticPosition
+
+    def __iter__(self):
+        return iter((self.angle, self.position))
 
 
 def angular_separation(data: AstroData, body1, body2, t0: Time) -> AngularSeparationResult:

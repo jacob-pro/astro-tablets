@@ -1,11 +1,11 @@
 from data import MERCURY
 from generate.planet_events import InnerPlanetPhenomena
 from query.result import PlanetaryEventResult, TargetTime
-from query.tablet import QueryTablet
+from query.tablet import AbstractTablet
 from typing import *
 
 
-class BM41222(QueryTablet):
+class BM41222(AbstractTablet):
 
     def shamash_14(self, potential_years: List):
         for y in potential_years:
@@ -13,7 +13,7 @@ class BM41222(QueryTablet):
             month_xii_days = self.db.get_days(months[11])
             for start_offset in range(-1, 1):
                 day_4 = month_xii_days[4 + start_offset]
-                time = TargetTime(y['nisan_1'], month_xii_days[1 + start_offset].sunset, day_4.sunset, day_4.sunrise, "XII 4")
+                time = TargetTime(y['nisan_1'], start_offset + 1, day_4.sunset, day_4.sunrise, "XII 4")
                 res = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF.value, time)
                 if res.is_good_result():
                     print(y['year'])
