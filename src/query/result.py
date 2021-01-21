@@ -6,6 +6,7 @@ from typing import *
 from constants import Planet
 from data import AstroData
 from generate.angular_separation import EclipticPosition
+from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
 from query.database import Database
 from util import jd_float_to_string
 
@@ -41,10 +42,11 @@ class AbstractResult(ABC):
 
 class PlanetaryEventResult(AbstractResult):
 
-    def __init__(self, db: Database, planet: Planet, event: str, target_time: TargetTime):
+    def __init__(self, db: Database, planet: Planet, event: Union[InnerPlanetPhenomena, OuterPlanetPhenomena],
+                 target_time: TargetTime):
         self.target_time = target_time
         self.event = event
-        self.nearest = db.nearest_event_match_to_time(planet.name, event, target_time.start)
+        self.nearest = db.nearest_event_match_to_time(planet.name, event.value, target_time.start)
         self.planet = planet
 
     @staticmethod
@@ -72,8 +74,8 @@ class PlanetaryEventResult(AbstractResult):
 
     def output(self, data: AstroData) -> dict:
         return {
-            'planet': self.planet,
-            'event': self.event,
+            'planet': self.planet.name,
+            'event': self.event.value,
             'nearest_time': data.timescale.tt_jd(self.nearest).utc_iso(),
             'calendar': self.target_time.output(data),
         }
