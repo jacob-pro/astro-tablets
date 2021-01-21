@@ -88,6 +88,6 @@ Available:
 babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
 \[Online\]. Available: <https://www.jstor.org/stable/41670130>.
 
-\[6\] H. Hunger and A. Sachs, *Astronomical diaries and related texts
+\[6\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
 from babylonia. Vol. 1, diaries from 652 b.c. To 262 b.c. : Plates*.
 Verlag der Österreichischen Akademie der Wissenschaften, 1988.
