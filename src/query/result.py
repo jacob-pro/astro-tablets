@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from typing import *
 
 from constants import Planet
 from data import AstroData
@@ -18,7 +19,7 @@ class TargetTime:
 class AbstractResult(ABC):
 
     @abstractmethod
-    def is_good_result(self) -> bool:
+    def result_quality(self) -> bool:
         pass
 
     @abstractmethod
@@ -33,7 +34,7 @@ class PlanetaryEventResult(AbstractResult):
         self.nearest = db.nearest_event_match_to_time(planet.name, event, target_time.start)
         self.planet = planet
 
-    def is_good_result(self) -> bool:
+    def result_quality(self) -> bool:
         if self.nearest > self.target_time.end:
             return (self.nearest - self.target_time.end) <= self.planet.tolerance_days
         elif self.nearest < self.target_time.start:
@@ -47,7 +48,16 @@ class PlanetaryEventResult(AbstractResult):
 
 class AngularSeparationResult(AbstractResult):
 
-    def is_good_result(self) -> bool:
+    def __init__(self, db: Database, from_body: str, to_body: str, min: Union[float, None], max: float,
+                 target_time: TargetTime):
+        self.target_time = target_time
+        self.from_body = from_body
+        self.to_body = to_body
+        self.min = min
+        self.max = max
+        sep = db.separations_in_range(from_body, to_body, target_time.start, target_time.end)
+
+    def result_quality(self) -> bool:
         pass
 
     def print(self, data: AstroData) -> dict:

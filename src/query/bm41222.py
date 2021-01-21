@@ -15,7 +15,7 @@ class BM41222(AbstractTablet):
                 day_4 = month_xii_days[4 + start_offset]
                 time = TargetTime(y['nisan_1'], start_offset + 1, day_4.sunset, day_4.sunrise, "XII 4")
                 res = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF.value, time)
-                if res.is_good_result():
+                if res.result_quality():
                     print(y['year'])
 
     def query(self):
