@@ -3,7 +3,7 @@ import time
 from abc import ABC
 from typing import *
 
-from src.generate.angular_separation import angular_separation
+from generate.angular_separation import angular_separation
 from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis
 from data import *
 from generate.database import Database

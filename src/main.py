@@ -5,7 +5,7 @@ import unittest
 from distutils.util import strtobool
 from typing import *
 
-import src.query as query_pkg
+import query as query_pkg
 from data import AstroData
 from generate import tablets
 from generate.database import Database as GenerateDatabase

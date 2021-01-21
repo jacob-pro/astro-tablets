@@ -29,7 +29,11 @@ Supported features
 
 ## Setup
 
-- Requires Python == 3.5 (note: Skyfield doesn't support newer versions yet)
+- Requires Python 3
 - Install `requirements.txt`
 - When using PyCharm define `./src` as a source folder in project structure
 - First run will take a while to download the astronomical data
+
+`pypy -m ensurepip`
+`pypy3 -mpip install -r requirements.txt`
+
