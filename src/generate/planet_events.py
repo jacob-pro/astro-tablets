@@ -6,10 +6,31 @@ from skyfield import almanac
 from skyfield.timelib import Time
 from skyfield.units import Angle
 
-from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis
+from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis, Planet
 from data import AstroData, SUN, EARTH
 from util import same_sign, change_in_longitude
 from generate import OPTIONAL_PROGRESS
+
+
+@unique
+class InnerPlanetPhenomena(Enum):
+    EF = "evening_first"  # Appear in the west
+    ES = "evening_station"  # Stationary in the west
+    EL = "evening_last"  # Set in the west
+    MF = "morning_first"  # Appear in the east
+    MS = "morning_station"  # Stationary in the east
+    ML = "morning_last"  # Set in the east
+
+
+@unique
+class OuterPlanetPhenomena(Enum):
+    FA = "first_appearance"  # To appear
+    AR = "acronychal_rising"  # To rise to daylight
+    LA = "last_appearance"  # To set
+    ST = "stationary"  # Either stationary point
+
+
+SynodicEvent = namedtuple('SynodicEvent', 'time type')
 
 
 def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
@@ -19,29 +40,17 @@ def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
     return alt
 
 
-@unique
-class InnerPlanetPhenomena(Enum):
-    EF = "evening_first"     # Appear in the west
-    ES = "evening_station"   # Stationary in the west
-    EL = "evening_last"      # Set in the west
-    MF = "morning_first"     # Appear in the east
-    MS = "morning_station"   # Stationary in the east
-    ML = "morning_last"      # Set in the east
+def planet_events(data: AstroData, planet: Planet, t0: Time, t1: Time, progress: OPTIONAL_PROGRESS = None
+                  ) -> List[SynodicEvent]:
+    if planet.is_inner:
+        return __inner_planet_events(data, data.get_body(planet.name), t0, t1, planet.arcus_visionis, progress)
+    else:
+        return __outer_planet_events(data, data.get_body(planet.name), t0, t1, planet.arcus_visionis, progress)
 
 
-@unique
-class OuterPlanetPhenomena(Enum):
-    FA = "first_appearance"  # To appear
-    AR = "acronychal_rising" # To rise to daylight
-    LA = "last_appearance"   # To set
-    ST = "stationary"       # Either stationary point
 
-
-SynodicEvent = namedtuple('SynodicEvent', 'time type')
-
-
-def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis,
-                        progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
+def __inner_planet_events(data: AstroData, body: str, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis,
+                          progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an inner planet
     Evening/Morning Last is the night of last visibility (not first invisible)
@@ -130,8 +139,8 @@ def inner_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: InnerPlan
     return events
 
 
-def outer_planet_events(data: AstroData, body, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis,
-                        progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
+def __outer_planet_events(data: AstroData, body: str, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis,
+                          progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an outer planet
     Note stations are not precise, but at the time of nearest/rise set

@@ -1,14 +1,12 @@
 import sys
 import time
 from abc import ABC
-from typing import *
 
-from generate.angular_separation import angular_separation
-from constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis
 from data import *
+from generate.angular_separation import angular_separation
 from generate.database import Database
 from generate.lunar_calendar import vernal_equinox, days_in_range
-from generate.planet_events import outer_planet_events, inner_planet_events
+from generate.planet_events import planet_events
 
 
 def get_tablet_class(tablet: str):
@@ -46,7 +44,11 @@ class Tablet(ABC):
         print("")
         return days
 
-    def separation_during_night(self, of: str, to: str, intervals: int = 4):
+    def separation_during_night(self, of: Union[str, Planet], to: Union[str, Planet], intervals: int = 4):
+        if type(of) == Planet:
+            of = of.name
+        if type(to) == Planet:
+            to = to.name
         b1 = self.data.get_body(of)
         b2 = self.data.get_body(to)
         for idx, day in enumerate(self.days):
@@ -58,25 +60,10 @@ class Tablet(ABC):
             self.print_progress("Computing separation between {} and {}".format(of, to), idx / len(self.days))
         print("")
 
-    def mercury(self):
-        events = inner_planet_events(self.data, self.data.get_body(MERCURY), self.start_day, self.end_day,
-                                     InnerPlanetArcusVisionis.mercury(),
-                                     lambda x: self.print_progress("Computing Mercury visibility", x))
-        self.db.save_synodic_events(MERCURY, events)
-        print("")
-
-    def mars(self):
-        events = outer_planet_events(self.data, self.data.get_body(MARS), self.start_day, self.end_day,
-                                     OuterPlanetArcusVisionis.mars(),
-                                     lambda x: self.print_progress("Computing Mars visibility", x))
-        self.db.save_synodic_events(MARS, events)
-        print("")
-
-    def saturn(self,):
-        events = outer_planet_events(self.data, self.data.get_body(SATURN), self.start_day, self.end_day,
-                                     OuterPlanetArcusVisionis.saturn(),
-                                     lambda x: self.print_progress("Computing Saturn visibility", x))
-        self.db.save_synodic_events(SATURN, events)
+    def planet_events(self, planet: Planet):
+        events = planet_events(self.data, planet, self.start_day, self.end_day,
+                               lambda x: self.print_progress("Computing {} visibility".format(planet.name), x))
+        self.db.save_synodic_events(planet.name, events)
         print("")
 
     def compute(self):
@@ -107,13 +94,13 @@ class BM32312(Tablet):
         super(BM32312, self).compute()
         # Mercury’s last appearance in the east behind Pisces
         # Mercury’s first appearance in the east in Pisces
-        self.mercury()
+        self.planet_events(MERCURY)
         self.separation_during_night(MERCURY, FIFTY_EIGHT_PISCIUM)
         # Saturn’s last appearance behind Pisces
-        self.saturn()
+        self.planet_events(SATURN)
         self.separation_during_night(SATURN, FIFTY_EIGHT_PISCIUM)
         # Mars became stationary in the area of the Lip of the Scorpion
-        self.mars()
+        self.planet_events(MARS)
         # it came close to the bright star of the Scorpion’s head
         self.separation_during_night(MARS, ANTARES)
         # Venus stood in the region of Aries, 10 fingers behind Mars
@@ -129,7 +116,7 @@ class BM41222(Tablet):
     def compute(self):
         super(BM41222, self).compute()
         # Mercury's first appearance in the west
-        self.mercury()
+        self.planet_events(MERCURY)
         # in the area of the Swallow = Pisces
         self.separation_during_night(MERCURY, FIFTY_EIGHT_PISCIUM)
         # mars was in [the area?] of the Old Man = Perseus

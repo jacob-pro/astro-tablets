@@ -29,7 +29,7 @@ Supported features
 
 ## Setup
 
-- Requires Python 3
+- Requires Python 3.7
 - Install `requirements.txt`
 - When using PyCharm define `./src` as a source folder in project structure
 - First run will take a while to download the astronomical data

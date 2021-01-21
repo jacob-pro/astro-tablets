@@ -1,5 +1,6 @@
 from data import MERCURY
 from generate.planet_events import InnerPlanetPhenomena
+from query.result import PlanetaryEventResult, TargetTime
 from query.tablet import QueryTablet
 from typing import *
 
@@ -12,8 +13,9 @@ class BM41222(QueryTablet):
             month_xii_days = self.db.get_days(months[11])
             for start_offset in range(-1, 1):
                 day_4 = month_xii_days[4 + start_offset]
-                nearest = self.db.nearest_event_match_to_time(MERCURY, InnerPlanetPhenomena.EF.value, day_4.sunset)
-                if abs(nearest - day_4.sunset) < 5:
+                time = TargetTime(y['nisan_1'], month_xii_days[1 + start_offset].sunset, day_4.sunset, day_4.sunrise, "XII 4")
+                res = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF.value, time)
+                if res.is_good_result():
                     print(y['year'])
 
     def query(self):

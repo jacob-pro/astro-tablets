@@ -18,8 +18,7 @@ class PlanetEventsTest(TestCase):
         expected_visibity = self.parse_plsv_inner("plsv_mercury.html")
         start = self.data.timescale.ut1(-610, 1, 1)
         end = self.data.timescale.ut1(-600, 12, 31)
-        body = self.data.get_body(MERCURY)
-        events = inner_planet_events(self.data, body, start, end, InnerPlanetArcusVisionis.mercury())
+        events = planet_events(self.data, MERCURY, start, end)
 
         visibilities = list(filter(lambda x: x.type not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
         for idx, val in enumerate(expected_visibity):
@@ -49,8 +48,7 @@ class PlanetEventsTest(TestCase):
         expected_visibity = self.parse_plsv_inner("plsv_venus.html")
         start = self.data.timescale.ut1(-610, 1, 1)
         end = self.data.timescale.ut1(-601, 12, 31)
-        body = self.data.get_body(VENUS)
-        events = inner_planet_events(self.data, body, start, end, InnerPlanetArcusVisionis.venus())
+        events = planet_events(self.data, VENUS, start, end)
 
         visibilities = list(filter(lambda x: x.type not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
         for idx, val in enumerate(expected_visibity):
@@ -82,8 +80,7 @@ class PlanetEventsTest(TestCase):
         expected = self.parse_plsv_outer("plsv_mars.html")
         start = self.data.timescale.ut1(-750, 1, 1)
         end = self.data.timescale.ut1(-741, 12, 31)
-        body = self.data.get_body(MARS)
-        events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.mars())
+        events = planet_events(self.data, MARS, start, end)
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
             actual = visibilities[idx]
@@ -109,8 +106,8 @@ class PlanetEventsTest(TestCase):
         expected = self.parse_plsv_outer("plsv_jupiter.html")
         start = self.data.timescale.ut1(-600, 1, 1)
         end = self.data.timescale.ut1(-591, 12, 31)
-        body = self.data.get_body(JUPITER)
-        events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.jupiter())
+        events = planet_events(self.data, JUPITER, start, end)
+
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
             actual = visibilities[idx]
@@ -134,8 +131,8 @@ class PlanetEventsTest(TestCase):
         expected = self.parse_plsv_outer("plsv_saturn.html")
         start = self.data.timescale.ut1(-550, 1, 1)
         end = self.data.timescale.ut1(-540, 1, 1)
-        body = self.data.get_body(SATURN)
-        events = outer_planet_events(self.data, body, start, end, OuterPlanetArcusVisionis.saturn())
+        events = planet_events(self.data, SATURN, start, end)
+
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
             actual = visibilities[idx]
@@ -161,7 +158,7 @@ class PlanetEventsTest(TestCase):
     def parse_plsv_inner(self, name: str) -> List[SynodicEvent]:
         path = pathlib.Path(__file__).parent / 'data' / name
         with open(path.as_posix()) as f:
-            soup = BeautifulSoup(f, "html.parser")
+            soup = BeautifulSoup(f, "html.parser", from_encoding="cp1252")
         table = soup.findAll("table")[1]
         rows = table.findAll("tr")[1:]
         filtered = list(filter(lambda x: len(list(x.children)) == 15, rows))
@@ -188,7 +185,7 @@ class PlanetEventsTest(TestCase):
     def parse_plsv_outer(self, name: str) -> List[SynodicEvent]:
         path = pathlib.Path(__file__).parent / 'data' / name
         with open(path.as_posix()) as f:
-            soup = BeautifulSoup(f, "html.parser")
+            soup = BeautifulSoup(f, "html.parser", from_encoding="cp1252")
         table = soup.findAll("table")[1]
         rows = table.findAll("tr")[1:]
         filtered = list(filter(lambda x: len(list(x.children)) == 15, rows))

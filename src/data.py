@@ -6,14 +6,9 @@ from skyfield.starlib import Star
 from skyfield.timelib import GREGORIAN_START
 from skyfield.toposlib import Topos
 
-from constants import BABYLON_COORDS
+from constants import *
 
-MERCURY = "mercury"
-VENUS = "venus"
 EARTH = "earth"
-MARS = "mars"
-SATURN = "saturn"
-JUPITER = "jupiter"
 MOON = "moon"
 SUN = "sun"
 
@@ -45,17 +40,17 @@ class AstroData:
     def get_body(self, name: str):
         name = name.lower()
 
-        if name == MERCURY:
+        if name == MERCURY.name:
             return self.ephemeris["MERCURY BARYCENTER"]
-        if name == VENUS:
+        if name == VENUS.name:
             return self.ephemeris["VENUS BARYCENTER"]
         if name == EARTH:
             return self.ephemeris["EARTH"]
-        if name == MARS:
+        if name == MARS.name:
             return self.ephemeris["MARS BARYCENTER"]
-        if name == SATURN:
+        if name == SATURN.name:
             return self.ephemeris["SATURN BARYCENTER"]
-        if name == JUPITER:
+        if name == JUPITER.name:
             return self.ephemeris["JUPITER BARYCENTER"]
         if name == MOON:
             return self.ephemeris["MOON"]
