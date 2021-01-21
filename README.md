@@ -33,7 +33,3 @@ Supported features
 - Install `requirements.txt`
 - When using PyCharm define `./src` as a source folder in project structure
 - First run will take a while to download the astronomical data
-
-`pypy -m ensurepip`
-`pypy3 -mpip install -r requirements.txt`
-
