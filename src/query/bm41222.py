@@ -2,7 +2,7 @@ from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena
 from query.result import PlanetaryEventResult, TargetTime, AngularSeparationResult, AbstractResult
-from query.tablet import AbstractTablet, MultiplexedMonthResult
+from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult
 
 
 class BM41222(AbstractTablet):
@@ -15,7 +15,7 @@ class BM41222(AbstractTablet):
         res2 = AngularSeparationResult(self.db, MERCURY, FIFTY_EIGHT_PISCIUM, 0, 50, None, day4)
         return [res1, res2]
 
-    def shamash_year_14(self, nisan_1: float) -> List[MultiplexedMonthResult]:
+    def shamash_year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_xii = self.db.get_days(months[11])
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_xii, self.shamash_14_xii)
@@ -30,7 +30,7 @@ class BM41222(AbstractTablet):
         res2 = AngularSeparationResult(self.db, MARS, MERCURY, 0, 40, EclipticPosition.AHEAD, day19)
         return [res1, res2]
 
-    def shamash_year_17(self, nisan_1: float) -> List[MultiplexedMonthResult]:
+    def shamash_year_17(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_ii = self.db.get_days(months[1])
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_ii, self.shamash_17_ii)
@@ -43,26 +43,32 @@ class BM41222(AbstractTablet):
         res1 = AngularSeparationResult(self.db, MERCURY, MARS, (2/3 * CUBIT), 1 * CUBIT, EclipticPosition.ABOVE, day4)
         return [res1]
 
-    def shamash_year_19(self, nisan_1: float) -> List[MultiplexedMonthResult]:
+    def shamash_year_19(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_vii = self.db.get_days(months[6])
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_vii, self.shamash_19_vii)
         return [res1]
 
-
-    def query(self):
+    def shamash(self):
         years = self.db.get_years()
-        items = list(years.items())
-        matches = []
+        items = list(map(lambda x: x[1], years.items()))
+        results = []
         for i in range(0, len(years) - 5):
-            y14 = self.repeat_year_with_alternate_starts(items[i][1], self.shamash_year_14)
-            y17 = self.repeat_year_with_alternate_starts(items[i + 3][1], self.shamash_year_17)
-            y19 = self.repeat_year_with_alternate_starts(items[i + 5][1], self.shamash_year_19)
+            y14 = self.repeat_year_with_alternate_starts(items[i], self.shamash_year_14)
+            y17 = self.repeat_year_with_alternate_starts(items[i + 3], self.shamash_year_17)
+            y19 = self.repeat_year_with_alternate_starts(items[i + 5], self.shamash_year_19)
             total_score = sum(item[0].score for item in [y14, y17, y19])
-            matches.append((items[i][1][0]['year'], total_score, [y14, y17, y19]))
-        matches.sort(key=lambda x: x[1], reverse=True)
-        for i in matches:
-            print(i[0], i[1])
+            results.append(MultiyearResult(items[i][0]['year'], total_score, [y14, y17, y19]))
+        self.print_top_results(results, "Shamash-shum-ukin year 14")
+
+    def kandalanu(self):
         pass
 
+    def do_query(self, subquery: Union[str, None]):
+        if subquery == "shamash":
+            self.shamash()
+        elif subquery == "kandalanu":
+            self.kandalanu()
+        else:
+            raise RuntimeError("Please specify a valid subquery for this tablet")
 
