@@ -84,7 +84,7 @@ class Database:
 
     def separations_in_range(self, from_body: str, to_body: str, start_time: float, end_time: float) -> List[Dict]:
         cursor = self.conn.cursor()
-        cursor.execute("""SELECT angle, position FROM separations 
+        cursor.execute("""SELECT angle, position, time FROM separations 
             WHERE from_body=? AND to_body=? AND time >= ? AND time <= ?""",
                        (from_body, to_body, start_time, end_time))
         return self.fetch_all_as_dict(cursor)

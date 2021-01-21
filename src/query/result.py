@@ -1,10 +1,13 @@
+import math
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import *
 
 from constants import Planet
 from data import AstroData
+from generate.angular_separation import EclipticPosition
 from query.database import Database
+from util import jd_float_to_string
 
 
 @dataclass
@@ -15,15 +18,24 @@ class TargetTime:
     end: float
     date: str
 
+    def output(self, data: AstroData) -> dict:
+        return {
+            'start_time': jd_float_to_string(self.start, data.timescale),
+            'end_time': jd_float_to_string(self.end, data.timescale),
+            'nisan_1': jd_float_to_string(self.nisan_1, data.timescale),
+            'date': self.date,
+            'month_started_late': self.month_offset
+        }
+
 
 class AbstractResult(ABC):
 
     @abstractmethod
-    def result_quality(self) -> bool:
+    def quality_score(self) -> float:
         pass
 
     @abstractmethod
-    def print(self, data: AstroData) -> dict:
+    def output(self, data: AstroData) -> dict:
         pass
 
 
@@ -31,34 +43,105 @@ class PlanetaryEventResult(AbstractResult):
 
     def __init__(self, db: Database, planet: Planet, event: str, target_time: TargetTime):
         self.target_time = target_time
+        self.event = event
         self.nearest = db.nearest_event_match_to_time(planet.name, event, target_time.start)
         self.planet = planet
 
-    def result_quality(self) -> bool:
-        if self.nearest > self.target_time.end:
-            return (self.nearest - self.target_time.end) <= self.planet.tolerance_days
-        elif self.nearest < self.target_time.start:
-            return (self.target_time.start - self.nearest) <= self.planet.tolerance_days
-        else:
-            return True
+    @staticmethod
+    def result_function(x: float, cut_off: float) -> float:
+        """
+        An exponential function means the closest will be asymptotically closer to 1,
+        but score will decrease as x approaches the cut_off
+        """
+        return 1 - math.pow((1 + 10 * math.sqrt(cut_off)), x - cut_off)
 
-    def print(self, data: AstroData) -> dict:
-        pass
+    def quality_score(self) -> float:
+        if self.nearest > self.target_time.end:
+            diff = self.nearest - self.target_time.end
+        elif self.nearest < self.target_time.start:
+            diff = self.target_time.start - self.nearest
+        else:
+            return 1.0
+        # The higher the cut_off the more lenient the result is
+        cut_off = 48.0 / self.planet.event_frequency
+        res = self.result_function(diff, cut_off)
+        if res < 0:
+            return 0
+        else:
+            return res
+
+    def output(self, data: AstroData) -> dict:
+        return {
+            'planet': self.planet,
+            'event': self.event,
+            'nearest_time': data.timescale.tt_jd(self.nearest).utc_iso(),
+            'calendar': self.target_time.output(data),
+        }
 
 
 class AngularSeparationResult(AbstractResult):
 
-    def __init__(self, db: Database, from_body: str, to_body: str, min: Union[float, None], max: float,
-                 target_time: TargetTime):
+    def __init__(self, db: Database, from_body: Union[Planet, str], to_body: Union[Planet, str], target_angle: float,
+                 tolerance: float, target_position: Union[EclipticPosition, None], target_time: TargetTime):
+        if type(from_body) == Planet:
+            from_body = from_body.name
+        if type(to_body) == Planet:
+            to_body = to_body.name
         self.target_time = target_time
         self.from_body = from_body
         self.to_body = to_body
-        self.min = min
-        self.max = max
+        self.target_angle = target_angle
+        self.target_position = target_position
+        self.tolerance = tolerance
         sep = db.separations_in_range(from_body, to_body, target_time.start, target_time.end)
+        sep.sort(key=lambda x: abs(x['angle'] - target_angle))
+        if target_position is not None:
+            filtered = list(filter(lambda x: x['angle'] <= tolerance and x['position'] == target_position.value, sep))
+            if len(filtered) > 0:
+                self.best = filtered[0]
+            else:
+                self.best = sep[0]
+        else:
+            self.best = sep[0]
 
-    def result_quality(self) -> bool:
-        pass
+    def result_function(self, x: float) -> float:
+        res = 1 - math.pow((x / (self.tolerance / 2.0)), 2)
+        if res < 0:
+            return 0
+        return res
 
-    def print(self, data: AstroData) -> dict:
-        pass
+    def quality_score(self) -> float:
+        """
+        If angle is within tolerance of the target_angle score 1.0
+        Decreasing score as the angle moves from target_angle+tolerance up to target_angle + (1.5 * tolerance)
+        Correct position adds 2.0 to score
+        """
+        lower_bound = max(self.target_angle - self.tolerance, 0)
+        upper_bound = self.target_angle + self.tolerance
+        actual = self.best['angle']
+        if lower_bound <= actual <= upper_bound:
+            angle_score = 1.0
+        else:
+            diff = min(abs(actual - lower_bound), abs(actual - upper_bound))
+            angle_score = self.result_function(diff)
+        if angle_score == 0:
+            return 0
+        if self.target_position is not None:
+            if self.best['position'] == self.target_position.value:
+                position_score = 1
+            else:
+                position_score = 0
+            return (angle_score * 0.8) + (position_score * 0.2)
+        else:
+            return angle_score
+
+    def output(self, data: AstroData) -> dict:
+        return {
+            'from_body': self.from_body,
+            'to_body': self.to_body,
+            'angle': self.best['angle'],
+            'position': self.best['position'],
+            'at_time': data.timescale.tt_jd(self.best['time']).utc_iso(),
+            'calendar': self.target_time.output(data),
+        }
+

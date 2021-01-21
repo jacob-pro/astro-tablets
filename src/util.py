@@ -3,7 +3,7 @@ import subprocess
 from collections import OrderedDict
 from typing import *
 
-from skyfield.timelib import Time
+from skyfield.timelib import Time, Timescale
 
 
 def diff_mins(t1: Time, t2: Time) -> float:
@@ -65,3 +65,7 @@ def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
         else:
             res[key] = [item]
     return res
+
+
+def jd_float_to_string(time: float, timescale: Timescale) -> float:
+    return timescale.tt_jd(time).utc_iso()

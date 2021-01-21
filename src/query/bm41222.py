@@ -1,6 +1,7 @@
-from data import MERCURY
+from data import *
+from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena
-from query.result import PlanetaryEventResult, TargetTime
+from query.result import PlanetaryEventResult, TargetTime, AngularSeparationResult
 from query.tablet import AbstractTablet
 from typing import *
 
@@ -15,8 +16,10 @@ class BM41222(AbstractTablet):
                 day_4 = month_xii_days[4 + start_offset]
                 time = TargetTime(y['nisan_1'], start_offset + 1, day_4.sunset, day_4.sunrise, "XII 4")
                 res = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF.value, time)
-                if res.result_quality():
-                    print(y['year'])
+                res = AngularSeparationResult(self.db, MERCURY, FIFTY_EIGHT_PISCIUM, 0, 12, None, time)
+
+                if res.quality_score() > 0:
+                    print(y['year'], res.quality_score())
 
     def query(self):
         years = self.db.get_years()
