@@ -12,20 +12,16 @@ from util import jd_float_to_local_time
 
 
 @dataclass
-class TargetTime:
-    nisan_1: float
-    month_offset: int
+class SearchRange:
     start: float
     end: float
     date: str
 
     def output(self, data: AstroData) -> dict:
         return {
-            'start_time': jd_float_to_local_time(self.start, data.timescale),
-            'end_time': jd_float_to_local_time(self.end, data.timescale),
-            'nisan_1': jd_float_to_local_time(self.nisan_1, data.timescale),
+            'search_start': jd_float_to_local_time(self.start, data.timescale),
+            'search_end': jd_float_to_local_time(self.end, data.timescale),
             'date': self.date,
-            'month_started_late': self.month_offset
         }
 
 
@@ -43,7 +39,7 @@ class AbstractResult(ABC):
 class PlanetaryEventResult(AbstractResult):
 
     def __init__(self, db: Database, planet: Planet, event: Union[InnerPlanetPhenomena, OuterPlanetPhenomena],
-                 target_time: TargetTime):
+                 target_time: SearchRange):
         self.target_time = target_time
         self.event = event
         self.nearest = db.nearest_event_match_to_time(planet.name, event.value, target_time.start)
@@ -85,7 +81,7 @@ class PlanetaryEventResult(AbstractResult):
 class AngularSeparationResult(AbstractResult):
 
     def __init__(self, db: Database, from_body: Union[Planet, str], to_body: Union[Planet, str], target_angle: float,
-                 tolerance: float, target_position: Union[EclipticPosition, None], target_time: TargetTime):
+                 tolerance: float, target_position: Union[EclipticPosition, None], target_time: SearchRange):
         if type(from_body) == Planet:
             from_body = from_body.name
         if type(to_body) == Planet:

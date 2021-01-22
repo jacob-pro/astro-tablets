@@ -16,12 +16,17 @@ from util import jd_float_to_local_time
 class PotentialMonthResult:
     score: float
     name: str
-    report: List[Dict]
+    actual_month: int
+    month_sunset_1: str
+    first_visibility: str
+    days_late: int
+    observations: List[Dict]
 
 
 @dataclass
 class PotentialYearResult:
     score: float
+    name: str
     nisan_1: str
     vernal_equinox: str
     months: List[PotentialMonthResult]
@@ -51,22 +56,27 @@ class AbstractTablet(ABC):
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         pass
 
-    def repeat_month_with_alternate_starts(self, nisan_1: float, month_days: List[BabylonianDay], name: str,
-                                           func: Callable[[List, int, float], List[AbstractResult]]
+    def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int, name: str,
+                                           func: Callable[[List[BabylonianDay]], List[AbstractResult]]
                                            ) -> PotentialMonthResult:
+        assert 1 <= month_number <= 13
+        months = self.db.get_months(nisan_1)
+        month_days = self.db.get_days(months[month_number - 1])
         all_results = []
         for start_offset in range(0, 2):
-            results = func(month_days[start_offset:], start_offset, nisan_1)
+            results = func(month_days[start_offset:])
             score = sum(item.quality_score() for item in results)
             output = list(map(lambda x:
                               dict(chain.from_iterable(d.items() for d in
                                                        [x.output(self.data), {'score': x.quality_score()}]
                                                        )), results))
-            all_results.append(PotentialMonthResult(score, name, output))
+            sunset_one = jd_float_to_local_time(month_days[start_offset].sunset, self.data.timescale)
+            first_vis = jd_float_to_local_time(month_days[0].sunset, self.data.timescale)
+            all_results.append(PotentialMonthResult(score, name, month_number, sunset_one, first_vis, start_offset, output))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return all_results[0]
 
-    def repeat_year_with_alternate_starts(self, potential_years: List[Dict],
+    def repeat_year_with_alternate_starts(self, potential_years: List[Dict], name: str,
                                            func: Callable[[float], List[PotentialMonthResult]]
                                            ) -> List[PotentialYearResult]:
         all_results = []
@@ -75,7 +85,7 @@ class AbstractTablet(ABC):
             total_score = sum(item.score for item in results)
             vernal = self.db.nearest_event_match_to_time(SUN, VERNAL_EQUINOX, y['nisan_1'])
             all_results.append(
-                PotentialYearResult(total_score, jd_float_to_local_time(y['nisan_1'], self.data.timescale),
+                PotentialYearResult(total_score, name, jd_float_to_local_time(y['nisan_1'], self.data.timescale),
                                     jd_float_to_local_time(vernal, self.data.timescale), results))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return all_results
