@@ -20,7 +20,7 @@ class BM41222(AbstractTablet):
     def shamash_year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_xii = self.db.get_days(months[11])
-        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_xii, self.shamash_14_xii)
+        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_xii, "Year 14 XII", self.shamash_14_xii)
         return [res1]
 
 
@@ -35,7 +35,7 @@ class BM41222(AbstractTablet):
     def shamash_year_17(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_ii = self.db.get_days(months[1])
-        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_ii, self.shamash_17_ii)
+        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_ii, "Year 17 II", self.shamash_17_ii)
         return [res1]
 
 
@@ -48,7 +48,7 @@ class BM41222(AbstractTablet):
     def shamash_year_19(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_vii = self.db.get_days(months[6])
-        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_vii, self.shamash_19_vii)
+        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_vii, "Year 19 VII", self.shamash_19_vii)
         return [res1]
 
     def shamash(self, years: List) -> List[MultiyearResult]:
@@ -72,7 +72,7 @@ class BM41222(AbstractTablet):
     def kand_year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_iii = self.db.get_days(months[2])
-        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_iii, self.kand_1_iii)
+        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_iii, "Year 1 III", self.kand_1_iii)
         return [res1]
 
 
@@ -87,7 +87,7 @@ class BM41222(AbstractTablet):
     def kand_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_i = self.db.get_days(months[0])
-        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_i, self.kand_12_i)
+        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_i, "Year 12 I", self.kand_12_i)
         return [res1]
 
 
@@ -100,7 +100,7 @@ class BM41222(AbstractTablet):
     def kand_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
         month_iii = self.db.get_days(months[2])
-        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_iii, self.kand_16_iii)
+        res1 = self.repeat_month_with_alternate_starts(nisan_1, month_iii, "Year 16 III", self.kand_16_iii)
         return [res1]
 
     def kandalanu(self, years: List) -> List[MultiyearResult]:
@@ -125,8 +125,8 @@ class BM41222(AbstractTablet):
         months = self.db.get_months(nisan_1)
         attempts = []
         for m in months:
-            attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), self.nabo_7_unknown))
-        attempts.sort(key=lambda x: x.score, reverse=True)
+            attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), "Year 7 ?", self.nabo_7_unknown))
+        attempts.sort(key=lambda x: x.best_score, reverse=True)
         return attempts[:1]
 
 
@@ -144,8 +144,8 @@ class BM41222(AbstractTablet):
 
     def nabo_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
-        iv = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[3]), self.nabo_12_iv)
-        vi = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[5]), self.nabo_12_vi)
+        iv = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[3]), "Year 12 IV", self.nabo_12_iv)
+        vi = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[5]), "Year 12 VI", self.nabo_12_vi)
         return [iv, vi]
 
 
@@ -163,8 +163,8 @@ class BM41222(AbstractTablet):
 
     def nabo_year_13(self, nisan_1: float) -> List[PotentialMonthResult]:
         months = self.db.get_months(nisan_1)
-        iii = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[2]), self.nabo_13_iii)
-        v = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[4]), self.nabo_13_v)
+        iii = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[2]), "Year 13 III", self.nabo_13_iii)
+        v = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[4]), "Year 13 V", self.nabo_13_v)
         return [iii, v]
 
 

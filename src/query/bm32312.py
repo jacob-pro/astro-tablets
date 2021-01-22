@@ -50,8 +50,8 @@ class BM32312(AbstractTablet):
         month_a_attempts = []
         month_b_attempts = []
         for m in months:
-            month_a_attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), self.month_a))
-            month_b_attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), self.month_b))
+            month_a_attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), "Month A (Probably I)", self.month_a))
+            month_b_attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), "Month B", self.month_b))
         month_a_attempts.sort(key=lambda x: x.score, reverse=True)
         month_b_attempts.sort(key=lambda x: x.score, reverse=True)
         return [month_a_attempts[0], month_b_attempts[0]]
