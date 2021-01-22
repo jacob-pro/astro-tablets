@@ -53,7 +53,10 @@ class BM41222(AbstractTablet):
         day28 = SearchRange.for_night(month, 28)
         # Mercury was in the back of Mars?
         res1 = AngularSeparationResult(self.db, MERCURY, MARS, 0, 30, EclipticPosition.BEHIND, day28)
-        return [res1]
+        day29 = SearchRange.for_night(month, 29)
+        # Mercury in the area of the Lion
+        res2 = AngularSeparationResult(self.db, MERCURY, LEO.central_star, 0, LEO.radius, None, day29)
+        return [res1, res2]
 
     def kand_year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 3, "Year 1 III", self.kand_1_iii)
@@ -176,5 +179,3 @@ class BM41222(AbstractTablet):
             self.print_results(res, "Shamash-shum-ukin year 14 to Nabopolassar (assuming reigns of 20, and 22)")
 
         self.output_json_for_year(res, print_year)
-
-
