@@ -3,6 +3,7 @@ import json
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import *
+from itertools import chain
 
 from data import AstroData
 from query.database import Database, BabylonianDay
@@ -19,7 +20,7 @@ class PotentialMonthResult:
 @dataclass
 class PotentialYearResult:
     score: float
-    nisan_1: float
+    nisan_1: str
     months: List[PotentialMonthResult]
 
 
@@ -54,7 +55,10 @@ class AbstractTablet(ABC):
         for start_offset in range(0, 2):
             results = func(month[start_offset:], start_offset, nisan_1)
             score = sum(item.quality_score() for item in results)
-            output = list(map(lambda x: x.output(self.data), results))
+            output = list(map(lambda x:
+                              dict(chain.from_iterable(d.items() for d in
+                                                       [x.output(self.data), {'score': x.quality_score()}]
+                                                       )), results))
             all_results.append(PotentialMonthResult(score, output))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return all_results[0]

@@ -55,6 +55,8 @@ class PlanetaryEventResult(AbstractResult):
         An exponential function means the closest will be asymptotically closer to 1,
         but score will decrease as x approaches the cut_off
         """
+        if x > cut_off:
+            return 0
         return 1 - math.pow((1 + 10 * math.sqrt(cut_off)), x - cut_off)
 
     def quality_score(self) -> float:
