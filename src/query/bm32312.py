@@ -46,7 +46,7 @@ class BM32312(AbstractTablet):
         return res
 
     def shamash_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
-        months = self.db.get_months(nisan_1, count=13)
+        months = self.db.get_months(nisan_1)
         month_a_attempts = []
         month_b_attempts = []
         for m in months:
@@ -61,8 +61,7 @@ class BM32312(AbstractTablet):
         year_items = list(map(lambda x: x[1], years.items()))
         results = []
         for y in year_items:
-            y16 = self.shamash_year_16(y[0]['nisan_1'])
-            total_score = sum(item[0].score for item in [y16])
-            results.append(MultiyearResult(y[0]['year'], total_score, [y16]))
+            y16 = self.repeat_year_with_alternate_starts(y, self.shamash_year_16)
+            results.append(MultiyearResult(y[0]['year'], y16[0].score, [y16]))
         self.print_top_results(results, "Shamash-shum-ukin year 16")
         self.output_results_for_year(results, print_year)

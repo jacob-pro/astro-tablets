@@ -48,6 +48,8 @@ class PlanetaryEventResult(AbstractResult):
         self.event = event
         self.nearest = db.nearest_event_match_to_time(planet.name, event.value, target_time.start)
         self.planet = planet
+        if self.nearest is None:
+            raise RuntimeError("Failed to find any event {} for {} - check the database".format(event, planet.name))
 
     @staticmethod
     def result_function(x: float, cut_off: float) -> float:
@@ -95,6 +97,9 @@ class AngularSeparationResult(AbstractResult):
         self.target_position = target_position
         self.tolerance = tolerance
         sep = db.separations_in_range(from_body, to_body, target_time.start, target_time.end)
+        if len(sep) < 1:
+            raise RuntimeError("Failed to find any separations between {} and {} at {} to {}"
+                               .format(from_body, to_body, target_time.start, target_time.end))
         sep.sort(key=lambda x: abs(x['angle'] - target_angle))
         if target_position is not None:
             filtered = list(filter(lambda x: x['angle'] <= tolerance and x['position'] == target_position.value, sep))

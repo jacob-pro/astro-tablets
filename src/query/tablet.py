@@ -63,7 +63,7 @@ class AbstractTablet(ABC):
         all_results.sort(key=lambda x: x.score, reverse=True)
         return all_results[0]
 
-    def repeat_year_with_alternate_starts(self, potential_years: List,
+    def repeat_year_with_alternate_starts(self, potential_years: List[Dict],
                                            func: Callable[[float], List[PotentialMonthResult]]
                                            ) -> List[PotentialYearResult]:
         all_results = []
