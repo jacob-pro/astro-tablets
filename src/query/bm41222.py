@@ -11,7 +11,7 @@ class BM41222(AbstractTablet):
     ## Shamash-shum-ukin
 
     def shamash_14_xii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day4 = SearchRange(month[3].sunset, month[3].sunrise, "4th")
+        day4 = SearchRange.for_night(month, 4)
         # Mercury's first appearance in the west
         res1 = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF, day4)
         # in the area of the Swallow.
@@ -24,7 +24,7 @@ class BM41222(AbstractTablet):
 
 
     def shamash_17_ii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day19 = SearchRange(month[18].sunset, month[18].sunrise, "19th")
+        day19 = SearchRange.for_night(month, 19)
         # mars was in [the area?] of the Old Man
         res1 = AngularSeparationResult(self.db, MARS, PERSEUS.central_star, 0, PERSEUS.radius, None, day19)
         # to the right of Mercury
@@ -37,7 +37,7 @@ class BM41222(AbstractTablet):
 
 
     def shamash_19_vii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day4 = SearchRange(month[3].sunset, month[3].sunrise, "4th")
+        day4 = SearchRange.for_night(month, 4)
         # Mercury stood for ⅔ cubit above? Mars
         res1 = AngularSeparationResult(self.db, MERCURY, MARS, (2/3 * CUBIT), 1 * CUBIT, EclipticPosition.ABOVE, day4)
         return [res1]
@@ -59,7 +59,7 @@ class BM41222(AbstractTablet):
     ## Kandalanu
 
     def kand_1_iii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day28 = SearchRange(month[27].sunset, month[27].sunrise, "28th")
+        day28 = SearchRange.for_night(month, 28)
         # Mercury was in the back of Mars?
         res1 = AngularSeparationResult(self.db, MERCURY, MARS, 0, 30, EclipticPosition.BEHIND, day28)
         return [res1]
@@ -70,7 +70,7 @@ class BM41222(AbstractTablet):
 
 
     def kand_12_i(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day8 = SearchRange(month[7].sunset, month[7].sunrise, "8th")
+        day8 = SearchRange.for_night(month, 8)
         # Mercury, in the area of Pleiades
         res1 = AngularSeparationResult(self.db, MERCURY, ALCYONE, 0, 10, None, day8)
         # Mercury was 2 ⅔ cubits above? Mars?
@@ -83,7 +83,7 @@ class BM41222(AbstractTablet):
 
 
     def kand_16_iii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day20 = SearchRange(month[19].sunset, month[19].sunrise, "20th")
+        day20 = SearchRange.for_night(month, 20)
         # Mercury stood 1 cubit 4 fingers behind Mars.
         res1 = AngularSeparationResult(self.db, MERCURY, MARS, (1 * CUBIT + 4 * FINGER), 1 * CUBIT, EclipticPosition.BEHIND, day20)
         return [res1]
@@ -105,9 +105,9 @@ class BM41222(AbstractTablet):
     # Nabopolassar
 
     def nabo_7_unknown(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day = SearchRange(month[0].sunset, month[30].sunrise, "?")
+        range = SearchRange(month[0].sunset, month[29].sunrise, "Unknown day")
         # Mercury was balanced 6 fingers above Mars.
-        res1 = AngularSeparationResult(self.db, MERCURY, MARS, 6 * FINGER, 6 * FINGER, EclipticPosition.ABOVE, day)
+        res1 = AngularSeparationResult(self.db, MERCURY, MARS, 6 * FINGER, 6 * FINGER, EclipticPosition.ABOVE, range)
         return [res1]
 
     def nabo_year_7(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -119,15 +119,15 @@ class BM41222(AbstractTablet):
 
 
     def nabo_12_iv(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day = SearchRange(month[17].sunset, month[17].sunrise, "18th")
+        day18 = SearchRange.for_night(month, 18)
         # Mars was with Pleiades
-        res1 = AngularSeparationResult(self.db, MARS, ALCYONE, 0, 10, None, day)
+        res1 = AngularSeparationResult(self.db, MARS, ALCYONE, 0, 10, None, day18)
         return [res1]
 
     def nabo_12_vi(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day = SearchRange(month[12].sunset, month[12].sunrise, "13th")
+        day13 = SearchRange.for_night(month, 13)
         # Mars was ⅔ cubit above the Chariot
-        res1 = AngularSeparationResult(self.db, MARS, AURIGA.central_star, 0, AURIGA.radius, None, day)
+        res1 = AngularSeparationResult(self.db, MARS, AURIGA.central_star, 0, AURIGA.radius, None, day13)
         return [res1]
 
     def nabo_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -137,15 +137,15 @@ class BM41222(AbstractTablet):
 
 
     def nabo_13_iii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day = SearchRange(month[0].sunset, month[0].sunrise, "1st")
+        day1 = SearchRange.for_night(month, 1)
         # Mars was [....] above α Leonis.
-        res1 = AngularSeparationResult(self.db, MARS, REGULUS, 0, 20, EclipticPosition.ABOVE, day)
+        res1 = AngularSeparationResult(self.db, MARS, REGULUS, 0, 20, EclipticPosition.ABOVE, day1)
         return [res1]
 
     def nabo_13_v(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day = SearchRange(month[2].sunset, month[2].sunrise, "3rd")
+        day3 = SearchRange.for_night(month, 3)
         # Mars ... it was with β Virginis
-        res1 = AngularSeparationResult(self.db, MARS, BETA_VIRGINIS, 0, 10, None, day)
+        res1 = AngularSeparationResult(self.db, MARS, BETA_VIRGINIS, 0, 10, None, day3)
         return [res1]
 
     def nabo_year_13(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -170,13 +170,13 @@ class BM41222(AbstractTablet):
         year_items = list(map(lambda x: x[1], years.items()))
         if subquery == "shamash":
             res = self.shamash(year_items)
-            self.print_top_results(res, "Shamash-shum-ukin year 14")
+            self.print_results(res, "Shamash-shum-ukin year 14")
         elif subquery == "kandalanu":
             res = self.kandalanu(year_items)
-            self.print_top_results(res, "Kandalanu year 1")
+            self.print_results(res, "Kandalanu year 1")
         elif subquery == "nabopolassar":
             res = self.nabopolassar(year_items)
-            self.print_top_results(res, "Nabopolassar year 7")
+            self.print_results(res, "Nabopolassar year 7")
         else:
             raise RuntimeError("Please specify a valid subquery for this tablet")
         self.output_results_for_year(res, print_year)

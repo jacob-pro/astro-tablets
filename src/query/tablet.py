@@ -3,7 +3,6 @@ import json
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import *
-from itertools import chain
 
 from data import AstroData, SUN
 from generate.lunar_calendar import VERNAL_EQUINOX
@@ -67,9 +66,10 @@ class AbstractTablet(ABC):
             results = func(month_days[start_offset:])
             score = sum(item.quality_score() for item in results)
             output = list(map(lambda x:
-                              dict(chain.from_iterable(d.items() for d in
-                                                       [x.output(self.data), {'score': x.quality_score()}]
-                                                       )), results))
+                              {**x.output(self.data.timescale),
+                               **{'score': x.quality_score()},
+                               **x.get_search_range().output(self.data.timescale)
+                               }, results))
             sunset_one = jd_float_to_local_time(month_days[start_offset].sunset, self.data.timescale)
             first_vis = jd_float_to_local_time(month_days[0].sunset, self.data.timescale)
             all_results.append(PotentialMonthResult(score, name, month_number, sunset_one, first_vis, start_offset, output))
@@ -91,11 +91,11 @@ class AbstractTablet(ABC):
         return all_results
 
     @staticmethod
-    def print_top_results(results: List[MultiyearResult], for_comment: str):
+    def print_results(results: List[MultiyearResult], for_comment: str):
         results.sort(key=lambda x: x.best_score, reverse=True)
-        print("Top matches for {}".format(for_comment))
+        print("Scores for {}".format(for_comment))
         print("Year   Score")
-        for i in results[:10]:
+        for i in results:
             print(i.base_year, i.best_score)
 
     @staticmethod

@@ -10,7 +10,7 @@ class BM32312(AbstractTablet):
 
     def month_a(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         res = []
-        day14 = SearchRange(month[13].sunset, month[13].sunrise, "14th")
+        day14 = SearchRange.for_night(month, 14)
         # Mercury's last appearance in the east behind Pisces
         res.append(PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.ML, day14))
         res.append(AngularSeparationResult(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day14))
@@ -18,7 +18,7 @@ class BM32312(AbstractTablet):
         res.append(PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, day14))
         res.append(AngularSeparationResult(self.db, SATURN, PISCES.central_star, 0, PISCES.radius, EclipticPosition.BEHIND, day14))
 
-        day17 = SearchRange(month[16].sunset, month[16].sunrise, "17th")
+        day17 = SearchRange.for_night(month, 17)
         # Mars became stationary
         res.append(PlanetaryEventResult(self.db, MARS, OuterPlanetPhenomena.ST, day17))
         # it came close to the bright star of the Scorpion's head
@@ -28,17 +28,17 @@ class BM32312(AbstractTablet):
 
     def month_b(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         res = []
-        day5 = SearchRange(month[4].sunset, month[4].sunrise, "5th")
+        day5 = SearchRange.for_night(month, 5)
         # Mercury's first appearance in the east in Pisces
         res.append(PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.MF, day5))
         res.append(AngularSeparationResult(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day5))
 
-        day19 = SearchRange(month[18].sunset, month[18].sunrise, "19th")
+        day19 = SearchRange.for_night(month, 19)
         # Venus stood in the region of Aries, 10 fingers behind Mars
         res.append(AngularSeparationResult(self.db, VENUS, MARS, 10 * FINGER, 10 * FINGER, EclipticPosition.BEHIND, day19))
         res.append(AngularSeparationResult(self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day19))
 
-        day20 = SearchRange(month[19].sunset, month[19].sunrise, "20th")
+        day20 = SearchRange.for_night(month, 20)
         # Mars was 1 finger to the left of the front? of Aries
         res.append(AngularSeparationResult(self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day20))
 
@@ -61,5 +61,5 @@ class BM32312(AbstractTablet):
         for y in year_items:
             y16 = self.repeat_year_with_alternate_starts(y, "Shamash-shum-ukin 16", self.shamash_year_16)
             results.append(MultiyearResult(y[0]['year'], y16[0].score, [y16]))
-        self.print_top_results(results, "Shamash-shum-ukin year 16")
+        self.print_results(results, "Shamash-shum-ukin year 16")
         self.output_results_for_year(results, print_year)

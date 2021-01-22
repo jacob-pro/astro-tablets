@@ -3,26 +3,35 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import *
 
+import inflect
+from skyfield.timelib import Timescale
+
 from constants import Planet
-from data import AstroData
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
-from query.database import Database
+from query.database import Database, BabylonianDay
 from util import jd_float_to_local_time
 
+p = inflect.engine()
 
 @dataclass
 class SearchRange:
     start: float
     end: float
-    date: str
+    comment: str
 
-    def output(self, data: AstroData) -> dict:
+    def output(self, ts: Timescale) -> dict:
         return {
-            'search_start': jd_float_to_local_time(self.start, data.timescale),
-            'search_end': jd_float_to_local_time(self.end, data.timescale),
-            'date': self.date,
+            'search_start': jd_float_to_local_time(self.start, ts),
+            'search_end': jd_float_to_local_time(self.end, ts),
+            'date': self.comment,
         }
+
+    @staticmethod
+    def for_night(month: List[BabylonianDay], day_number: int):
+        assert 1 <= day_number <= 30
+        return SearchRange(month[day_number - 1].sunset, month[day_number - 1].sunrise,
+                           "Night of the {}".format(p.ordinal(day_number)))
 
 
 class AbstractResult(ABC):
@@ -32,7 +41,11 @@ class AbstractResult(ABC):
         pass
 
     @abstractmethod
-    def output(self, data: AstroData) -> dict:
+    def output(self, ts: Timescale) -> dict:
+        pass
+
+    @abstractmethod
+    def get_search_range(self) -> SearchRange:
         pass
 
 
@@ -45,7 +58,10 @@ class PlanetaryEventResult(AbstractResult):
         self.nearest = db.nearest_event_match_to_time(planet.name, event.value, target_time.start)
         self.planet = planet
         if self.nearest is None:
-            raise RuntimeError("Failed to find any event {} for {} - check the database".format(event, planet.name))
+            raise RuntimeError("Failed to find any event {} for {} - check database".format(event, planet.name))
+
+    def get_search_range(self) -> SearchRange:
+        return self.target_time
 
     @staticmethod
     def result_function(x: float, cut_off: float) -> float:
@@ -69,12 +85,11 @@ class PlanetaryEventResult(AbstractResult):
         res = self.result_function(diff, cut_off)
         return max(res, 0)
 
-    def output(self, data: AstroData) -> dict:
+    def output(self, ts: Timescale) -> dict:
         return {
             'planet': self.planet.name,
             'event': self.event.value,
-            'nearest_time': jd_float_to_local_time(self.nearest, data.timescale),
-            'calendar': self.target_time.output(data),
+            'nearest_time': jd_float_to_local_time(self.nearest, ts),
         }
 
 
@@ -94,7 +109,7 @@ class AngularSeparationResult(AbstractResult):
         self.tolerance = tolerance
         sep = db.separations_in_range(from_body, to_body, target_time.start, target_time.end)
         if len(sep) < 1:
-            raise RuntimeError("Failed to find any separations between {} and {} at {} to {}"
+            raise RuntimeError("Failed to find any separations between {} and {} at {} to {}, check database"
                                .format(from_body, to_body, target_time.start, target_time.end))
         sep.sort(key=lambda x: abs(x['angle'] - target_angle))
         if target_position is not None:
@@ -105,6 +120,9 @@ class AngularSeparationResult(AbstractResult):
                 self.best = sep[0]
         else:
             self.best = sep[0]
+
+    def get_search_range(self) -> SearchRange:
+        return self.target_time
 
     def result_function(self, x: float) -> float:
         res = 1 - math.pow((x / (self.tolerance / 2.0)), 2)
@@ -135,13 +153,11 @@ class AngularSeparationResult(AbstractResult):
         else:
             return angle_score
 
-    def output(self, data: AstroData) -> dict:
+    def output(self, ts: Timescale) -> dict:
         return {
             'from_body': self.from_body,
             'to_body': self.to_body,
             'angle': self.best['angle'],
             'position': self.best['position'],
-            'at_time': jd_float_to_local_time(self.best['time'], data.timescale),
-            'calendar': self.target_time.output(data),
+            'at_time': jd_float_to_local_time(self.best['time'], ts),
         }
-
