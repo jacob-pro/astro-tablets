@@ -10,4 +10,4 @@ VOLUME /astro-tablets/generated
 VOLUME /astro-tablets/skyfield-data
 ENV GIT_HASH=$GIT_HASH
 ENV GIT_MODIFIED=$GIT_MODIFIED
-ENTRYPOINT ["pypy3", "./src/main.py"]
+ENTRYPOINT ["python", "./src/main.py"]
