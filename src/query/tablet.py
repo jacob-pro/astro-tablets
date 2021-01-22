@@ -35,7 +35,7 @@ class PotentialYearResult:
 class MultiyearResult:
     base_year: float
     best_score: float
-    potential_years: List
+    potential_years: List[List[PotentialYearResult]]
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):
@@ -43,6 +43,13 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         if dataclasses.is_dataclass(o):
             return dataclasses.asdict(o)
         return super().default(o)
+
+
+@dataclass
+class YearToTest:
+    index: int
+    name: str
+    func: Callable
 
 
 class AbstractTablet(ABC):
@@ -104,3 +111,16 @@ class AbstractTablet(ABC):
         if len(filtered) > 0:
             with open('result_for_{}.json'.format(year), 'w') as outfile:
                 json.dump(filtered[0], outfile, indent=2, cls=EnhancedJSONEncoder)
+
+    def run_years(self, ys: List[YearToTest]) -> List[MultiyearResult]:
+        years = list(map(lambda x: x[1], self.db.get_years().items()))
+        results = []
+        max_index = max(d.index for d in ys)
+        assert ys[0].index == 0, "First index must be 0"
+        for i in range(0, len(years) - max_index):
+            rys = []
+            for x in ys:
+                rys.append(self.repeat_year_with_alternate_starts(years[i + x.index], x.name, x.func))
+            total_score = sum(item[0].score for item in rys)
+            results.append(MultiyearResult(years[i][0]['year'], total_score, rys))
+        return results

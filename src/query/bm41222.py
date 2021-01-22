@@ -3,7 +3,7 @@ from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena
 from query.database import BabylonianDay
 from query.result import PlanetaryEventResult, SearchRange, AngularSeparationResult, AbstractResult
-from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult
+from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult, YearToTest
 
 
 class BM41222(AbstractTablet):
@@ -46,15 +46,6 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 7, "Year 19 VII", self.shamash_19_vii)
         return [res1]
 
-    def shamash(self, years: List) -> List[MultiyearResult]:
-        results = []
-        for i in range(0, len(years) - 5):
-            y14 = self.repeat_year_with_alternate_starts(years[i], "Shamash-shum-ukin 14", self.shamash_year_14)
-            y17 = self.repeat_year_with_alternate_starts(years[i + 3], "Shamash-shum-ukin 17", self.shamash_year_17)
-            y19 = self.repeat_year_with_alternate_starts(years[i + 5], "Shamash-shum-ukin 19", self.shamash_year_19)
-            total_score = sum(item[0].score for item in [y14, y17, y19])
-            results.append(MultiyearResult(years[i][0]['year'], total_score, [y14, y17, y19]))
-        return results
 
     ## Kandalanu
 
@@ -92,15 +83,6 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 3, "Year 16 III", self.kand_16_iii)
         return [res1]
 
-    def kandalanu(self, years: List) -> List[MultiyearResult]:
-        results = []
-        for i in range(0, len(years) - 15):
-            y1 = self.repeat_year_with_alternate_starts(years[i], "Kanalanu 1", self.kand_year_1)
-            y12 = self.repeat_year_with_alternate_starts(years[i + 11], "Kanalanu 15", self.kand_year_12)
-            y16 = self.repeat_year_with_alternate_starts(years[i + 15], "Kanalanu 16", self.kand_year_16)
-            total_score = sum(item[0].score for item in [y1, y12, y16])
-            results.append(MultiyearResult(years[i][0]['year'], total_score, [y1, y12, y16]))
-        return results
 
     # Nabopolassar
 
@@ -153,32 +135,47 @@ class BM41222(AbstractTablet):
         v = self.repeat_month_with_alternate_starts(nisan_1, 5, "Year 13 V", self.nabo_13_v)
         return [iii, v]
 
-
-    def nabopolassar(self, years: List) -> List[MultiyearResult]:
-        results = []
-        for i in range(0, len(years) - 6):
-            y7 = self.repeat_year_with_alternate_starts(years[i], "Nabopolassar 7", self.nabo_year_7)
-            y12 = self.repeat_year_with_alternate_starts(years[i + 5], "Nabopolassar 12", self.nabo_year_12)
-            y13 = self.repeat_year_with_alternate_starts(years[i + 6], "Nabopolassar 13", self.nabo_year_13)
-            total_score = sum(item[0].score for item in [y7, y12, y13])
-            results.append(MultiyearResult(years[i][0]['year'], total_score, [y7, y12, y13]))
-        return results
-
-
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
-        years = self.db.get_years()
-        year_items = list(map(lambda x: x[1], years.items()))
-        if subquery == "shamash":
-            res = self.shamash(year_items)
-            self.print_results(res, "Shamash-shum-ukin year 14")
-        elif subquery == "kandalanu":
-            res = self.kandalanu(year_items)
-            self.print_results(res, "Kandalanu year 1")
-        elif subquery == "nabopolassar":
-            res = self.nabopolassar(year_items)
-            self.print_results(res, "Nabopolassar year 7")
+
+        if subquery is not None:
+
+            if subquery == "shamash":
+                tests = [YearToTest(0, "Shamash-shum-ukin 14", self.shamash_year_14),
+                         YearToTest(3, "Shamash-shum-ukin 17", self.shamash_year_17),
+                         YearToTest(5, "Shamash-shum-ukin 19", self.shamash_year_19)]
+                res = self.run_years(tests)
+                self.print_results(res, "Shamash-shum-ukin year 14")
+
+            elif subquery == "kandalanu":
+                tests = [YearToTest(0, "Kanalanu 1", self.kand_year_1),
+                         YearToTest(11, "Kanalanu 12", self.kand_year_12),
+                         YearToTest(15, "Kanalanu 16", self.kand_year_16)]
+                res = self.run_years(tests)
+                self.print_results(res, "Kandalanu year 1")
+
+            elif subquery == "nabopolassar":
+                tests = [YearToTest(0, "Nabopolassar 7", self.nabo_year_7),
+                         YearToTest(5, "Nabopolassar 12", self.nabo_year_12),
+                         YearToTest(6, "Nabopolassar 13", self.nabo_year_13)]
+                res = self.run_years(tests)
+                self.print_results(res, "Nabopolassar year 7")
+
+            else:
+                raise RuntimeError("Please specify a valid subquery for this tablet")
+
         else:
-            raise RuntimeError("Please specify a valid subquery for this tablet")
+            tests = [YearToTest(0, "Shamash-shum-ukin 14", self.shamash_year_14),
+                     YearToTest(3, "Shamash-shum-ukin 17", self.shamash_year_17),
+                     YearToTest(5, "Shamash-shum-ukin 19", self.shamash_year_19),
+                     YearToTest(7, "Kanalanu 1", self.kand_year_1),
+                     YearToTest(18, "Kanalanu 12", self.kand_year_12),
+                     YearToTest(22, "Kanalanu 16", self.kand_year_16),
+                     YearToTest(35, "Nabopolassar 7", self.nabo_year_7),
+                     YearToTest(40, "Nabopolassar 12", self.nabo_year_12),
+                     YearToTest(41, "Nabopolassar 13", self.nabo_year_13)]
+            res = self.run_years(tests)
+            self.print_results(res, "Shamash-shum-ukin year 14 to Nabopolassar (assuming reigns of 20, and 22)")
+
         self.output_results_for_year(res, print_year)
 
 
