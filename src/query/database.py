@@ -31,7 +31,7 @@ class Database:
         @param month_sunset_1: The time of sunset on the first day of the month
         """
         cursor = self.conn.cursor()
-        cursor.execute("SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 31",
+        cursor.execute("SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 32",
                        (month_sunset_1,))
         res = cursor.fetchall()
         res = list(map(lambda x: BabylonianDay(*x), res))

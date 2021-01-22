@@ -7,6 +7,8 @@ from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult
 
 class BM41222(AbstractTablet):
 
+    ## Shamash-shum-ukin
+
     def shamash_14_xii(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
         day4 = TargetTime(nisan_1, days_late, month[3].sunset, month[3].sunrise, "XII/4")
         # Mercury's first appearance in the west
@@ -62,7 +64,7 @@ class BM41222(AbstractTablet):
         self.print_top_results(results, "Shamash-shum-ukin year 14")
         self.output_results_for_year(results, print_year)
 
-
+    ## Kandalanu
 
     def kand_1_iii(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
         day28 = TargetTime(nisan_1, days_late, month[27].sunset, month[27].sunrise, "III/28")
@@ -117,12 +119,83 @@ class BM41222(AbstractTablet):
         self.print_top_results(results, "Kandalanu year 1")
         self.output_results_for_year(results, print_year)
 
+    # Nabopolassar
+
+    def nabo_7_unknown(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
+        day = TargetTime(nisan_1, days_late, month[0].sunset, month[30].sunrise, "Year 7 ?/?")
+        # Mercury was balanced 6 fingers above Mars.
+        res1 = AngularSeparationResult(self.db, MERCURY, MARS, 6 * FINGER, 6 * FINGER, EclipticPosition.ABOVE, day)
+        return [res1]
+
+    def nabo_year_7(self, nisan_1: float) -> List[PotentialMonthResult]:
+        months = self.db.get_months(nisan_1)
+        attempts = []
+        for m in months:
+            attempts.append(self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(m), self.nabo_7_unknown))
+        attempts.sort(key=lambda x: x.score, reverse=True)
+        return attempts[:1]
+
+
+    def nabo_12_iv(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
+        day = TargetTime(nisan_1, days_late, month[17].sunset, month[17].sunrise, "IV/18")
+        # Mars was with Pleiades
+        res1 = AngularSeparationResult(self.db, MARS, ALCYONE, 0, 10, None, day)
+        return [res1]
+
+    def nabo_12_vi(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
+        day = TargetTime(nisan_1, days_late, month[12].sunset, month[12].sunrise, "VI/13")
+        # Mars was ⅔ cubit above the Chariot
+        res1 = AngularSeparationResult(self.db, MARS, AURIGA.central_star, 0, AURIGA.radius, None, day)
+        return [res1]
+
+    def nabo_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
+        months = self.db.get_months(nisan_1)
+        iv = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[3]), self.nabo_12_iv)
+        vi = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[5]), self.nabo_12_vi)
+        return [iv, vi]
+
+
+    def nabo_13_iii(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
+        day = TargetTime(nisan_1, days_late, month[0].sunset, month[0].sunrise, "III/1")
+        # Mars was [....] above α Leonis.
+        res1 = AngularSeparationResult(self.db, MARS, REGULUS, 0, 20, EclipticPosition.ABOVE, day)
+        return [res1]
+
+    def nabo_13_v(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
+        day = TargetTime(nisan_1, days_late, month[2].sunset, month[2].sunrise, "V/3")
+        # Mars ... it was with β Virginis
+        res1 = AngularSeparationResult(self.db, MARS, BETA_VIRGINIS, 0, 10, None, day)
+        return [res1]
+
+    def nabo_year_13(self, nisan_1: float) -> List[PotentialMonthResult]:
+        months = self.db.get_months(nisan_1)
+        iii = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[2]), self.nabo_13_iii)
+        v = self.repeat_month_with_alternate_starts(nisan_1, self.db.get_days(months[4]), self.nabo_13_v)
+        return [iii, v]
+
+
+    def nabopolassar(self, print_year: Union[int, None]):
+        years = self.db.get_years()
+        items = list(map(lambda x: x[1], years.items()))
+        results = []
+        for i in range(0, len(years) - 6):
+            y7 = self.repeat_year_with_alternate_starts(items[i], self.nabo_year_7)
+            y12 = self.repeat_year_with_alternate_starts(items[i + 5], self.nabo_year_12)
+            y13 = self.repeat_year_with_alternate_starts(items[i + 6], self.nabo_year_13)
+            total_score = sum(item[0].score for item in [y7, y12, y13])
+            results.append(MultiyearResult(items[i][0]['year'], total_score, [y7, y12, y13]))
+        self.print_top_results(results, "Nabopolassar year 7")
+        self.output_results_for_year(results, print_year)
+
+
 
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         if subquery == "shamash":
             self.shamash(print_year)
         elif subquery == "kandalanu":
             self.kandalanu(print_year)
+        elif subquery == "nabopolassar":
+            self.nabopolassar(print_year)
         else:
             raise RuntimeError("Please specify a valid subquery for this tablet")
 

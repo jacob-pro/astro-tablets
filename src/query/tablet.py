@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from typing import *
 
 from data import AstroData
-from query.database import Database
+from query.database import Database, BabylonianDay
 from query.result import AbstractResult
 from util import jd_float_to_local_time
 
@@ -47,7 +47,7 @@ class AbstractTablet(ABC):
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         pass
 
-    def repeat_month_with_alternate_starts(self, nisan_1: float, month: List,
+    def repeat_month_with_alternate_starts(self, nisan_1: float, month: List[BabylonianDay],
                                            func: Callable[[List, int, float], List[AbstractResult]]
                                            ) -> PotentialMonthResult:
         all_results = []
