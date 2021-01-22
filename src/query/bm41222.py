@@ -51,18 +51,15 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_vii, self.shamash_19_vii)
         return [res1]
 
-    def shamash(self, print_year: Union[int, None]):
-        years = self.db.get_years()
-        items = list(map(lambda x: x[1], years.items()))
+    def shamash(self, years: List) -> List[MultiyearResult]:
         results = []
         for i in range(0, len(years) - 5):
-            y14 = self.repeat_year_with_alternate_starts(items[i], self.shamash_year_14)
-            y17 = self.repeat_year_with_alternate_starts(items[i + 3], self.shamash_year_17)
-            y19 = self.repeat_year_with_alternate_starts(items[i + 5], self.shamash_year_19)
+            y14 = self.repeat_year_with_alternate_starts(years[i], self.shamash_year_14)
+            y17 = self.repeat_year_with_alternate_starts(years[i + 3], self.shamash_year_17)
+            y19 = self.repeat_year_with_alternate_starts(years[i + 5], self.shamash_year_19)
             total_score = sum(item[0].score for item in [y14, y17, y19])
-            results.append(MultiyearResult(items[i][0]['year'], total_score, [y14, y17, y19]))
-        self.print_top_results(results, "Shamash-shum-ukin year 14")
-        self.output_results_for_year(results, print_year)
+            results.append(MultiyearResult(years[i][0]['year'], total_score, [y14, y17, y19]))
+        return results
 
     ## Kandalanu
 
@@ -106,18 +103,15 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_iii, self.kand_16_iii)
         return [res1]
 
-    def kandalanu(self, print_year: Union[int, None]):
-        years = self.db.get_years()
-        items = list(map(lambda x: x[1], years.items()))
+    def kandalanu(self, years: List) -> List[MultiyearResult]:
         results = []
         for i in range(0, len(years) - 15):
-            y1 = self.repeat_year_with_alternate_starts(items[i], self.kand_year_1)
-            y12 = self.repeat_year_with_alternate_starts(items[i + 11], self.kand_year_12)
-            y16 = self.repeat_year_with_alternate_starts(items[i + 15], self.kand_year_16)
+            y1 = self.repeat_year_with_alternate_starts(years[i], self.kand_year_1)
+            y12 = self.repeat_year_with_alternate_starts(years[i + 11], self.kand_year_12)
+            y16 = self.repeat_year_with_alternate_starts(years[i + 15], self.kand_year_16)
             total_score = sum(item[0].score for item in [y1, y12, y16])
-            results.append(MultiyearResult(items[i][0]['year'], total_score,  [y1, y12, y16]))
-        self.print_top_results(results, "Kandalanu year 1")
-        self.output_results_for_year(results, print_year)
+            results.append(MultiyearResult(years[i][0]['year'], total_score, [y1, y12, y16]))
+        return results
 
     # Nabopolassar
 
@@ -174,28 +168,31 @@ class BM41222(AbstractTablet):
         return [iii, v]
 
 
-    def nabopolassar(self, print_year: Union[int, None]):
-        years = self.db.get_years()
-        items = list(map(lambda x: x[1], years.items()))
+    def nabopolassar(self, years: List) -> List[MultiyearResult]:
         results = []
         for i in range(0, len(years) - 6):
-            y7 = self.repeat_year_with_alternate_starts(items[i], self.nabo_year_7)
-            y12 = self.repeat_year_with_alternate_starts(items[i + 5], self.nabo_year_12)
-            y13 = self.repeat_year_with_alternate_starts(items[i + 6], self.nabo_year_13)
+            y7 = self.repeat_year_with_alternate_starts(years[i], self.nabo_year_7)
+            y12 = self.repeat_year_with_alternate_starts(years[i + 5], self.nabo_year_12)
+            y13 = self.repeat_year_with_alternate_starts(years[i + 6], self.nabo_year_13)
             total_score = sum(item[0].score for item in [y7, y12, y13])
-            results.append(MultiyearResult(items[i][0]['year'], total_score, [y7, y12, y13]))
-        self.print_top_results(results, "Nabopolassar year 7")
-        self.output_results_for_year(results, print_year)
-
+            results.append(MultiyearResult(years[i][0]['year'], total_score, [y7, y12, y13]))
+        return results
 
 
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
+        years = self.db.get_years()
+        year_items = list(map(lambda x: x[1], years.items()))
         if subquery == "shamash":
-            self.shamash(print_year)
+            res = self.shamash(year_items)
+            self.print_top_results(res, "Shamash-shum-ukin year 14")
         elif subquery == "kandalanu":
-            self.kandalanu(print_year)
+            res = self.kandalanu(year_items)
+            self.print_top_results(res, "Kandalanu year 1")
         elif subquery == "nabopolassar":
-            self.nabopolassar(print_year)
+            res = self.nabopolassar(year_items)
+            self.print_top_results(res, "Nabopolassar year 7")
         else:
             raise RuntimeError("Please specify a valid subquery for this tablet")
+        self.output_results_for_year(res, print_year)
+
 
