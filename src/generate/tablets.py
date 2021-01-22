@@ -95,10 +95,10 @@ class BM32312(Tablet):
         # Mercury’s last appearance in the east behind Pisces
         # Mercury’s first appearance in the east in Pisces
         self.planet_events(MERCURY)
-        self.separation_during_night(MERCURY, FIFTY_EIGHT_PISCIUM)
+        self.separation_during_night(MERCURY, PISCES.central_star)
         # Saturn’s last appearance behind Pisces
         self.planet_events(SATURN)
-        self.separation_during_night(SATURN, FIFTY_EIGHT_PISCIUM)
+        self.separation_during_night(SATURN, PISCES.central_star)
         # Mars became stationary in the area of the Lip of the Scorpion
         self.planet_events(MARS)
         # it came close to the bright star of the Scorpion’s head
@@ -106,7 +106,7 @@ class BM32312(Tablet):
         # Venus stood in the region of Aries, 10 fingers behind Mars
         self.separation_during_night(VENUS, MARS)
         # Mars was 1 finger to the left of the front? of Aries
-        self.separation_during_night(MARS, NU_ARIETIS)
+        self.separation_during_night(MARS, ARIES.central_star)
 
 
 class BM41222(Tablet):
@@ -118,9 +118,9 @@ class BM41222(Tablet):
         # Mercury's first appearance in the west
         self.planet_events(MERCURY)
         # in the area of the Swallow = Pisces
-        self.separation_during_night(MERCURY, FIFTY_EIGHT_PISCIUM)
+        self.separation_during_night(MERCURY, PISCES.central_star)
         # mars was in [the area?] of the Old Man = Perseus
-        self.separation_during_night(MARS, THIRTY_SIX_PERSEI)
+        self.separation_during_night(MARS, PERSEUS.central_star)
         # to the right of Mercury
         self.separation_during_night(MARS, MERCURY)
         # Mercury stood for ⅔ cubit above? Mars
@@ -128,12 +128,14 @@ class BM41222(Tablet):
         # Mercury stood 1 cubit 4 fingers behind Mars.
         # Mercury was balanced 6 fingers above Mars.
         self.separation_during_night(MERCURY, MARS)
+        # Mercury in the area of the Lion
+        self.separation_during_night(MERCURY, LEO.central_star)
         #  Mercury, in the area of Pleiades
         self.separation_during_night(MERCURY, ALCYONE)
         # Mars was with Pleiades
         self.separation_during_night(MARS, ALCYONE)
         # Mars was ⅔ cubit above the Chariot [....] = Auriga.
-        self.separation_during_night(MARS, NU_AURIGAE)
+        self.separation_during_night(MARS, AURIGA.central_star)
         # Mars was [....] above α Leonis.
         self.separation_during_night(MARS, REGULUS)
         # with β Virginis

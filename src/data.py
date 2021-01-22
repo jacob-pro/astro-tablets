@@ -14,12 +14,8 @@ SUN = "sun"
 
 SHERATAN = "sheratan"
 ANTARES = "antares"
-NU_ARIETIS = "nu arietis"
-FIFTY_EIGHT_PISCIUM = "58 piscium"
 EPSILON_PISCIUM = "epsilon piscium"
-THIRTY_SIX_PERSEI = "36 persei"
 ALCYONE = "alcyone"
-NU_AURIGAE = "nu aurigae"
 REGULUS = "regulus"
 BETA_VIRGINIS = "beta virginis"
 
@@ -61,22 +57,25 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[8903])
         if name == ANTARES:
             return Star.from_dataframe(self.stars.loc[80763])
-        if name == NU_ARIETIS:
-            return Star.from_dataframe(self.stars.loc[12332])
-        if name == FIFTY_EIGHT_PISCIUM:
-            return Star.from_dataframe(self.stars.loc[3675])
         if name == EPSILON_PISCIUM:
             return Star.from_dataframe(self.stars.loc[4906])
-        if name == THIRTY_SIX_PERSEI:
-            return Star.from_dataframe(self.stars.loc[16499])
         if name == ALCYONE:
             return Star.from_dataframe(self.stars.loc[17702])
-        if name == NU_AURIGAE:
-            return Star.from_dataframe(self.stars.loc[27673])
         if name == REGULUS:
             return Star.from_dataframe(self.stars.loc[49669])
         if name == BETA_VIRGINIS:
             return Star.from_dataframe(self.stars.loc[57757])
+
+        if name == NU_ARIETIS:
+            return Star.from_dataframe(self.stars.loc[12332])
+        if name == NU_AURIGAE:
+            return Star.from_dataframe(self.stars.loc[27673])
+        if name == FIFTY_TWO_LEONIS:
+            return Star.from_dataframe(self.stars.loc[52689])
+        if name == THIRTY_SIX_PERSEI:
+            return Star.from_dataframe(self.stars.loc[16499])
+        if name == FIFTY_EIGHT_PISCIUM:
+            return Star.from_dataframe(self.stars.loc[3675])
 
         raise ValueError
 

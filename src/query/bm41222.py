@@ -12,7 +12,7 @@ class BM41222(AbstractTablet):
         # Mercury's first appearance in the west
         res1 = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF, day4)
         # in the area of the Swallow.
-        res2 = AngularSeparationResult(self.db, MERCURY, FIFTY_EIGHT_PISCIUM, 0, 50, None, day4)
+        res2 = AngularSeparationResult(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day4)
         return [res1, res2]
 
     def shamash_year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -25,7 +25,7 @@ class BM41222(AbstractTablet):
     def shamash_17_ii(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
         day19 = TargetTime(nisan_1, days_late, month[18].sunset, month[18].sunrise, "II/19")
         # mars was in [the area?] of the Old Man
-        res1 = AngularSeparationResult(self.db, MARS, THIRTY_SIX_PERSEI, 0, 45, None, day19)
+        res1 = AngularSeparationResult(self.db, MARS, PERSEUS.central_star, 0, PERSEUS.radius, None, day19)
         # to the right of Mercury
         res2 = AngularSeparationResult(self.db, MARS, MERCURY, 0, 30, EclipticPosition.AHEAD, day19)
         return [res1, res2]
