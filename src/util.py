@@ -67,5 +67,6 @@ def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
     return res
 
 
-def jd_float_to_string(time: float, timescale: Timescale) -> float:
-    return timescale.tt_jd(time).utc_iso()
+def jd_float_to_local_time(time: float, timescale: Timescale) -> str:
+    t = timescale.tt_jd(time + 3/24)
+    return "{}-{:02d}-{:02d} {:02d}:{:02d}".format(*t.ut1_calendar())

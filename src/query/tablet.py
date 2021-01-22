@@ -1,3 +1,5 @@
+import dataclasses
+import json
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import *
@@ -5,7 +7,7 @@ from typing import *
 from data import AstroData
 from query.database import Database
 from query.result import AbstractResult
-from util import jd_float_to_string
+from util import jd_float_to_local_time
 
 
 @dataclass
@@ -28,6 +30,13 @@ class MultiyearResult:
     results: List
 
 
+class EnhancedJSONEncoder(json.JSONEncoder):
+    def default(self, o):
+        if dataclasses.is_dataclass(o):
+            return dataclasses.asdict(o)
+        return super().default(o)
+
+
 class AbstractTablet(ABC):
 
     def __init__(self, data: AstroData, db: Database):
@@ -35,7 +44,7 @@ class AbstractTablet(ABC):
         self.db = db
 
     @abstractmethod
-    def do_query(self, subquery: Union[str, None]):
+    def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         pass
 
     def repeat_month_with_alternate_starts(self, nisan_1: float, month: List,
@@ -58,7 +67,7 @@ class AbstractTablet(ABC):
             results = func(y['nisan_1'])
             total_score = sum(item.score for item in results)
             all_results.append(
-                PotentialYearResult(total_score, jd_float_to_string(y['nisan_1'], self.data.timescale), results))
+                PotentialYearResult(total_score, jd_float_to_local_time(y['nisan_1'], self.data.timescale), results))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return all_results
 
@@ -69,3 +78,10 @@ class AbstractTablet(ABC):
         print("Year   Score")
         for i in results[:10]:
             print(i.base_year, i.score)
+
+    @staticmethod
+    def output_results_for_year(results: List[MultiyearResult], year: Union[int, None]):
+        filtered = list(filter(lambda x: x.base_year == year, results))
+        if len(filtered) > 0:
+            with open('result_for_{}.json'.format(year), 'w') as outfile:
+                json.dump(filtered[0], outfile, indent=2, cls=EnhancedJSONEncoder)

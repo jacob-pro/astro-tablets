@@ -8,7 +8,7 @@ from data import AstroData
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
 from query.database import Database
-from util import jd_float_to_string
+from util import jd_float_to_local_time
 
 
 @dataclass
@@ -21,9 +21,9 @@ class TargetTime:
 
     def output(self, data: AstroData) -> dict:
         return {
-            'start_time': jd_float_to_string(self.start, data.timescale),
-            'end_time': jd_float_to_string(self.end, data.timescale),
-            'nisan_1': jd_float_to_string(self.nisan_1, data.timescale),
+            'start_time': jd_float_to_local_time(self.start, data.timescale),
+            'end_time': jd_float_to_local_time(self.end, data.timescale),
+            'nisan_1': jd_float_to_local_time(self.nisan_1, data.timescale),
             'date': self.date,
             'month_started_late': self.month_offset
         }
@@ -67,16 +67,13 @@ class PlanetaryEventResult(AbstractResult):
         # The higher the cut_off the more lenient the result is
         cut_off = 48.0 / self.planet.event_frequency
         res = self.result_function(diff, cut_off)
-        if res < 0:
-            return 0
-        else:
-            return res
+        return max(res, 0)
 
     def output(self, data: AstroData) -> dict:
         return {
             'planet': self.planet.name,
             'event': self.event.value,
-            'nearest_time': data.timescale.tt_jd(self.nearest).utc_iso(),
+            'nearest_time': jd_float_to_local_time(self.nearest, data.timescale),
             'calendar': self.target_time.output(data),
         }
 
@@ -108,15 +105,13 @@ class AngularSeparationResult(AbstractResult):
 
     def result_function(self, x: float) -> float:
         res = 1 - math.pow((x / (self.tolerance / 2.0)), 2)
-        if res < 0:
-            return 0
-        return res
+        return max(res, 0)
 
     def quality_score(self) -> float:
         """
         If angle is within tolerance of the target_angle score 1.0
         Decreasing score as the angle moves from target_angle+tolerance up to target_angle + (1.5 * tolerance)
-        Correct position adds 2.0 to score
+        Correct position (if specified) adds 0.2 to score
         """
         lower_bound = max(self.target_angle - self.tolerance, 0)
         upper_bound = self.target_angle + self.tolerance
@@ -143,7 +138,7 @@ class AngularSeparationResult(AbstractResult):
             'to_body': self.to_body,
             'angle': self.best['angle'],
             'position': self.best['position'],
-            'at_time': data.timescale.tt_jd(self.best['time']).utc_iso(),
+            'at_time': jd_float_to_local_time(self.best['time'], data.timescale),
             'calendar': self.target_time.output(data),
         }
 

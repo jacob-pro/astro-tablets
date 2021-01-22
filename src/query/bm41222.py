@@ -49,7 +49,7 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_vii, self.shamash_19_vii)
         return [res1]
 
-    def shamash(self):
+    def shamash(self, print_year: Union[int, None]):
         years = self.db.get_years()
         items = list(map(lambda x: x[1], years.items()))
         results = []
@@ -60,6 +60,8 @@ class BM41222(AbstractTablet):
             total_score = sum(item[0].score for item in [y14, y17, y19])
             results.append(MultiyearResult(items[i][0]['year'], total_score, [y14, y17, y19]))
         self.print_top_results(results, "Shamash-shum-ukin year 14")
+        self.output_results_for_year(results, print_year)
+
 
 
     def kand_1_iii(self, month: List, days_late: int, nisan_1: float) -> List[AbstractResult]:
@@ -102,7 +104,7 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, month_iii, self.kand_16_iii)
         return [res1]
 
-    def kandalanu(self):
+    def kandalanu(self, print_year: Union[int, None]):
         years = self.db.get_years()
         items = list(map(lambda x: x[1], years.items()))
         results = []
@@ -113,13 +115,14 @@ class BM41222(AbstractTablet):
             total_score = sum(item[0].score for item in [y1, y12, y16])
             results.append(MultiyearResult(items[i][0]['year'], total_score,  [y1, y12, y16]))
         self.print_top_results(results, "Kandalanu year 1")
+        self.output_results_for_year(results, print_year)
 
 
-    def do_query(self, subquery: Union[str, None]):
+    def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         if subquery == "shamash":
-            self.shamash()
+            self.shamash(print_year)
         elif subquery == "kandalanu":
-            self.kandalanu()
+            self.kandalanu(print_year)
         else:
             raise RuntimeError("Please specify a valid subquery for this tablet")
 

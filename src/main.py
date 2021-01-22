@@ -43,13 +43,13 @@ def generate(tablet: str, db: Union[str, None], overwrite: bool, start: Union[in
     db.close()
 
 
-def query(tablet: str, subquery: Union[str, None], db: Union[str, None]):
+def query(tablet: str, subquery: Union[str, None], db: Union[str, None], year: Union[int, None]):
     data = AstroData(time_only=True)
     db_file = database_path(tablet, db)
     db = QueryDatabase(db_file)
     assert db.tablet_name.lower() == tablet.lower(), "Database info table doesn't match the requested tablet"
     tablet = query_pkg.get_tablet_class(tablet)(data, db)
-    tablet.do_query(subquery)
+    tablet.do_query(subquery, year)
 
 
 def test():
@@ -76,6 +76,7 @@ if __name__ == "__main__":
     query_parser.add_argument('tablet', type=str, help='name of the tablet to query ephemeris for')
     query_parser.add_argument('subquery', type=str, nargs='?', help='optional subquery')
     query_parser.add_argument('--db', type=str, help='override path to source database')
+    query_parser.add_argument('--year', type=int, help='optionally output a specific year')
 
     subparsers.add_parser('test')
 
