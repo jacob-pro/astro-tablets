@@ -58,4 +58,4 @@ class BM32312(AbstractTablet):
         tests = [YearToTest(0, "Shamash-shum-ukin 16", self.shamash_year_16)]
         results = self.run_years(tests)
         self.print_results(results, "Shamash-shum-ukin year 16")
-        self.output_results_for_year(results, print_year)
+        self.output_json_for_year(results, print_year)

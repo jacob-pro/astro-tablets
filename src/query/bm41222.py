@@ -83,7 +83,6 @@ class BM41222(AbstractTablet):
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 3, "Year 16 III", self.kand_16_iii)
         return [res1]
 
-
     # Nabopolassar
 
     def nabo_7_unknown(self, month: List[BabylonianDay]) -> List[AbstractResult]:
@@ -176,6 +175,6 @@ class BM41222(AbstractTablet):
             res = self.run_years(tests)
             self.print_results(res, "Shamash-shum-ukin year 14 to Nabopolassar (assuming reigns of 20, and 22)")
 
-        self.output_results_for_year(res, print_year)
+        self.output_json_for_year(res, print_year)
 
 

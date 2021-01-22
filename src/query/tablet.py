@@ -65,6 +65,11 @@ class AbstractTablet(ABC):
     def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int, name: str,
                                            func: Callable[[List[BabylonianDay]], List[AbstractResult]]
                                            ) -> PotentialMonthResult:
+        """
+        Tries repeating the same month observations but assuming the month started either 0 or 1 days later
+        than first lunar visibility
+        Returns the best / highest scoring month
+        """
         assert 1 <= month_number <= 13
         months = self.db.get_months(nisan_1)
         month_days = self.db.get_days(months[month_number - 1])
@@ -86,6 +91,10 @@ class AbstractTablet(ABC):
     def repeat_year_with_alternate_starts(self, potential_years: List[Dict], name: str,
                                            func: Callable[[float], List[PotentialMonthResult]]
                                            ) -> List[PotentialYearResult]:
+        """
+        Tries repeating the same set of year observations, but starting at different dates for Nisan I
+        Returns a list in order of highest score, descending
+        """
         all_results = []
         for y in potential_years:
             results = func(y['nisan_1'])
@@ -106,9 +115,11 @@ class AbstractTablet(ABC):
             print(i.base_year, i.best_score)
 
     @staticmethod
-    def output_results_for_year(results: List[MultiyearResult], year: Union[int, None]):
-        filtered = list(filter(lambda x: x.base_year == year, results))
-        if len(filtered) > 0:
+    def output_json_for_year(results: List[MultiyearResult], year: Union[int, None]):
+        if year is not None:
+            filtered = list(filter(lambda x: x.base_year == year, results))
+            if len(filtered) < 1:
+                raise RuntimeError("Base year not found")
             with open('result_for_{}.json'.format(year), 'w') as outfile:
                 json.dump(filtered[0], outfile, indent=2, cls=EnhancedJSONEncoder)
 
