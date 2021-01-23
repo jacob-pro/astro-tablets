@@ -3,6 +3,7 @@ from collections import OrderedDict
 from dataclasses import dataclass
 from typing import *
 
+from constants import MAX_NISAN_EQUINOX_DIFF_DAYS
 from data import SUN
 from generate.lunar_calendar import VERNAL_EQUINOX
 from util import array_group_by
@@ -66,10 +67,10 @@ class Database:
             SELECT days.sunset as nisan_1, days.year as year
             FROM events equinox
             INNER JOIN days 
-            ON days.sunset >= (equinox.time - 31) and days.sunset <= (equinox.time + 31) and days.first_visibility==1
+            ON days.sunset >= (equinox.time - ?) and days.sunset <= (equinox.time + ?) and days.first_visibility==1
             WHERE equinox.event=? and equinox.body=?
             AND days.year <= (SELECT end_year FROM db_info LIMIT 1)""",
-                       (VERNAL_EQUINOX, SUN, ))
+                       (MAX_NISAN_EQUINOX_DIFF_DAYS, MAX_NISAN_EQUINOX_DIFF_DAYS, VERNAL_EQUINOX, SUN, ))
         res = self.fetch_all_as_dict(cursor)
         return array_group_by(res, lambda x: x["year"])
 

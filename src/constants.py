@@ -10,6 +10,8 @@ FINGER = 0.092
 CUBIT = 2.2
 HALO = 22.0
 
+MAX_NISAN_EQUINOX_DIFF_DAYS = 31
+
 
 @dataclass
 class InnerPlanetArcusVisionis:

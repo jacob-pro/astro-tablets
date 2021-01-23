@@ -3,7 +3,7 @@ from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
 from query.database import BabylonianDay
 from query.result import AbstractResult, AngularSeparationResult, SearchRange, PlanetaryEventResult
-from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult, YearToTest
+from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult, YearToTest, Intercalary
 
 
 class BM32312(AbstractTablet):
@@ -55,7 +55,7 @@ class BM32312(AbstractTablet):
         return [month_a_attempts[0], month_b_attempts[0]]
 
     def do_query(self, _subquery: Union[str, None], print_year: Union[int, None]):
-        tests = [YearToTest(0, "Shamash-shum-ukin 16", self.shamash_year_16)]
+        tests = [YearToTest(0, "Shamash-shum-ukin 16", Intercalary.UNKNOWN, self.shamash_year_16)]
         results = self.run_years(tests)
         self.print_results(results, "Shamash-shum-ukin year 16")
         self.output_json_for_year(results, print_year)
