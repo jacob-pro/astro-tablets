@@ -149,9 +149,9 @@ class BM41222(AbstractTablet):
                 self.print_results(res, "Shamash-shum-ukin year 14")
 
             elif subquery == "kandalanu":
-                tests = [YearToTest(0, "Kanalanu 1", self.kand_year_1),
-                         YearToTest(11, "Kanalanu 12", self.kand_year_12),
-                         YearToTest(15, "Kanalanu 16", self.kand_year_16)]
+                tests = [YearToTest(0, "Kandalanu 1", self.kand_year_1),
+                         YearToTest(11, "Kandalanu 12", self.kand_year_12),
+                         YearToTest(15, "Kandalanu 16", self.kand_year_16)]
                 res = self.run_years(tests)
                 self.print_results(res, "Kandalanu year 1")
 
@@ -169,9 +169,9 @@ class BM41222(AbstractTablet):
             tests = [YearToTest(0, "Shamash-shum-ukin 14", self.shamash_year_14),
                      YearToTest(3, "Shamash-shum-ukin 17", self.shamash_year_17),
                      YearToTest(5, "Shamash-shum-ukin 19", self.shamash_year_19),
-                     YearToTest(7, "Kanalanu 1", self.kand_year_1),
-                     YearToTest(18, "Kanalanu 12", self.kand_year_12),
-                     YearToTest(22, "Kanalanu 16", self.kand_year_16),
+                     YearToTest(7, "Kandalanu 1", self.kand_year_1),
+                     YearToTest(18, "Kandalanu 12", self.kand_year_12),
+                     YearToTest(22, "Kandalanu 16", self.kand_year_16),
                      YearToTest(35, "Nabopolassar 7", self.nabo_year_7),
                      YearToTest(40, "Nabopolassar 12", self.nabo_year_12),
                      YearToTest(41, "Nabopolassar 13", self.nabo_year_13)]
