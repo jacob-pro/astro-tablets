@@ -67,8 +67,21 @@ def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
     return res
 
 
-def jd_float_to_local_time(time: Union[float, None], timescale: Timescale) -> str:
-    if time is None:
-        return ""
-    t = timescale.tt_jd(time + 3/24)
-    return "{}-{:02d}-{:02d} {:02d}:{:02d}".format(*t.ut1_calendar())
+
+
+
+class TimeValue:
+
+    def __init__(self, inner):
+        self.inner = inner
+
+    def string(self, timescale: Timescale):
+        if self.inner is None:
+            return ""
+        t = timescale.tt_jd(self.inner + 3 / 24)
+        return "{}-{:02d}-{:02d} {:02d}:{:02d}".format(*t.ut1_calendar())
+
+    def __eq__(self, other):
+        if isinstance(other, TimeValue):
+            return self.inner == other.inner
+        return False

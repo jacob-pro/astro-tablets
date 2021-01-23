@@ -4,13 +4,12 @@ from dataclasses import dataclass
 from typing import *
 
 import inflect
-from skyfield.timelib import Timescale
 
 from constants import Planet
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
 from query.database import Database, BabylonianDay
-from util import jd_float_to_local_time
+from util import TimeValue
 
 p = inflect.engine()
 
@@ -20,10 +19,10 @@ class SearchRange:
     end: float
     comment: str
 
-    def output(self, ts: Timescale) -> dict:
+    def output(self) -> dict:
         return {
-            'search_start': jd_float_to_local_time(self.start, ts),
-            'search_end': jd_float_to_local_time(self.end, ts),
+            'search_start': TimeValue(self.start),
+            'search_end': TimeValue(self.end),
             'date': self.comment,
         }
 
@@ -41,7 +40,7 @@ class AbstractResult(ABC):
         pass
 
     @abstractmethod
-    def output(self, ts: Timescale) -> dict:
+    def output(self) -> dict:
         pass
 
     @abstractmethod
@@ -85,11 +84,11 @@ class PlanetaryEventResult(AbstractResult):
         res = self.result_function(diff, cut_off)
         return max(res, 0)
 
-    def output(self, ts: Timescale) -> dict:
+    def output(self) -> dict:
         return {
             'planet': self.planet.name,
             'event': self.event.value,
-            'nearest_time': jd_float_to_local_time(self.nearest, ts),
+            'nearest_time': TimeValue(self.nearest),
         }
 
 
@@ -153,11 +152,11 @@ class AngularSeparationResult(AbstractResult):
         else:
             return angle_score
 
-    def output(self, ts: Timescale) -> dict:
+    def output(self) -> dict:
         return {
             'from_body': self.from_body,
             'to_body': self.to_body,
             'angle': self.best['angle'],
             'position': self.best['position'],
-            'at_time': jd_float_to_local_time(self.best['time'], ts),
+            'at_time': TimeValue(self.best['time']),
         }
