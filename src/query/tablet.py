@@ -42,6 +42,7 @@ class PotentialYearResult:
     score: float
     nisan_1: TimeValue
     next_nisan: TimeValue   # 12 or 13 months later depending on intercalary status
+    compatibility_warning: bool
     _actual_year: int
     _intercalary: Intercalary
     months: List[PotentialMonthResult]
@@ -153,7 +154,7 @@ class AbstractTablet(ABC):
             all_results.append(
                 PotentialYearResult(score=total_score, nisan_1=TimeValue(y['nisan_1']),
                                     next_nisan=TimeValue(next_nisan), months=results,
-                                    _intercalary=intercalary, _actual_year=year_number))
+                                    _intercalary=intercalary, _actual_year=year_number, compatibility_warning=False))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return YearResult(name, year_number, TimeValue(vernal), intercalary, all_results)
 
@@ -190,6 +191,8 @@ class AbstractTablet(ABC):
                     if len(match_next_y) > 0:
                         if match_next_y[0].nisan_1 != y.next_nisan:
                             incompatible = True
+                            y.compatibility_warning = True
+                            match_next_y[0].compatibility_warning = True
             if not incompatible:
                 scores.append(sum(x.score for x in i))
         assert len(scores) > 0
