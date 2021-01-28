@@ -142,7 +142,7 @@ class BM41222(AbstractTablet):
         if subquery is not None:
 
             if subquery == "shamash":
-                tests = [YearToTest(0, "Shamash-shum-ukin 14", Intercalary.UNKNOWN, self.shamash_year_14),
+                tests = [YearToTest(0, "Shamash-shum-ukin 14", Intercalary.ADDARU, self.shamash_year_14),
                          YearToTest(3, "Shamash-shum-ukin 17", Intercalary.UNKNOWN, self.shamash_year_17),
                          YearToTest(5, "Shamash-shum-ukin 19", Intercalary.UNKNOWN, self.shamash_year_19)]
                 res = self.run_years(tests)
@@ -166,7 +166,7 @@ class BM41222(AbstractTablet):
                 raise RuntimeError("Please specify a valid subquery for this tablet")
 
         else:
-            tests = [YearToTest(0, "Shamash-shum-ukin 14", Intercalary.UNKNOWN, self.shamash_year_14),
+            tests = [YearToTest(0, "Shamash-shum-ukin 14", Intercalary.ADDARU, self.shamash_year_14),
                      YearToTest(3, "Shamash-shum-ukin 17", Intercalary.UNKNOWN, self.shamash_year_17),
                      YearToTest(5, "Shamash-shum-ukin 19", Intercalary.UNKNOWN, self.shamash_year_19),
                      YearToTest(7, "Kandalanu 1", Intercalary.UNKNOWN, self.kand_year_1),
