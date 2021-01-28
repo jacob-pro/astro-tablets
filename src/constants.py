@@ -53,11 +53,17 @@ class Constellation:
 NU_ARIETIS = "nu arietis"
 NU_AURIGAE = "nu aurigae"
 FIFTY_TWO_LEONIS = "52 leonis"
+NU_LIBRAE = "nu librae"
 THIRTY_SIX_PERSEI = "36 persei"
 FIFTY_EIGHT_PISCIUM = "58 piscium"
+ASCELLA = "ascella"
+THETA_VIRGINIS = "theta virginis"
 
 ARIES = Constellation(NU_ARIETIS, 30)
 AURIGA = Constellation(NU_AURIGAE, 32)
 LEO = Constellation(FIFTY_TWO_LEONIS, 40)
+LIBRA = Constellation(NU_LIBRAE, 25)
 PERSEUS = Constellation(THIRTY_SIX_PERSEI, 45)
 PISCES = Constellation(FIFTY_EIGHT_PISCIUM, 50)
+SAGITTARIUS = Constellation(ASCELLA, 40)
+VIRGO = Constellation(THETA_VIRGINIS, 45)

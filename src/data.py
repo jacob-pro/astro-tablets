@@ -12,12 +12,13 @@ EARTH = "earth"
 MOON = "moon"
 SUN = "sun"
 
-SHERATAN = "sheratan"
-ANTARES = "antares"
-EPSILON_PISCIUM = "epsilon piscium"
 ALCYONE = "alcyone"
-REGULUS = "regulus"
+ANTARES = "antares"
 BETA_VIRGINIS = "beta virginis"
+EPSILON_LEONIS = "epsilon leonis"
+EPSILON_PISCIUM = "epsilon piscium"
+REGULUS = "regulus"
+SHERATAN = "sheratan"
 
 
 class AstroData:
@@ -53,18 +54,20 @@ class AstroData:
         if name == SUN:
             return self.ephemeris["SUN"]
 
-        if name == SHERATAN:
-            return Star.from_dataframe(self.stars.loc[8903])
-        if name == ANTARES:
-            return Star.from_dataframe(self.stars.loc[80763])
-        if name == EPSILON_PISCIUM:
-            return Star.from_dataframe(self.stars.loc[4906])
         if name == ALCYONE:
             return Star.from_dataframe(self.stars.loc[17702])
-        if name == REGULUS:
-            return Star.from_dataframe(self.stars.loc[49669])
+        if name == ANTARES:
+            return Star.from_dataframe(self.stars.loc[80763])
         if name == BETA_VIRGINIS:
             return Star.from_dataframe(self.stars.loc[57757])
+        if name == EPSILON_LEONIS:
+            return Star.from_dataframe(self.stars.loc[47908])
+        if name == EPSILON_PISCIUM:
+            return Star.from_dataframe(self.stars.loc[4906])
+        if name == REGULUS:
+            return Star.from_dataframe(self.stars.loc[49669])
+        if name == SHERATAN:
+            return Star.from_dataframe(self.stars.loc[8903])
 
         if name == NU_ARIETIS:
             return Star.from_dataframe(self.stars.loc[12332])
@@ -72,10 +75,16 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[27673])
         if name == FIFTY_TWO_LEONIS:
             return Star.from_dataframe(self.stars.loc[52689])
+        if name == NU_LIBRAE:
+            return Star.from_dataframe(self.stars.loc[73945])
         if name == THIRTY_SIX_PERSEI:
             return Star.from_dataframe(self.stars.loc[16499])
         if name == FIFTY_EIGHT_PISCIUM:
             return Star.from_dataframe(self.stars.loc[3675])
+        if name == ASCELLA:
+            return Star.from_dataframe(self.stars.loc[93506])
+        if name == THETA_VIRGINIS:
+            return Star.from_dataframe(self.stars.loc[64238])
 
         raise ValueError
 
