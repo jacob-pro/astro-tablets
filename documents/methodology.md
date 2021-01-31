@@ -14,10 +14,11 @@ intercalary month. I am using this list of known intercalary months:
 
 -   Shamash-shum-ukin Year 14, Addaru II: BM 29496, YBC 11309
 -   Kandalanu Year 5, Ululu II: Clay BE 8/1, No.3,
-    [BM76738](./bm76738_76813.md) Obv. 10
--   Kandalanu Year 8, Ululu II: [BM76738](./bm76738_76813.md) Obv. 15
+    [BM76738](./bm76738_76813.md#translation) Obv. 10
+-   Kandalanu Year 8, Ululu II:
+    [BM76738](./bm76738_76813.md#translation) Obv. 15
 -   Kandalanu Year 10, Addaru II: BM 54213,
-    [BM76738](./bm76738_76813.md) Rev. 20
+    [BM76738](./bm76738_76813.md#translation) Rev. 20
 -   Kandalanu Year 19, Addaru II: YBC 11481, 11300, 11476, NBC 6144
 -   Nabopolassar Year 2, Addaru II: NCBT 589
 -   Nabopolassar Year 5, Ululu II: UET IV 202
