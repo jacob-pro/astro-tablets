@@ -40,7 +40,7 @@ class Tablet(ABC):
     def calendar(self):
         for i in range(self.start_day.utc.year, self.end_day.utc.year + 1):
             self.db.save_equinox(vernal_equinox(self.data, i))
-        days = days_in_range(self.data, self.start_day, self.end_day + 32,      # We need to read a month ahead
+        days = days_in_range(self.data, self.start_day, self.end_day,
                              lambda x: self.print_progress("Computing Lunar calendar", x))
         self.db.save_days(days)
         print("")
@@ -72,7 +72,7 @@ class Tablet(ABC):
         self.start_time = time.time()
         print("Computing {} for {} to {}".format(type(self).__name__, self.start_year, self.end_year))
         self.start_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.start_year).tt - 32)
-        self.end_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.end_year + 1).tt + 32)
+        self.end_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.end_year + 1).tt + 64)
         self.days = self.calendar()
 
     def post_compute(self):

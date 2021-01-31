@@ -3,7 +3,7 @@ from generate.angular_separation import EclipticPosition
 from generate.planet_events import OuterPlanetPhenomena
 from query.database import BabylonianDay
 from query.result import PlanetaryEventResult, SearchRange, AngularSeparationResult, AbstractResult
-from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult, YearToTest, Intercalary
+from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM76738(AbstractTablet):
