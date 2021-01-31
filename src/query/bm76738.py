@@ -117,7 +117,7 @@ class BM76738(AbstractTablet):
         return [month_6, month_7]
 
     def year_8_month_vi2(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        range = SearchRange.x_plus(month, 5)
+        range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)
         res2 = AngularSeparationResult(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range)
         return [res1, res2]
