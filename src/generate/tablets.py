@@ -151,7 +151,6 @@ class BM76738(Tablet):
     def compute(self):
         super(BM76738, self).compute()
         self.planet_events(SATURN)
-        self.separation_during_night(SATURN, CANCER.central_star)
         self.separation_during_night(SATURN, EPSILON_LEONIS)
         self.separation_during_night(SATURN, REGULUS)
         self.separation_during_night(SATURN, LEO.central_star)

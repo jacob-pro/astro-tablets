@@ -14,8 +14,7 @@ class BM76738(AbstractTablet):
     def year_1_month_4(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 24)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationResult(self.db, SATURN, CANCER.central_star, 0, CANCER.radius, None, range)
-        return [res1, res2]
+        return [res1]
 
     def year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 4, self.year_1_month_unknown)
