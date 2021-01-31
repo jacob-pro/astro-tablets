@@ -14,8 +14,8 @@ class BM76738(AbstractTablet):
     def year_1_month_4(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 24)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        # TODO res2 = AngularSeparationResult(self.db, SATURN, CANCER.central_star, 0, CANCER.radius, None, range)
-        return [res1]
+        res2 = AngularSeparationResult(self.db, SATURN, CANCER.central_star, 0, CANCER.radius, None, range)
+        return [res1, res2]
 
     def year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 4, self.year_1_month_unknown)
@@ -30,7 +30,7 @@ class BM76738(AbstractTablet):
     def year_2_month_5(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         any_day = SearchRange.any_day(month)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, any_day)
-        res2 = AngularSeparationResult(self.db, SATURN, EPSILON_LEONIS, 0, 10, None, any_day)
+        res2 = AngularSeparationResult(self.db, SATURN, EPSILON_LEONIS, 0, 20, None, any_day)
         return [res1, res2]
 
     def year_2(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -46,7 +46,7 @@ class BM76738(AbstractTablet):
     def year_3_month_5(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 16)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationResult(self.db, SATURN, REGULUS, 0, 10, EclipticPosition.BEHIND, range)
+        res2 = AngularSeparationResult(self.db, SATURN, REGULUS, 0, 20, EclipticPosition.BEHIND, range)
         return [res1, res2]
 
     def year_3(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -93,7 +93,7 @@ class BM76738(AbstractTablet):
     def year_6_month_6(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 22)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationResult(self.db, SATURN, BETA_VIRGINIS, 0, 10, EclipticPosition.BEHIND, range)
+        res2 = AngularSeparationResult(self.db, SATURN, BETA_VIRGINIS, 0, 20, EclipticPosition.BEHIND, range)
         return [res1, res2]
 
     def year_6(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -158,8 +158,8 @@ class BM76738(AbstractTablet):
     def year_10_month_b(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 23)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        # TODO res2 = AngularSeparationResult(self.db, SATURN, ANTARES, 0, 10, EclipticPosition.AHEAD, range)
-        return [res1]
+        res2 = AngularSeparationResult(self.db, SATURN, ANTARES, 0, 20, EclipticPosition.AHEAD, range)
+        return [res1, res2]
 
     def year_10(self, nisan_1: float) -> List[PotentialMonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 12, self.year_10_month_a)
@@ -174,8 +174,8 @@ class BM76738(AbstractTablet):
     def year_11_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        # TODO res2 = AngularSeparationResult(self.db, SATURN, ANTARES, 0, 10, EclipticPosition.ABOVE, range)
-        return [res1]
+        res2 = AngularSeparationResult(self.db, SATURN, ANTARES, 0, 20, EclipticPosition.ABOVE, range)
+        return [res1, res2]
 
     def year_11(self, nisan_1: float) -> List[PotentialMonthResult]:
         month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_11_month_7)
