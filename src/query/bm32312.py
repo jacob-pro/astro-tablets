@@ -49,8 +49,8 @@ class BM32312(AbstractTablet):
         month_b = self.try_multiple_months(nisan_1, 1, 12, self.month_b, comment="Month B")
         return [month_a, month_b]
 
-    def do_query(self, _subquery: Union[str, None], print_year: Union[int, None]):
+    def do_query(self, _subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
         tests = [YearToTest(0, "Shamash-shum-ukin 16", Intercalary.UNKNOWN, self.shamash_year_16)]
         results = self.run_years(tests)
         self.print_results(results, "Shamash-shum-ukin year 16")
-        self.output_json_for_year(results, print_year)
+        self.output_json_for_year(results, print_year, slim_results)

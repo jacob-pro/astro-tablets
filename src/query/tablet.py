@@ -43,7 +43,7 @@ class PotentialYearResult:
     score: float
     nisan_1: TimeValue
     next_nisan: TimeValue   # 12 or 13 months later depending on intercalary status
-    compatibility_warning: bool
+    best_compatible_path: bool
     _actual_year: int
     _intercalary: Intercalary
     months: List[PotentialMonthResult]
@@ -100,7 +100,7 @@ class AbstractTablet(ABC):
         self.db = db
 
     @abstractmethod
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
+    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
         pass
 
     def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int,
@@ -156,7 +156,7 @@ class AbstractTablet(ABC):
             all_results.append(
                 PotentialYearResult(score=total_score, nisan_1=TimeValue(y['nisan_1']),
                                     next_nisan=TimeValue(next_nisan), months=results,
-                                    _intercalary=intercalary, _actual_year=year_number, compatibility_warning=False))
+                                    _intercalary=intercalary, _actual_year=year_number, best_compatible_path=False))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return YearResult(name, year_number, TimeValue(vernal), intercalary, all_results)
 
@@ -168,21 +168,27 @@ class AbstractTablet(ABC):
         for i in results:
             print(i.base_year, i.best_score)
 
-    def output_json_for_year(self, results: List[MultiyearResult], year: Union[int, None]):
+    def output_json_for_year(self, results: List[MultiyearResult], year: Union[int, None], slim_results: bool):
         if year is not None:
             filtered = list(filter(lambda x: x.base_year == year, results))
             if len(filtered) < 1:
                 raise RuntimeError("Base year not found")
+            year_to_print = filtered[0]
+
+            if slim_results is True:
+                for y in year_to_print.years:
+                    y.potentials = list(filter(lambda x: x.best_compatible_path is True, y.potentials))
+
             with open('result_for_{}.json'.format(year), 'w') as outfile:
                 encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
-                raw = encoder.encode(filtered[0])
+                raw = encoder.encode(year_to_print)
                 outfile.write(raw)
 
     @staticmethod
     def total_score(yrs: List[YearResult]) -> float:
         potential_list = list(map(lambda x: x.potentials, yrs))
         product = list(itertools.product(*potential_list))
-        scores = []
+        compatible_products = []
         for i in product:
             incompatible = False
             # Years are incompatible if the year afterwards does not start when this one ends
@@ -193,12 +199,13 @@ class AbstractTablet(ABC):
                     if len(match_next_y) > 0:
                         if match_next_y[0].nisan_1 != y.next_nisan:
                             incompatible = True
-                            y.compatibility_warning = True
-                            match_next_y[0].compatibility_warning = True
             if not incompatible:
-                scores.append(sum(x.score for x in i))
-        assert len(scores) > 0
-        return max(scores)
+                compatible_products.append(i)
+        assert len(compatible_products) > 0
+        compatible_products.sort(key=lambda y: sum(x.score for x in y), reverse=True)
+        for e in compatible_products[0]:
+            e.best_compatible_path = True
+        return sum(x.score for x in compatible_products[0])
 
     def run_years(self, ys: List[YearToTest]) -> List[MultiyearResult]:
         years = list(map(lambda x: x[1], self.db.get_years().items()))

@@ -134,7 +134,7 @@ class BM41222(AbstractTablet):
         v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.nabo_13_v)
         return [iii, v]
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
+    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
 
         if subquery is not None:
 
@@ -175,4 +175,4 @@ class BM41222(AbstractTablet):
             res = self.run_years(tests)
             self.print_results(res, "Shamash-shum-ukin year 14 to Nabopolassar (assuming reigns of 20, and 22)")
 
-        self.output_json_for_year(res, print_year)
+        self.output_json_for_year(res, print_year, slim_results)
