@@ -153,7 +153,9 @@ class BM76738(AbstractTablet):
 
     def year_10_month_a(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 20)
-        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, LIBRA.central_star, 0, LIBRA.radius, None, range)
+        return [res1, res2]
 
     def year_10_month_b(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 23)
