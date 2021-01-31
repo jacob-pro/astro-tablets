@@ -14,7 +14,7 @@ The data tables are saved in a SQLite db which can then be queried for the best 
 Support for these texts:
 - [X] [BM 32312](./documents/bm32312.md)
 - [X] [BM 41222 (ADT V No.52)](documents/bm41222.md)
-- [ ] [BM 76738 and 76813](./documents/bm76738_76813.md)
+- [X] [BM 76738 and 76813](./documents/bm76738_76813.md)
 - [ ] [BM 35115... (LBAT 1415-7, ADT V No.3)](documents/bm35115_35789_45640.md)
 - [ ] [BM 32234 (LBAT 1419, ADT V No.4)](documents/bm32234.md)
 - [ ] [BM 38462 (LBAT 1420, ADT V No.6)](documents/bm38462.md)
