@@ -73,6 +73,8 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[12332])
         if name == NU_AURIGAE:
             return Star.from_dataframe(self.stars.loc[27673])
+        if name == THETA_CANCRI:
+            return Star.from_dataframe(self.stars.loc[41822])
         if name == FIFTY_TWO_LEONIS:
             return Star.from_dataframe(self.stars.loc[52689])
         if name == NU_LIBRAE:

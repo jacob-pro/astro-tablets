@@ -36,6 +36,10 @@ class SearchRange:
     def any_day(month: List[BabylonianDay]):
         return SearchRange(month[0].sunset, month[29].sunrise, "Any day")
 
+    @staticmethod
+    def x_plus(month: List[BabylonianDay], x: int):
+        return SearchRange(month[x].sunset, month[29].sunrise, "{}+".format(x))
+
 
 class AbstractResult(ABC):
 

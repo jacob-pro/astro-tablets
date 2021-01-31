@@ -40,7 +40,7 @@ class Tablet(ABC):
     def calendar(self):
         for i in range(self.start_day.utc.year, self.end_day.utc.year + 1):
             self.db.save_equinox(vernal_equinox(self.data, i))
-        days = days_in_range(self.data, self.start_day, self.end_day,
+        days = days_in_range(self.data, self.start_day, self.end_day + 32,      # We need to read a month ahead
                              lambda x: self.print_progress("Computing Lunar calendar", x))
         self.db.save_days(days)
         print("")
@@ -151,10 +151,12 @@ class BM76738(Tablet):
     def compute(self):
         super(BM76738, self).compute()
         self.planet_events(SATURN)
+        self.separation_during_night(SATURN, CANCER.central_star)
         self.separation_during_night(SATURN, EPSILON_LEONIS)
         self.separation_during_night(SATURN, REGULUS)
         self.separation_during_night(SATURN, LEO.central_star)
         self.separation_during_night(SATURN, BETA_VIRGINIS)
         self.separation_during_night(SATURN, VIRGO.central_star)
         self.separation_during_night(SATURN, LIBRA.central_star)
+        self.separation_during_night(SATURN, ANTARES)
         self.separation_during_night(SATURN, SAGITTARIUS.central_star)

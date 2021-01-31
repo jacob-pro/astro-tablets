@@ -12,9 +12,9 @@ class BM76738(AbstractTablet):
         return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, SearchRange.any_day(month))]
 
     def year_1_month_4(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        day24 = SearchRange.for_night(month, 24)
-        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, day24)
-        # TODO add cancer
+        range = SearchRange.for_night(month, 24)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        # TODO res2 = AngularSeparationResult(self.db, SATURN, CANCER.central_star, 0, CANCER.radius, None, range)
         return [res1]
 
     def year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -24,7 +24,7 @@ class BM76738(AbstractTablet):
 
 
     def year_2_month_4(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        range = SearchRange(month[10].sunset, month[29].sunrise, "Day 10+")
+        range = SearchRange.x_plus(month, 10)
         return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_2_month_5(self, month: List[BabylonianDay]) -> List[AbstractResult]:
@@ -39,9 +39,162 @@ class BM76738(AbstractTablet):
         return [month_4, month_5]
 
 
+    def year_3_month_4(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 7)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_3_month_5(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 16)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, REGULUS, 0, 10, EclipticPosition.BEHIND, range)
+        return [res1, res2]
+
+    def year_3(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_4 = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_3_month_4)
+        month_5 = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_3_month_5)
+        return [month_4, month_5]
+
+
+    def year_4_month_4(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 29)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_4_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.any_day(month)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, LEO.central_star, 0, LEO.radius, None, range)
+        return [res1, res2]
+
+    def year_4(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_4 = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_4_month_4)
+        month_b = self.try_multiple_months(nisan_1, 5, 12, self.year_4_month_unknown)
+        return [month_4, month_b]
+
+
+    def year_5_month_5(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 23)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_5_month_6(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 29)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        return [res1]
+
+    def year_5(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_5 = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_5_month_5)
+        month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_5_month_6)
+        return [month_5, month_6]
+
+
+    def year_6_month_5(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 20)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_6_month_6(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 22)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, BETA_VIRGINIS, 0, 10, EclipticPosition.BEHIND, range)
+        return [res1, res2]
+
+    def year_6(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_5 = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_6_month_5)
+        month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_6_month_6)
+        return [month_5, month_6]
+
+
+    def year_7_month_6(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.x_plus(month, 10)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_7_month_7(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 15)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range)
+        return [res1, res2]
+
+    def year_7(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_7_month_6)
+        month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_7_month_7)
+        return [month_6, month_7]
+
+    def year_8_month_6(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.x_plus(month, 5)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range)
+        return [res1, res2]
+
+    def year_8_month_7(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 5)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range)
+        return [res1, res2]
+
+    def year_8(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_8_month_6)
+        month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_8_month_7)
+        return [month_6, month_7]
+
+
+    def year_9_month_a(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.any_day(month)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_9_month_b(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.any_day(month)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        res2 = AngularSeparationResult(self.db, SATURN, LIBRA.central_star, 0, LIBRA.radius, None, range)
+        return [res1, res2]
+
+    def year_9(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.try_multiple_months(nisan_1, 1, 12, self.year_9_month_a)
+        month_b = self.try_multiple_months(nisan_1, 1, 12, self.year_9_month_b)
+        return [month_a, month_b]
+
+
+    def year_10_month_a(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 20)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_10_month_b(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 23)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        # TODO res2 = AngularSeparationResult(self.db, SATURN, ANTARES, 0, 10, EclipticPosition.AHEAD, range)
+        return [res1]
+
+    def year_10(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.try_multiple_months(nisan_1, 1, 12, self.year_10_month_a)
+        month_b = self.try_multiple_months(nisan_1, 1, 13, self.year_10_month_b)
+        return [month_a, month_b]
+
+
+    def year_11_month_7(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.for_night(month, 13)
+        return [PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
+
+    def year_11_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+        range = SearchRange.any_day(month)
+        res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
+        # TODO res2 = AngularSeparationResult(self.db, SATURN, ANTARES, 0, 10, EclipticPosition.ABOVE, range)
+        return [res1]
+
+    def year_11(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_11_month_7)
+        month_b = self.try_multiple_months(nisan_1, 7, 12, self.year_11_month_unknown)
+        return [month_7, month_b]
+
+
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         tests = [YearToTest(0, "Kandalanu 1", Intercalary.UNKNOWN, self.year_1),
-                 YearToTest(1, "Kandalanu 2", Intercalary.UNKNOWN, self.year_2)
+                 YearToTest(1, "Kandalanu 2", Intercalary.UNKNOWN, self.year_2),
+                 YearToTest(2, "Kandalanu 3", Intercalary.UNKNOWN, self.year_3),
+                 YearToTest(3, "Kandalanu 4", Intercalary.FALSE, self.year_4),
+                 YearToTest(4, "Kandalanu 5", Intercalary.ULULU, self.year_5),
+                 YearToTest(5, "Kandalanu 6", Intercalary.FALSE, self.year_6),
+                 YearToTest(6, "Kandalanu 7", Intercalary.UNKNOWN, self.year_7),
+                 YearToTest(7, "Kandalanu 8", Intercalary.UNKNOWN, self.year_8),
+                 YearToTest(8, "Kandalanu 9", Intercalary.FALSE, self.year_9),
+                 YearToTest(9, "Kandalanu 10", Intercalary.ADDARU, self.year_10),
+                 YearToTest(10, "Kandalanu 11", Intercalary.FALSE, self.year_11),
                  ]
         res = self.run_years(tests)
         self.print_results(res, "Kandalanu year 1")
