@@ -28,8 +28,8 @@ I will take into account the following constraints:
 
 -   The month may not start earlier than the first possible day of lunar
     visibility, however it may start one day later.
--   Each month can either be 29 or 30 days long, unless a dated text
-    confirms the month was 30 days long.
+-   Each month can either be 29 or 30 days long (unless a dated text
+    confirms the month was 30 days long).
 
 Planetary Visibilty
 -------------------
@@ -55,7 +55,31 @@ Where the diaries translate to “halo” I will map this to a 22° radius.
 
 Where the tablets describe a body as being within a constellation, I
 will approximate that position by drawing an appropriate radius around a
-relatively central star within that constellation.
+relatively central star within that constellation. We can only take an
+approximate approach anyway given that we do not have strict boundaries
+for the ancient constellations.
+
+Translations
+------------
+
+The general conventions used for most of the translations \[6, p. 37\]:
+
+-   Square brackets `[]` denote missing/reconstructed text
+-   Half brackets `⌜⌝` denote text damaged in some other way
+-   A question mark indicates doubts about the reading of a sign
+
+As a general rule I will not rely on reconstructed text for use in
+analysing the observations; I will treat those sections as if they were
+missing. There are some exceptions to this, such as where it is possible
+to deduce information about the missing text from its surroundings, for
+example:
+
+-   Where a year/month/day number is missing or damaged we can assume
+    that if the text is in order then the missing number will fit within
+    the range of adjacent lines
+-   [BM76738](./bm76738_76813.md) follows a consistent pattern where
+    every other line is the last/first appearance, and every two lines
+    spans a year.
 
 References
 ----------
