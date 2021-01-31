@@ -8,7 +8,21 @@
 > [@ossendrijver2016translating, 131]
 
 The year could either have 12 or 13 months depending on if there was an intercalary month. 
-A list of intercalary months mentioned in texts was published by Parker and Dubberstein [@dubberstein1956babylonian, 4]
+I am using this list of known intercalary months:
+
+- Shamash-shum-ukin Year 14, Addaru II: BM 29496, YBC 11309
+- Kandalanu Year 5, Ululu II: Clay BE 8/1, No.3, [BM76738](./bm76738_76813.md) Obv. 10
+- Kandalanu Year 8, Ululu II: [BM76738](./bm76738_76813.md) Obv. 15
+- Kandalanu Year 10, Addaru II: BM 54213, [BM76738](./bm76738_76813.md) Rev. 20
+- Kandalanu Year 19, Addaru II: YBC 11481, 11300, 11476, NBC 6144
+- Nabopolassar Year 2, Addaru II: NCBT 589
+- Nabopolassar Year 5, Ululu II: UET IV 202
+- Nabopolassar Year 7, Addaru II: YBC 3455
+- Nabopolassar Year 10, Ululu II: GCCI II 50, NBC 6141
+- Nabopolassar Year 12, Addaru II: Unpub. economic text (Sachs)
+- Nabopolassar Year 15, Ululu II: TCL XII 19, NCBT 1175
+
+(See also [@dubberstein1956babylonian, 4] [@brinkman1983documentary, 67])
 
 ### Lunar Month
 

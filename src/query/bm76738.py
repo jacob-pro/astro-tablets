@@ -117,21 +117,22 @@ class BM76738(AbstractTablet):
         month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_7_month_7)
         return [month_6, month_7]
 
-    def year_8_month_6(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def year_8_month_vi2(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.x_plus(month, 5)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, range)
         res2 = AngularSeparationResult(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range)
         return [res1, res2]
 
-    def year_8_month_7(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def year_8_month_vii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = AngularSeparationResult(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range)
         return [res1, res2]
 
     def year_8(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_8_month_6)
-        month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_8_month_7)
+        # Intercalary Ululu so offset by one
+        month_6 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_8_month_vi2)
+        month_7 = self.repeat_month_with_alternate_starts(nisan_1, 8, self.year_8_month_vii)
         return [month_6, month_7]
 
 
@@ -237,8 +238,8 @@ class BM76738(AbstractTablet):
                  YearToTest(3, "Kandalanu 4", Intercalary.FALSE, self.year_4),
                  YearToTest(4, "Kandalanu 5", Intercalary.ULULU, self.year_5),
                  YearToTest(5, "Kandalanu 6", Intercalary.FALSE, self.year_6),
-                 YearToTest(6, "Kandalanu 7", Intercalary.UNKNOWN, self.year_7),
-                 YearToTest(7, "Kandalanu 8", Intercalary.UNKNOWN, self.year_8),
+                 YearToTest(6, "Kandalanu 7", Intercalary.FALSE, self.year_7),
+                 YearToTest(7, "Kandalanu 8", Intercalary.ULULU, self.year_8),
                  YearToTest(8, "Kandalanu 9", Intercalary.FALSE, self.year_9),
                  YearToTest(9, "Kandalanu 10", Intercalary.ADDARU, self.year_10),
                  YearToTest(10, "Kandalanu 11", Intercalary.FALSE, self.year_11),

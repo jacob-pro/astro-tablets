@@ -10,8 +10,23 @@ Calendar
 > within about 30 days of the vernal equinox \[1, p. 131\]
 
 The year could either have 12 or 13 months depending on if there was an
-intercalary month. A list of intercalary months mentioned in texts was
-published by Parker and Dubberstein \[2, p. 4\]
+intercalary month. I am using this list of known intercalary months:
+
+-   Shamash-shum-ukin Year 14, Addaru II: BM 29496, YBC 11309
+-   Kandalanu Year 5, Ululu II: Clay BE 8/1, No.3,
+    [BM76738](./bm76738_76813.md) Obv. 10
+-   Kandalanu Year 8, Ululu II: [BM76738](./bm76738_76813.md) Obv. 15
+-   Kandalanu Year 10, Addaru II: BM 54213,
+    [BM76738](./bm76738_76813.md) Rev. 20
+-   Kandalanu Year 19, Addaru II: YBC 11481, 11300, 11476, NBC 6144
+-   Nabopolassar Year 2, Addaru II: NCBT 589
+-   Nabopolassar Year 5, Ululu II: UET IV 202
+-   Nabopolassar Year 7, Addaru II: YBC 3455
+-   Nabopolassar Year 10, Ululu II: GCCI II 50, NBC 6141
+-   Nabopolassar Year 12, Addaru II: Unpub. economic text (Sachs)
+-   Nabopolassar Year 15, Ululu II: TCL XII 19, NCBT 1175
+
+(See also \[2, p. 4\] \[3, p. 67\])
 
 ### Lunar Month
 
@@ -22,7 +37,7 @@ published by Parker and Dubberstein \[2, p. 4\]
 > observed or not. \[1, p. 131\]
 
 > Our calculation shows that 7.5° (±0.25 ̊) is the lowest naked eye
-> visibility limit. \[3, p. 58\]
+> visibility limit. \[4, p. 58\]
 
 I will take into account the following constraints:
 
@@ -36,7 +51,7 @@ Planetary Visibilty
 
 When computing planetary visibility events I am using the default fixed
 arcus visionis parameters that are used in Alcyone Planetary, Stellar
-and Lunar Visibility \[4\].
+and Lunar Visibility \[5\].
 
 Conversions
 -----------
@@ -44,12 +59,12 @@ Conversions
 ### Angular Separation
 
 > Our results for the angular equivalent of the finger and cubit in the
-> Neo-Babylonian period are respectively 0.092 and 2.2 deg \[5, p. 212\]
+> Neo-Babylonian period are respectively 0.092 and 2.2 deg \[6, p. 212\]
 
 Where the diaries translate to “halo” I will map this to a 22° radius.
 
 > The larger type of halo called supūru is not so far attested in
-> diaries. \[6, p. 33\]
+> diaries. \[7, p. 33\]
 
 ### Constellations
 
@@ -62,7 +77,7 @@ for the ancient constellations.
 Translations
 ------------
 
-The general conventions used for most of the translations \[6, p. 37\]:
+The general conventions used for most of the translations \[7, p. 37\]:
 
 -   Square brackets `[]` denote missing/reconstructed text
 -   Half brackets `⌜⌝` denote text damaged in some other way
@@ -94,19 +109,25 @@ Examples*, vol. 344, p. 125, 2016, \[Online\]. Available:
 b.c.-A.D. 75*. Brown University Press, 1956, \[Online\]. Available:
 <https://webspace.science.uu.nl/~gent0113/babylon/downloads/babylonian_chronology_pd_1971.pdf>.
 
-\[3\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
+\[3\] J. A. Brinkman and D. A. Kennedy, “Documentary evidence for the
+economic base of early neo-babylonian society: A survey of dated
+babylonian economic texts, 721-626 b.c.” *Journal of Cuneiform Studies*,
+vol. 35, no. 1, pp. 1–90, 1983, \[Online\]. Available:
+<http://www.jstor.org/stable/3515942>.
+
+\[4\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
 danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007,
 \[Online\]. Available:
 <http://adsabs.harvard.edu/full/2007Obs...127...53S>.
 
-\[4\] Alcyone, “Planetary, stellar and lunar visibility.” \[Online\].
+\[5\] Alcyone, “Planetary, stellar and lunar visibility.” \[Online\].
 Available:
 <http://www.alcyone.de/planetary_lunar_and_stellar_visibility.html>.
 
-\[5\] L. J. Fatoohi and F. R. Stephenson, “Angular measurements in
+\[6\] L. J. Fatoohi and F. R. Stephenson, “Angular measurements in
 babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
 \[Online\]. Available: <https://www.jstor.org/stable/41670130>.
 
-\[6\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
+\[7\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
 from babylonia. Vol. 1, diaries from 652 b.c. To 262 b.c. : Plates*.
 Verlag der Österreichischen Akademie der Wissenschaften, 1988.
