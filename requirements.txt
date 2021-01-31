@@ -3,3 +3,4 @@ pandas==1.2.1
 beautifulsoup4==4.9.3
 parse==1.18.0
 inflect== 5.0.2
+roman==3.3

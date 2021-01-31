@@ -1,6 +1,7 @@
 import dataclasses
 import itertools
 import json
+import roman
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
@@ -102,8 +103,8 @@ class AbstractTablet(ABC):
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None]):
         pass
 
-    def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int, name: str,
-                                           func: Callable[[List[BabylonianDay]], List[AbstractResult]]
+    def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int,
+                                           func: Callable[[List[BabylonianDay]], List[AbstractResult]], name=None
                                            ) -> PotentialMonthResult:
         """
         Tries repeating the same month observations but assuming the month started either 0 or 1 days later
@@ -113,6 +114,7 @@ class AbstractTablet(ABC):
         assert 1 <= month_number <= 13
         months = self.db.get_months(nisan_1)
         month_days = self.db.get_days(months[month_number - 1])
+        name = name if name is not None else roman.toRoman(month_number)
         all_results = []
         for start_offset in range(0, 2):
             results = func(month_days[start_offset:])
@@ -210,3 +212,13 @@ class AbstractTablet(ABC):
             total_score = self.total_score(yrs)
             results.append(MultiyearResult(years[i][0]['year'], total_score, yrs))
         return results
+
+    def try_multiple_months(self, nisan_1: float, start: int, end: int,
+                            fn: Callable[[List[BabylonianDay]], List[AbstractResult]], comment=None) -> PotentialMonthResult:
+        attempts = []
+        comment = "Unknown month between {} and {}".format(start, end) if comment is None else comment
+        for m in range(start, end+1):
+            attempts.append(
+                self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment))
+        attempts.sort(key=lambda x: x.score, reverse=True)
+        return attempts[0]

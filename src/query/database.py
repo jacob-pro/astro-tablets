@@ -39,7 +39,7 @@ class Database:
         assert res[0].sunset == month_sunset_1
         return res
 
-    def get_months(self, nisan_1_sunset: float, count=12) -> List[float]:
+    def get_months(self, nisan_1_sunset: float, count=13) -> List[float]:
         """
         Get a list of months for a given Nisan I sunset time
         @param nisan_1_sunset: The time of sunset on the first day of the year

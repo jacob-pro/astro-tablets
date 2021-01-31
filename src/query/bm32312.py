@@ -3,7 +3,7 @@ from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
 from query.database import BabylonianDay
 from query.result import AbstractResult, AngularSeparationResult, SearchRange, PlanetaryEventResult
-from query.tablet import AbstractTablet, PotentialMonthResult, MultiyearResult, YearToTest, Intercalary
+from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM32312(AbstractTablet):
@@ -45,14 +45,9 @@ class BM32312(AbstractTablet):
         return res
 
     def shamash_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_a_attempts = []
-        month_b_attempts = []
-        for month_number in range(1, 13):
-            month_a_attempts.append(self.repeat_month_with_alternate_starts(nisan_1, month_number, "Month A (Probably I)", self.month_a))
-            month_b_attempts.append(self.repeat_month_with_alternate_starts(nisan_1, month_number, "Month B", self.month_b))
-        month_a_attempts.sort(key=lambda x: x.score, reverse=True)
-        month_b_attempts.sort(key=lambda x: x.score, reverse=True)
-        return [month_a_attempts[0], month_b_attempts[0]]
+        month_a = self.try_multiple_months(nisan_1, 1, 12, self.month_a, comment="Month A (Probably I)")
+        month_b = self.try_multiple_months(nisan_1, 1, 12, self.month_b, comment="Month B")
+        return [month_a, month_b]
 
     def do_query(self, _subquery: Union[str, None], print_year: Union[int, None]):
         tests = [YearToTest(0, "Shamash-shum-ukin 16", Intercalary.UNKNOWN, self.shamash_year_16)]
