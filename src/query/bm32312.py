@@ -45,8 +45,9 @@ class BM32312(AbstractTablet):
         return res
 
     def shamash_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_a = self.try_multiple_months(nisan_1, 1, 12, self.month_a, comment="Month A (Probably I)")
-        month_b = self.try_multiple_months(nisan_1, 1, 12, self.month_b, comment="Month B")
+        # Unknown intercalary status
+        month_a = self.try_multiple_months(nisan_1, 1, 13, self.month_a, comment="Month A (Probably I)")
+        month_b = self.try_multiple_months(nisan_1, 1, 13, self.month_b, comment="Month B")
         return [month_a, month_b]
 
     def do_query(self, _subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
