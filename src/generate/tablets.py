@@ -17,6 +17,8 @@ def get_tablet_class(tablet: str):
         return BM41222
     if tablet == "bm76738":
         return BM76738
+    if tablet == "bm35115":
+        return BM35115
     raise ValueError("Unknown tablet name")
 
 
@@ -159,3 +161,12 @@ class BM76738(Tablet):
         self.separation_during_night(SATURN, LIBRA.central_star)
         self.separation_during_night(SATURN, ANTARES)
         self.separation_during_night(SATURN, SAGITTARIUS.central_star)
+
+
+class BM35115(Tablet):
+    default_start = -720
+    default_end = -581
+
+    def compute(self):
+        super(BM35115, self).compute()
+        pass
