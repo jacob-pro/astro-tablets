@@ -80,4 +80,8 @@ about the missing text from its surroundings, for example:
 - [BM76738](./bm76738_76813.md) follows a consistent pattern where every other line is the last/first appearance, 
   and every two lines spans a year.
 
+## Time
+
+1 UŠ ("time degree") = 4 minutes; 1 bēru = 30 UŠ [@stephenson1994babylonian] [@sachs1988adt, 16]
+
 ## References

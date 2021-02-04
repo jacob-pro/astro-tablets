@@ -97,6 +97,11 @@ example:
     every other line is the last/first appearance, and every two lines
     spans a year.
 
+Time
+----
+
+1 UŠ (“time degree”) = 4 minutes; 1 bēru = 30 UŠ \[8\] \[7, p. 16\]
+
 References
 ----------
 
@@ -132,3 +137,8 @@ babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
 \[7\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
 from babylonia. Vol. 1, diaries from 652 b.c. To 262 b.c. : Plates*.
 Verlag der Österreichischen Akademie der Wissenschaften, 1988.
+
+\[8\] F. R. Stephenson and L. J. Fatoohi, “The babylonian unit of time,”
+*Journal for the history of astronomy*, vol. 25, no. 2, pp. 99–110,
+1994, \[Online\]. Available:
+<http://adsabs.harvard.edu/full/1994JHA....25...99S>.
