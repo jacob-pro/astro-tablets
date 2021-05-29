@@ -7,7 +7,33 @@ from skyfield.timelib import Time
 
 from data import AstroData
 
+
 ## https://github.com/skyfielders/python-skyfield/issues/545
+
+
+class AngleBetweenCalculator:
+
+    def __init__(self, data: AstroData):
+        sdict = dict(((s.center, s.target), s.spk_segment) for s in data.ephemeris.segments)
+        self.sun = sdict[0, 10]
+        self.earth_barycenter = sdict[0, 3]
+        self.earth = sdict[3, 399]
+        self.moon = sdict[3, 301]
+
+    def impl(self, t: Time):
+        from skyfield.functions import angle_between
+
+        jd, fr = t.whole, t.tdb_fraction
+        b = self.earth_barycenter.compute(jd, fr)
+        e = self.earth.compute(jd, fr)
+        m = self.moon.compute(jd, fr)
+        s = self.sun.compute(jd, fr)
+
+        earth_to_sun = s - b - e
+        moon_to_earth = e - m
+
+        angle = angle_between(earth_to_sun, moon_to_earth)
+        return angle
 
 
 @dataclass
@@ -69,5 +95,3 @@ def lunar_eclipses_in_range(data: AstroData, start: Time, end: Time) -> List[Ecl
                                      penumbra_radius_radians=details['penumbra_radius_radians'][idx],
                                      umbra_radius_radians=details['umbra_radius_radians'][idx]))
     return list(map(lambda x: x.upgrade(data), bases))
-
-
