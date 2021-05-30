@@ -4,13 +4,10 @@ from matplotlib import pyplot as plt
 from util import TimeValue
 
 data = AstroData()
-t0 = data.timescale.ut1(-423, 9, 28)
+t0 = data.timescale.ut1(-631, 5, 24)
 times, types, details = eclipselib.lunar_eclipses(data.timescale.tt_jd(t0.tt - 1), data.timescale.tt_jd(t0.tt + 1), data.ephemeris)
 
 assert len(times) == 1
-print(TimeValue(times[0].tt).string(data.timescale))
-print(eclipselib.LUNAR_ECLIPSES[types[0]])
-
 calc = AngleBetweenCalculator(data)
 
 one_hour = 1.0 / 24
@@ -27,13 +24,14 @@ while start_time.tt < end_time.tt:
     points.append((diff, angle))
     start_time = data.timescale.tt_jd(start_time.tt + one_min)
 
-fig, ax = plt.subplots()
-ax.set(xlabel='time', ylabel='separation (rad)')
+plt.xlabel('Time (deg)')
+plt.ylabel('Separation (rad)')
+plt.title("{} (UTC+3) - {}".format(TimeValue(times[0].tt).string(data.timescale), eclipselib.LUNAR_ECLIPSES[types[0]]))
 
 plt.plot(*zip(*points))
-plt.axhline(y=details['penumbra_radius_radians'][0] + moon_radius, color='g', label="penumbral")
-plt.axhline(y=details['umbra_radius_radians'][0] + moon_radius, color='y', label="partial")
-plt.axhline(y=details['umbra_radius_radians'][0] - moon_radius, color='r', label="total")
+plt.axhline(y=details['penumbra_radius_radians'][0] + moon_radius, color='g', label="Penumbral")
+plt.axhline(y=details['umbra_radius_radians'][0] + moon_radius, color='y', label="Partial")
+plt.axhline(y=details['umbra_radius_radians'][0] - moon_radius, color='r', label="Total")
 
 plt.legend()
 plt.show()
