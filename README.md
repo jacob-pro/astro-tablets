@@ -24,8 +24,8 @@ Support for these texts:
 Supported features
 - Compute a lunar calendar (sunrise, sunset, first visibility, spring equinox)
 - Angular separation of moon, planets, stars
-- Position of two bodies with direction relative to the ecliptic plane
 - Visibility phenomena and stations of the inner and outer planets
+- Compute lunar eclipse durations
 
 ## Setup
 
