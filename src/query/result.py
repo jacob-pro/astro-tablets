@@ -1,6 +1,7 @@
 import math
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
+from enum import unique, Enum
 from typing import *
 
 import inflect
@@ -12,6 +13,7 @@ from query.database import Database, BabylonianDay
 from util import TimeValue
 
 p = inflect.engine()
+
 
 @dataclass
 class SearchRange:
@@ -168,3 +170,37 @@ class AngularSeparationResult(AbstractResult):
             'position': self.best['position'],
             'at_time': TimeValue(self.best['time']),
         }
+
+
+@dataclass
+class FirstContactSunrise:
+    after_sunrise: float
+
+
+@dataclass
+class FirstContactSunset:
+    after_sunset: float
+
+
+@unique
+class ExpectedEclipseType(Enum):
+    UNKNOWN = 0
+    PARTIAL_OR_TOTAL = 1
+    PARTIAL = 2
+    TOTAL = 3
+
+
+class LunarEclipseResult(AbstractResult):
+
+    def __init__(self, db: Database, first_contact: Union[None, FirstContactSunset, FirstContactSunrise],
+                 type: ExpectedEclipseType, target_time: SearchRange):
+        pass
+
+    def output(self) -> dict:
+        pass
+
+    def get_search_range(self) -> SearchRange:
+        pass
+
+    def quality_score(self) -> float:
+        pass
