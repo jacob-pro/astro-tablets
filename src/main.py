@@ -9,6 +9,7 @@ import query as query_pkg
 from data import AstroData
 from generate import tablets
 from generate.database import Database as GenerateDatabase
+from graphics.eclipse_plot import plot_eclipse
 from query.database import Database as QueryDatabase
 
 
@@ -60,6 +61,12 @@ def test():
     runner.run(suite)
 
 
+def graphs():
+    data = AstroData()
+    plot_eclipse(data, data.timescale.ut1(-554, 10, 7), "../documents/graphics/total_eclipse.png")
+    plot_eclipse(data, data.timescale.ut1(-153, 3, 21), "../documents/graphics/partial_eclipse.png")
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -80,6 +87,7 @@ if __name__ == "__main__":
     query_parser.add_argument('--slim', action='store_true', help='reduce size of output json')
 
     subparsers.add_parser('test')
+    subparsers.add_parser('graphs')
 
     kwargs = vars(parser.parse_args())
     globals()[kwargs.pop('subparser')](**kwargs)
