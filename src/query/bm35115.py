@@ -1,7 +1,7 @@
 from data import *
 from query.database import BabylonianDay
 from query.result import SearchRange, AbstractResult, LunarEclipseResult, FirstContactSunrise, FirstContactSunset, \
-    ExpectedEclipseType
+    ExpectedEclipseType, AngularSeparationResult
 from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
@@ -46,8 +46,10 @@ class BM35115(AbstractTablet):
 
 
     def year_36_month_3(self, month: List[BabylonianDay]) -> List[AbstractResult]:
-        range = SearchRange.for_night(month, 15)
-        return [LunarEclipseResult(self.db, None, ExpectedEclipseType.PARTIAL, range)]
+        day15 = SearchRange.for_night(month, 15)
+        res1 = LunarEclipseResult(self.db, None, ExpectedEclipseType.PARTIAL, day15)
+        res2 = AngularSeparationResult(self.db, MOON, ANTARES, 0, 20, None, day15)
+        return [res1, res2]
 
     def year_36(self, nisan_1: float) -> List[PotentialMonthResult]:
         month_3 = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_36_month_3)
