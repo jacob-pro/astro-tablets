@@ -6,6 +6,7 @@ from skyfield.timelib import Time
 
 from data import SUN
 from generate.angular_separation import AngularSeparationResult
+from generate.eclipse import Eclipse, TimeUnit
 from generate.lunar_calendar import BabylonianDay, VERNAL_EQUINOX
 from generate.planet_events import SynodicEvent
 from util import get_git_hash, get_git_changes
@@ -54,6 +55,17 @@ class Database:
             git VARCHAR,
             time DATETIME DEFAULT CURRENT_TIMESTAMP
         );""")
+        self.cursor.execute("""
+        CREATE TABLE lunar_eclipses (
+            e_type VARCHAR(255),
+            closest_approach_time FLOAT,
+            partial_eclipse_begin FLOAT NULL,
+            onset_us FLOAT,
+            maximal_us FLOAT,
+            clearing_us FLOAT,
+            sum_us FLOAT,
+            PRIMARY KEY (closest_approach_time)
+        );""")
 
     def close(self):
         self.cursor.close()
@@ -71,11 +83,22 @@ class Database:
 
     def save_equinox(self, time: Time):
         self.cursor.execute("INSERT INTO events (body, event, time) VALUES (?, ?, ?)",
-                            (SUN, VERNAL_EQUINOX, time.tt, ))
+                            (SUN, VERNAL_EQUINOX, time.tt,))
 
     def save_separation(self, of: str, to: str, res: AngularSeparationResult, time: Time):
-        self.cursor.execute("INSERT INTO separations (from_body, to_body, angle, position, time) VALUES (?, ?, ?, ?, ?)",
-                            (of, to, res.angle.degrees, res.position.value, time.tt))
+        self.cursor.execute(
+            "INSERT INTO separations (from_body, to_body, angle, position, time) VALUES (?, ?, ?, ?, ?)",
+            (of, to, res.angle.degrees, res.position.value, time.tt))
+
+    def save_lunar_eclipses(self, events: List[Eclipse]):
+        for e in events:
+            partial_eclipse_begin = None if e.type == 'Penumbral' else e.partial_eclipse_begin.tt
+            phases = e.phases(TimeUnit.DEGREE)
+            self.cursor.execute(
+                "INSERT INTO lunar_eclipses (e_type, closest_approach_time, partial_eclipse_begin, onset_us, "
+                "maximal_us, clearing_us, sum_us) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (e.type, e.closest_approach_time.tt, partial_eclipse_begin, phases.onset, phases.maximal,
+                 phases.clearing, phases.sum))
 
     def save_info(self, tablet: str, start: int, end: int):
         hash = get_git_hash()

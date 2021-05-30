@@ -1,4 +1,5 @@
 from data import *
+from generate.angular_separation import EclipticPosition
 from query.database import BabylonianDay
 from query.result import SearchRange, AbstractResult, LunarEclipseResult, FirstContactSunrise, FirstContactSunset, \
     ExpectedEclipseType, AngularSeparationResult
@@ -48,7 +49,7 @@ class BM35115(AbstractTablet):
     def year_36_month_3(self, month: List[BabylonianDay]) -> List[AbstractResult]:
         day15 = SearchRange.for_night(month, 15)
         res1 = LunarEclipseResult(self.db, None, ExpectedEclipseType.PARTIAL, day15)
-        res2 = AngularSeparationResult(self.db, MOON, ANTARES, 0, 20, None, day15)
+        res2 = AngularSeparationResult(self.db, MOON, ANTARES, 0, 20, EclipticPosition.BEHIND, day15)
         return [res1, res2]
 
     def year_36(self, nisan_1: float) -> List[PotentialMonthResult]:

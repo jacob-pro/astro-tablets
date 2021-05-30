@@ -5,6 +5,7 @@ from abc import ABC
 from data import *
 from generate.angular_separation import angular_separation
 from generate.database import Database
+from generate.eclipse import lunar_eclipses_in_range
 from generate.lunar_calendar import vernal_equinox, days_in_range
 from generate.planet_events import planet_events
 
@@ -69,6 +70,20 @@ class Tablet(ABC):
                                lambda x: self.print_progress("Computing {} visibility".format(planet.name), x))
         self.db.save_synodic_events(planet.name, events)
         print("")
+
+    def lunar_eclipses(self, distances: List[str] = []):
+        print("Computing lunar eclipses")
+        eclipses = lunar_eclipses_in_range(self.data, self.start_day, self.end_day)
+        self.db.save_lunar_eclipses(eclipses)
+        for body in distances:
+            b1 = self.data.get_body(MOON)
+            b2 = self.data.get_body(body)
+            for idx, e in enumerate(eclipses):
+                res = angular_separation(self.data, b1, b2, e.closest_approach_time)
+                self.db.save_separation(MOON, body, res, e.closest_approach_time)
+                self.print_progress("Computing separation between {} and {}".format(MOON, body), idx / len(eclipses))
+            print("")
+        return eclipses
 
     def compute(self):
         self.start_time = time.time()
@@ -169,4 +184,5 @@ class BM35115(Tablet):
 
     def compute(self):
         super(BM35115, self).compute()
-        pass
+        # (Moon) behind α Scorpii [it was eclipsed.]
+        self.lunar_eclipses([ANTARES])
