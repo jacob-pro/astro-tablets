@@ -137,8 +137,10 @@ measure the time from the start of the partial eclipse until it becomes
 maximal (i.e. nearest separation of the moon and the shadow) (1:M), and
 the time from then to the end of the eclipse (M:4). But because there is
 a continuous curve, it is difficult to define a maximal phase
-“duration”: ![](graphics/partial_eclipse.png) Therefore in the case of
-partial eclipses I am only considering the total eclipse duration.
+“duration”: ![](graphics/partial_eclipse.png)
+
+Therefore in the case of partial eclipses I am only considering the
+total eclipse duration.
 
 References
 ----------

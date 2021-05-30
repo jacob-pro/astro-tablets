@@ -26,8 +26,8 @@ def plot_eclipse(data: AstroData, t0: Time, dest: str):
         start_time = data.timescale.tt_jd(start_time.tt + one_min)
 
     f, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [5, 1]})
-    ax1.set_xlabel('Time (deg)')
-    ax1.set_ylabel('Separation (rad)')
+    ax1.set_xlabel('Time (UŠ)')
+    ax1.set_ylabel('Separation (° rad)')
     ax1.set_title(
         "{} (UTC+3) - {}".format(TimeValue(times[0].tt).string(data.timescale), eclipselib.LUNAR_ECLIPSES[types[0]]))
 
@@ -42,12 +42,12 @@ def plot_eclipse(data: AstroData, t0: Time, dest: str):
     phases = again.phases(TimeUnit.DEGREE)
 
     if again.type == "Total":
-        t = "1:2 = {:.2f}°   2:3 = {:.2f}°   3:4 = {:.2f}°   (1:4 = {:.2f}°)" \
+        t = "1:2 = {:.2f} UŠ   2:3 = {:.2f} UŠ   3:4 = {:.2f} UŠ   (1:4 = {:.2f} UŠ)" \
             .format(phases.onset, phases.maximal, phases.clearing, phases.sum)
-        ax2.text(0, 0, t, fontsize=12)
+        ax2.text(0, 0, t, fontsize=11)
     elif again.type == "Partial":
-        t = "1:M = {:.2f}°   M:4 = {:.2f}°   (1:4 = {:.2f}°)" \
+        t = "1:M = {:.2f} UŠ   M:4 = {:.2f} UŠ   (1:4 = {:.2f} UŠ)" \
             .format(phases.onset, phases.clearing, phases.sum)
-        ax2.text(0, 0, t, fontsize=12)
+        ax2.text(0, 0, t, fontsize=11)
 
     plt.savefig(dest)
