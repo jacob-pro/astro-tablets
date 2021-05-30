@@ -4,11 +4,11 @@ from matplotlib import pyplot as plt
 from util import TimeValue
 
 data = AstroData()
-t0 = data.timescale.ut1(-631, 5, 24)
+t0 = data.timescale.ut1(-623, 6, 23)
 times, types, details = eclipselib.lunar_eclipses(data.timescale.tt_jd(t0.tt - 1), data.timescale.tt_jd(t0.tt + 1), data.ephemeris)
 
 assert len(times) == 1
-calc = AngleBetweenCalculator(data)
+calc = EclipseTool(data)
 
 one_hour = 1.0 / 24
 one_min = 1.0 / 24 / 60
@@ -18,7 +18,7 @@ moon_radius = details['moon_radius_radians'][0]
 
 points = []
 while start_time.tt < end_time.tt:
-    angle = calc.impl(start_time)
+    angle = calc.angle_between(start_time)
     diff = times[0].tt - start_time.tt
     diff = diff * 1440 / 4
     points.append((diff, angle))
