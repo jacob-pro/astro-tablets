@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import unique, Enum
 from typing import *
 
 from numpy.ma import arcsin
@@ -61,12 +62,19 @@ class EclipseTool:
         return moon_radius
 
 
+@unique
+class TimeUnit(Enum):
+    MINUTE = 0
+    DEGREE = 1
+
+
 @dataclass
 class EclipsePhases:
-    onset_minutes: float
-    maximal_minutes: float
-    clearing_minutes: float
-    sum_minutes: float
+    onset: float
+    maximal: float
+    clearing: float
+    sum: float
+    unit: TimeUnit
 
 
 class Eclipse:
@@ -110,17 +118,26 @@ class Eclipse:
             self.total_eclipse_begin = times[0]
             self.total_eclipse_end = times[1]
 
-    def phases(self) -> EclipsePhases:
-        phases = EclipsePhases(0, 0, 0, 0)
+    def phases(self, unit=TimeUnit.MINUTE) -> EclipsePhases:
+        phases = EclipsePhases(0, 0, 0, 0, unit)
         if self.type == 'Partial':
-            phases.onset_minutes = diff_mins(self.partial_eclipse_begin, self.closest_approach_time)
-            phases.clearing_minutes = diff_mins(self.closest_approach_time, self.partial_eclipse_end)
-            phases.sum_minutes = diff_mins(self.partial_eclipse_begin, self.partial_eclipse_end)
+            phases.onset = diff_mins(self.partial_eclipse_begin, self.closest_approach_time)
+            phases.clearing = diff_mins(self.closest_approach_time, self.partial_eclipse_end)
+            phases.sum = diff_mins(self.partial_eclipse_begin, self.partial_eclipse_end)
         if self.type == 'Total':
-            phases.onset_minutes = diff_mins(self.partial_eclipse_begin, self.total_eclipse_begin)
-            phases.maximal_minutes = diff_mins(self.total_eclipse_begin, self.total_eclipse_end)
-            phases.clearing_minutes = diff_mins(self.total_eclipse_end, self.partial_eclipse_end)
-            phases.sum_minutes = diff_mins(self.partial_eclipse_begin, self.partial_eclipse_end)
+            phases.onset = diff_mins(self.partial_eclipse_begin, self.total_eclipse_begin)
+            phases.maximal = diff_mins(self.total_eclipse_begin, self.total_eclipse_end)
+            phases.clearing = diff_mins(self.total_eclipse_end, self.partial_eclipse_end)
+            phases.sum = diff_mins(self.partial_eclipse_begin, self.partial_eclipse_end)
+        if unit == TimeUnit.MINUTE:
+            pass
+        elif unit == TimeUnit.DEGREE:
+            phases.onset = phases.onset / 4.0
+            phases.maximal = phases.maximal / 4.0
+            phases.clearing = phases.clearing / 4.0
+            phases.sum = phases.sum / 4.0
+        else:
+            raise RuntimeError("Invalid TimeUnit")
         return phases
 
 
@@ -136,3 +153,11 @@ def lunar_eclipses_in_range(data: AstroData, start: Time, end: Time) -> List[Ecl
                             penumbra_radius_radians=details['penumbra_radius_radians'][idx],
                             umbra_radius_radians=details['umbra_radius_radians'][idx]))
     return list
+
+
+def lunar_eclipse_on_date(data: AstroData, t0: Time) -> Eclipse:
+    search_start = data.timescale.tt_jd(t0.tt - 1.5)
+    search_end = data.timescale.tt_jd(t0.tt + 1.5)
+    eclipses = lunar_eclipses_in_range(data, search_start, search_end)
+    assert len(eclipses) == 1
+    return eclipses[0]

@@ -1,6 +1,6 @@
-from generate.eclipse import *
 from matplotlib import pyplot as plt
 
+from generate.eclipse import *
 from util import TimeValue
 
 data = AstroData()
@@ -24,14 +24,28 @@ while start_time.tt < end_time.tt:
     points.append((diff, angle))
     start_time = data.timescale.tt_jd(start_time.tt + one_min)
 
-plt.xlabel('Time (deg)')
-plt.ylabel('Separation (rad)')
-plt.title("{} (UTC+3) - {}".format(TimeValue(times[0].tt).string(data.timescale), eclipselib.LUNAR_ECLIPSES[types[0]]))
+f, (ax1, ax2) = plt.subplots(2, 1, gridspec_kw={'height_ratios': [5, 1]})
+ax1.set_xlabel('Time (deg)')
+ax1.set_ylabel('Separation (rad)')
+ax1.set_title("{} (UTC+3) - {}".format(TimeValue(times[0].tt).string(data.timescale), eclipselib.LUNAR_ECLIPSES[types[0]]))
 
-plt.plot(*zip(*points))
-plt.axhline(y=details['penumbra_radius_radians'][0] + moon_radius, color='g', label="Penumbral")
-plt.axhline(y=details['umbra_radius_radians'][0] + moon_radius, color='y', label="Partial")
-plt.axhline(y=details['umbra_radius_radians'][0] - moon_radius, color='r', label="Total")
+ax1.plot(*zip(*points))
+ax1.axhline(y=details['penumbra_radius_radians'][0] + moon_radius, color='g', label="Penumbral")
+ax1.axhline(y=details['umbra_radius_radians'][0] + moon_radius, color='y', label="Partial")
+ax1.axhline(y=details['umbra_radius_radians'][0] - moon_radius, color='r', label="Total")
+ax1.legend()
 
-plt.legend()
+ax2.axis('off')
+again = lunar_eclipse_on_date(data, t0)
+phases = again.phases(TimeUnit.DEGREE)
+
+if again.type == "Total":
+    t = "1:2 = {:.2f}°   2:3 = {:.2f}°   3:4 = {:.2f}°   (1:4 = {:.2f}°)"\
+        .format(phases.onset, phases.maximal, phases.clearing, phases.sum)
+    ax2.text(0, 0, t, fontsize=12)
+elif again.type == "Partial":
+    t = "1:M = {:.2f}°   M:4 = {:.2f}°   (1:4 = {:.2f}°)"\
+        .format(phases.onset, phases.maximal, phases.clearing, phases.sum)
+    ax2.text(0, 0, t, fontsize=12)
+
 plt.show()
