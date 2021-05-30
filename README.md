@@ -2,12 +2,12 @@
 
 A tool designed for dating the events in ancient Babylonian Astronomical Texts
 whilst making as few assumptions as possible about their chronology. 
-(See [Methodology](./documents/methodology.md) for more info about how the texts are interpreted)
 
-Using the [Skyfield](https://rhodesmill.org/skyfield/) library for Python we 
-generate tables of data to covering all the events in a specific tablet. 
+See [Introduction](./documents/texts.md) for a background on the texts, and explanations for
+how I am interpreting them.
 
-The data tables are saved in a SQLite db which can then be queried for the best match.
+See [Methodology](./documents/methodology.md) to see how the queries / rankings of dates
+are calculated.
 
 ## Features
 
