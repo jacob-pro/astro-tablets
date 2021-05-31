@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from enum import unique, Enum
 from typing import Union
 
+from generate.angular_separation import EclipticPosition
 from query.database import Database
 from query.abstract_query import AbstractQuery, SearchRange
 
@@ -45,10 +46,19 @@ class CompositePhaseTiming(PhaseTiming):
     sum: [None, float]
 
 
+@dataclass
+class EclipseLocation:
+    body: str
+    target_angle: float
+    tolerance: float
+    target_position: Union[EclipticPosition, None]
+
+
 class LunarEclipseQuery(AbstractQuery):
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
-                 type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming], target_time: SearchRange):
+                 type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming],
+                 location: Union[None, EclipseLocation], target_time: SearchRange):
         pass
 
     def output(self) -> dict:
