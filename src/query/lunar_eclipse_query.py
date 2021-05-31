@@ -7,7 +7,7 @@ from typing import *
 from generate.angular_separation import EclipticPosition
 from query.database import Database
 from query.abstract_query import AbstractQuery, SearchRange
-from util import diff_mins_signed, diff_time_degrees_signed
+from util import diff_time_degrees_signed
 
 
 @unique

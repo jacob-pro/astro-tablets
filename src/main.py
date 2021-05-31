@@ -10,6 +10,7 @@ from data import AstroData
 from generate import tablets
 from generate.database import Database as GenerateDatabase
 from graphics.eclipse_plot import plot_eclipse
+from graphics.eclipse_timing_score_plot import plot_eclipse_timing_score
 from query.database import Database as QueryDatabase
 
 
@@ -65,6 +66,7 @@ def graphs():
     data = AstroData()
     plot_eclipse(data, data.timescale.ut1(-554, 10, 7), "../documents/graphics/total_eclipse.png")
     plot_eclipse(data, data.timescale.ut1(-153, 3, 21), "../documents/graphics/partial_eclipse.png")
+    plot_eclipse_timing_score("../documents/graphics/eclipse_timing_score.png")
 
 
 if __name__ == "__main__":

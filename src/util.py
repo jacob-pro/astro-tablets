@@ -18,7 +18,7 @@ def diff_hours(t1: Time, t2: Time) -> float:
 
 
 def diff_time_degrees_signed(t1: float, t2: float) -> float:
-    jdiff = abs(t1 - t2)
+    jdiff = t1 - t2
     degrees_in_day = 360
     return jdiff * degrees_in_day
 
