@@ -1,3 +1,4 @@
+from abc import ABC
 from dataclasses import dataclass
 from enum import unique, Enum
 from typing import Union
@@ -28,10 +29,26 @@ class ExpectedEclipseType(Enum):
     TOTAL = 3             # An observations of a total eclipse
 
 
+class PhaseTiming(ABC):
+    pass
+
+
+@dataclass
+class SeparatePhaseTimings(PhaseTiming):
+    onset: [None, float]
+    maximal: [None, float]
+    clearing: [None, float]
+
+
+@dataclass
+class CompositePhaseTiming(PhaseTiming):
+    sum: [None, float]
+
+
 class LunarEclipseQuery(AbstractQuery):
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
-                 type: ExpectedEclipseType, target_time: SearchRange):
+                 type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming], target_time: SearchRange):
         pass
 
     def output(self) -> dict:
