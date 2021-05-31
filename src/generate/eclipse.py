@@ -10,6 +10,7 @@ from skyfield.searchlib import find_discrete
 from skyfield.timelib import Time
 
 from data import AstroData
+from generate.lunar_calendar import altitude_of_moon
 from util import diff_mins
 
 
@@ -87,6 +88,7 @@ class Eclipse:
                  moon_radius_radians: float,
                  penumbra_radius_radians: float,
                  umbra_radius_radians: float):
+        self.data = data
         self.closest_approach_time = time
         self.type = eclipselib.LUNAR_ECLIPSES[type]
         self.closest_approach_radians = closest_approach_radians
@@ -139,6 +141,18 @@ class Eclipse:
         else:
             raise RuntimeError("Invalid TimeUnit")
         return phases
+
+    def visibility_in_babylon(self) -> bool:
+        from constants import LUNAR_VISIBILITY
+        if self.type == 'Penumbral':
+            return False
+        alt1 = altitude_of_moon(self.data, self.partial_eclipse_begin).degrees
+        alt2 = altitude_of_moon(self.data, self.partial_eclipse_end).degrees
+        if alt1 > LUNAR_VISIBILITY:
+            return True
+        if alt2 > LUNAR_VISIBILITY:
+            return True
+        return False
 
 
 def lunar_eclipses_in_range(data: AstroData, start: Time, end: Time) -> List[Eclipse]:

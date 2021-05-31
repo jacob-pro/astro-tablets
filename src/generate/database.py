@@ -64,6 +64,7 @@ class Database:
             maximal_us FLOAT,
             clearing_us FLOAT,
             sum_us FLOAT,
+            visible SMALLINT,
             PRIMARY KEY (closest_approach_time)
         );""")
 
@@ -96,9 +97,9 @@ class Database:
             phases = e.phases(TimeUnit.DEGREE)
             self.cursor.execute(
                 "INSERT INTO lunar_eclipses (e_type, closest_approach_time, partial_eclipse_begin, onset_us, "
-                "maximal_us, clearing_us, sum_us) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "maximal_us, clearing_us, sum_us, visible) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
                 (e.type, e.closest_approach_time.tt, partial_eclipse_begin, phases.onset, phases.maximal,
-                 phases.clearing, phases.sum))
+                 phases.clearing, phases.sum, e.visibility_in_babylon()))
 
     def save_info(self, tablet: str, start: int, end: int):
         hash = get_git_hash()
