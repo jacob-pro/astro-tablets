@@ -2,7 +2,9 @@ from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena
 from query.database import BabylonianDay
-from query.result import PlanetaryEventResult, SearchRange, AngularSeparationResult, AbstractResult
+from query.abstract_query import SearchRange, AbstractQuery
+from query.planetary_event_query import PlanetaryEventQuery
+from query.angular_separation_query import AngularSeparationQuery
 from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
@@ -10,12 +12,12 @@ class BM41222(AbstractTablet):
 
     ## Shamash-shum-ukin
 
-    def shamash_14_xii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def shamash_14_xii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day4 = SearchRange.for_night(month, 4)
         # Mercury's first appearance in the west
-        res1 = PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.EF, day4)
+        res1 = PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.EF, day4)
         # in the area of the Swallow.
-        res2 = AngularSeparationResult(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day4)
+        res2 = AngularSeparationQuery(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day4)
         return [res1, res2]
 
     def shamash_year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -23,12 +25,12 @@ class BM41222(AbstractTablet):
         return [res1]
 
 
-    def shamash_17_ii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def shamash_17_ii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day19 = SearchRange.for_night(month, 19)
         # mars was in [the area?] of the Old Man
-        res1 = AngularSeparationResult(self.db, MARS, PERSEUS.central_star, 0, PERSEUS.radius, None, day19)
+        res1 = AngularSeparationQuery(self.db, MARS, PERSEUS.central_star, 0, PERSEUS.radius, None, day19)
         # to the right of Mercury
-        res2 = AngularSeparationResult(self.db, MARS, MERCURY, 0, 30, EclipticPosition.AHEAD, day19)
+        res2 = AngularSeparationQuery(self.db, MARS, MERCURY, 0, 30, EclipticPosition.AHEAD, day19)
         return [res1, res2]
 
     def shamash_year_17(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -36,10 +38,10 @@ class BM41222(AbstractTablet):
         return [res1]
 
 
-    def shamash_19_vii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def shamash_19_vii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day4 = SearchRange.for_night(month, 4)
         # Mercury stood for ⅔ cubit above? Mars
-        res1 = AngularSeparationResult(self.db, MERCURY, MARS, (2/3 * CUBIT), 1 * CUBIT, EclipticPosition.ABOVE, day4)
+        res1 = AngularSeparationQuery(self.db, MERCURY, MARS, (2 / 3 * CUBIT), 1 * CUBIT, EclipticPosition.ABOVE, day4)
         return [res1]
 
     def shamash_year_19(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -49,13 +51,13 @@ class BM41222(AbstractTablet):
 
     ## Kandalanu
 
-    def kand_1_iii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def kand_1_iii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day28 = SearchRange.for_night(month, 28)
         # Mercury was in the back of Mars?
-        res1 = AngularSeparationResult(self.db, MERCURY, MARS, 0, 30, EclipticPosition.BEHIND, day28)
+        res1 = AngularSeparationQuery(self.db, MERCURY, MARS, 0, 30, EclipticPosition.BEHIND, day28)
         day29 = SearchRange.for_night(month, 29)
         # Mercury in the area of the Lion
-        res2 = AngularSeparationResult(self.db, MERCURY, LEO.central_star, 0, LEO.radius, None, day29)
+        res2 = AngularSeparationQuery(self.db, MERCURY, LEO.central_star, 0, LEO.radius, None, day29)
         return [res1, res2]
 
     def kand_year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -63,12 +65,12 @@ class BM41222(AbstractTablet):
         return [res1]
 
 
-    def kand_12_i(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def kand_12_i(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day8 = SearchRange.for_night(month, 8)
         # Mercury, in the area of Pleiades
-        res1 = AngularSeparationResult(self.db, MERCURY, ALCYONE, 0, 10, None, day8)
+        res1 = AngularSeparationQuery(self.db, MERCURY, ALCYONE, 0, 10, None, day8)
         # Mercury was 2 ⅔ cubits above? Mars?
-        res2 = AngularSeparationResult(self.db, MERCURY, MARS, (2 + 2/3) * CUBIT, 2 * CUBIT, EclipticPosition.ABOVE, day8)
+        res2 = AngularSeparationQuery(self.db, MERCURY, MARS, (2 + 2 / 3) * CUBIT, 2 * CUBIT, EclipticPosition.ABOVE, day8)
         return [res1, res2]
 
     def kand_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -76,10 +78,10 @@ class BM41222(AbstractTablet):
         return [res1]
 
 
-    def kand_16_iii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def kand_16_iii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day20 = SearchRange.for_night(month, 20)
         # Mercury stood 1 cubit 4 fingers behind Mars.
-        res1 = AngularSeparationResult(self.db, MERCURY, MARS, (1 * CUBIT + 4 * FINGER), 1 * CUBIT, EclipticPosition.BEHIND, day20)
+        res1 = AngularSeparationQuery(self.db, MERCURY, MARS, (1 * CUBIT + 4 * FINGER), 1 * CUBIT, EclipticPosition.BEHIND, day20)
         return [res1]
 
     def kand_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -88,10 +90,10 @@ class BM41222(AbstractTablet):
 
     # Nabopolassar
 
-    def nabo_7_unknown(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def nabo_7_unknown(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         # Mercury was balanced 6 fingers above Mars.
-        res1 = AngularSeparationResult(self.db, MERCURY, MARS, 6 * FINGER, 6 * FINGER, EclipticPosition.ABOVE,
-                                       SearchRange.any_day(month))
+        res1 = AngularSeparationQuery(self.db, MERCURY, MARS, 6 * FINGER, 6 * FINGER, EclipticPosition.ABOVE,
+                                      SearchRange.any_day(month))
         return [res1]
 
     def nabo_year_7(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -99,16 +101,16 @@ class BM41222(AbstractTablet):
         return [res1]
 
 
-    def nabo_12_iv(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def nabo_12_iv(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day18 = SearchRange.for_night(month, 18)
         # Mars was with Pleiades
-        res1 = AngularSeparationResult(self.db, MARS, ALCYONE, 0, 10, None, day18)
+        res1 = AngularSeparationQuery(self.db, MARS, ALCYONE, 0, 10, None, day18)
         return [res1]
 
-    def nabo_12_vi(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def nabo_12_vi(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day13 = SearchRange.for_night(month, 13)
         # Mars was ⅔ cubit above the Chariot
-        res1 = AngularSeparationResult(self.db, MARS, AURIGA.central_star, 0, AURIGA.radius, None, day13)
+        res1 = AngularSeparationQuery(self.db, MARS, AURIGA.central_star, 0, AURIGA.radius, None, day13)
         return [res1]
 
     def nabo_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -117,16 +119,16 @@ class BM41222(AbstractTablet):
         return [iv, vi]
 
 
-    def nabo_13_iii(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def nabo_13_iii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day1 = SearchRange.for_night(month, 1)
         # Mars was [....] above α Leonis.
-        res1 = AngularSeparationResult(self.db, MARS, REGULUS, 0, 20, EclipticPosition.ABOVE, day1)
+        res1 = AngularSeparationQuery(self.db, MARS, REGULUS, 0, 20, EclipticPosition.ABOVE, day1)
         return [res1]
 
-    def nabo_13_v(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def nabo_13_v(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day3 = SearchRange.for_night(month, 3)
         # Mars ... it was with β Virginis
-        res1 = AngularSeparationResult(self.db, MARS, BETA_VIRGINIS, 0, 10, None, day3)
+        res1 = AngularSeparationQuery(self.db, MARS, BETA_VIRGINIS, 0, 10, None, day3)
         return [res1]
 
     def nabo_year_13(self, nisan_1: float) -> List[PotentialMonthResult]:

@@ -2,45 +2,47 @@ from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
 from query.database import BabylonianDay
-from query.result import AbstractResult, AngularSeparationResult, SearchRange, PlanetaryEventResult
+from query.abstract_query import AbstractQuery, SearchRange
+from query.planetary_event_query import PlanetaryEventQuery
+from query.angular_separation_query import AngularSeparationQuery
 from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM32312(AbstractTablet):
 
-    def month_a(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         res = []
         day14 = SearchRange.for_night(month, 14)
         # Mercury's last appearance in the east behind Pisces
-        res.append(PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.ML, day14))
-        res.append(AngularSeparationResult(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day14))
+        res.append(PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.ML, day14))
+        res.append(AngularSeparationQuery(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day14))
         # Saturn's last appearance behind Pisces
-        res.append(PlanetaryEventResult(self.db, SATURN, OuterPlanetPhenomena.LA, day14))
-        res.append(AngularSeparationResult(self.db, SATURN, PISCES.central_star, 0, PISCES.radius, EclipticPosition.BEHIND, day14))
+        res.append(PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, day14))
+        res.append(AngularSeparationQuery(self.db, SATURN, PISCES.central_star, 0, PISCES.radius, EclipticPosition.BEHIND, day14))
 
         day17 = SearchRange.for_night(month, 17)
         # Mars became stationary
-        res.append(PlanetaryEventResult(self.db, MARS, OuterPlanetPhenomena.ST, day17))
+        res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.ST, day17))
         # it came close to the bright star of the Scorpion's head
-        res.append(AngularSeparationResult(self.db, MARS, ANTARES, 0, 10, None, day17))
+        res.append(AngularSeparationQuery(self.db, MARS, ANTARES, 0, 10, None, day17))
 
         return res
 
-    def month_b(self, month: List[BabylonianDay]) -> List[AbstractResult]:
+    def month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         res = []
         day5 = SearchRange.for_night(month, 5)
         # Mercury's first appearance in the east in Pisces
-        res.append(PlanetaryEventResult(self.db, MERCURY, InnerPlanetPhenomena.MF, day5))
-        res.append(AngularSeparationResult(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day5))
+        res.append(PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.MF, day5))
+        res.append(AngularSeparationQuery(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day5))
 
         day19 = SearchRange.for_night(month, 19)
         # Venus stood in the region of Aries, 10 fingers behind Mars
-        res.append(AngularSeparationResult(self.db, VENUS, MARS, 10 * FINGER, 10 * FINGER, EclipticPosition.BEHIND, day19))
-        res.append(AngularSeparationResult(self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day19))
+        res.append(AngularSeparationQuery(self.db, VENUS, MARS, 10 * FINGER, 10 * FINGER, EclipticPosition.BEHIND, day19))
+        res.append(AngularSeparationQuery(self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day19))
 
         day20 = SearchRange.for_night(month, 20)
         # Mars was 1 finger to the left of the front? of Aries
-        res.append(AngularSeparationResult(self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day20))
+        res.append(AngularSeparationQuery(self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day20))
 
         return res
 

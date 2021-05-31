@@ -13,7 +13,7 @@ from constants import MAX_NISAN_EQUINOX_DIFF_DAYS
 from data import AstroData, SUN
 from generate.lunar_calendar import VERNAL_EQUINOX
 from query.database import Database, BabylonianDay
-from query.result import AbstractResult
+from query.abstract_query import AbstractQuery
 from util import TimeValue
 
 
@@ -104,7 +104,7 @@ class AbstractTablet(ABC):
         pass
 
     def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int,
-                                           func: Callable[[List[BabylonianDay]], List[AbstractResult]], name=None
+                                           func: Callable[[List[BabylonianDay]], List[AbstractQuery]], name=None
                                            ) -> PotentialMonthResult:
         """
         Tries repeating the same month observations but assuming the month started either 0 or 1 days later
@@ -221,7 +221,7 @@ class AbstractTablet(ABC):
         return results
 
     def try_multiple_months(self, nisan_1: float, start: int, end: int,
-                            fn: Callable[[List[BabylonianDay]], List[AbstractResult]], comment=None) -> PotentialMonthResult:
+                            fn: Callable[[List[BabylonianDay]], List[AbstractQuery]], comment=None) -> PotentialMonthResult:
         attempts = []
         comment = "Unknown month between {} and {}".format(start, end) if comment is None else comment
         for m in range(start, end+1):
