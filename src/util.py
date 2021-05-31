@@ -17,6 +17,12 @@ def diff_hours(t1: Time, t2: Time) -> float:
     return jdiff * 24
 
 
+def diff_time_degrees_signed(t1: float, t2: float) -> float:
+    jdiff = abs(t1 - t2)
+    degrees_in_day = 360
+    return jdiff * degrees_in_day
+
+
 def same_sign(num1, num2) -> bool:
     return (num1 >= 0 and num2 >= 0) or (num1 < 0 and num2 < 0)
 

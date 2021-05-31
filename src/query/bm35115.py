@@ -3,7 +3,7 @@ from generate.angular_separation import EclipticPosition
 from query.abstract_query import SearchRange, AbstractQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import FirstContactTime, FirstContactRelative, ExpectedEclipseType, LunarEclipseQuery, \
-    CompositePhaseTiming, EclipseLocation
+    CompositePhaseTiming, EclipsePosition
 from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
@@ -73,7 +73,7 @@ class BM35115(AbstractTablet):
         # 5 20° onset, maximal phase, [and clearing ....]
         # 6 behind α Scorpii [it was eclipsed.]
         day15 = SearchRange.for_night(month, 15)
-        location = EclipseLocation(ANTARES, 0, 20, EclipticPosition.BEHIND)
+        location = EclipsePosition(ANTARES, 0, 20, EclipticPosition.BEHIND)
         res1 = LunarEclipseQuery(self.db, None, ExpectedEclipseType.PARTIAL, CompositePhaseTiming(20), location, day15)
         return [res1]
 

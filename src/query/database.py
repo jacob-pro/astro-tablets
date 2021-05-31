@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from typing import *
 
 from constants import MAX_NISAN_EQUINOX_DIFF_DAYS
-from data import SUN
+from data import SUN, MOON
 from generate.lunar_calendar import VERNAL_EQUINOX
 from util import array_group_by
 
@@ -89,6 +89,38 @@ class Database:
             WHERE from_body=? AND to_body=? AND time >= ? AND time <= ?""",
                        (from_body, to_body, start_time, end_time))
         return self.fetch_all_as_dict(cursor)
+
+    def lunar_eclipses_in_range(self, start_time: float, end_time: float, position_body: Union[None, str]) -> List[Dict]:
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT e_type, closest_approach_time, partial_eclipse_begin, onset_us,
+            maximal_us, clearing_us, sum_us, visible, angle, position 
+            FROM lunar_eclipses e
+            LEFT JOIN separations s 
+            ON s.time == e.closest_approach_time AND s.to_body == ? AND s.from_body == ?
+            WHERE closest_approach_time >= ? AND closest_approach_time <= ?""",
+                       (MOON, position_body, start_time, end_time))
+        eclipses = self.fetch_all_as_dict(cursor)
+        for e in eclipses:
+            e['sunset'] = self.nearest_sunset(e['closest_approach_time'])
+            e['sunrise'] = self.nearest_sunrise(e['closest_approach_time'])
+        return eclipses
+
+    def nearest_sunset(self, time: float) -> float:
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT sunset FROM days d ORDER BY ABS(d.sunset - ?) LIMIT 1""",
+                       (time, ))
+        res = self.fetch_one_as_dict(cursor)
+        return res['sunset']
+
+    def nearest_sunrise(self, time: float) -> float:
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT sunrise FROM days d ORDER BY ABS(d.sunrise - ?) LIMIT 1""",
+                       (time, ))
+        res = self.fetch_one_as_dict(cursor)
+        return res['sunrise']
 
     @staticmethod
     def fetch_all_as_dict(cursor: sqlite3.Cursor) -> List[Dict]:

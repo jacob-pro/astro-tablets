@@ -71,11 +71,11 @@ class Tablet(ABC):
         self.db.save_synodic_events(planet.name, events)
         print("")
 
-    def lunar_eclipses(self, distances: List[str] = []):
+    def lunar_eclipses(self, position_bodies: List[str] = []):
         print("Computing lunar eclipses")
         eclipses = lunar_eclipses_in_range(self.data, self.start_day, self.end_day)
         self.db.save_lunar_eclipses(eclipses)
-        for body in distances:
+        for body in position_bodies:
             b1 = self.data.get_body(MOON)
             b2 = self.data.get_body(body)
             for idx, e in enumerate(eclipses):
