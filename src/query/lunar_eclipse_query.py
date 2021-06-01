@@ -10,7 +10,7 @@ from generate.angular_separation import EclipticPosition
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import Database
 from query.abstract_query import AbstractQuery, SearchRange
-from util import diff_time_degrees_signed
+from util import diff_time_degrees_signed, TimeValue
 
 
 @unique
@@ -61,15 +61,19 @@ class EclipsePosition:
 
 
 class LunarEclipseQuery(AbstractQuery):
+    REGULAR_TIME_TOLERANCE = 50
+    HIGH_TIME_TOLERANCE = 1.5
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
                  type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming],
                  position: Union[None, EclipsePosition], target_time: SearchRange):
         self.target_time = target_time
+        self.position = position
+        self.phase_timing = phase_timing
         position_body = position.body if position is not None else None
         matched_eclipses = db.lunar_eclipses_in_range(target_time.start, target_time.end, position_body)
         results = list(map(lambda x: (x, self.score_eclipse(x, first_contact, type, phase_timing, position)),
-                     matched_eclipses))
+                           matched_eclipses))
         results.sort(key=lambda x: x[1], reverse=True)
         if len(results) > 0:
             self.best = results[0][0]
@@ -87,17 +91,25 @@ class LunarEclipseQuery(AbstractQuery):
         if location is not None:
             assert eclipse['angle'] is not None
             scores.append(AngularSeparationQuery.separation_score(location.target_angle, location.tolerance,
-                                                            location.target_position, eclipse['angle'],
-                                                            eclipse['position']))
+                                                                  location.target_position, eclipse['angle'],
+                                                                  eclipse['position']))
             weights.append(0.25)
         if first_contact is not None:
-            scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact))
+            if type == ExpectedEclipseType.UNKNOWN:
+                # If the eclipse is a prediction then allow a higher time tolerance`
+                scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact,
+                                                                          LunarEclipseQuery.HIGH_TIME_TOLERANCE))
+            else:
+                scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact,
+                                                                          LunarEclipseQuery.REGULAR_TIME_TOLERANCE))
             weights.append(0.25)
         if phase_timing is not None:
             scores.append(LunarEclipseQuery.eclipse_phase_length_score(eclipse, phase_timing))
             weights.append(0.25)
         score = np.average(scores, weights=weights)
         assert 0 <= score <= 1
+        if 0.7637620404052851 <= score <= 0.7637620404052851:
+            print("")
         return score
 
     @staticmethod
@@ -121,7 +133,8 @@ class LunarEclipseQuery(AbstractQuery):
         return score
 
     @staticmethod
-    def eclipse_time_of_day_score(eclipse: Dict, first_contact: FirstContactTime) -> float:
+    def eclipse_time_of_day_score(eclipse: Dict, first_contact: FirstContactTime, tolerance: float) -> float:
+        assert tolerance > 1
         if eclipse['partial_eclipse_begin'] is None:
             return 0
         if first_contact.relative == FirstContactRelative.BEFORE_SUNRISE:
@@ -136,7 +149,7 @@ class LunarEclipseQuery(AbstractQuery):
             raise RuntimeError("Invalid FirstContactRelative")
         err = abs(first_contact.time_degrees - actual)
         percent_err = err / abs(actual)
-        score = math.pow(50, -percent_err)
+        score = math.pow(tolerance, -percent_err)
         assert 0 <= score <= 1
         return score
 
@@ -165,7 +178,23 @@ class LunarEclipseQuery(AbstractQuery):
         return score
 
     def output(self) -> dict:
-        return {}
+        dict = {}
+        if self.best is not None:
+            dict['closest_approach_time'] = TimeValue(self.best['closest_approach_time'])
+            dict['visible'] = self.best['visible']
+            dict['type'] = self.best['e_type']
+            dict['onset_us'] = self.best['onset_us']
+            dict['maximal_us'] = self.best['maximal_us']
+            dict['clearing_us'] = self.best['clearing_us']
+            dict['sum_us'] = self.best['sum_us']
+            dict['after_sunrise_us'] = diff_time_degrees_signed(self.best['closest_approach_time'],
+                                                                self.best['sunrise'])
+            dict['after_sunset_us'] = diff_time_degrees_signed(self.best['closest_approach_time'], self.best['sunset'])
+            if self.position is not None:
+                dict['position_body'] = self.position.body
+                dict['position_actual_angle'] = self.best['angle']
+                dict['position_actual_position'] = self.best['position']
+        return dict
 
     def get_search_range(self) -> SearchRange:
         return self.target_time

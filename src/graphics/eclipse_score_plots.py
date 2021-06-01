@@ -5,12 +5,13 @@ from query.lunar_eclipse_query import LunarEclipseQuery, FirstContactRelative, F
 from util import diff_time_degrees_signed
 
 
-def plot_eclipse_time_of_day_score(dest: str):
+def plot_eclipse_time_of_day_score(tolerance: float, dest: str):
     eclipse = {'sunrise': 1458133.8958227257, 'partial_eclipse_begin': 1458133.9258227257}
     actual = diff_time_degrees_signed(eclipse['partial_eclipse_begin'], eclipse['sunrise'])
     xs = np.arange(-15, 25, 0.01)
     ys = list(map(lambda x: LunarEclipseQuery.eclipse_time_of_day_score(eclipse, FirstContactTime(x,
-                                                                                                  FirstContactRelative.AFTER_SUNRISE)),
+                                                                                                  FirstContactRelative.AFTER_SUNRISE),
+                                                                        tolerance),
                   xs))
 
     f, ax1 = plt.subplots()
