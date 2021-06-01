@@ -118,7 +118,7 @@ class LunarEclipseQuery(AbstractQuery):
         elif type == ExpectedEclipseType.TOTAL and eclipse['visible']:
             if eclipse['e_type'] == 'Total':
                 score = 1.0
-            elif eclipse['e_type' == 'Partial']:
+            elif eclipse['e_type'] == 'Partial':
                 score = 0.5
         elif type == ExpectedEclipseType.PARTIAL and eclipse['visible']:
             if eclipse['e_type'] == 'Total':
@@ -169,8 +169,9 @@ class LunarEclipseQuery(AbstractQuery):
             raise RuntimeError
         score = 0
         for (observed, actual) in diffs:
-            percent_err = abs(actual - observed) / abs(actual)
-            score = score + math.pow(LunarEclipseQuery.REGULAR_TIME_TOLERANCE, -percent_err)
+            if actual != 0:
+                percent_err = abs(actual - observed) / abs(actual)
+                score = score + math.pow(LunarEclipseQuery.REGULAR_TIME_TOLERANCE, -percent_err)
         score = score / len(diffs)
         assert 0 <= score <= 1
         return score

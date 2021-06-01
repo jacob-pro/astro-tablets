@@ -44,6 +44,11 @@ class BM32234(AbstractTablet):
         eclipse_pos = EclipsePosition(LIBRA.central_star, 0, LIBRA.radius, EclipticPosition.AHEAD)
         eclipse_time = FirstContactTime(1.5, FirstContactRelative.AFTER_SUNSET)
         eclipse = LunarEclipseQuery(self.db, eclipse_time, ExpectedEclipseType.PARTIAL_OR_TOTAL, None, eclipse_pos, range)
+
+        if eclipse.best is not None:
+            eclipse_time = eclipse.best['closest_approach_time']
+            range = SearchRange(eclipse_time - 1, eclipse_time + 1, "Within a day of the eclipse")
+
         mars = AngularSeparationQuery(self.db, MARS, ANTARES, 2 * CUBIT, 1 * CUBIT, EclipticPosition.AHEAD, range)
         saturn = AngularSeparationQuery(self.db, SATURN, CAPRICORNUS.central_star, 0, CAPRICORNUS.radius, None, range)
         return [eclipse, mars, saturn]

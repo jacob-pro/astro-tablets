@@ -98,7 +98,7 @@ class Database:
             FROM lunar_eclipses e
             LEFT JOIN separations s 
             ON s.time == e.closest_approach_time AND s.to_body == ? AND s.from_body == ?
-            WHERE closest_approach_time >= ? AND closest_approach_time <= ?""",
+            WHERE (closest_approach_time >= ? AND closest_approach_time <= ?)""",
                        (position_body, MOON, start_time, end_time))
         eclipses = self.fetch_all_as_dict(cursor)
         for e in eclipses:
