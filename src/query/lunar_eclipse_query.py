@@ -96,7 +96,7 @@ class LunarEclipseQuery(AbstractQuery):
             weights.append(0.25)
         if first_contact is not None:
             if type == ExpectedEclipseType.UNKNOWN:
-                # If the eclipse is a prediction then allow a higher time tolerance`
+                # If the eclipse is a prediction then allow a higher time tolerance
                 scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact,
                                                                           LunarEclipseQuery.HIGH_TIME_TOLERANCE))
             else:
@@ -170,7 +170,7 @@ class LunarEclipseQuery(AbstractQuery):
         score = 0
         for (observed, actual) in diffs:
             percent_err = abs(actual - observed) / abs(actual)
-            score = score + math.pow(50, -percent_err)
+            score = score + math.pow(LunarEclipseQuery.REGULAR_TIME_TOLERANCE, -percent_err)
         score = score / len(diffs)
         assert 0 <= score <= 1
         return score
