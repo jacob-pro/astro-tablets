@@ -48,7 +48,8 @@ class BM35115(AbstractTablet):
         # 2 month II, (after) 5 months,
         # 3 (eclipse) which was omitted.
         # 4 At 1,0° before sunset.
-        return [LunarEclipseQuery(self.db, FirstContactTime(1.0, FirstContactRelative.BEFORE_SUNSET),
+        t = (1 * 60) + 0
+        return [LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.BEFORE_SUNSET),
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 

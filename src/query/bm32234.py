@@ -40,9 +40,10 @@ class BM32234(AbstractTablet):
         # 6'  Saturn rose in Capricorn; Mars
         # 7'  was 2 cubits in front of α Scorpii.
         # 8'  At 1,30° after sunset.
+        t = (1 * 60) + 30
         range = SearchRange.any_day(month)
         eclipse_pos = EclipsePosition(LIBRA.central_star, 0, LIBRA.radius, EclipticPosition.AHEAD)
-        eclipse_time = FirstContactTime(1.5, FirstContactRelative.AFTER_SUNSET)
+        eclipse_time = FirstContactTime(t, FirstContactRelative.AFTER_SUNSET)
         eclipse = LunarEclipseQuery(self.db, eclipse_time, ExpectedEclipseType.PARTIAL_OR_TOTAL, None, eclipse_pos, range)
 
         if eclipse.best is not None:
