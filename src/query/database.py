@@ -99,7 +99,7 @@ class Database:
             LEFT JOIN separations s 
             ON s.time == e.closest_approach_time AND s.to_body == ? AND s.from_body == ?
             WHERE closest_approach_time >= ? AND closest_approach_time <= ?""",
-                       (MOON, position_body, start_time, end_time))
+                       (position_body, MOON, start_time, end_time))
         eclipses = self.fetch_all_as_dict(cursor)
         for e in eclipses:
             e['sunset'] = self.nearest_sunset(e['closest_approach_time'])

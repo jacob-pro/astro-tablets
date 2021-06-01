@@ -68,9 +68,15 @@ class LunarEclipseQuery(AbstractQuery):
         self.target_time = target_time
         position_body = position.body if position is not None else None
         matched_eclipses = db.lunar_eclipses_in_range(target_time.start, target_time.end, position_body)
-        scores = map(lambda x: (x, self.score_eclipse(x, first_contact, type, phase_timing, position)),
-                     matched_eclipses)
-        pass
+        results = list(map(lambda x: (x, self.score_eclipse(x, first_contact, type, phase_timing, position)),
+                     matched_eclipses))
+        results.sort(key=lambda x: x[1], reverse=True)
+        if len(results) > 0:
+            self.best = results[0][0]
+            self.score = results[0][1]
+        else:
+            self.best = None
+            self.score = 0.0
 
     @staticmethod
     def score_eclipse(eclipse: Dict, first_contact: Union[None, FirstContactTime],
@@ -79,6 +85,7 @@ class LunarEclipseQuery(AbstractQuery):
         scores = [LunarEclipseQuery.eclipse_core_score(eclipse, type)]
         weights = [0.5]
         if location is not None:
+            assert eclipse['angle'] is not None
             scores.append(AngularSeparationQuery.separation_score(location.target_angle, location.tolerance,
                                                             location.target_position, eclipse['angle'],
                                                             eclipse['position']))
@@ -106,7 +113,7 @@ class LunarEclipseQuery(AbstractQuery):
         elif type == ExpectedEclipseType.PARTIAL and eclipse['visible']:
             if eclipse['e_type'] == 'Total':
                 score = 0.5
-            elif eclipse['e_type' == 'Partial']:
+            elif eclipse['e_type'] == 'Partial':
                 score = 1.0
         elif type == ExpectedEclipseType.PARTIAL_OR_TOTAL and eclipse['visible']:
             score = 1.0
@@ -135,6 +142,8 @@ class LunarEclipseQuery(AbstractQuery):
 
     @staticmethod
     def eclipse_phase_length_score(eclipse: Dict, timings: PhaseTiming) -> float:
+        if eclipse['sum_us'] == 0:
+            return 0
         diffs = []
         if isinstance(timings, CompositePhaseTiming):
             diffs.append((timings.sum, eclipse['sum_us']))
@@ -156,10 +165,10 @@ class LunarEclipseQuery(AbstractQuery):
         return score
 
     def output(self) -> dict:
-        pass
+        return {}
 
     def get_search_range(self) -> SearchRange:
         return self.target_time
 
     def quality_score(self) -> float:
-        pass
+        return self.score
