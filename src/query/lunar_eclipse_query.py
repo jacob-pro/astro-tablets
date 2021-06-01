@@ -77,7 +77,7 @@ class LunarEclipseQuery(AbstractQuery):
         pass
 
     @staticmethod
-    def eclipse_timing_score(eclipse: Dict, first_contact: FirstContactTime) -> float:
+    def eclipse_time_of_day_score(eclipse: Dict, first_contact: FirstContactTime) -> float:
         if eclipse['partial_eclipse_begin'] is None:
             return 0
         if first_contact.relative == FirstContactRelative.BEFORE_SUNRISE:
@@ -94,6 +94,27 @@ class LunarEclipseQuery(AbstractQuery):
         percent_err = err / abs(actual)
         score = math.pow(50, -percent_err)
         return score
+
+    @staticmethod
+    def eclipse_phase_length_score(eclipse: Dict, timings: PhaseTiming) -> float:
+        diffs = []
+        if isinstance(timings, CompositePhaseTiming):
+            diffs.append((timings.sum, eclipse['sum_us']))
+        elif isinstance(timings, SeparatePhaseTimings):
+            if timings.onset is not None:
+                diffs.append((timings.onset, eclipse['onset_us']))
+            if timings.maximal is not None:
+                diffs.append((timings.maximal, eclipse['maximal_us']))
+            if timings.clearing is not None:
+                diffs.append((timings.clearing, eclipse['clearing_us']))
+        else:
+            raise RuntimeError
+        base = 0
+        for (observed, actual) in diffs:
+            percent_err = abs(actual - observed) / abs(actual)
+            base = base + math.pow(50, -percent_err)
+        base = base / len(diffs)
+        return base
 
     def output(self) -> dict:
         pass
