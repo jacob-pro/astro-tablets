@@ -5,7 +5,7 @@ from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import FirstContactTime, FirstContactRelative, ExpectedEclipseType, LunarEclipseQuery, \
     EclipsePosition, SeparatePhaseTimings
-from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM32234(AbstractTablet):

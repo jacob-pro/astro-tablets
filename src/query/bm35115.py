@@ -4,7 +4,7 @@ from query.abstract_query import SearchRange, AbstractQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import FirstContactTime, FirstContactRelative, ExpectedEclipseType, LunarEclipseQuery, \
     CompositePhaseTiming, EclipsePosition
-from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM35115(AbstractTablet):

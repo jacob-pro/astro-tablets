@@ -172,14 +172,20 @@ class AbstractTablet(ABC):
         if year is not None:
             filtered = list(filter(lambda x: x.base_year == year, results))
             if len(filtered) < 1:
-                raise RuntimeError("Base year not found")
+                raise RuntimeError("Base year {} not found".format(year))
             year_to_print = filtered[0]
 
             if slim_results is True:
                 for y in year_to_print.years:
                     y.potentials = list(filter(lambda x: x.best_compatible_path is True, y.potentials))
 
-            with open('result_for_{}.json'.format(year), 'w') as outfile:
+            tablet = self.__class__.__name__.lower()
+            filename = '{}_base_year_{}'.format(tablet, year)
+            if slim_results:
+                filename += "_slim"
+            filename += ".json"
+
+            with open(filename, 'w') as outfile:
                 encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
                 raw = encoder.encode(year_to_print)
                 outfile.write(raw)

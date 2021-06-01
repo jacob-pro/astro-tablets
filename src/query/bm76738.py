@@ -5,7 +5,7 @@ from query.database import BabylonianDay
 from query.abstract_query import SearchRange, AbstractQuery
 from query.planetary_event_query import PlanetaryEventQuery
 from query.angular_separation_query import AngularSeparationQuery
-from query.tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM76738(AbstractTablet):

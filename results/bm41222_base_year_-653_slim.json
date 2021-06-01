@@ -1,0 +1,423 @@
+{
+  "base_year": -653,
+  "best_score": 14.385602108458018,
+  "years": [
+    {
+      "name": "Shamash-shum-ukin 14",
+      "actual_year": -653,
+      "vernal_equinox": "-653-03-28 14:15",
+      "intercalary": "Addaru II",
+      "potentials": [
+        {
+          "score": 1.9995354743905813,
+          "nisan_1": "-653-03-15 18:05",
+          "next_nisan": "-652-04-02 18:17",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.9995354743905813,
+              "name": "XII",
+              "actual_month": 12,
+              "month_sunset_1": "-652-02-04 17:36",
+              "first_visibility": "-652-02-03 17:35",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "mercury",
+                  "event": "evening_first",
+                  "nearest_time": "-652-02-09 18:32",
+                  "score": 0.9995354743905814,
+                  "search_start": "-652-02-07 17:38",
+                  "search_end": "-652-02-08 07:02",
+                  "date": "Night of the 4th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "58 piscium",
+                  "angle": 18.066522734266837,
+                  "position": "ahead",
+                  "at_time": "-652-02-08 03:41",
+                  "score": 1.0,
+                  "search_start": "-652-02-07 17:38",
+                  "search_end": "-652-02-08 07:02",
+                  "date": "Night of the 4th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shamash-shum-ukin 17",
+      "actual_year": -650,
+      "vernal_equinox": "-650-03-28 07:40",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 1.997454664756385,
+          "nisan_1": "-650-04-10 18:21",
+          "next_nisan": "-649-03-30 18:15",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.997454664756385,
+              "name": "II",
+              "actual_month": 2,
+              "month_sunset_1": "-650-05-09 18:39",
+              "first_visibility": "-650-05-09 18:39",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mars",
+                  "to_body": "36 persei",
+                  "angle": 46.135154600519314,
+                  "position": "behind",
+                  "at_time": "-650-05-27 18:51",
+                  "score": 0.9974546647563849,
+                  "search_start": "-650-05-27 18:51",
+                  "search_end": "-650-05-28 04:55",
+                  "date": "Night of the 19th"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "mercury",
+                  "angle": 12.618903144577365,
+                  "position": "ahead",
+                  "at_time": "-650-05-28 02:24",
+                  "score": 1.0,
+                  "search_start": "-650-05-27 18:51",
+                  "search_end": "-650-05-28 04:55",
+                  "date": "Night of the 19th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shamash-shum-ukin 19",
+      "actual_year": -648,
+      "vernal_equinox": "-648-03-27 19:15",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 0.8,
+          "nisan_1": "-648-03-19 18:09",
+          "next_nisan": "-647-03-09 18:02",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.8,
+              "name": "VII",
+              "actual_month": 7,
+              "month_sunset_1": "-648-09-13 18:20",
+              "first_visibility": "-648-09-13 18:20",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mercury",
+                  "to_body": "mars",
+                  "angle": 1.6349838977154354,
+                  "position": "ahead",
+                  "at_time": "-648-09-17 02:51",
+                  "score": 0.8,
+                  "search_start": "-648-09-16 18:17",
+                  "search_end": "-648-09-17 05:42",
+                  "date": "Night of the 4th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 1",
+      "actual_year": -646,
+      "vernal_equinox": "-646-03-28 06:57",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 2.0,
+          "nisan_1": "-646-03-28 18:14",
+          "next_nisan": "-645-03-17 18:07",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 2.0,
+              "name": "III",
+              "actual_month": 3,
+              "month_sunset_1": "-646-05-25 18:50",
+              "first_visibility": "-646-05-25 18:50",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mercury",
+                  "to_body": "mars",
+                  "angle": 0.7049928999249953,
+                  "position": "behind",
+                  "at_time": "-646-06-21 19:05",
+                  "score": 1.0,
+                  "search_start": "-646-06-21 19:05",
+                  "search_end": "-646-06-22 04:47",
+                  "date": "Night of the 28th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "52 leonis",
+                  "angle": 13.566546193573128,
+                  "position": "ahead",
+                  "at_time": "-646-06-23 02:22",
+                  "score": 1.0,
+                  "search_start": "-646-06-22 19:06",
+                  "search_end": "-646-06-23 04:47",
+                  "date": "Night of the 29th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 12",
+      "actual_year": -635,
+      "vernal_equinox": "-635-03-27 22:52",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 2.0,
+          "nisan_1": "-635-03-26 18:13",
+          "next_nisan": "-634-03-15 18:06",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 2.0,
+              "name": "I",
+              "actual_month": 1,
+              "month_sunset_1": "-635-03-26 18:13",
+              "first_visibility": "-635-03-26 18:13",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mercury",
+                  "to_body": "alcyone",
+                  "angle": 1.8917930968237533,
+                  "position": "below",
+                  "at_time": "-635-04-02 18:17",
+                  "score": 1.0,
+                  "search_start": "-635-04-02 18:17",
+                  "search_end": "-635-04-03 05:57",
+                  "date": "Night of the 8th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "mars",
+                  "angle": 2.1234096673972997,
+                  "position": "above",
+                  "at_time": "-635-04-03 03:02",
+                  "score": 1.0,
+                  "search_start": "-635-04-02 18:17",
+                  "search_end": "-635-04-03 05:57",
+                  "date": "Night of the 8th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 16",
+      "actual_year": -631,
+      "vernal_equinox": "-631-03-27 22:16",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 0.8,
+          "nisan_1": "-631-03-11 18:03",
+          "next_nisan": "-630-03-01 17:56",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.8,
+              "name": "III",
+              "actual_month": 3,
+              "month_sunset_1": "-631-05-09 18:39",
+              "first_visibility": "-631-05-09 18:39",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mercury",
+                  "to_body": "mars",
+                  "angle": 1.6576329929868634,
+                  "position": "ahead",
+                  "at_time": "-631-05-28 18:52",
+                  "score": 0.8,
+                  "search_start": "-631-05-28 18:52",
+                  "search_end": "-631-05-29 04:54",
+                  "date": "Night of the 20th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nabopolassar 7",
+      "actual_year": -618,
+      "vernal_equinox": "-618-03-28 01:49",
+      "intercalary": "Addaru II",
+      "potentials": [
+        {
+          "score": 1.0,
+          "nisan_1": "-618-03-18 18:08",
+          "next_nisan": "-617-04-06 18:19",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "Unknown month between 1 and 13",
+              "actual_month": 5,
+              "month_sunset_1": "-618-07-14 19:09",
+              "first_visibility": "-618-07-14 19:09",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mercury",
+                  "to_body": "mars",
+                  "angle": 0.4951210073104273,
+                  "position": "above",
+                  "at_time": "-618-08-01 02:35",
+                  "score": 1.0,
+                  "search_start": "-618-07-14 19:09",
+                  "search_end": "-618-08-13 05:15",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nabopolassar 12",
+      "actual_year": -613,
+      "vernal_equinox": "-613-03-28 06:39",
+      "intercalary": "Addaru II",
+      "potentials": [
+        {
+          "score": 2.0,
+          "nisan_1": "-613-03-22 18:10",
+          "next_nisan": "-612-04-09 18:21",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "IV",
+              "actual_month": 4,
+              "month_sunset_1": "-613-06-19 19:04",
+              "first_visibility": "-613-06-19 19:04",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mars",
+                  "to_body": "alcyone",
+                  "angle": 7.123879438447175,
+                  "position": "below",
+                  "at_time": "-613-07-07 02:25",
+                  "score": 1.0,
+                  "search_start": "-613-07-06 19:09",
+                  "search_end": "-613-07-07 04:50",
+                  "date": "Night of the 18th"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "VI",
+              "actual_month": 6,
+              "month_sunset_1": "-613-08-18 18:50",
+              "first_visibility": "-613-08-18 18:50",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mars",
+                  "to_body": "nu aurigae",
+                  "angle": 17.011080446685842,
+                  "position": "below",
+                  "at_time": "-613-08-31 02:46",
+                  "score": 1.0,
+                  "search_start": "-613-08-30 18:38",
+                  "search_end": "-613-08-31 05:29",
+                  "date": "Night of the 13th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nabopolassar 13",
+      "actual_year": -612,
+      "vernal_equinox": "-612-03-27 12:37",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 1.7886119693110505,
+          "nisan_1": "-612-04-09 18:21",
+          "next_nisan": "-611-03-30 18:15",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "III",
+              "actual_month": 3,
+              "month_sunset_1": "-612-06-07 18:59",
+              "first_visibility": "-612-06-07 18:59",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mars",
+                  "to_body": "regulus",
+                  "angle": 1.0436763092916461,
+                  "position": "above",
+                  "at_time": "-612-06-08 02:22",
+                  "score": 1.0,
+                  "search_start": "-612-06-07 18:59",
+                  "search_end": "-612-06-08 04:49",
+                  "date": "Night of the 1st"
+                }
+              ]
+            },
+            {
+              "score": 0.7886119693110504,
+              "name": "V",
+              "actual_month": 5,
+              "month_sunset_1": "-612-08-06 18:59",
+              "first_visibility": "-612-08-06 18:59",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "mars",
+                  "to_body": "beta virginis",
+                  "angle": 12.298847704225693,
+                  "position": "behind",
+                  "at_time": "-612-08-08 18:58",
+                  "score": 0.7886119693110504,
+                  "search_start": "-612-08-08 18:58",
+                  "search_end": "-612-08-09 05:12",
+                  "date": "Night of the 3rd"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

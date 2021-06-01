@@ -1,0 +1,155 @@
+{
+  "base_year": -651,
+  "best_score": 10.956387753116433,
+  "years": [
+    {
+      "name": "Shamash-shum-ukin 16",
+      "actual_year": -651,
+      "vernal_equinox": "-651-03-28 01:50",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 10.956387753116433,
+          "nisan_1": "-651-03-22 18:10",
+          "next_nisan": "-650-03-11 18:03",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 5.9568732733093555,
+              "name": "Month A (Probably I)",
+              "actual_month": 1,
+              "month_sunset_1": "-651-03-23 18:11",
+              "first_visibility": "-651-03-22 18:10",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "mercury",
+                  "event": "morning_last",
+                  "nearest_time": "-651-04-09 05:06",
+                  "score": 0.9568732739497795,
+                  "search_start": "-651-04-05 18:18",
+                  "search_end": "-651-04-06 05:53",
+                  "date": "Night of the 14th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "58 piscium",
+                  "angle": 11.448609548335671,
+                  "position": "below",
+                  "at_time": "-651-04-05 18:18",
+                  "score": 1.0,
+                  "search_start": "-651-04-05 18:18",
+                  "search_end": "-651-04-06 05:53",
+                  "date": "Night of the 14th"
+                },
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-651-04-01 19:04",
+                  "score": 0.9999999999998967,
+                  "search_start": "-651-04-05 18:18",
+                  "search_end": "-651-04-06 05:53",
+                  "date": "Night of the 14th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "58 piscium",
+                  "angle": 38.03478247923717,
+                  "position": "behind",
+                  "at_time": "-651-04-05 18:18",
+                  "score": 1.0,
+                  "search_start": "-651-04-05 18:18",
+                  "search_end": "-651-04-06 05:53",
+                  "date": "Night of the 14th"
+                },
+                {
+                  "planet": "mars",
+                  "event": "stationary",
+                  "nearest_time": "-651-03-19 21:04",
+                  "score": 0.9999999993596793,
+                  "search_start": "-651-04-08 18:20",
+                  "search_end": "-651-04-09 05:49",
+                  "date": "Night of the 17th"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "antares",
+                  "angle": 6.9162646959836005,
+                  "position": "above",
+                  "at_time": "-651-04-08 18:20",
+                  "score": 1.0,
+                  "search_start": "-651-04-08 18:20",
+                  "search_end": "-651-04-09 05:49",
+                  "date": "Night of the 17th"
+                }
+              ]
+            },
+            {
+              "score": 4.999514479807077,
+              "name": "Month B",
+              "actual_month": 12,
+              "month_sunset_1": "-650-02-11 17:42",
+              "first_visibility": "-650-02-10 17:41",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "mercury",
+                  "event": "morning_first",
+                  "nearest_time": "-650-02-14 05:54",
+                  "score": 0.9995144798070768,
+                  "search_start": "-650-02-15 17:45",
+                  "search_end": "-650-02-16 06:55",
+                  "date": "Night of the 5th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "58 piscium",
+                  "angle": 37.25670394735022,
+                  "position": "ahead",
+                  "at_time": "-650-02-15 17:45",
+                  "score": 1.0,
+                  "search_start": "-650-02-15 17:45",
+                  "search_end": "-650-02-16 06:55",
+                  "date": "Night of the 5th"
+                },
+                {
+                  "from_body": "venus",
+                  "to_body": "mars",
+                  "angle": 0.3925559737048453,
+                  "position": "behind",
+                  "at_time": "-650-03-02 03:29",
+                  "score": 1.0,
+                  "search_start": "-650-03-01 17:56",
+                  "search_end": "-650-03-02 06:40",
+                  "date": "Night of the 19th"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "nu arietis",
+                  "angle": 5.963284269140953,
+                  "position": "below",
+                  "at_time": "-650-03-01 17:56",
+                  "score": 1.0,
+                  "search_start": "-650-03-01 17:56",
+                  "search_end": "-650-03-02 06:40",
+                  "date": "Night of the 19th"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "nu arietis",
+                  "angle": 6.056660930041238,
+                  "position": "below",
+                  "at_time": "-650-03-02 17:57",
+                  "score": 1.0,
+                  "search_start": "-650-03-02 17:57",
+                  "search_end": "-650-03-03 06:39",
+                  "date": "Night of the 20th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "base_year": -667,
+  "best_score": 5.80320813837127,
+  "years": [
+    {
+      "name": "Shamashshumukin Acc.",
+      "actual_year": -667,
+      "vernal_equinox": "-667-03-28 04:55",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 1.9234495640474494,
+          "nisan_1": "-667-03-19 18:08",
+          "next_nisan": "-666-03-08 18:01",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9599974845328103,
+              "name": "II",
+              "actual_month": 2,
+              "month_sunset_1": "-667-04-17 18:25",
+              "first_visibility": "-667-04-17 18:25",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-667-05-02 10:21",
+                  "visible": 0,
+                  "type": "Partial",
+                  "onset_us": 17.11394182406366,
+                  "maximal_us": 0.0,
+                  "clearing_us": 17.459458708763123,
+                  "sum_us": 34.57340053282678,
+                  "after_sunrise_us": 75.53343485109508,
+                  "after_sunset_us": -123.40949222445488,
+                  "score": 0.9599974845328103,
+                  "search_start": "-667-04-17 18:25",
+                  "search_end": "-667-05-17 05:03",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 0.9634520795146392,
+              "name": "VIII",
+              "actual_month": 8,
+              "month_sunset_1": "-667-10-13 17:43",
+              "first_visibility": "-667-10-13 17:43",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-667-10-25 16:00",
+                  "visible": 0,
+                  "type": "Partial",
+                  "onset_us": 19.8187539819628,
+                  "maximal_us": 0.0,
+                  "clearing_us": 20.106144715100527,
+                  "sum_us": 39.92489869706333,
+                  "after_sunrise_us": 146.87520758248866,
+                  "after_sunset_us": -22.222828399389982,
+                  "score": 0.9634520795146392,
+                  "search_start": "-667-10-13 17:43",
+                  "search_end": "-667-11-12 06:29",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shamashshumukin 2",
+      "actual_year": -665,
+      "vernal_equinox": "-665-03-28 16:31",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 1.0,
+          "nisan_1": "-665-03-28 18:13",
+          "next_nisan": "-664-03-16 18:07",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "I",
+              "actual_month": 1,
+              "month_sunset_1": "-665-03-28 18:13",
+              "first_visibility": "-665-03-28 18:13",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-665-04-10 20:15",
+                  "visible": 1,
+                  "type": "Partial",
+                  "onset_us": 19.8561043292284,
+                  "maximal_us": 0.0,
+                  "clearing_us": 20.22823065519333,
+                  "sum_us": 40.08433498442173,
+                  "after_sunrise_us": -143.01349388435483,
+                  "after_sunset_us": 28.37434032931924,
+                  "score": 1.0,
+                  "search_start": "-665-04-10 18:21",
+                  "search_end": "-665-04-11 05:47",
+                  "date": "Night of the 14th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shamashshumukin 18",
+      "actual_year": -649,
+      "vernal_equinox": "-649-03-28 13:24",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 1.8983361995587673,
+          "nisan_1": "-649-03-30 18:15",
+          "next_nisan": "-648-03-19 18:09",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.8983361995587672,
+              "name": "II",
+              "actual_month": 2,
+              "month_sunset_1": "-649-04-29 18:33",
+              "first_visibility": "-649-04-29 18:33",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-649-05-13 17:32",
+                  "visible": 0,
+                  "type": "Partial",
+                  "onset_us": 14.092598408460617,
+                  "maximal_us": 0.0,
+                  "clearing_us": 14.446251690387726,
+                  "sum_us": 28.538850098848343,
+                  "after_sunrise_us": -173.74200294725597,
+                  "after_sunset_us": -17.53099137917161,
+                  "score": 0.8983361995587672,
+                  "search_start": "-649-04-29 18:33",
+                  "search_end": "-649-05-29 04:54",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "VIII",
+              "actual_month": 8,
+              "month_sunset_1": "-649-10-24 17:30",
+              "first_visibility": "-649-10-24 17:30",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-649-11-06 00:39",
+                  "visible": 1,
+                  "type": "Partial",
+                  "onset_us": 19.724777592346072,
+                  "maximal_us": 0.0,
+                  "clearing_us": 20.01589072868228,
+                  "sum_us": 39.74066832102835,
+                  "after_sunrise_us": -86.04339385405183,
+                  "after_sunset_us": 110.17539775930345,
+                  "score": 1.0,
+                  "search_start": "-649-11-05 17:18",
+                  "search_end": "-649-11-06 17:17",
+                  "date": "Night and day of the 13th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 16",
+      "actual_year": -631,
+      "vernal_equinox": "-631-03-27 22:16",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 0.9814223747650528,
+          "nisan_1": "-631-03-11 18:03",
+          "next_nisan": "-630-03-01 17:56",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9814223747650528,
+              "name": "III",
+              "actual_month": 3,
+              "month_sunset_1": "-631-05-09 18:39",
+              "first_visibility": "-631-05-09 18:39",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-631-05-24 00:37",
+                  "visible": 1,
+                  "type": "Partial",
+                  "onset_us": 9.492629813030362,
+                  "maximal_us": 0.0,
+                  "clearing_us": 9.861700851470232,
+                  "sum_us": 19.354330664500594,
+                  "after_sunrise_us": -65.02597767859697,
+                  "after_sunset_us": 87.15283814817667,
+                  "position_body": "antares",
+                  "position_actual_angle": 21.659625482009226,
+                  "position_actual_position": "behind",
+                  "score": 0.9814223747650528,
+                  "search_start": "-631-05-23 18:49",
+                  "search_end": "-631-05-24 18:49",
+                  "date": "Night and day of the 15th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

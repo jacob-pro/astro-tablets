@@ -1,0 +1,905 @@
+{
+  "base_year": -646,
+  "best_score": 40.99999999999989,
+  "years": [
+    {
+      "name": "Kandalanu 1",
+      "actual_year": -646,
+      "vernal_equinox": "-646-03-28 06:57",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 2.0,
+          "nisan_1": "-646-03-28 18:14",
+          "next_nisan": "-645-03-17 18:07",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "Unknown month between 1 and 4",
+              "actual_month": 3,
+              "month_sunset_1": "-646-05-25 18:50",
+              "first_visibility": "-646-05-25 18:50",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-646-06-14 19:54",
+                  "score": 1.0,
+                  "search_start": "-646-05-25 18:50",
+                  "search_end": "-646-06-24 04:47",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "IV",
+              "actual_month": 4,
+              "month_sunset_1": "-646-06-24 19:06",
+              "first_visibility": "-646-06-24 19:06",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-646-07-18 03:45",
+                  "score": 1.0,
+                  "search_start": "-646-07-17 19:09",
+                  "search_end": "-646-07-18 04:56",
+                  "date": "Night of the 24th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 2",
+      "actual_year": -645,
+      "vernal_equinox": "-645-03-28 12:53",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 3.0,
+          "nisan_1": "-645-03-17 18:07",
+          "next_nisan": "-644-03-05 17:59",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "IV",
+              "actual_month": 4,
+              "month_sunset_1": "-645-06-13 19:01",
+              "first_visibility": "-645-06-13 19:01",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-645-06-28 20:00",
+                  "score": 1.0,
+                  "search_start": "-645-06-23 19:06",
+                  "search_end": "-645-07-13 04:53",
+                  "date": "10+"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "V",
+              "actual_month": 5,
+              "month_sunset_1": "-645-07-13 19:09",
+              "first_visibility": "-645-07-13 19:09",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-645-07-31 03:55",
+                  "score": 1.0,
+                  "search_start": "-645-07-13 19:09",
+                  "search_end": "-645-08-12 05:14",
+                  "date": "Any day"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "epsilon leonis",
+                  "angle": 9.003003459687697,
+                  "position": "below",
+                  "at_time": "-645-07-26 02:32",
+                  "score": 1.0,
+                  "search_start": "-645-07-13 19:09",
+                  "search_end": "-645-08-12 05:14",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 3",
+      "actual_year": -644,
+      "vernal_equinox": "-644-03-27 18:54",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 2.9999999999999707,
+          "nisan_1": "-644-04-04 18:18",
+          "next_nisan": "-643-03-24 18:11",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "IV",
+              "actual_month": 4,
+              "month_sunset_1": "-644-07-02 19:09",
+              "first_visibility": "-644-07-01 19:08",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-644-07-10 20:04",
+                  "score": 1.0,
+                  "search_start": "-644-07-08 19:09",
+                  "search_end": "-644-07-09 04:51",
+                  "date": "Night of the 7th"
+                }
+              ]
+            },
+            {
+              "score": 1.999999999999971,
+              "name": "V",
+              "actual_month": 5,
+              "month_sunset_1": "-644-07-31 19:03",
+              "first_visibility": "-644-07-31 19:03",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-644-08-12 04:06",
+                  "score": 0.9999999999999709,
+                  "search_start": "-644-08-15 18:52",
+                  "search_end": "-644-08-16 05:17",
+                  "date": "Night of the 16th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "regulus",
+                  "angle": 5.101454781323541,
+                  "position": "behind",
+                  "at_time": "-644-08-15 18:52",
+                  "score": 1.0,
+                  "search_start": "-644-08-15 18:52",
+                  "search_end": "-644-08-16 05:17",
+                  "date": "Night of the 16th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 4",
+      "actual_year": -643,
+      "vernal_equinox": "-643-03-28 00:38",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 2.99999999999997,
+          "nisan_1": "-643-03-24 18:11",
+          "next_nisan": "-642-03-13 18:04",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9999999999999699,
+              "name": "IV",
+              "actual_month": 4,
+              "month_sunset_1": "-643-06-22 19:06",
+              "first_visibility": "-643-06-21 19:05",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-643-07-24 19:57",
+                  "score": 0.9999999999999699,
+                  "search_start": "-643-07-20 19:08",
+                  "search_end": "-643-07-21 04:58",
+                  "date": "Night of the 29th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "Unknown month between 5 and 12",
+              "actual_month": 6,
+              "month_sunset_1": "-643-08-19 18:49",
+              "first_visibility": "-643-08-19 18:49",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-643-08-25 04:18",
+                  "score": 1.0,
+                  "search_start": "-643-08-19 18:49",
+                  "search_end": "-643-09-18 05:43",
+                  "date": "Any day"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "52 leonis",
+                  "angle": 10.131807145219328,
+                  "position": "behind",
+                  "at_time": "-643-08-19 18:49",
+                  "score": 1.0,
+                  "search_start": "-643-08-19 18:49",
+                  "search_end": "-643-09-18 05:43",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 5",
+      "actual_year": -642,
+      "vernal_equinox": "-642-03-28 06:29",
+      "intercalary": "Ululu II",
+      "potentials": [
+        {
+          "score": 1.9999999999999711,
+          "nisan_1": "-642-03-13 18:04",
+          "next_nisan": "-641-04-01 18:16",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9999999999999712,
+              "name": "V",
+              "actual_month": 5,
+              "month_sunset_1": "-642-07-11 19:09",
+              "first_visibility": "-642-07-10 19:09",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-642-08-06 19:49",
+                  "score": 0.9999999999999712,
+                  "search_start": "-642-08-02 19:02",
+                  "search_end": "-642-08-03 05:07",
+                  "date": "Night of the 23rd"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "VI",
+              "actual_month": 6,
+              "month_sunset_1": "-642-08-08 18:58",
+              "first_visibility": "-642-08-08 18:58",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-642-09-06 04:32",
+                  "score": 1.0,
+                  "search_start": "-642-09-05 18:31",
+                  "search_end": "-642-09-06 05:33",
+                  "date": "Night of the 29th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 6",
+      "actual_year": -641,
+      "vernal_equinox": "-641-03-28 12:15",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 3.0,
+          "nisan_1": "-641-04-01 18:16",
+          "next_nisan": "-640-03-20 18:09",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "V",
+              "actual_month": 5,
+              "month_sunset_1": "-641-07-28 19:05",
+              "first_visibility": "-641-07-28 19:05",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-641-08-18 19:39",
+                  "score": 1.0,
+                  "search_start": "-641-08-16 18:52",
+                  "search_end": "-641-08-17 05:17",
+                  "date": "Night of the 20th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "VI",
+              "actual_month": 6,
+              "month_sunset_1": "-641-08-27 18:41",
+              "first_visibility": "-641-08-27 18:41",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-641-09-19 04:41",
+                  "score": 1.0,
+                  "search_start": "-641-09-17 18:16",
+                  "search_end": "-641-09-18 05:42",
+                  "date": "Night of the 22nd"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "beta virginis",
+                  "angle": 15.496478176930328,
+                  "position": "behind",
+                  "at_time": "-641-09-17 18:16",
+                  "score": 1.0,
+                  "search_start": "-641-09-17 18:16",
+                  "search_end": "-641-09-18 05:42",
+                  "date": "Night of the 22nd"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 7",
+      "actual_year": -640,
+      "vernal_equinox": "-640-03-27 18:03",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 3.0,
+          "nisan_1": "-640-03-20 18:09",
+          "next_nisan": "-639-03-10 18:03",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "VI",
+              "actual_month": 6,
+              "month_sunset_1": "-640-08-15 18:52",
+              "first_visibility": "-640-08-15 18:52",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-640-08-30 19:23",
+                  "score": 1.0,
+                  "search_start": "-640-08-25 18:43",
+                  "search_end": "-640-09-14 05:40",
+                  "date": "10+"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "VII",
+              "actual_month": 7,
+              "month_sunset_1": "-640-09-14 18:19",
+              "first_visibility": "-640-09-14 18:19",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-640-09-30 04:51",
+                  "score": 1.0,
+                  "search_start": "-640-09-28 18:01",
+                  "search_end": "-640-09-29 05:51",
+                  "date": "Night of the 15th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "theta virginis",
+                  "angle": 5.660228486777289,
+                  "position": "behind",
+                  "at_time": "-640-09-28 18:01",
+                  "score": 1.0,
+                  "search_start": "-640-09-28 18:01",
+                  "search_end": "-640-09-29 05:51",
+                  "date": "Night of the 15th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 8",
+      "actual_year": -639,
+      "vernal_equinox": "-639-03-27 23:56",
+      "intercalary": "Ululu II",
+      "potentials": [
+        {
+          "score": 3.999999999999999,
+          "nisan_1": "-639-03-10 18:03",
+          "next_nisan": "-638-03-29 18:14",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.9999999999999993,
+              "name": "VII",
+              "actual_month": 7,
+              "month_sunset_1": "-639-09-04 18:32",
+              "first_visibility": "-639-09-03 18:33",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-639-09-11 19:08",
+                  "score": 0.9999999999999993,
+                  "search_start": "-639-09-08 18:27",
+                  "search_end": "-639-09-09 05:36",
+                  "date": "Night of the 5th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "theta virginis",
+                  "angle": 13.53858175607534,
+                  "position": "behind",
+                  "at_time": "-639-09-08 18:27",
+                  "score": 1.0,
+                  "search_start": "-639-09-08 18:27",
+                  "search_end": "-639-09-09 05:36",
+                  "date": "Night of the 5th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "VIII",
+              "actual_month": 8,
+              "month_sunset_1": "-639-10-04 17:54",
+              "first_visibility": "-639-10-03 17:55",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-639-10-11 05:03",
+                  "score": 0.9999999999999999,
+                  "search_start": "-639-10-08 17:49",
+                  "search_end": "-639-10-09 05:59",
+                  "date": "Night of the 5th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "theta virginis",
+                  "angle": 17.06492748139568,
+                  "position": "behind",
+                  "at_time": "-639-10-08 17:49",
+                  "score": 1.0,
+                  "search_start": "-639-10-08 17:49",
+                  "search_end": "-639-10-09 05:59",
+                  "date": "Night of the 5th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 9",
+      "actual_year": -638,
+      "vernal_equinox": "-638-03-28 05:31",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 3.0,
+          "nisan_1": "-638-03-29 18:14",
+          "next_nisan": "-637-03-19 18:08",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "Unknown month between 1 and 12",
+              "actual_month": 6,
+              "month_sunset_1": "-638-08-23 18:45",
+              "first_visibility": "-638-08-23 18:45",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-638-09-22 18:55",
+                  "score": 1.0,
+                  "search_start": "-638-08-23 18:45",
+                  "search_end": "-638-09-22 05:46",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "Unknown month between 1 and 12",
+              "actual_month": 7,
+              "month_sunset_1": "-638-09-22 18:09",
+              "first_visibility": "-638-09-22 18:09",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-638-10-23 05:10",
+                  "score": 1.0,
+                  "search_start": "-638-09-22 18:09",
+                  "search_end": "-638-10-22 06:09",
+                  "date": "Any day"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "nu librae",
+                  "angle": 2.017959484917139,
+                  "position": "ahead",
+                  "at_time": "-638-10-22 03:00",
+                  "score": 1.0,
+                  "search_start": "-638-09-22 18:09",
+                  "search_end": "-638-10-22 06:09",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 10",
+      "actual_year": -637,
+      "vernal_equinox": "-637-03-28 11:16",
+      "intercalary": "Addaru II",
+      "potentials": [
+        {
+          "score": 3.9999999999999996,
+          "nisan_1": "-637-03-19 18:08",
+          "next_nisan": "-636-04-05 18:19",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.9999999999999996,
+              "name": "Unknown month between 1 and 12",
+              "actual_month": 7,
+              "month_sunset_1": "-637-09-12 18:23",
+              "first_visibility": "-637-09-11 18:24",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-637-10-04 18:39",
+                  "score": 0.9999999999999994,
+                  "search_start": "-637-10-01 17:58",
+                  "search_end": "-637-10-02 05:53",
+                  "date": "Night of the 20th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "nu librae",
+                  "angle": 5.78253630680275,
+                  "position": "behind",
+                  "at_time": "-637-10-01 17:58",
+                  "score": 1.0,
+                  "search_start": "-637-10-01 17:58",
+                  "search_end": "-637-10-02 05:53",
+                  "date": "Night of the 20th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "Unknown month between 1 and 13",
+              "actual_month": 8,
+              "month_sunset_1": "-637-10-11 17:45",
+              "first_visibility": "-637-10-11 17:45",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-637-11-03 05:20",
+                  "score": 1.0,
+                  "search_start": "-637-11-02 17:21",
+                  "search_end": "-637-11-03 06:20",
+                  "date": "Night of the 23rd"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "antares",
+                  "angle": 13.155507467927436,
+                  "position": "ahead",
+                  "at_time": "-637-11-03 03:05",
+                  "score": 1.0,
+                  "search_start": "-637-11-02 17:21",
+                  "search_end": "-637-11-03 06:20",
+                  "date": "Night of the 23rd"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 11",
+      "actual_year": -636,
+      "vernal_equinox": "-636-03-27 17:10",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 3.0,
+          "nisan_1": "-636-04-05 18:19",
+          "next_nisan": "-635-03-26 18:13",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "VII",
+              "actual_month": 7,
+              "month_sunset_1": "-636-10-01 17:57",
+              "first_visibility": "-636-09-30 17:58",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-636-10-15 18:23",
+                  "score": 1.0,
+                  "search_start": "-636-10-13 17:42",
+                  "search_end": "-636-10-14 06:03",
+                  "date": "Night of the 13th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "Unknown month between 7 and 12",
+              "actual_month": 8,
+              "month_sunset_1": "-636-10-29 17:24",
+              "first_visibility": "-636-10-29 17:24",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-636-11-14 05:27",
+                  "score": 1.0,
+                  "search_start": "-636-10-29 17:24",
+                  "search_end": "-636-11-28 06:45",
+                  "date": "Any day"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "antares",
+                  "angle": 6.238377965316655,
+                  "position": "above",
+                  "at_time": "-636-11-15 20:30",
+                  "score": 1.0,
+                  "search_start": "-636-10-29 17:24",
+                  "search_end": "-636-11-28 06:45",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 12",
+      "actual_year": -635,
+      "vernal_equinox": "-635-03-27 22:52",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 3.0,
+          "nisan_1": "-635-03-26 18:13",
+          "next_nisan": "-634-03-15 18:06",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "VIII",
+              "actual_month": 8,
+              "month_sunset_1": "-635-10-20 17:34",
+              "first_visibility": "-635-10-19 17:35",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-635-10-26 18:13",
+                  "score": 1.0,
+                  "search_start": "-635-10-24 17:29",
+                  "search_end": "-635-10-25 06:12",
+                  "date": "Night of the 5th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "IX",
+              "actual_month": 9,
+              "month_sunset_1": "-635-11-18 17:07",
+              "first_visibility": "-635-11-17 17:08",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-635-11-25 05:38",
+                  "score": 0.9999999999999999,
+                  "search_start": "-635-11-22 17:05",
+                  "search_end": "-635-11-23 06:40",
+                  "date": "Night of the 5th"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "ascella",
+                  "angle": 24.71653586361647,
+                  "position": "ahead",
+                  "at_time": "-635-11-23 03:16",
+                  "score": 1.0,
+                  "search_start": "-635-11-22 17:05",
+                  "search_end": "-635-11-23 06:40",
+                  "date": "Night of the 5th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 13",
+      "actual_year": -634,
+      "vernal_equinox": "-634-03-28 04:42",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 2.999999999999982,
+          "nisan_1": "-634-03-15 18:06",
+          "next_nisan": "-633-03-04 17:58",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9999999999999817,
+              "name": "VIII",
+              "actual_month": 8,
+              "month_sunset_1": "-634-10-09 17:47",
+              "first_visibility": "-634-10-08 17:49",
+              "days_late": 1,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-634-11-07 18:01",
+                  "score": 0.9999999999999817,
+                  "search_start": "-634-11-03 17:19",
+                  "search_end": "-634-11-04 06:21",
+                  "date": "Night of the 26th"
+                }
+              ]
+            },
+            {
+              "score": 2.0,
+              "name": "X",
+              "actual_month": 10,
+              "month_sunset_1": "-634-12-06 17:01",
+              "first_visibility": "-634-12-06 17:01",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-634-12-06 05:49",
+                  "score": 1.0,
+                  "search_start": "-634-12-06 17:01",
+                  "search_end": "-634-12-07 06:53",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "ascella",
+                  "angle": 14.350196088707369,
+                  "position": "ahead",
+                  "at_time": "-634-12-07 03:25",
+                  "score": 1.0,
+                  "search_start": "-634-12-06 17:01",
+                  "search_end": "-634-12-07 06:53",
+                  "date": "Night of the 1st"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Kandalanu 14",
+      "actual_year": -633,
+      "vernal_equinox": "-633-03-28 10:33",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 2.0,
+          "nisan_1": "-633-03-04 17:58",
+          "next_nisan": "-632-02-21 17:50",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 1.0,
+              "name": "Unknown month between 1 and 12",
+              "actual_month": 9,
+              "month_sunset_1": "-633-10-27 17:27",
+              "first_visibility": "-633-10-27 17:27",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "last_appearance",
+                  "nearest_time": "-633-11-18 17:55",
+                  "score": 1.0,
+                  "search_start": "-633-10-27 17:27",
+                  "search_end": "-633-11-26 06:42",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "Unknown month between 1 and 12",
+              "actual_month": 10,
+              "month_sunset_1": "-633-11-25 17:04",
+              "first_visibility": "-633-11-25 17:04",
+              "days_late": 0,
+              "observations": [
+                {
+                  "planet": "saturn",
+                  "event": "first_appearance",
+                  "nearest_time": "-633-12-18 05:57",
+                  "score": 1.0,
+                  "search_start": "-633-11-25 17:04",
+                  "search_end": "-633-12-25 07:06",
+                  "date": "Any day"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

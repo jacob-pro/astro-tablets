@@ -1,0 +1,317 @@
+{
+  "base_year": -590,
+  "best_score": 9.153319451379431,
+  "years": [
+    {
+      "name": "Nebuchadnezzar 14",
+      "actual_year": -590,
+      "vernal_equinox": "-590-03-27 20:34",
+      "intercalary": "Addaru II",
+      "potentials": [
+        {
+          "score": 1.8888888888888888,
+          "nisan_1": "-590-04-07 18:20",
+          "next_nisan": "-589-04-26 18:31",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.8888888888888888,
+              "name": "VI",
+              "actual_month": 6,
+              "month_sunset_1": "-590-09-02 18:34",
+              "first_visibility": "-590-09-02 18:34",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-590-09-15 07:51",
+                  "visible": 0,
+                  "type": "Total",
+                  "onset_us": 16.266492353752255,
+                  "maximal_us": 25.59599851258099,
+                  "clearing_us": 16.263929838314652,
+                  "sum_us": 58.1264207046479,
+                  "after_sunrise_us": 32.54749026149511,
+                  "after_sunset_us": -156.83321080170572,
+                  "score": 0.8888888888888888,
+                  "search_start": "-590-09-02 18:34",
+                  "search_end": "-590-10-02 05:53",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "XII",
+              "actual_month": 12,
+              "month_sunset_1": "-589-02-26 17:54",
+              "first_visibility": "-589-02-26 17:54",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-589-03-12 10:05",
+                  "visible": 0,
+                  "type": "Partial",
+                  "onset_us": 19.476802172139287,
+                  "maximal_us": 0.0,
+                  "clearing_us": 19.804743714630604,
+                  "sum_us": 39.28154588676989,
+                  "after_sunrise_us": 54.451377522200346,
+                  "after_sunset_us": -119.74013306200504,
+                  "score": 1.0,
+                  "search_start": "-589-03-11 18:03",
+                  "search_end": "-589-03-12 18:04",
+                  "date": "Night and day of the 14th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nebuchadnezzar 31",
+      "actual_year": -573,
+      "vernal_equinox": "-573-03-27 23:29",
+      "intercalary": "Ululu II",
+      "potentials": [
+        {
+          "score": 2.559295199181764,
+          "nisan_1": "-573-03-31 18:16",
+          "next_nisan": "-572-04-17 18:26",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 2.559295199181764,
+              "name": "Unknown month between 1 and 13",
+              "actual_month": 13,
+              "month_sunset_1": "-572-03-19 18:09",
+              "first_visibility": "-572-03-19 18:09",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-572-04-02 01:58",
+                  "visible": 1,
+                  "type": "Total",
+                  "onset_us": 14.1313311830163,
+                  "maximal_us": 24.559435369446874,
+                  "clearing_us": 14.131903583183885,
+                  "sum_us": 52.82267013564706,
+                  "after_sunrise_us": -59.819273706525564,
+                  "after_sunset_us": 115.28477417305112,
+                  "position_body": "nu librae",
+                  "position_actual_angle": 7.865817560168329,
+                  "position_actual_position": "ahead",
+                  "score": 0.7592951991817639,
+                  "search_start": "-572-03-19 18:09",
+                  "search_end": "-572-04-18 05:35",
+                  "date": "Any day"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "antares",
+                  "angle": 5.4557037137939846,
+                  "position": "above",
+                  "at_time": "-572-04-03 00:06",
+                  "score": 0.8,
+                  "search_start": "-572-04-01 01:58",
+                  "search_end": "-572-04-03 01:58",
+                  "date": "Within a day of the eclipse"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "eta_capricorni",
+                  "angle": 10.536771124592955,
+                  "position": "ahead",
+                  "at_time": "-572-04-03 00:06",
+                  "score": 1.0,
+                  "search_start": "-572-04-01 01:58",
+                  "search_end": "-572-04-03 01:58",
+                  "date": "Within a day of the eclipse"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nebuchadnezzar 32",
+      "actual_year": -572,
+      "vernal_equinox": "-572-03-27 05:21",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 1.941433852416687,
+          "nisan_1": "-572-04-17 18:26",
+          "next_nisan": "-571-04-06 18:19",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9414338524166869,
+              "name": "VI",
+              "actual_month": 6,
+              "month_sunset_1": "-572-09-12 18:21",
+              "first_visibility": "-572-09-12 18:21",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-572-09-25 15:32",
+                  "visible": 0,
+                  "type": "Total",
+                  "onset_us": 16.376229487359524,
+                  "maximal_us": 25.04803603515029,
+                  "clearing_us": 16.373510314151645,
+                  "sum_us": 57.79777583666146,
+                  "after_sunrise_us": 145.7919242978096,
+                  "after_sunset_us": -38.143594739958644,
+                  "score": 0.9414338524166869,
+                  "search_start": "-572-09-12 18:21",
+                  "search_end": "-572-10-12 06:02",
+                  "date": "Any day"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "XII",
+              "actual_month": 12,
+              "month_sunset_1": "-571-03-08 18:02",
+              "first_visibility": "-571-03-08 18:02",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-571-03-22 17:52",
+                  "visible": 1,
+                  "type": "Partial",
+                  "onset_us": 20.716546587646008,
+                  "maximal_us": 0.0,
+                  "clearing_us": 21.03842834942043,
+                  "sum_us": 41.754974937066436,
+                  "after_sunrise_us": 174.72583813592792,
+                  "after_sunset_us": -4.7288628201931715,
+                  "score": 1.0,
+                  "search_start": "-571-03-22 18:11",
+                  "search_end": "-571-03-23 18:11",
+                  "date": "Night and day of the 15th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nebuchadnezzar 50",
+      "actual_year": -554,
+      "vernal_equinox": "-554-03-27 13:49",
+      "intercalary": "Addaru II",
+      "potentials": [
+        {
+          "score": 1.8037247720053595,
+          "nisan_1": "-554-03-30 18:15",
+          "next_nisan": "-553-04-18 18:26",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.8037247720053594,
+              "name": "VII",
+              "actual_month": 7,
+              "month_sunset_1": "-554-09-24 18:06",
+              "first_visibility": "-554-09-24 18:06",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-554-10-06 23:21",
+                  "visible": 1,
+                  "type": "Total",
+                  "onset_us": 16.47797506302595,
+                  "maximal_us": 24.527499228715897,
+                  "clearing_us": 16.475112810730934,
+                  "sum_us": 57.48058710247278,
+                  "after_sunrise_us": -99.04389322735369,
+                  "after_sunset_us": 82.69849749282002,
+                  "position_body": "nu arietis",
+                  "position_actual_angle": 6.436204731875202,
+                  "position_actual_position": "below",
+                  "score": 0.8037247720053594,
+                  "search_start": "-554-10-06 17:50",
+                  "search_end": "-554-10-07 17:49",
+                  "date": "Night and day of the 13th"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "Addaru II",
+              "actual_month": 13,
+              "month_sunset_1": "-553-03-19 18:09",
+              "first_visibility": "-553-03-19 18:09",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-553-04-03 01:31",
+                  "visible": 1,
+                  "type": "Partial",
+                  "onset_us": 21.923530669882894,
+                  "maximal_us": 0.0,
+                  "clearing_us": 22.24471690133214,
+                  "sum_us": 44.16824757121503,
+                  "after_sunrise_us": -66.41530285589397,
+                  "after_sunset_us": 108.48691742867231,
+                  "score": 1.0,
+                  "search_start": "-553-04-02 18:17",
+                  "search_end": "-553-04-03 18:18",
+                  "date": "Night and day of the 15th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nebuchadnezzar 68",
+      "actual_year": -536,
+      "vernal_equinox": "-536-03-26 22:36",
+      "intercalary": "unknown",
+      "potentials": [
+        {
+          "score": 0.9599767388867333,
+          "nisan_1": "-536-04-09 18:22",
+          "next_nisan": "-535-03-29 18:15",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 0.9599767388867333,
+              "name": "VII",
+              "actual_month": 7,
+              "month_sunset_1": "-536-10-04 17:52",
+              "first_visibility": "-536-10-04 17:52",
+              "days_late": 0,
+              "observations": [
+                {
+                  "closest_approach_time": "-536-10-17 07:21",
+                  "visible": 0,
+                  "type": "Total",
+                  "onset_us": 16.546537773683667,
+                  "maximal_us": 24.122411906719208,
+                  "clearing_us": 16.54354895465076,
+                  "sum_us": 57.212498635053635,
+                  "after_sunrise_us": 18.638602551072836,
+                  "after_sunset_us": -153.87435564771295,
+                  "position_body": "alcyone",
+                  "position_actual_angle": 8.222558648222078,
+                  "position_actual_position": "ahead",
+                  "score": 0.9599767388867333,
+                  "search_start": "-536-10-15 17:38",
+                  "search_end": "-536-11-03 06:21",
+                  "date": "11+"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
