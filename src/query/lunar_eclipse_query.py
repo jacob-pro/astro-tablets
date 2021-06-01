@@ -4,7 +4,10 @@ from dataclasses import dataclass
 from enum import unique, Enum
 from typing import *
 
+import numpy as np
+
 from generate.angular_separation import EclipticPosition
+from query.angular_separation_query import AngularSeparationQuery
 from query.database import Database
 from query.abstract_query import AbstractQuery, SearchRange
 from util import diff_time_degrees_signed
@@ -26,10 +29,10 @@ class FirstContactTime:
 
 @unique
 class ExpectedEclipseType(Enum):
-    UNKNOWN = 0           # A prediction or uncertain if it was a prediction
+    UNKNOWN = 0  # A prediction or uncertain if it was a prediction
     PARTIAL_OR_TOTAL = 1  # An observation, of uncertain type
-    PARTIAL = 2           # An observation of a partial eclipse
-    TOTAL = 3             # An observations of a total eclipse
+    PARTIAL = 2  # An observation of a partial eclipse
+    TOTAL = 3  # An observations of a total eclipse
 
 
 class PhaseTiming(ABC):
@@ -65,20 +68,50 @@ class LunarEclipseQuery(AbstractQuery):
         self.target_time = target_time
         position_body = position.body if position is not None else None
         matched_eclipses = db.lunar_eclipses_in_range(target_time.start, target_time.end, position_body)
-        scores = map(lambda x: (x, self.score_eclipse(x, first_contact, type, phase_timing, position)), matched_eclipses)
+        scores = map(lambda x: (x, self.score_eclipse(x, first_contact, type, phase_timing, position)),
+                     matched_eclipses)
         pass
 
     @staticmethod
     def score_eclipse(eclipse: Dict, first_contact: Union[None, FirstContactTime],
                       type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming],
                       location: Union[None, EclipsePosition]) -> float:
+        scores = [LunarEclipseQuery.eclipse_core_score(eclipse, type)]
+        weights = [0.5]
         if location is not None:
-            assert eclipse['angle'] is not None # Check that positions were computed
+            scores.append(AngularSeparationQuery.separation_score(location.target_angle, location.tolerance,
+                                                            location.target_position, eclipse['angle'],
+                                                            eclipse['position']))
+            weights.append(0.25)
         if first_contact is not None:
-            score = LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact)
+            scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact))
+            weights.append(0.25)
         if phase_timing is not None:
-            score = LunarEclipseQuery.eclipse_phase_length_score(eclipse, phase_timing)
-        pass
+            scores.append(LunarEclipseQuery.eclipse_phase_length_score(eclipse, phase_timing))
+            weights.append(0.25)
+        score = np.average(scores, weights=weights)
+        assert 0 <= score <= 1
+        return score
+
+    @staticmethod
+    def eclipse_core_score(eclipse: Dict, type: ExpectedEclipseType) -> float:
+        score = 0
+        if type == ExpectedEclipseType.UNKNOWN:
+            score = 1.0
+        elif type == ExpectedEclipseType.TOTAL and eclipse['visible']:
+            if eclipse['e_type'] == 'Total':
+                score = 1.0
+            elif eclipse['e_type' == 'Partial']:
+                score = 0.5
+        elif type == ExpectedEclipseType.PARTIAL and eclipse['visible']:
+            if eclipse['e_type'] == 'Total':
+                score = 0.5
+            elif eclipse['e_type' == 'Partial']:
+                score = 1.0
+        elif type == ExpectedEclipseType.PARTIAL_OR_TOTAL and eclipse['visible']:
+            score = 1.0
+        assert 0 <= score <= 1
+        return score
 
     @staticmethod
     def eclipse_time_of_day_score(eclipse: Dict, first_contact: FirstContactTime) -> float:
