@@ -56,6 +56,7 @@ class Constellation:
 NU_ARIETIS = "nu arietis"
 NU_AURIGAE = "nu aurigae"
 THETA_CANCRI = "theta cancri"
+ETA_CAPRICORNI = "eta_capricorni"
 FIFTY_TWO_LEONIS = "52 leonis"
 NU_LIBRAE = "nu librae"
 THIRTY_SIX_PERSEI = "36 persei"
@@ -66,6 +67,7 @@ THETA_VIRGINIS = "theta virginis"
 ARIES = Constellation(NU_ARIETIS, 30)
 AURIGA = Constellation(NU_AURIGAE, 32)
 CANCER = Constellation(THETA_CANCRI, 25)
+CAPRICORNUS = Constellation(ETA_CAPRICORNI, 28)
 LEO = Constellation(FIFTY_TWO_LEONIS, 40)
 LIBRA = Constellation(NU_LIBRAE, 25)
 PERSEUS = Constellation(THIRTY_SIX_PERSEI, 45)

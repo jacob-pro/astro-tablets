@@ -186,3 +186,19 @@ class BM35115(Tablet):
         super(BM35115, self).compute()
         # (Moon) behind α Scorpii [it was eclipsed.]
         self.lunar_eclipses([ANTARES])
+
+
+class BM32234(Tablet):
+    default_start = -640
+    default_end = -490
+
+    def compute(self):
+        super(BM32234, self).compute()
+        # in front of Libra it was eclipsed.
+        # Behind the rump of Aries it was eclipsed.
+        # in front of η Tauri it was eclipsed.
+        self.lunar_eclipses([LIBRA.central_star, ARIES.central_star, ALCYONE])
+        # Mars was 2 cubits in front of α Scorpii.
+        self.separation_during_night(MARS, ANTARES)
+        # Saturn rose in Capricorn
+        self.separation_during_night(SATURN, CAPRICORNUS.central_star)

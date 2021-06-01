@@ -30,6 +30,12 @@ class SearchRange:
                            "Night of the {}".format(p.ordinal(day_number)))
 
     @staticmethod
+    def for_night_and_day(month: List[BabylonianDay], day_number: int):
+        assert 1 <= day_number <= 30
+        return SearchRange(month[day_number - 1].sunset, month[day_number].sunset,
+                           "Night and day of the {}".format(p.ordinal(day_number)))
+
+    @staticmethod
     def any_day(month: List[BabylonianDay]):
         return SearchRange(month[0].sunset, month[29].sunrise, "Any day")
 

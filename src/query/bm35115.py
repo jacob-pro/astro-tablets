@@ -48,7 +48,7 @@ class BM35115(AbstractTablet):
         # 2 month II, (after) 5 months,
         # 3 (eclipse) which was omitted.
         # 4 At 1,0° before sunset.
-        return [LunarEclipseQuery(self.db, FirstContactTime(10, FirstContactRelative.BEFORE_SUNSET),
+        return [LunarEclipseQuery(self.db, FirstContactTime(1.0, FirstContactRelative.BEFORE_SUNSET),
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
@@ -56,7 +56,7 @@ class BM35115(AbstractTablet):
     def year_18_month_8(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         # 5 Month VIII, the 13th, .... [....]
         # 6 and south [....]
-        range = SearchRange.for_night(month, 13)
+        range = SearchRange.for_night_and_day(month, 13)
         return [LunarEclipseQuery(self.db, None, ExpectedEclipseType.UNKNOWN, None, None, range)]
 
     def year_18(self, nisan_1: float) -> List[PotentialMonthResult]:
@@ -72,7 +72,7 @@ class BM35115(AbstractTablet):
         # 4 It cleared in the north. The north wind b[lew?.]
         # 5 20° onset, maximal phase, [and clearing ....]
         # 6 behind α Scorpii [it was eclipsed.]
-        day15 = SearchRange.for_night(month, 15)
+        day15 = SearchRange.for_night_and_day(month, 15)
         location = EclipsePosition(ANTARES, 0, 20, EclipticPosition.BEHIND)
         res1 = LunarEclipseQuery(self.db, None, ExpectedEclipseType.PARTIAL, CompositePhaseTiming(20), location, day15)
         return [res1]
