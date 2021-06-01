@@ -112,10 +112,12 @@ class BM32234(AbstractTablet):
         # 8'  blew. 5°
         # 9'  in front of η Tauri it was eclipsed.
         # 10' At 14° before [sunrise].
+        # Comment: V' 5': the missing word at the end of the line may have meant "was missing"
+        # Visibility description kind of unclear
         range = SearchRange.x_plus(month, 11)
         eclipse_time = FirstContactTime(14, FirstContactRelative.BEFORE_SUNRISE)
         location = EclipsePosition(ALCYONE, 0, 15, EclipticPosition.AHEAD)
-        res1 = LunarEclipseQuery(self.db, eclipse_time, ExpectedEclipseType.PARTIAL, None, location, range)
+        res1 = LunarEclipseQuery(self.db, eclipse_time, ExpectedEclipseType.UNKNOWN, None, location, range)
         return [res1]
 
     def year_68(self, nisan_1: float) -> List[PotentialMonthResult]:

@@ -61,7 +61,7 @@ class EclipsePosition:
 
 
 class LunarEclipseQuery(AbstractQuery):
-    REGULAR_TIME_TOLERANCE = 50
+    REGULAR_TIME_TOLERANCE = 5
     HIGH_TIME_TOLERANCE = 1.5
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
