@@ -20,6 +20,8 @@ def get_tablet_class(tablet: str):
         return BM76738
     if tablet == "bm35115":
         return BM35115
+    if tablet == "bm322234":
+        return BM32234
     raise ValueError("Unknown tablet name")
 
 
