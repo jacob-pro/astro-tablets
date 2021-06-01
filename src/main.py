@@ -6,11 +6,13 @@ from distutils.util import strtobool
 from typing import *
 
 import query as query_pkg
+from constants import HALO, FINGER, CUBIT
 from data import AstroData
 from generate import tablets
 from generate.database import Database as GenerateDatabase
 from graphics.eclipse_plot import plot_eclipse
 from graphics.eclipse_score_plots import plot_eclipse_time_of_day_score, plot_eclipse_phase_length_score
+from graphics.separation_score_plot import plot_separation_score
 from query.database import Database as QueryDatabase
 
 
@@ -68,6 +70,8 @@ def graphs():
     plot_eclipse(data, data.timescale.ut1(-153, 3, 21), "../documents/graphics/partial_eclipse.png")
     plot_eclipse_time_of_day_score("../documents/graphics/eclipse_time_of_day_score.png")
     plot_eclipse_phase_length_score("../documents/graphics/eclipse_phase_length_score.png")
+    plot_separation_score(0, HALO, "../documents/graphics/separation_score_1.png")
+    plot_separation_score(1 * CUBIT, 6 * FINGER, "../documents/graphics/separation_score_2.png")
 
 
 if __name__ == "__main__":

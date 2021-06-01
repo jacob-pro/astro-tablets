@@ -36,31 +36,39 @@ class AngularSeparationQuery(AbstractQuery):
         else:
             self.best = sep[0]
 
-    def quality_score(self) -> float:
+    def get_search_range(self) -> SearchRange:
+        return self.target_time
+
+    @staticmethod
+    def separation_score(target_angle: float, tolerance: float, target_position: Union[EclipticPosition, None],
+                         actual: float, actual_position: str):
         """
-        If angle is within tolerance of the target_angle score 1.0
-        Decreasing score as the angle moves from target_angle+tolerance up to target_angle + (1.5 * tolerance)
-        Correct position (if specified) adds 0.2 to score
-        """
-        lower_bound = max(self.target_angle - self.tolerance, 0)
-        upper_bound = self.target_angle + self.tolerance
-        actual = self.best['angle']
+                If angle is within tolerance of the target_angle score 1.0
+                Decreasing score as the angle moves from target_angle+tolerance up to target_angle + (1.5 * tolerance)
+                Correct position (if specified) adds 0.2 to score
+                """
+        lower_bound = max(target_angle - tolerance, 0)
+        upper_bound = target_angle + tolerance
         if lower_bound <= actual <= upper_bound:
             angle_score = 1.0
         else:
             diff = min(abs(actual - lower_bound), abs(actual - upper_bound))
-            res = 1 - math.pow((diff / (self.tolerance / 2.0)), 2)
+            res = 1 - math.pow((diff / (tolerance / 2.0)), 2)
             angle_score = max(res, 0)
         if angle_score == 0:
             return 0
-        if self.target_position is not None:
-            if self.best['position'] == self.target_position.value:
+        if target_position is not None:
+            if actual_position == target_position.value:
                 position_score = 1
             else:
                 position_score = 0
             return (angle_score * 0.8) + (position_score * 0.2)
         else:
             return angle_score
+
+    def quality_score(self) -> float:
+        return self.separation_score(self.target_angle, self.tolerance, self.target_position, self.best['angle'],
+                                     self.best['position'])
 
     def output(self) -> dict:
         return {
