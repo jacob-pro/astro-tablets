@@ -74,6 +74,10 @@ class LunarEclipseQuery(AbstractQuery):
                       location: Union[None, EclipsePosition]) -> float:
         if location is not None:
             assert eclipse['angle'] is not None # Check that positions were computed
+        if first_contact is not None:
+            score = LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact)
+        if phase_timing is not None:
+            score = LunarEclipseQuery.eclipse_phase_length_score(eclipse, phase_timing)
         pass
 
     @staticmethod
@@ -93,6 +97,7 @@ class LunarEclipseQuery(AbstractQuery):
         err = abs(first_contact.time_degrees - actual)
         percent_err = err / abs(actual)
         score = math.pow(50, -percent_err)
+        assert 0 <= score <= 1
         return score
 
     @staticmethod
@@ -109,12 +114,13 @@ class LunarEclipseQuery(AbstractQuery):
                 diffs.append((timings.clearing, eclipse['clearing_us']))
         else:
             raise RuntimeError
-        base = 0
+        score = 0
         for (observed, actual) in diffs:
             percent_err = abs(actual - observed) / abs(actual)
-            base = base + math.pow(50, -percent_err)
-        base = base / len(diffs)
-        return base
+            score = score + math.pow(50, -percent_err)
+        score = score / len(diffs)
+        assert 0 <= score <= 1
+        return score
 
     def output(self) -> dict:
         pass

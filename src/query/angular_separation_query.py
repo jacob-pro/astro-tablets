@@ -36,13 +36,6 @@ class AngularSeparationQuery(AbstractQuery):
         else:
             self.best = sep[0]
 
-    def get_search_range(self) -> SearchRange:
-        return self.target_time
-
-    def result_function(self, x: float) -> float:
-        res = 1 - math.pow((x / (self.tolerance / 2.0)), 2)
-        return max(res, 0)
-
     def quality_score(self) -> float:
         """
         If angle is within tolerance of the target_angle score 1.0
@@ -56,7 +49,8 @@ class AngularSeparationQuery(AbstractQuery):
             angle_score = 1.0
         else:
             diff = min(abs(actual - lower_bound), abs(actual - upper_bound))
-            angle_score = self.result_function(diff)
+            res = 1 - math.pow((diff / (self.tolerance / 2.0)), 2)
+            angle_score = max(res, 0)
         if angle_score == 0:
             return 0
         if self.target_position is not None:
