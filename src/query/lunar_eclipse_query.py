@@ -108,8 +108,6 @@ class LunarEclipseQuery(AbstractQuery):
             weights.append(0.25)
         score = np.average(scores, weights=weights)
         assert 0 <= score <= 1
-        if 0.7637620404052851 <= score <= 0.7637620404052851:
-            print("")
         return score
 
     @staticmethod
