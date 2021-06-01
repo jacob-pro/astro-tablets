@@ -91,6 +91,9 @@ class Database:
         return self.fetch_all_as_dict(cursor)
 
     def lunar_eclipses_in_range(self, start_time: float, end_time: float, position_body: Union[None, str]) -> List[Dict]:
+        # Extend the search a little bit on either end, because closest_approach_time is only the midpoint
+        start_wider = start_time - 6/24
+        end_wider = end_time + 6/24
         cursor = self.conn.cursor()
         cursor.execute("""
             SELECT e_type, closest_approach_time, partial_eclipse_begin, onset_us,
@@ -99,7 +102,7 @@ class Database:
             LEFT JOIN separations s 
             ON s.time == e.closest_approach_time AND s.to_body == ? AND s.from_body == ?
             WHERE (closest_approach_time >= ? AND closest_approach_time <= ?)""",
-                       (position_body, MOON, start_time, end_time))
+                       (position_body, MOON, start_wider, end_wider))
         eclipses = self.fetch_all_as_dict(cursor)
         for e in eclipses:
             e['sunset'] = self.nearest_sunset(e['closest_approach_time'])

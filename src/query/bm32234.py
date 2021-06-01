@@ -100,7 +100,7 @@ class BM32234(AbstractTablet):
 
     def year_50(self, nisan_1: float) -> List[PotentialMonthResult]:
         month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_50_month_7)
-        month_13 = self.repeat_month_with_alternate_starts(nisan_1, 13, self.year_50_month_13, name="XII₂")
+        month_13 = self.repeat_month_with_alternate_starts(nisan_1, 13, self.year_50_month_13, name="Addaru II")
         return [month_7, month_13]
 
 
