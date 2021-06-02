@@ -12,7 +12,8 @@ HALO = 22.0
 
 BERU_US = 30
 
-MAX_NISAN_EQUINOX_DIFF_DAYS = 31
+# about 30 days - slightly more tolerant
+MAX_NISAN_EQUINOX_DIFF_DAYS = 34
 
 
 @dataclass
