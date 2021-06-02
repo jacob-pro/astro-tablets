@@ -4,7 +4,7 @@ from query.abstract_query import SearchRange, AbstractQuery
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import FirstContactTime, FirstContactRelative, ExpectedEclipseType, LunarEclipseQuery, \
-    EclipsePosition, SeparatePhaseTimings
+    EclipsePosition, SeparatePhaseTimings, CompositePhaseTiming
 from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
@@ -68,7 +68,7 @@ class BM38462(AbstractTablet):
         # 8  [Year 4. M]onth I, the 13th, middle watch, 3 bēru 5° after sunset,
         # 9  it began in the west and north. Three quarters
         # 10 [was covered.] It cleared in the north. The north wind blew.
-        t = (3 * 30) + 5
+        t = (3 * BERU_US) + 5
         return [LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.AFTER_SUNSET),
                                   ExpectedEclipseType.PARTIAL, None, None,
                                   SearchRange.for_night_and_day(month, 13))]
@@ -101,7 +101,7 @@ class BM38462(AbstractTablet):
         # 13 [Month XI,] (after) 5 months, 3 ½ bēru after sunset,
         # 14 [....] two-thirds was covered. In the south it was covered. In the west? [it cleared.]
         # 15 [In?] its eclipse, .... [....]
-        t = (3.5 * 30)
+        t = (3.5 * BERU_US)
         return [LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.AFTER_SUNSET),
                                   ExpectedEclipseType.PARTIAL, None, None,
                                   SearchRange.any_day(month))]
@@ -112,13 +112,167 @@ class BM38462(AbstractTablet):
         month_c = self.try_multiple_months(nisan_1, 8, 13, self.year_5_month_c)
         return [month_a, month_b, month_c]
 
+
+    def year_10_month_8(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 1  Month VIII, [....] .... [....]
+        # 2  It cleared [in the west] and south [....] ⅔ bēru after [sunset?]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_10(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 8, self.year_10_month_8)
+        return [month_a]
+
+
+    def year_11_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 3  Year 11. Month II, [....] 10° after sunset it began
+        # 4  it was total, and 10? [....]
+        return [LunarEclipseQuery(self.db, FirstContactTime(10, FirstContactRelative.AFTER_SUNSET),
+                                  ExpectedEclipseType.TOTAL, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_11_month_8(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 4  Month VIII, omitted. Month XII was intercalary.
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+
+    def year_11(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_11_month_2)
+        month_b = self.repeat_month_with_alternate_starts(nisan_1, 8, self.year_11_month_8)
+        return [month_a, month_b]
+
+
+    def year_12_month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 5  Year 12. Month [I, omitted]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_12_month_7(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 5  Month VII. omitted.
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_12_month_12(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 6  Month XII, the 15th. 10? [....nn]° after sunset [....]
+        # 7  1 bēru 6° onset [and clearing.]
+        length = (1 * BERU_US) + 6
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.PARTIAL_OR_TOTAL, CompositePhaseTiming(length), None,
+                                  SearchRange.for_night_and_day(month, 15))]
+
+    def year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.try_multiple_months(nisan_1, 1, 6, self.year_12_month_a)
+        month_b = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_12_month_7)
+        month_c = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_12_month_12)
+        return [month_a, month_b, month_c]
+
+
+    def year_13_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 8  Year 13. Month VI, [omitted]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_13_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 9  [Month XII, the 1]4th. it came out eclipsed. I bēru 10° [....]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.PARTIAL_OR_TOTAL, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_13(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_13_month_6)
+        month_b = self.try_multiple_months(nisan_1, 7, 12, self.year_13_month_b)
+        return [month_a, month_b]
+
+
+    def year_14_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 10 [Year 1]4. [Month] VI, [omitted.]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_14_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 11 [Month XII. omitt]ed .... Month XII [was intercalary]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_14_month_6)
+        month_b = self.try_multiple_months(nisan_1, 7, 12, self.year_14_month_b)
+        return [month_a, month_b]
+
+
+    def year_15_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 12 [Year 1]5. Month V, [omitt]ed.
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_15_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 12 Month X[I, omitted.]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_15(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_15_month_5)
+        month_b = self.try_multiple_months(nisan_1, 10, 12, self.year_15_month_b)
+        return [month_a, month_b]
+
+
+    def year_16_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 13 [Year] 16. Month IV, [omitted.]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_16_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 14 [Month X,] the 14th. morning watch. ⅔ bēru before sunrise?.
+        # 15 half of it was covered. [It set] eclipsed.
+        t = (2/3 * BERU_US)
+        return [LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.BEFORE_SUNRISE),
+                                  ExpectedEclipseType.PARTIAL, None, None,
+                                  SearchRange.for_night_and_day(month, 14))]
+
+    def year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_16_month_4)
+        month_b = self.try_multiple_months(nisan_1, 5, 12, self.year_16_month_b)
+        return [month_a, month_b]
+
+
+    def year_17_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 16 [Year] 17. Month IV, [omitted.]
+        return [LunarEclipseQuery(self.db, None,
+                                  ExpectedEclipseType.UNKNOWN, None, None,
+                                  SearchRange.any_day(month))]
+
+    def year_17_month_10(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # 17 [Month] X, the 13th, morning watch. 1 bēru 5° [before sunrise?]
+        # 18 all of it was covered. [It set eclips]ed.
+        t = (1 * BERU_US) + 5
+        return [LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.BEFORE_SUNRISE),
+                                  ExpectedEclipseType.TOTAL, None, None,
+                                  SearchRange.for_night_and_day(month, 13))]
+
+    def year_17(self, nisan_1: float) -> List[PotentialMonthResult]:
+        month_a = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_17_month_4)
+        month_b = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_17_month_10)
+        return [month_a, month_b]
+
+
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
         tests = [YearToTest(0, "Nebuchadnezzar 1", Intercalary.FALSE, self.year_1),
                  YearToTest(1, "Nebuchadnezzar 2", Intercalary.ULULU, self.year_2),
                  YearToTest(2, "Nebuchadnezzar 3", Intercalary.FALSE, self.year_3),
                  YearToTest(3, "Nebuchadnezzar 4", Intercalary.FALSE, self.year_4),
                  YearToTest(4, "Nebuchadnezzar 5", Intercalary.ULULU, self.year_5),
-                 YearToTest(1, "Nebuchadnezzar 10", Intercalary.FALSE, self.year_10),
+                 YearToTest(9, "Nebuchadnezzar 10", Intercalary.FALSE, self.year_10),
                  YearToTest(10, "Nebuchadnezzar 11", Intercalary.ADDARU, self.year_11),
                  YearToTest(11, "Nebuchadnezzar 12", Intercalary.FALSE, self.year_12),
                  YearToTest(12, "Nebuchadnezzar 13", Intercalary.FALSE, self.year_13),
