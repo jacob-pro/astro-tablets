@@ -22,6 +22,8 @@ def get_tablet_class(tablet: str):
         return BM35115
     if tablet == "bm32234":
         return BM32234
+    if tablet == "bm38462":
+        return BM38462
     raise ValueError("Unknown tablet name")
 
 
@@ -204,3 +206,12 @@ class BM32234(Tablet):
         self.separation_during_night(MARS, ANTARES)
         # Saturn rose in Capricorn
         self.separation_during_night(SATURN, CAPRICORNUS.central_star)
+
+
+class BM38462(Tablet):
+    default_start = -655
+    default_end = -525
+
+    def compute(self):
+        super(BM38462, self).compute()
+        self.lunar_eclipses()
