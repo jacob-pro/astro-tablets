@@ -63,6 +63,7 @@ class EclipsePosition:
 class LunarEclipseQuery(AbstractQuery):
     REGULAR_TIME_TOLERANCE = 5
     HIGH_TIME_TOLERANCE = 1.5
+    ECLIPSE_SEARCH_TOLERANCE = 6/24
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
                  type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming],
@@ -71,7 +72,12 @@ class LunarEclipseQuery(AbstractQuery):
         self.position = position
         self.phase_timing = phase_timing
         position_body = position.body if position is not None else None
-        matched_eclipses = db.lunar_eclipses_in_range(target_time.start, target_time.end, position_body)
+
+        # Extend the search a little bit on either end, because closest_approach_time is only the midpoint
+        start_wider = target_time.start - self.ECLIPSE_SEARCH_TOLERANCE
+        end_wider = target_time.end + self.ECLIPSE_SEARCH_TOLERANCE
+
+        matched_eclipses = db.lunar_eclipses_in_range(start_wider, end_wider, position_body)
         results = list(map(lambda x: (x, self.score_eclipse(x, first_contact, type, phase_timing, position)),
                            matched_eclipses))
         results.sort(key=lambda x: x[1], reverse=True)

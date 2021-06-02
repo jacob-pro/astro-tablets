@@ -1,6 +1,8 @@
 import dataclasses
 import itertools
 import json
+import sys
+
 import roman
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -191,11 +193,12 @@ class AbstractTablet(ABC):
                 outfile.write(raw)
 
     @staticmethod
-    def total_score(yrs: List[YearResult]) -> float:
+    def total_score(yrs: List[YearResult], p: float, range_top: int) -> float:
         potential_list = list(map(lambda x: x.potentials, yrs))
         product = list(itertools.product(*potential_list))
         compatible_products = []
-        for i in product:
+        for idx, i in enumerate(product):
+            AbstractTablet.print_progress(p + ((idx / len(product)) * 1 / range_top / 2))
             incompatible = False
             # Years are incompatible if the year afterwards does not start when this one ends
             # Although we can only do this check if we know the length of this year for certain
@@ -218,11 +221,16 @@ class AbstractTablet(ABC):
         results = []
         max_index = max(d.index for d in ys)
         assert ys[0].index == 0, "First index must be 0"
-        for i in range(0, len(years) - max_index):
+        range_top = len(years) - max_index
+        assert range_top >= 0, "Data range must be greater or equal to query range"
+        for i in range(0, range_top):
             yrs = []  # type: List[YearResult]
-            for x in ys:
+            p = 0
+            for idx, x in enumerate(ys):
                 yrs.append(self.repeat_year_with_alternate_starts(years[i + x.index], x.name, x.intercalary, x.func))
-            total_score = self.total_score(yrs)
+                p = (i / range_top) + ((idx / len(ys)) * 1 / range_top / 2)
+                self.print_progress(p)
+            total_score = self.total_score(yrs, p, range_top)
             results.append(MultiyearResult(years[i][0]['year'], total_score, yrs))
         return results
 
@@ -235,3 +243,10 @@ class AbstractTablet(ABC):
                 self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment))
         attempts.sort(key=lambda x: x.score, reverse=True)
         return attempts[0]
+
+    @staticmethod
+    def print_progress(progress: float):
+        if progress > 0.99:
+            progress = 1
+        sys.stderr.write("\rProgress {:05.2f}%".format(progress * 100))
+        sys.stderr.flush()
