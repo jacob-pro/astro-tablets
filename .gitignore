@@ -2,4 +2,4 @@
 venv/
 skyfield-data/
 generated/
-result_for_*.json
+*base_year_*.json

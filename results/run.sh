@@ -5,6 +5,8 @@ else
 fi
 
 SCRIPT="python ../src/main.py query"
+set -e
+set -x
 
 $CMD $SCRIPT bm32312 --year -651 --slim > bm32312_scores.txt
 $CMD $SCRIPT bm41222 --year -653 --slim > bm41222_scores.txt

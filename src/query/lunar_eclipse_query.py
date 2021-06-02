@@ -7,9 +7,9 @@ from typing import *
 import numpy as np
 
 from generate.angular_separation import EclipticPosition
+from query.abstract_query import AbstractQuery, SearchRange
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import Database
-from query.abstract_query import AbstractQuery, SearchRange
 from util import diff_time_degrees_signed, TimeValue
 
 
@@ -115,6 +115,8 @@ class LunarEclipseQuery(AbstractQuery):
         score = 0
         if type == ExpectedEclipseType.UNKNOWN:
             score = 1.0
+            if eclipse['e_type'] == 'Penumbral':  # Tie breaker, when two predicted eclipses, favour non penumbral
+                score -= 0.001
         elif type == ExpectedEclipseType.TOTAL and eclipse['visible']:
             if eclipse['e_type'] == 'Total':
                 score = 1.0
@@ -142,7 +144,7 @@ class LunarEclipseQuery(AbstractQuery):
         elif first_contact.relative == FirstContactRelative.BEFORE_SUNSET:
             actual = diff_time_degrees_signed(eclipse['sunset'], eclipse['partial_eclipse_begin'])
         elif first_contact.relative == FirstContactRelative.AFTER_SUNSET:
-            actual = diff_time_degrees_signed(eclipse['partial_eclipse_begin'], eclipse['sunrise'])
+            actual = diff_time_degrees_signed(eclipse['partial_eclipse_begin'], eclipse['sunset'])
         else:
             raise RuntimeError("Invalid FirstContactRelative")
         err = abs(first_contact.time_degrees - actual)
@@ -186,9 +188,10 @@ class LunarEclipseQuery(AbstractQuery):
             dict['maximal_us'] = self.best['maximal_us']
             dict['clearing_us'] = self.best['clearing_us']
             dict['sum_us'] = self.best['sum_us']
-            dict['after_sunrise_us'] = diff_time_degrees_signed(self.best['closest_approach_time'],
-                                                                self.best['sunrise'])
-            dict['after_sunset_us'] = diff_time_degrees_signed(self.best['closest_approach_time'], self.best['sunset'])
+            if self.best['e_type'] != 'Penumbral':
+                dict['after_sunrise_us'] = diff_time_degrees_signed(self.best['partial_eclipse_begin'],
+                                                                    self.best['sunrise'])
+                dict['after_sunset_us'] = diff_time_degrees_signed(self.best['partial_eclipse_begin'], self.best['sunset'])
             if self.position is not None:
                 dict['position_body'] = self.position.body
                 dict['position_actual_angle'] = self.best['angle']
