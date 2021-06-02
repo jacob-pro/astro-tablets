@@ -33,9 +33,12 @@ class BM38462(AbstractTablet):
                                   SearchRange.any_day(month))]
 
     def year_2_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        # 2  [Month IX,] omitted.
-        return [LunarEclipseQuery(self.db, None,
-                                  ExpectedEclipseType.UNKNOWN, None, None,
+        # 4  [Month VII, the 1]4th?, 1 ⅔ bēru 5°, variant 1 ½ bēru, after sunset,
+        # 5  it began in the [....] north; half was covered. In the north and west it began
+        # 6  [to cl]ear. [1] ½ bēru onset and clearing. The west wind blew.
+        t = 1.5 * BERU_US
+        return [LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.AFTER_SUNSET),
+                                  ExpectedEclipseType.PARTIAL, CompositePhaseTiming(0.5 * BERU_US), None,
                                   SearchRange.any_day(month))]
 
     def year_2(self, nisan_1: float) -> List[PotentialMonthResult]:
