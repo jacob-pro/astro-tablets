@@ -1,21 +1,19 @@
 import dataclasses
-import itertools
 import json
 import sys
-
-import roman
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
 from typing import *
 
+import roman
 from skyfield.timelib import Timescale
 
 from constants import MAX_NISAN_EQUINOX_DIFF_DAYS
 from data import AstroData, SUN
 from generate.lunar_calendar import VERNAL_EQUINOX
-from query.database import Database, BabylonianDay
 from query.abstract_query import AbstractQuery
+from query.database import Database, BabylonianDay
 from util import TimeValue
 
 
@@ -49,6 +47,15 @@ class PotentialYearResult:
     _actual_year: int
     _intercalary: Intercalary
     months: List[PotentialMonthResult]
+
+    def can_be_followed_by(self, potential2) -> bool:
+        # Years are incompatible if the year afterwards does not start when this one ends
+        # Although we can only do this check if we know the length of this year for certain
+        # noinspection PyProtectedMember
+        if self._intercalary != Intercalary.UNKNOWN and self._actual_year == potential2._actual_year - 1:
+            if potential2.nisan_1 != self.next_nisan:
+                return False
+        return True
 
 
 @dataclass
@@ -193,23 +200,27 @@ class AbstractTablet(ABC):
                 outfile.write(raw)
 
     @staticmethod
-    def total_score(yrs: List[YearResult], p: float, range_top: int) -> float:
-        potential_list = list(map(lambda x: x.potentials, yrs))
-        product = list(itertools.product(*potential_list))
-        compatible_products = []
-        for idx, i in enumerate(product):
-            AbstractTablet.print_progress(p + ((idx / len(product)) * 1 / range_top / 2))
-            incompatible = False
-            # Years are incompatible if the year afterwards does not start when this one ends
-            # Although we can only do this check if we know the length of this year for certain
-            for y in i:
-                if y._intercalary != Intercalary.UNKNOWN:
-                    match_next_y = list(filter(lambda x: x._actual_year == y._actual_year + 1, i))  # type: List[PotentialYearResult]
-                    if len(match_next_y) > 0:
-                        if match_next_y[0].nisan_1 != y.next_nisan:
-                            incompatible = True
-            if not incompatible:
-                compatible_products.append(i)
+    def generate_compatible_combinations(yrs: List[YearResult]) -> List[List[PotentialYearResult]]:
+        paths = []  # type: List[List[PotentialYearResult]]
+        for idx, y in enumerate(yrs):
+            if idx == 0:
+                for potential in y.potentials:
+                    paths.append([potential])
+            else:
+                new_paths = []
+                for path in paths:
+                    for potential in y.potentials:
+                        path_tail = path[len(path) - 1]
+                        if path_tail.can_be_followed_by(potential):
+                            new_path = path.copy()
+                            new_path.append(potential)
+                            new_paths.append(new_path)
+                paths = new_paths
+        return paths
+
+    @staticmethod
+    def total_score(yrs: List[YearResult]) -> float:
+        compatible_products = AbstractTablet.generate_compatible_combinations(yrs)
         assert len(compatible_products) > 0
         compatible_products.sort(key=lambda y: sum(x.score for x in y), reverse=True)
         for e in compatible_products[0]:
@@ -224,13 +235,11 @@ class AbstractTablet(ABC):
         range_top = len(years) - max_index
         assert range_top >= 0, "Data range must be greater or equal to query range"
         for i in range(0, range_top):
+            self.print_progress((i / range_top))
             yrs = []  # type: List[YearResult]
-            p = 0
             for idx, x in enumerate(ys):
                 yrs.append(self.repeat_year_with_alternate_starts(years[i + x.index], x.name, x.intercalary, x.func))
-                p = (i / range_top) + ((idx / len(ys)) * 1 / range_top / 2)
-                self.print_progress(p)
-            total_score = self.total_score(yrs, p, range_top)
+            total_score = self.total_score(yrs)
             results.append(MultiyearResult(years[i][0]['year'], total_score, yrs))
         return results
 
@@ -248,5 +257,5 @@ class AbstractTablet(ABC):
     def print_progress(progress: float):
         if progress > 0.99:
             progress = 1
-        sys.stderr.write("\rProgress {:05.2f}%".format(progress * 100))
+        sys.stderr.write("\rProgress {:02.0f}%".format(progress * 100))
         sys.stderr.flush()
