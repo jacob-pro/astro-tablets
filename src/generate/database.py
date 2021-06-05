@@ -9,6 +9,7 @@ from generate.angular_separation import AngularSeparationResult
 from generate.eclipse import Eclipse, TimeUnit
 from generate.lunar_calendar import BabylonianDay, VERNAL_EQUINOX
 from generate.planet_events import SynodicEvent
+from generate.risings_settings import RisingOrSetting
 from util import get_git_hash, get_git_changes
 
 
@@ -67,6 +68,13 @@ class Database:
             visible SMALLINT,
             PRIMARY KEY (closest_approach_time)
         );""")
+        self.cursor.execute("""
+        CREATE TABLE risings_settings (
+            r_type VARCHAR(255),
+            time FLOAT,
+            body VARCHAR(255),
+            PRIMARY KEY (body, time, r_type)
+        );""")
 
     def close(self):
         self.cursor.close()
@@ -81,6 +89,11 @@ class Database:
         for e in events:
             self.cursor.execute("INSERT INTO days (sunset, sunrise, `year`, first_visibility) VALUES (?, ?, ?, ?)",
                                 (e.sunset.tt, e.sunrise.tt, int(e.sunset.utc.year), e.first_visibility))
+
+    def save_risings_settings(self, body: str, events: List[RisingOrSetting]):
+        for r in events:
+            self.cursor.execute("INSERT INTO risings_settings (r_type, time, body) VALUES (?, ?, ?)",
+                                (r.type.value, r.time.tt, body))
 
     def save_equinox(self, time: Time):
         self.cursor.execute("INSERT INTO events (body, event, time) VALUES (?, ?, ?)",

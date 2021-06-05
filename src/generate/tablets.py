@@ -8,6 +8,7 @@ from generate.database import Database
 from generate.eclipse import lunar_eclipses_in_range
 from generate.lunar_calendar import vernal_equinox, days_in_range
 from generate.planet_events import planet_events
+from generate.risings_settings import risings_and_settings
 
 
 def get_tablet_class(tablet: str):
@@ -90,6 +91,11 @@ class Tablet(ABC):
                 self.print_progress("Computing separation between {} and {}".format(MOON, body), idx / len(eclipses))
             print("")
         return eclipses
+
+    def risings_settings(self, body: str):
+        print("Computing risings and settings for {}".format(body))
+        rs = risings_and_settings(self.data, body, self.start_day, self.end_day)
+        self.db.save_risings_settings(body, rs)
 
     def compute(self):
         self.start_time = time.time()
@@ -234,6 +240,8 @@ class VAT4956(Tablet):
         self.separation_during_night(MOON, BETA_VIRGINIS)
         # Sagmegar (Jupiter) ‘rose to daylight’ (AR)
         self.planet_events(JUPITER)
+        #  NA (sunrise to moonset) was 4.
+        self.risings_settings(MOON)
         # Sîn (Moon) appeared below the Rear Bright Star of the Large Twins (β Geminorum)
         self.separation_during_night(MOON, BETA_GEMINORUM)
         # Ṣalbaṭānu (Mars) entered the Crab (Praesepe)
