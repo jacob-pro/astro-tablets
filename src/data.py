@@ -14,10 +14,15 @@ SUN = "sun"
 
 ALCYONE = "alcyone"
 ANTARES = "antares"
+BETA_CAPRICORNI = "beta capricorni"
+BETA_GEMINORUM = "beta geminorum"
+BETA_LIBRAE = "beta librae"
 BETA_VIRGINIS = "beta virginis"
 EPSILON_LEONIS = "epsilon leonis"
 EPSILON_PISCIUM = "epsilon piscium"
+FORTY_TWO_CANCRI = "42 cancri"
 REGULUS = "regulus"
+THETA_LEONIS = "theta leonis"
 SHERATAN = "sheratan"
 
 
@@ -58,14 +63,24 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[17702])
         if name == ANTARES:
             return Star.from_dataframe(self.stars.loc[80763])
+        if name == BETA_CAPRICORNI:
+            return Star.from_dataframe(self.stars.loc[100345])
+        if name == BETA_GEMINORUM:
+            return Star.from_dataframe(self.stars.loc[37826])
+        if name == BETA_LIBRAE:
+            return Star.from_dataframe(self.stars.loc[74785])
         if name == BETA_VIRGINIS:
             return Star.from_dataframe(self.stars.loc[57757])
         if name == EPSILON_LEONIS:
             return Star.from_dataframe(self.stars.loc[47908])
         if name == EPSILON_PISCIUM:
             return Star.from_dataframe(self.stars.loc[4906])
+        if name == FORTY_TWO_CANCRI:
+            return Star.from_dataframe(self.stars.loc[42578])
         if name == REGULUS:
             return Star.from_dataframe(self.stars.loc[49669])
+        if name == THETA_LEONIS:
+            return Star.from_dataframe(self.stars.loc[54879])
         if name == SHERATAN:
             return Star.from_dataframe(self.stars.loc[8903])
 
@@ -77,6 +92,8 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[41822])
         if name == ETA_CAPRICORNI:
             return Star.from_dataframe(self.stars.loc[104019])
+        if name == OMEGA_GEMINORUM:
+            return Star.from_dataframe(self.stars.loc[33927])
         if name == FIFTY_TWO_LEONIS:
             return Star.from_dataframe(self.stars.loc[52689])
         if name == NU_LIBRAE:
@@ -87,6 +104,8 @@ class AstroData:
             return Star.from_dataframe(self.stars.loc[3675])
         if name == ASCELLA:
             return Star.from_dataframe(self.stars.loc[93506])
+        if name == EPSILON_TAURI:
+            return Star.from_dataframe(self.stars.loc[20889])
         if name == THETA_VIRGINIS:
             return Star.from_dataframe(self.stars.loc[64238])
 

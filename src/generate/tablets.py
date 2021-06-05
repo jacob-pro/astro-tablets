@@ -24,6 +24,8 @@ def get_tablet_class(tablet: str):
         return BM32234
     if tablet == "bm38462":
         return BM38462
+    if tablet == "vat4956":
+        return VAT4956
     raise ValueError("Unknown tablet name")
 
 
@@ -215,3 +217,75 @@ class BM38462(Tablet):
     def compute(self):
         super(BM38462, self).compute()
         self.lunar_eclipses()
+
+
+class VAT4956(Tablet):
+    default_start = -620
+    default_end = -510
+
+    def compute(self):
+        super(VAT4956, self).compute()
+        # Sîn (Moon) appeared behind the Bull of Heaven (Taurus)
+        # the Bull of Heaven (Taurus),
+        self.separation_during_night(MOON, TAURUS.central_star)
+        # Kajjamānu (Saturn) was in front of the Swallow (Pisces)
+        self.separation_during_night(SATURN, PISCES.central_star)
+        # Sîn (Moon) stood 1 cubit in front of the Rear Foot of the Lion (β Virginis)
+        self.separation_during_night(MOON, BETA_VIRGINIS)
+        # Sagmegar (Jupiter) ‘rose to daylight’ (AR)
+        self.planet_events(JUPITER)
+        # Sîn (Moon) appeared below the Rear Bright Star of the Large Twins (β Geminorum)
+        self.separation_during_night(MOON, BETA_GEMINORUM)
+        # Ṣalbaṭānu (Mars) entered the Crab (Praesepe)
+        self.separation_during_night(MARS, FORTY_TWO_CANCRI)
+        # Šiḫṭu (Mercury) [rose] in the west behind the [Little] Twins [...] (Gemini)
+        self.separation_during_night(MERCURY, GEMINI.central_star)
+        self.planet_events(MERCURY)
+        # Dilbat (Venus) was ‘balanced’ 1 cubit 4 fingers above the King (Regulus)
+        self.separation_during_night(VENUS, REGULUS)
+        # Sîn (Moon) appeared behind the Crab (Cancer)
+        # and the Crab (Cancer) were inside {inside} the ‘fold’.
+        self.separation_during_night(MOON, CANCER.central_star)
+        # Ṣalba-ṭānu (Mars) and Šiḫṭu (Mercury) were 4 cubits in front of the K[ing ...] (Regulus)
+        # Ṣalbaṭānu (Mars) was 2/3 of a cubit ˹above˺ [the King ...] (Regulus)
+        self.separation_during_night(MARS, REGULUS)
+        self.separation_during_night(MERCURY, REGULUS)
+        # Šiḫṭu (Mercury) passed below Ṣalbaṭānu (Mars)
+        self.separation_during_night(MARS, MERCURY)
+        # Sagmegar (Jupiter) was above Lisi (Antares)
+        self.separation_during_night(JUPITER, ANTARES)
+        #  Dilbat (Venus) was in the west, opposite the Tail of the Li[on ...] (θ Leonis)
+        self.separation_during_night(VENUS, THETA_LEONIS)
+        # Sîn (Moon) passed towards the east 1 cubit ‹above/below› the Bright Star at the Tip of the Lion’s Foot. (Leo)
+        # #  Sîn (Moon) was surrounded by a ‘fold’ (Halo); the Lion (Leo)
+        self.separation_during_night(MOON, LEO.central_star)
+        # Sîn (Moon) stood 2 1/2 cubits below the Northern Part of the Scales (β Librae)
+        self.separation_during_night(MOON, BETA_LIBRAE)
+        # Sîn (Moon) was ‘balanced’ 3 1/2 cubits above Lisi (Antares).
+        self.separation_during_night(MOON, ANTARES)
+        #  An eclipse of Sîn (Moon) which passed by
+        self.lunar_eclipses()
+        # Dilbat (Venus) was below the Middle Star of the Horn of the Goat [...] (β Capricorni)
+        self.separation_during_night(VENUS, BETA_CAPRICORNI)
+        # Sîn (Moon) appeared in the Swallow (Pisces)
+        self.separation_during_night(MOON, PISCES.central_star)
+        # Sagmegar (Jupiter) was behind the Elbow of Pabi[lsag by ... cubits ...] (Sagittarius)
+        self.separation_during_night(JUPITER, SAGITTARIUS.central_star)
+        # Dilbat (Venus) was ‘balanced’ 1/2 cubit below the Goat-Fish. (Capricorn)
+        self.separation_during_night(VENUS, CAPRICORNUS.central_star)
+        # Sîn (Moon) was surrounded by a ‘fold’ (Halo), the Bristle (Pleiades), ...,
+        # the Chariot (Auriga) [stood within the ‘fold’ ...]
+        # Sîn (Moon) was ‘balanced’ 4 cubits below the Stars (Pleiades).
+        self.separation_during_night(MOON, ALCYONE)
+        self.separation_during_night(MOON, AURIGA.central_star)
+        # King (Regulus) was ‘balanced’ 1 cubit below Sîn (Moon)
+        self.separation_during_night(REGULUS, MOON)
+        #  Sîn (Moon) appeared behind the Hired Man (Aries)
+        self.separation_during_night(MOON, ARIES.central_star)
+        # was in front of the Band of the Swallow (Pisces), 1/2 cubit below Dilbat (Venus), Šiḫṭu (Mercury)
+        # passing 8 fingers to the east, when it appeared it was bright and high. 1 U[Š ... Kajjamānu (Saturn)] was
+        # ‘balanced’ 6 fingers above Šiḫṭu (Mercury) and 3 fingers below Dilbat (Venus)
+        self.separation_during_night(VENUS, MERCURY)
+        # Dilbat (Venus) and Šiḫṭu (Mercury) entered the Band of the Swallow (Pisces)
+        self.separation_during_night(VENUS, PISCES.central_star)
+        self.separation_during_night(MERCURY, PISCES.central_star)
