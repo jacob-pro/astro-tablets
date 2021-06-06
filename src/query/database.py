@@ -6,6 +6,7 @@ from typing import *
 from constants import MAX_NISAN_EQUINOX_DIFF_DAYS
 from data import SUN, MOON
 from generate.lunar_calendar import VERNAL_EQUINOX
+from generate.risings_settings import RiseSetType
 from util import array_group_by
 
 
@@ -121,6 +122,15 @@ class Database:
                        (time, ))
         res = self.fetch_one_as_dict(cursor)
         return res['sunrise']
+
+
+    def nearest_rising_setting(self, body: str, r: RiseSetType, time: float) -> float:
+        cursor = self.conn.cursor()
+        cursor.execute("""
+            SELECT time FROM risings_settings WHERE body == ? AND r_type == ? ORDER BY ABS(time - ?) LIMIT 1""",
+                       (body, r.value, time))
+        res = self.fetch_one_as_dict(cursor)
+        return res['time']
 
     @staticmethod
     def fetch_all_as_dict(cursor: sqlite3.Cursor) -> List[Dict]:

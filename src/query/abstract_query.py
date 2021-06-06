@@ -2,12 +2,9 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import *
 
-import inflect
-
+from constants import INFLECT_ENGINE
 from query.database import BabylonianDay
 from util import TimeValue
-
-p = inflect.engine()
 
 
 @dataclass
@@ -27,13 +24,13 @@ class SearchRange:
     def for_night(month: List[BabylonianDay], day_number: int):
         assert 1 <= day_number <= 30
         return SearchRange(month[day_number - 1].sunset, month[day_number - 1].sunrise,
-                           "Night of the {}".format(p.ordinal(day_number)))
+                           "Night of the {}".format(INFLECT_ENGINE.ordinal(day_number)))
 
     @staticmethod
     def for_night_and_day(month: List[BabylonianDay], day_number: int):
         assert 1 <= day_number <= 30
         return SearchRange(month[day_number - 1].sunset, month[day_number].sunset,
-                           "Night and day of the {}".format(p.ordinal(day_number)))
+                           "Night and day of the {}".format(INFLECT_ENGINE.ordinal(day_number)))
 
     @staticmethod
     def any_day(month: List[BabylonianDay]):

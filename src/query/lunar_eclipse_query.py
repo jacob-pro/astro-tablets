@@ -1,11 +1,10 @@
 import math
 from abc import ABC
-from dataclasses import dataclass
 from enum import unique, Enum
-from typing import *
 
 import numpy as np
 
+from constants import *
 from generate.angular_separation import EclipticPosition
 from query.abstract_query import AbstractQuery, SearchRange
 from query.angular_separation_query import AngularSeparationQuery
@@ -61,8 +60,6 @@ class EclipsePosition:
 
 
 class LunarEclipseQuery(AbstractQuery):
-    REGULAR_TIME_TOLERANCE = 5
-    HIGH_TIME_TOLERANCE = 1.5
     ECLIPSE_SEARCH_TOLERANCE = 6/24
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
@@ -104,10 +101,10 @@ class LunarEclipseQuery(AbstractQuery):
             if type == ExpectedEclipseType.UNKNOWN:
                 # If the eclipse is a prediction then allow a higher time tolerance
                 scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact,
-                                                                          LunarEclipseQuery.HIGH_TIME_TOLERANCE))
+                                                                          HIGH_TIME_TOLERANCE))
             else:
                 scores.append(LunarEclipseQuery.eclipse_time_of_day_score(eclipse, first_contact,
-                                                                          LunarEclipseQuery.REGULAR_TIME_TOLERANCE))
+                                                                          REGULAR_TIME_TOLERANCE))
             weights.append(0.25)
         if phase_timing is not None:
             scores.append(LunarEclipseQuery.eclipse_phase_length_score(eclipse, phase_timing))
@@ -179,7 +176,7 @@ class LunarEclipseQuery(AbstractQuery):
         for (observed, actual) in diffs:
             if actual != 0:
                 percent_err = abs(actual - observed) / abs(actual)
-                score = score + math.pow(LunarEclipseQuery.REGULAR_TIME_TOLERANCE, -percent_err)
+                score = score + math.pow(REGULAR_TIME_TOLERANCE, -percent_err)
         score = score / len(diffs)
         assert 0 <= score <= 1
         return score

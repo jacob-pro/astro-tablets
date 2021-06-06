@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from typing import *
 
+import inflect
 
 LUNAR_VISIBILITY = 7.5
 
@@ -15,6 +16,10 @@ BERU_US = 30
 # about 30 days - slightly more tolerant
 MAX_NISAN_EQUINOX_DIFF_DAYS = 34
 
+REGULAR_TIME_TOLERANCE = 5
+HIGH_TIME_TOLERANCE = 1.5
+
+INFLECT_ENGINE = inflect.engine()
 
 @dataclass
 class InnerPlanetArcusVisionis:
