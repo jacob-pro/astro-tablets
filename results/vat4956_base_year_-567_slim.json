@@ -1,0 +1,563 @@
+{
+  "base_year": -567,
+  "best_score": 43.2681892738362,
+  "years": [
+    {
+      "name": "Nebuchadnezzar 37",
+      "actual_year": -567,
+      "vernal_equinox": "-567-03-27 10:27",
+      "intercalary": "false",
+      "potentials": [
+        {
+          "score": 43.2681892738362,
+          "nisan_1": "-567-04-22 18:29",
+          "next_nisan": "-566-04-12 18:23",
+          "best_compatible_path": true,
+          "months": [
+            {
+              "score": 4.0,
+              "name": "I",
+              "actual_month": 1,
+              "month_sunset_1": "-567-04-22 18:29",
+              "first_visibility": "-567-04-22 18:29",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "moon",
+                  "to_body": "epsilon tauri",
+                  "angle": 6.478265064532221,
+                  "position": "behind",
+                  "at_time": "-567-04-22 18:29",
+                  "score": 1.0,
+                  "search_start": "-567-04-22 18:29",
+                  "search_end": "-567-04-23 05:29",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "58 piscium",
+                  "angle": 15.96066861180974,
+                  "position": "ahead",
+                  "at_time": "-567-04-23 02:44",
+                  "score": 1.0,
+                  "search_start": "-567-04-22 18:29",
+                  "search_end": "-567-04-23 05:29",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "beta virginis",
+                  "angle": 11.149845826884075,
+                  "position": "behind",
+                  "at_time": "-567-04-30 18:34",
+                  "score": 0,
+                  "search_start": "-567-04-30 18:34",
+                  "search_end": "-567-05-01 05:19",
+                  "date": "Night of the 9th"
+                },
+                {
+                  "planet": "jupiter",
+                  "event": "acronychal_rising",
+                  "nearest_time": "-567-04-30 19:00",
+                  "score": 0.9999999999999999,
+                  "search_start": "-567-05-02 18:35",
+                  "search_end": "-567-05-04 05:16",
+                  "date": "11-12"
+                },
+                {
+                  "time_us": 3.471098067238927,
+                  "six": "sunrise to moonset",
+                  "moonset": "-567-05-06 05:28",
+                  "score": 1.0,
+                  "search_start": "-567-05-06 05:14",
+                  "search_end": "-567-05-06 05:14",
+                  "date": "Sunrise of the 14th"
+                }
+              ]
+            },
+            {
+              "score": 6.999994192586825,
+              "name": "II",
+              "actual_month": 2,
+              "month_sunset_1": "-567-05-22 18:49",
+              "first_visibility": "-567-05-21 18:48",
+              "days_late": 1,
+              "observations": [
+                {
+                  "from_body": "moon",
+                  "to_body": "beta geminorum",
+                  "angle": 7.4839448239064055,
+                  "position": "below",
+                  "at_time": "-567-05-22 18:49",
+                  "score": 1.0,
+                  "search_start": "-567-05-22 18:49",
+                  "search_end": "-567-05-23 04:58",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "saturn",
+                  "to_body": "58 piscium",
+                  "angle": 14.433326698395426,
+                  "position": "ahead",
+                  "at_time": "-567-05-23 02:26",
+                  "score": 1.0,
+                  "search_start": "-567-05-22 18:49",
+                  "search_end": "-567-05-23 04:58",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "42 cancri",
+                  "angle": 0.2691325567385017,
+                  "position": "above",
+                  "at_time": "-567-05-27 02:24",
+                  "score": 1.0,
+                  "search_start": "-567-05-24 18:50",
+                  "search_end": "-567-05-27 04:55",
+                  "date": "3-5"
+                },
+                {
+                  "planet": "mercury",
+                  "event": "evening_first",
+                  "nearest_time": "-567-06-01 19:53",
+                  "score": 0.999994192586825,
+                  "search_start": "-567-05-31 18:54",
+                  "search_end": "-567-06-01 18:55",
+                  "date": "Night and day of the 10th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "omega geminorum",
+                  "angle": 4.308842961318537,
+                  "position": "behind",
+                  "at_time": "-567-05-31 18:54",
+                  "score": 1.0,
+                  "search_start": "-567-05-31 18:54",
+                  "search_end": "-567-06-01 18:55",
+                  "date": "Night and day of the 10th"
+                },
+                {
+                  "from_body": "venus",
+                  "to_body": "regulus",
+                  "angle": 1.549697645505834,
+                  "position": "above",
+                  "at_time": "-567-06-08 18:59",
+                  "score": 1.0,
+                  "search_start": "-567-06-08 18:59",
+                  "search_end": "-567-06-09 04:49",
+                  "date": "Night of the 18th"
+                },
+                {
+                  "time_us": 22.72739063948393,
+                  "six": "moonrise to sunrise",
+                  "moonrise": "-567-06-17 03:17",
+                  "score": 1.0,
+                  "search_start": "-567-06-17 04:47",
+                  "search_end": "-567-06-17 04:47",
+                  "date": "Sunrise of the 26th"
+                }
+              ]
+            },
+            {
+              "score": 12.96613889237348,
+              "name": "III",
+              "actual_month": 3,
+              "month_sunset_1": "-567-06-20 19:05",
+              "first_visibility": "-567-06-20 19:05",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "moon",
+                  "to_body": "theta cancri",
+                  "angle": 11.18521200602066,
+                  "position": "behind",
+                  "at_time": "-567-06-20 19:05",
+                  "score": 1.0,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-21 04:47",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "time_us": 22.481176843866706,
+                  "six": "sunset to moonset",
+                  "moonset": "-567-06-20 20:35",
+                  "score": 0.9661388923734809,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-20 19:05",
+                  "date": "Sunset of the 1st"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "regulus",
+                  "angle": 7.426853460556819,
+                  "position": "ahead",
+                  "at_time": "-567-06-20 19:05",
+                  "score": 1.0,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-21 04:47",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "regulus",
+                  "angle": 7.677720754079108,
+                  "position": "ahead",
+                  "at_time": "-567-06-20 19:05",
+                  "score": 1.0,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-21 04:47",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "mercury",
+                  "angle": 0.4599160207779836,
+                  "position": "above",
+                  "at_time": "-567-06-21 02:22",
+                  "score": 1.0,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-21 04:47",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "jupiter",
+                  "to_body": "antares",
+                  "angle": 5.163197250231793,
+                  "position": "above",
+                  "at_time": "-567-06-21 02:22",
+                  "score": 1.0,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-21 04:47",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "venus",
+                  "to_body": "theta leonis",
+                  "angle": 8.452999170649578,
+                  "position": "below",
+                  "at_time": "-567-06-21 02:22",
+                  "score": 1.0,
+                  "search_start": "-567-06-20 19:05",
+                  "search_end": "-567-06-21 04:47",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "52 leonis",
+                  "angle": 34.075084973034436,
+                  "position": "behind",
+                  "at_time": "-567-06-24 19:07",
+                  "score": 1.0,
+                  "search_start": "-567-06-24 19:07",
+                  "search_end": "-567-06-25 04:48",
+                  "date": "Night of the 5th"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "beta librae",
+                  "angle": 5.456116278787386,
+                  "position": "below",
+                  "at_time": "-567-06-28 02:23",
+                  "score": 1.0,
+                  "search_start": "-567-06-27 19:08",
+                  "search_end": "-567-06-28 04:48",
+                  "date": "Night of the 8th"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "antares",
+                  "angle": 8.538019996759981,
+                  "position": "above",
+                  "at_time": "-567-06-29 19:08",
+                  "score": 1.0,
+                  "search_start": "-567-06-29 19:08",
+                  "search_end": "-567-06-30 04:49",
+                  "date": "Night of the 10th"
+                },
+                {
+                  "from_body": "mars",
+                  "to_body": "regulus",
+                  "angle": 0.9637302915917434,
+                  "position": "above",
+                  "at_time": "-567-07-01 19:09",
+                  "score": 1.0,
+                  "search_start": "-567-07-01 19:09",
+                  "search_end": "-567-07-02 04:49",
+                  "date": "Night of the 12th"
+                },
+                {
+                  "time_us": 7.916159452870488,
+                  "six": "sunrise to moonset",
+                  "moonset": "-567-07-05 05:22",
+                  "score": 1.0,
+                  "search_start": "-567-07-05 04:50",
+                  "search_end": "-567-07-05 04:50",
+                  "date": "Sunrise of the 15th"
+                },
+                {
+                  "closest_approach_time": "-567-07-04 13:50",
+                  "visible": 0,
+                  "type": "Partial",
+                  "onset_us": 12.347225490957499,
+                  "maximal_us": 0.0,
+                  "clearing_us": 12.734779715538025,
+                  "sum_us": 25.082005206495523,
+                  "after_sunrise_us": 122.67430007457733,
+                  "after_sunset_us": -92.11971164681017,
+                  "score": 1.0,
+                  "search_start": "-567-07-04 19:09",
+                  "search_end": "-567-07-05 19:09",
+                  "date": "Night and day of the 15th"
+                }
+              ]
+            },
+            {
+              "score": 1.0,
+              "name": "X",
+              "actual_month": 10,
+              "month_sunset_1": "-566-01-14 17:18",
+              "first_visibility": "-566-01-14 17:18",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "venus",
+                  "to_body": "beta capricorni",
+                  "angle": 4.146838433982549,
+                  "position": "below",
+                  "at_time": "-566-02-01 17:34",
+                  "score": 1.0,
+                  "search_start": "-566-02-01 17:34",
+                  "search_end": "-566-02-02 07:05",
+                  "date": "Night of the 19th"
+                }
+              ]
+            },
+            {
+              "score": 9.5020561888759,
+              "name": "XI",
+              "actual_month": 11,
+              "month_sunset_1": "-566-02-12 17:43",
+              "first_visibility": "-566-02-12 17:43",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "moon",
+                  "to_body": "58 piscium",
+                  "angle": 11.81927446189334,
+                  "position": "below",
+                  "at_time": "-566-02-13 03:39",
+                  "score": 1.0,
+                  "search_start": "-566-02-12 17:43",
+                  "search_end": "-566-02-13 06:57",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "time_us": 16.869677491486073,
+                  "six": "sunset to moonset",
+                  "moonset": "-566-02-12 18:51",
+                  "score": 0.9653459142187731,
+                  "search_start": "-566-02-12 17:43",
+                  "search_end": "-566-02-12 17:43",
+                  "date": "Sunset of the 1st"
+                },
+                {
+                  "from_body": "jupiter",
+                  "to_body": "ascella",
+                  "angle": 8.342436525406326,
+                  "position": "above",
+                  "at_time": "-566-02-12 17:43",
+                  "score": 0.8,
+                  "search_start": "-566-02-12 17:43",
+                  "search_end": "-566-02-13 06:57",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "from_body": "venus",
+                  "to_body": "eta_capricorni",
+                  "angle": 9.169121793721882,
+                  "position": "behind",
+                  "at_time": "-566-02-15 17:46",
+                  "score": 0.8,
+                  "search_start": "-566-02-15 17:46",
+                  "search_end": "-566-02-16 06:54",
+                  "date": "Night of the 4th"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "alcyone",
+                  "angle": 18.212138568261107,
+                  "position": "behind",
+                  "at_time": "-566-02-17 17:47",
+                  "score": 1.0,
+                  "search_start": "-566-02-17 17:47",
+                  "search_end": "-566-02-18 06:52",
+                  "date": "Night of the 6th"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "epsilon tauri",
+                  "angle": 8.50932560839068,
+                  "position": "behind",
+                  "at_time": "-566-02-17 17:47",
+                  "score": 1.0,
+                  "search_start": "-566-02-17 17:47",
+                  "search_end": "-566-02-18 06:52",
+                  "date": "Night of the 6th"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "nu aurigae",
+                  "angle": 19.160223587472643,
+                  "position": "below",
+                  "at_time": "-566-02-18 03:36",
+                  "score": 1.0,
+                  "search_start": "-566-02-17 17:47",
+                  "search_end": "-566-02-18 06:52",
+                  "date": "Night of the 6th"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "52 leonis",
+                  "angle": 5.287596598593964,
+                  "position": "ahead",
+                  "at_time": "-566-02-23 03:33",
+                  "score": 1.0,
+                  "search_start": "-566-02-18 17:48",
+                  "search_end": "-566-02-27 06:43",
+                  "date": "7-15"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "theta cancri",
+                  "angle": 2.2062303526830003,
+                  "position": "above",
+                  "at_time": "-566-02-21 03:34",
+                  "score": 1.0,
+                  "search_start": "-566-02-18 17:48",
+                  "search_end": "-566-02-27 06:43",
+                  "date": "7-15"
+                },
+                {
+                  "from_body": "regulus",
+                  "to_body": "moon",
+                  "angle": 2.8296301980362575,
+                  "position": "below",
+                  "at_time": "-566-02-22 17:51",
+                  "score": 0.9367102746571254,
+                  "search_start": "-566-02-18 17:48",
+                  "search_end": "-566-02-27 06:43",
+                  "date": "7-15"
+                }
+              ]
+            },
+            {
+              "score": 8.8,
+              "name": "XII",
+              "actual_month": 12,
+              "month_sunset_1": "-566-03-14 18:05",
+              "first_visibility": "-566-03-14 18:05",
+              "days_late": 0,
+              "observations": [
+                {
+                  "from_body": "moon",
+                  "to_body": "nu arietis",
+                  "angle": 10.546183327940293,
+                  "position": "below",
+                  "at_time": "-566-03-14 18:05",
+                  "score": 0.8,
+                  "search_start": "-566-03-14 18:05",
+                  "search_end": "-566-03-15 06:23",
+                  "date": "Night of the 1st"
+                },
+                {
+                  "time_us": 25.591820804402232,
+                  "six": "sunset to moonset",
+                  "moonset": "-566-03-14 19:48",
+                  "score": 1.0,
+                  "search_start": "-566-03-14 18:05",
+                  "search_end": "-566-03-14 18:05",
+                  "date": "Sunset of the 1st"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "alcyone",
+                  "angle": 9.30731373872193,
+                  "position": "below",
+                  "at_time": "-566-03-16 03:17",
+                  "score": 1.0,
+                  "search_start": "-566-03-15 18:06",
+                  "search_end": "-566-03-16 06:21",
+                  "date": "Night of the 2nd"
+                },
+                {
+                  "from_body": "moon",
+                  "to_body": "theta cancri",
+                  "angle": 5.733075487426512,
+                  "position": "behind",
+                  "at_time": "-566-03-20 18:09",
+                  "score": 1.0,
+                  "search_start": "-566-03-20 18:09",
+                  "search_end": "-566-03-21 06:14",
+                  "date": "Night of the 7th"
+                },
+                {
+                  "from_body": "regulus",
+                  "to_body": "moon",
+                  "angle": 14.926639266151165,
+                  "position": "behind",
+                  "at_time": "-566-03-21 03:13",
+                  "score": 1.0,
+                  "search_start": "-566-03-20 18:09",
+                  "search_end": "-566-03-21 06:14",
+                  "date": "Night of the 7th"
+                },
+                {
+                  "time_us": 0.2591404505074024,
+                  "six": "sunrise to moonset",
+                  "moonset": "-566-03-26 06:09",
+                  "score": 1.0,
+                  "search_start": "-566-03-26 06:08",
+                  "search_end": "-566-03-26 06:08",
+                  "date": "Sunrise of the 12th"
+                },
+                {
+                  "from_body": "venus",
+                  "to_body": "mercury",
+                  "angle": 2.218440256648772,
+                  "position": "behind",
+                  "at_time": "-566-04-01 18:16",
+                  "score": 1.0,
+                  "search_start": "-566-03-26 18:13",
+                  "search_end": "-566-04-04 05:55",
+                  "date": "13-21"
+                },
+                {
+                  "from_body": "venus",
+                  "to_body": "58 piscium",
+                  "angle": 8.055291235708635,
+                  "position": "below",
+                  "at_time": "-566-04-02 18:17",
+                  "score": 1.0,
+                  "search_start": "-566-04-02 18:17",
+                  "search_end": "-566-04-03 05:56",
+                  "date": "Night of the 20th"
+                },
+                {
+                  "from_body": "mercury",
+                  "to_body": "58 piscium",
+                  "angle": 8.979540295700497,
+                  "position": "below",
+                  "at_time": "-566-04-02 18:17",
+                  "score": 1.0,
+                  "search_start": "-566-04-02 18:17",
+                  "search_end": "-566-04-03 05:56",
+                  "date": "Night of the 20th"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
