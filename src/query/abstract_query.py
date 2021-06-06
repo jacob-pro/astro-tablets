@@ -38,7 +38,14 @@ class SearchRange:
 
     @staticmethod
     def x_plus(month: List[BabylonianDay], x: int):
-        return SearchRange(month[x].sunset, month[29].sunrise, "{}+".format(x))
+        assert 1 <= x <= 30
+        return SearchRange(month[x - 1].sunset, month[29].sunrise, "{}+".format(x))
+
+    @staticmethod
+    def range_of_nights(month: List[BabylonianDay], x: int, y: int):
+        assert 1 <= x <= 30
+        assert 1 <= y <= 30
+        return SearchRange(month[x - 1].sunset, month[y - 1].sunrise, "{}-{}".format(x, y))
 
 
 class AbstractQuery(ABC):
