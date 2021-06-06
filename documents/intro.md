@@ -4,14 +4,14 @@ Introduction to the Babylonian Astronomical Texts
 If you are not familiar with ancient Babylonian Astronomy I recommend
 reading:
 
--   Teije de Jong’s [Babylonian
-    Astronomy](https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf)
-    lecture slides from IAC2011 History of Astronomy (an
-    inter-university course at Radboud/Utrecht/Amsterdam).
+-   Teije de Jong’s [*Babylonian
+    Astronomy*](https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf)
+    lecture slides from IAC2011 *History of Astronomy* (Radboud,
+    Utrecht, and Amsterdam University) \[1\].
 -   The Introduction (pages 11-38) of *Astronomical Diaries and Related
-    Texts Vol. 1* \[1\]
+    Texts Vol. 1* \[2\].
 -   Pages 126-139 of *Translating Babylonian Astronomical Diaries and
-    Procedure Texts* \[2\]
+    Procedure Texts* \[3\].
 
 Calendar
 --------
@@ -20,23 +20,23 @@ Calendar
 > and each month began on the night when the lunar cresent was first
 > visible. There were twelve months in most years, each month lasting
 > for 29 or 30 days. To regulate the seasons, an intercalary month was
-> inserted when necessary. \[3, p. 338\]
+> inserted when necessary. \[4, p. 338\]
 
 ### Lunar Year
 
 > The beginning of the year, day 1 of Nisannu (month I), always fell
-> within about 30 days of the vernal equinox \[2, p. 131\]
+> within about 30 days of the vernal equinox \[3, p. 131\]
 
 The year could either have 12 or 13 months depending on if there was an
 intercalary month. The intercalary month could be either a second Ulūlu
 (VI₂) or a second Addaru (XII₂).
 
 From the reign of Nabopolassar onwards, I am using the intercalary
-months as documented by Parker and Dubberstein \[4, p. 4\].
+months as documented by Parker and Dubberstein \[5, p. 4\].
 
 However prior to Nabopolassar the arrangement of intercalary months is
 not fully complete, but I am using this list of confirmed intercalary
-months \[5, p. 67\]:
+months \[6, p. 67\]:
 
 -   Shamash-shum-ukin Year 14, Addaru II: BM 29496, YBC 11309
 -   Kandalanu Year 5, Ululu II: Clay BE 8/1, No.3,
@@ -53,13 +53,13 @@ months \[5, p. 67\]:
 > lunar crescent after sunset… The only attested month lengths are 29
 > days and 30 days, because day 1 was declared no later than the sunset
 > at the end of day 30, irrespective of whether the crescent was then
-> observed or not. \[2, p. 131\]
+> observed or not. \[3, p. 131\]
 
 In order to compute the start of the month I am using the following
 lunar visibility parameter:
 
 > Our calculation shows that 7.5° (±0.25°) is the lowest naked eye
-> visibility limit. \[6, p. 58\]
+> visibility limit. \[7, p. 58\]
 
 Angular Separations
 -------------------
@@ -70,14 +70,14 @@ in the sky. These are measured in terms of “cubits” and “fingers”, where
 there are 24 fingers in a cubit. In order to convert to degrees:
 
 > Our results for the angular equivalent of the finger and cubit in the
-> Neo-Babylonian period are respectively 0.092 and 2.2 deg \[7, p. 212\]
+> Neo-Babylonian period are respectively 0.092 and 2.2 deg \[8, p. 212\]
 
 The diaries sometimes describe bodies as appearing within a “halo”, this
 is a ring around the moon or sun with a 22° (or 10 cubit) radius. Haloes
 can also exist as a 46° ring, but they are not found in the diaries:
 
 > The larger type of halo called supūru is not so far attested in
-> diaries. \[1, p. 33\]
+> diaries. \[2, p. 33\]
 
 ### Constellations
 
@@ -178,7 +178,7 @@ parameters:
 
 > the minimum angular distance between the star/planet and the Sun
 > measured perpendicular to the horizon for the star/planet to be
-> visible \[8, p. 38\]
+> visible \[1, p. 38\]
 
 I am using the default fixed arcus visionis parameters from Alcyone
 Planetary, Stellar and Lunar Visibility \[9\] (see `src/constants.py`).
@@ -210,7 +210,7 @@ Lunar Six Intervals
 </tr>
 <tr class="odd">
 <td>NA</td>
-<td>sunrise</td>
+<td><strong>sunrise</strong></td>
 <td>first <strong>moonset</strong> after sunrise</td>
 <td>Full Moon</td>
 </tr>
@@ -236,7 +236,7 @@ Lunar Six Intervals
 </table>
 
 Times are measured in UŠ - “time degrees”. There are 360 UŠ in a day, so
-1 UŠ = 4 minutes, 1 bēru = 30 UŠ \[10\] \[1, p. 16\]
+1 UŠ = 4 minutes, 1 bēru = 30 UŠ \[10\] \[2, p. 16\]
 
 Eclipses
 --------
@@ -261,13 +261,13 @@ Some reports include measurements of the eclipse phases, including the
 time to maximal phase (onset), duration of maximal phase (totality), and
 time from the end of maximal phase to the end of the eclipse (clearing),
 or the total length the eclipse which is the sum of all three phases.
-\[1, p. 24\]
+\[2, p. 24\]
 
 In the case of a total lunar eclipse, the onset is the time from when
 the moon becomes partially eclipsed (1:2) to the start of the full
 eclipse, the maximal phase is the time in which it is fully eclipsed
 (2:3), and the clearing is the time until it is no longer partially
-eclipsed (3:4) \[3, p. 341\]: ![](graphics/total_eclipse.png)
+eclipsed (3:4) \[4, p. 341\]: ![](graphics/total_eclipse.png)
 
 In the case of partial eclipses it is less straightforward, I can
 measure the time from the start of the partial eclipse until it becomes
@@ -282,7 +282,7 @@ total eclipse duration.
 Translations
 ------------
 
-The general conventions used for most of the translations \[1, p. 37\]:
+The general conventions used for most of the translations \[2, p. 37\]:
 
 -   Square brackets `[]` denote missing/reconstructed text
 -   Half brackets `⌜⌝` denote text damaged in some other way
@@ -304,42 +304,42 @@ example:
 References
 ----------
 
-\[1\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
+\[1\] T. de Jong, “Babylonian astronomy,” May 2011, \[Online\].
+Available: <https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf>.
+
+\[2\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
 from babylonia. Vol. 1, diaries from 652 b.c. To 262 b.c. : Plates*.
 Verlag der Österreichischen Akademie der Wissenschaften, 1988.
 
-\[2\] M. Ossendrijver, “Translating babylonian astronomical diaries and
+\[3\] M. Ossendrijver, “Translating babylonian astronomical diaries and
 procedure texts,” *Translating Writings of Early Scholars in the Ancient
 Near East, Egypt, Greece and Rome: Methodological Aspects with
 Examples*, vol. 344, p. 125, 2016, \[Online\]. Available:
 <https://www.degruyter.com/view/book/9783110448818/10.1515/9783110448818-005.xml>.
 
-\[3\] J. Steele, F. Stephenson, and L. Morrison, “The accuracy of
+\[4\] J. Steele, F. Stephenson, and L. Morrison, “The accuracy of
 eclipse times measured by the babylonians,” *Journal for the History of
 Astronomy*, vol. 28, no. 4, pp. 337–345, 1997, \[Online\]. Available:
 <http://adsabs.harvard.edu/full/1997JHA....28..337S>.
 
-\[4\] W. H. Dubberstein and R. A. Parker, *Babylonian chronology 626
+\[5\] W. H. Dubberstein and R. A. Parker, *Babylonian chronology 626
 b.c.-A.D. 75*. Brown University Press, 1956, \[Online\]. Available:
 <https://webspace.science.uu.nl/~gent0113/babylon/downloads/babylonian_chronology_pd_1971.pdf>.
 
-\[5\] J. A. Brinkman and D. A. Kennedy, “Documentary evidence for the
+\[6\] J. A. Brinkman and D. A. Kennedy, “Documentary evidence for the
 economic base of early neo-babylonian society: A survey of dated
 babylonian economic texts, 721-626 b.c.” *Journal of Cuneiform Studies*,
 vol. 35, no. 1, pp. 1–90, 1983, \[Online\]. Available:
 <http://www.jstor.org/stable/3515942>.
 
-\[6\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
+\[7\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
 danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007,
 \[Online\]. Available:
 <http://adsabs.harvard.edu/full/2007Obs...127...53S>.
 
-\[7\] L. J. Fatoohi and F. R. Stephenson, “Angular measurements in
+\[8\] L. J. Fatoohi and F. R. Stephenson, “Angular measurements in
 babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
 \[Online\]. Available: <https://www.jstor.org/stable/41670130>.
-
-\[8\] T. de Jong, “Babylonian astronomy,” May 2011, \[Online\].
-Available: <https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf>.
 
 \[9\] Alcyone, “Planetary, stellar and lunar visibility.” \[Online\].
 Available:

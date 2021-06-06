@@ -3,10 +3,10 @@
 If you are not familiar with ancient Babylonian Astronomy I recommend reading:
 
 - Teije de Jong's 
-  [Babylonian Astronomy](https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf) lecture slides
-  from IAC2011 History of Astronomy (an inter-university course at Radboud/Utrecht/Amsterdam).
-- The Introduction (pages 11-38) of *Astronomical Diaries and Related Texts Vol. 1* [@sachs1988adt]
-- Pages 126-139 of *Translating Babylonian Astronomical Diaries and Procedure Texts* [@ossendrijver2016translating]
+  [*Babylonian Astronomy*](https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf) lecture slides
+  from IAC2011 *History of Astronomy* (Radboud, Utrecht, and Amsterdam University) [@dejong2011babylonian].
+- The Introduction (pages 11-38) of *Astronomical Diaries and Related Texts Vol. 1* [@sachs1988adt].
+- Pages 126-139 of *Translating Babylonian Astronomical Diaries and Procedure Texts* [@ossendrijver2016translating].
 
 ## Calendar
 
@@ -107,7 +107,7 @@ from Alcyone Planetary, Stellar and Lunar Visibility [@alcyoneplsv] (see `src/co
 |-----------|------------------------------------------|----------------------------------------|------------|
 | NA₁       | **sunset**                               | first visible **moonset** after sunset | New Moon   |
 | ŠU₂       | last **moonset** before sunrise          | **sunrise**                            | Full Moon  |
-| NA        | sunrise                                  | first **moonset** after sunrise        | Full Moon  |
+| NA        | **sunrise**                              | first **moonset** after sunrise        | Full Moon  |
 | ME        | last **moonrise** before sunset          | **sunset**                             | Full Moon  |
 | GI₆       | **sunset**                               | first **moonrise** after sunset        | Full Moon  |
 | KUR       | last visible **moonrise** before sunrise | **sunrise**                            | New Moon   |
