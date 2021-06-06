@@ -3,8 +3,7 @@
 A tool designed for dating the events in ancient Babylonian Astronomical Texts
 whilst making as few assumptions as possible about their chronology. 
 
-See [Introduction](./documents/texts.md) for a background on the texts, and explanations for
-how I am interpreting them.
+[Introduction](./documents/intro.md): Background on Babylonian Astronomy.
 
 See [Methodology](./documents/methodology.md) to see how the queries / rankings of dates
 are calculated.
