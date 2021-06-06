@@ -1,10 +1,11 @@
 from data import *
 from generate.angular_separation import EclipticPosition
-from generate.planet_events import OuterPlanetPhenomena
+from generate.planet_events import OuterPlanetPhenomena, InnerPlanetPhenomena
 from query.abstract_query import AbstractQuery, SearchRange
 from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
+from query.lunar_eclipse_query import LunarEclipseQuery, ExpectedEclipseType
 from query.lunar_six_query import LunarSixQuery, LunarSix
 from query.planetary_event_query import PlanetaryEventQuery
 
@@ -31,13 +32,145 @@ class VAT4956(AbstractTablet):
 
     def year_37_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         res = []
-
+        # Sîn (Moon) appeared below the Rear Bright Star of the Large Twins (β Geminorum)
+        res.append(AngularSeparationQuery(self.db, MOON, BETA_GEMINORUM, 0, 15,
+                                          EclipticPosition.BELOW, SearchRange.for_night(month, 1)))
+        # Kajjamānu (Saturn) was in front of the Swallow (Pisces).
+        res.append(AngularSeparationQuery(self.db, SATURN, PISCES.central_star, 0, PISCES.radius,
+                                          EclipticPosition.AHEAD, SearchRange.for_night(month, 1)))
+        # The 3rd, Ṣalbaṭānu (Mars) entered the Crab (Praesepe), the 5th it emerged.
+        res.append(AngularSeparationQuery(self.db, MARS, FORTY_TWO_CANCRI, 0, 15,
+                                          None, SearchRange.range_of_nights(month, 3, 5)))
+        # The 10th, Šiḫṭu (Mercury) [rose] in the west behind the [Little] Twins [...] (Gemini)
+        res.append(PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.EF,
+                                       SearchRange.for_night_and_day(month, 10)))
+        res.append(AngularSeparationQuery(self.db, MERCURY, GEMINI.central_star, 0, GEMINI.radius,
+                                          None, SearchRange.for_night_and_day(month, 10)))
+        # The 18th, Dilbat (Venus) was ‘balanced’ 1 cubit 4 fingers above the King (Regulus).
+        res.append(AngularSeparationQuery(self.db, VENUS, REGULUS, (1 * CUBIT) + (4 * FINGER),
+                                          1 * CUBIT, EclipticPosition.ABOVE, SearchRange.for_night(month, 18)))
+        #  The 26th (KUR) (moonrise to sunrise) was 23, I did not observe Sîn.
+        res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, True, 23))
         return res
 
+    def year_37_month_3(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+        # Sîn (Moon) appeared behind the Crab (Cancer);
+        res.append(AngularSeparationQuery(self.db, MOON, CANCER.central_star, 0, CANCER.radius,
+                                          EclipticPosition.BEHIND, SearchRange.for_night(month, 1)))
+        # NA (sunset to moonset) was 20
+        res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, False, 20))
+        # At that time, Ṣalba-ṭānu (Mars) and Šiḫṭu (Mercury) were 4 cubits in front of the K[ing ...] (Regulus)
+        # In the evening, Šiḫṭu (Mercury) passed below Ṣalbaṭānu (Mars)
+        res.append(AngularSeparationQuery(self.db, MARS, REGULUS, 4 * CUBIT, 2 * CUBIT,
+                                          EclipticPosition.AHEAD, SearchRange.for_night(month, 1)))
+        res.append(AngularSeparationQuery(self.db, MERCURY, REGULUS, 4 * CUBIT, 2 * CUBIT,
+                                          EclipticPosition.AHEAD, SearchRange.for_night(month, 1)))
+        res.append(AngularSeparationQuery(self.db, MARS, MERCURY, 0, 10,
+                                          EclipticPosition.ABOVE, SearchRange.for_night(month, 1)))
+        # Sagmegar (Jupiter) was above Lisi (Antares)
+        res.append((AngularSeparationQuery(self.db, JUPITER, ANTARES, 0, 20,
+                                           EclipticPosition.ABOVE, SearchRange.for_night(month, 1))))
+        #  Dilbat (Venus) was in the west, opposite the Tail of the Li[on ...] (θ Leonis)
+        res.append(AngularSeparationQuery(self.db, VENUS, THETA_LEONIS, 0, 20,
+                                          None, SearchRange.for_night(month, 1)))
+        # Night of the 5th, beginning of the night, Sîn (Moon) passed towards the east 1 cubit ‹above/below›
+        # the Bright Star at the Tip of the Lion’s Foot. (Leo)
+        res.append(AngularSeparationQuery(self.db, MOON, LEO.central_star, 0, LEO.radius,
+                                          None, SearchRange.for_night(month, 5)))
+        # the 8th, evening watch, Sîn (Moon) stood 2 1/2 cubits below the Northern Part of the Scales (β Librae).
+        res.append(AngularSeparationQuery(self.db, MOON, BETA_LIBRAE, 2.5 * CUBIT, 1 * CUBIT,
+                                          EclipticPosition.BELOW, SearchRange.for_night(month, 8)))
+        # Night of the 10th, evening watch, Sîn (Moon) was ‘balanced’ 3 1/2 cubits above Lisi (Antares).
+        res.append(AngularSeparationQuery(self.db, MOON, ANTARES, 3.5 * CUBIT, 1.5 * CUBIT,
+                                          EclipticPosition.ABOVE, SearchRange.for_night(month, 10)))
+        # The 12th, Ṣalbaṭānu (Mars) was 2/3 of a cubit ˹above˺ [the King ...] (Regulus)
+        res.append(AngularSeparationQuery(self.db, MARS, REGULUS, 2/3 * CUBIT, 2/3 * CUBIT,
+                                          EclipticPosition.ABOVE, SearchRange.for_night(month, 12)))
+        # The 15th, (one) god was seen with the (other) god, NA (sunrise to moonset) was 7;30
+        res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, False, 7.5))
+        # An eclipse of Sîn (Moon) which passed by
+        res.append(LunarEclipseQuery(self.db, None, ExpectedEclipseType.UNKNOWN, None, None,
+                                     SearchRange.for_night_and_day(month, 15)))
+        return res
+
+    def year_37_month_10(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+        # The 19th, Dilbat (Venus) was below the Middle Star of the Horn of the Goat [...] (β Capricorni)
+        res.append(AngularSeparationQuery(self.db, VENUS, BETA_CAPRICORNI, 0, 15,
+                                          EclipticPosition.BELOW, SearchRange.for_night(month, 19)))
+        return res
+
+    def year_37_month_11(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+        # Sîn (Moon) appeared in the Swallow (Pisces)
+        res.append(AngularSeparationQuery(self.db, MOON, PISCES.central_star, 0, PISCES.radius,
+                                          None, SearchRange.for_night(month, 1)))
+        #  NA (sunset to moonset) was 14;30
+        res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, False, 14.5))
+        # At that time, Sagmegar (Jupiter) was behind the Elbow of Pabi[lsag by ... cubits ...] (Sagittarius)
+        res.append(AngularSeparationQuery(self.db, JUPITER, SAGITTARIUS.central_star, 0, SAGITTARIUS.radius,
+                                          EclipticPosition.BEHIND, SearchRange.for_night(month, 1)))
+        # The 4th, Dilbat (Venus) was ‘balanced’ 1/2 cubit below the Goat-Fish. (Capricorn)
+        res.append(AngularSeparationQuery(self.db, VENUS, CAPRICORNUS.central_star, 0, CAPRICORNUS.radius,
+                                          EclipticPosition.BELOW, SearchRange.for_night(month, 4)))
+        #  Night of the 6th, evening watch, Sîn (Moon) was surrounded by a ‘fold’ (Halo), the Bristle (Pleiades),
+        #  the Bull of Heaven (Taurus), the Chariot (Auriga) [stood within the ‘fold’ ...]
+        res.append(AngularSeparationQuery(self.db, MOON, ALCYONE, 0, HALO,
+                                          None, SearchRange.for_night(month, 6)))
+        res.append(AngularSeparationQuery(self.db, MOON, TAURUS.central_star, 0, TAURUS.radius,
+                                          None, SearchRange.for_night(month, 6)))
+        res.append(AngularSeparationQuery(self.db, MOON, AURIGA.central_star, 0, AURIGA.radius,
+                                          None, SearchRange.for_night(month, 6)))
+        # Sîn (Moon) was surrounded by a ‘fold’ (Halo); the Lion (Leo) and the Crab (Cancer) were inside the ‘fold’.
+        res.append(AngularSeparationQuery(self.db, MOON, LEO.central_star, 0, LEO.radius,
+                                          None, SearchRange.range_of_nights(month, 7, 15)))
+        res.append(AngularSeparationQuery(self.db, MOON, CANCER.central_star, 0, CANCER.radius,
+                                          None, SearchRange.range_of_nights(month, 7, 15)))
+        # The King (Regulus) was ‘balanced’ 1 cubit below Sîn (Moon).
+        res.append(AngularSeparationQuery(self.db, REGULUS, MOON, 1 * CUBIT, 1 * CUBIT,
+                                          EclipticPosition.BELOW, SearchRange.range_of_nights(month, 7, 15)))
+        return res
+
+    def year_37_month_12(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+        # Addaru, the 1st, Sîn (Moon) appeared behind the Hired Man (Aries) while Šamaš was present
+        res.append(AngularSeparationQuery(self.db, MOON, ARIES.central_star, 0, ARIES.radius,
+                                          EclipticPosition.BEHIND, SearchRange.for_night(month, 1)))
+        # NA (sunset to moonset) was 25
+        res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, False, 25))
+        # Night of the 2nd, the evening watch, Sîn (Moon) was ‘balanced’ 4 cubits below the Stars (Pleiades).
+        res.append(AngularSeparationQuery(self.db, MOON, ALCYONE, 4 * CUBIT, 2 * CUBIT,
+                                          EclipticPosition.BELOW, SearchRange.for_night(month, 2)))
+        # Night of the 7th, Sîn (Moon) was surrounded by a ‘fold’ (Halo), the Crab (Cancer) and the
+        # King (Regulus) were within [the ‘fold’, ...]
+        res.append(AngularSeparationQuery(self.db, MOON, CANCER.central_star, 0, CANCER.radius,
+                                          None, SearchRange.for_night(month, 7)))
+        res.append(AngularSeparationQuery(self.db, REGULUS, MOON, 0, HALO,
+                                          None, SearchRange.for_night(month, 7)))
+        # The 12th, one god was seen with the (other) god, NA (sunrise to moonset) was 1;30.
+        res.append(LunarSixQuery(self.db, month, 12, LunarSix.NA, False, 1.5))
+        # was in front of the Band of the Swallow (Pisces), 1/2 cubit below Dilbat (Venus), Šiḫṭu (Mercury) passing
+        # 8 fingers to the east, when it appeared it was bright and high. 1 U[Š ... Kajjamānu (Saturn)] was ‘balanced’
+        # 6 fingers above Šiḫṭu (Mercury) and 3 fingers below Dilbat (Venus)
+        res.append(AngularSeparationQuery(self.db, VENUS, MERCURY, 1 * CUBIT, 1 * CUBIT,
+                                          None, SearchRange.range_of_nights(month, 13, 21)))
+        # Around the 20th Dilbat (Venus) and Šiḫṭu (Mercury) entered the Band of the Swallow (Pisces).
+        res.append(AngularSeparationQuery(self.db, VENUS, PISCES.central_star, 0, PISCES.radius,
+                                          None, SearchRange.for_night(month, 20)))
+        res.append(AngularSeparationQuery(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius,
+                                          None, SearchRange.for_night(month, 20)))
+        return res
+
+
     def year_37(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_1 = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_37_month_1)
-        month_2 = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_37_month_2)
-        return [month_1, month_2]
+        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_37_month_1)
+        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_37_month_2)
+        month_iii = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_37_month_3)
+        month_x = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_37_month_10)
+        month_xi = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_37_month_11)
+        month_xii = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_37_month_12)
+        return [month_i, month_ii, month_iii, month_x, month_xi, month_xii]
 
 
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
