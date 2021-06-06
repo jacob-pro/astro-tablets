@@ -20,15 +20,15 @@ Support for these texts:
 - [X] [VAT 4956 (ADT I No. -567)](./documents/vat4956.md)
 - [ ] [BM 33066 (LBAT 1477, Strm. Kambys. 400)](./documents/bm33066.md)
 
-Supported features
-- Compute a lunar calendar (sunrise, sunset, first visibility, spring equinox)
+By computing the following:
+- A Lunar calendar (sunrise, sunset, first visibility, spring equinox)
 - Angular separation of moon, planets, stars
 - Visibility phenomena and stations of the inner and outer planets
-- Compute lunar eclipse durations
+- Lunar eclipses and their durations
+- "Lunar Six" durations
 
 ## Setup
 
 - Requires Python 3.7
-- Install `requirements.txt`
+- Install `requirements.txt` using Pip
 - When using PyCharm define `./src` as a source folder in project structure
-- First run will take a while to download the astronomical data
