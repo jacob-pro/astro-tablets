@@ -1,6 +1,9 @@
 # Astro Tablets
 
-A tool for dating the events in ancient Babylonian Astronomical Texts. 
+A tool for dating the events in ancient Babylonian Astronomical Texts.
+This has been created for my [Jerusalem Book](https://jacob-pro.github.io/jerusalem-book/)
+([GitHub](https://github.com/jacob-pro/jerusalem-book)),
+discussing the chronology of the Neo-Babylonian empire.
 
 [Introduction](./documents/intro.md): Background on Babylonian Astronomy.
 
