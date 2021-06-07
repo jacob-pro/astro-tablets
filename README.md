@@ -4,8 +4,7 @@ A tool for dating the events in ancient Babylonian Astronomical Texts.
 
 [Introduction](./documents/intro.md): Background on Babylonian Astronomy.
 
-See [Methodology](./documents/methodology.md) to see how the queries / rankings of dates
-are calculated.
+[User Guide](./documents/guide.md): How the tool works, and how to use it and replicate the results.
 
 ## Features
 
@@ -25,9 +24,3 @@ By computing the following:
 - Visibility phenomena and stations of the inner and outer planets
 - Lunar eclipses and their durations
 - "Lunar Six" durations
-
-## Setup
-
-- Requires Python 3.7
-- Install `requirements.txt` using Pip
-- When using PyCharm define `./src` as a source folder in project structure
