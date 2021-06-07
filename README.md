@@ -1,7 +1,6 @@
 # Astro Tablets
 
-A tool designed for dating the events in ancient Babylonian Astronomical Texts
-whilst making as few assumptions as possible about their chronology. 
+A tool for dating the events in ancient Babylonian Astronomical Texts. 
 
 [Introduction](./documents/intro.md): Background on Babylonian Astronomy.
 
