@@ -31,8 +31,8 @@ class LunarSix(Enum):
 class LunarSixQuery(AbstractQuery):
 
 
-    def __init__(self, db: Database, month: List[BabylonianDay], day_number: int, six: LunarSix, predicted: bool,
-                 value_us: float):
+    def __init__(self, db: Database, month: List[BabylonianDay], day_number: int, six: LunarSix, value_us: float,
+                 predicted: bool = False):
         assert value_us >= 0
         assert 1 <= day_number <= 30
         self.six = six

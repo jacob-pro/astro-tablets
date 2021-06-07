@@ -14,10 +14,10 @@ from query.planetary_event_query import PlanetaryEventQuery
 
 @unique
 class VAT4956Mode(Enum):
-    ALL = 0
-    LUNAR_ONLY = 1
-    LUNAR_SIX_ONLY = 2
-    PLANET_ONLY = 3
+    ALL = "All"
+    LUNAR_ONLY = "Lunar Only"
+    LUNAR_SIX_ONLY = "Lunar Six Only"
+    PLANET_ONLY = "Planetary Only"
 
 
 class VAT4956(AbstractTablet):
@@ -47,7 +47,7 @@ class VAT4956(AbstractTablet):
 
         #  NA (sunrise to moonset) was 4.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, False, 4.0))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 4.0))
 
         return res
 
@@ -83,7 +83,7 @@ class VAT4956(AbstractTablet):
 
         #  The 26th (KUR) (moonrise to sunrise) was 23, I did not observe Sîn.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, True, 23))
+            res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, predicted=True))
 
         return res
 
@@ -96,7 +96,7 @@ class VAT4956(AbstractTablet):
 
         # NA (sunset to moonset) was 20
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, False, 20))
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 20))
 
         # At that time, Ṣalba-ṭānu (Mars) and Šiḫṭu (Mercury) were 4 cubits in front of the K[ing ...] (Regulus)
         # In the evening, Šiḫṭu (Mercury) passed below Ṣalbaṭānu (Mars)
@@ -141,7 +141,7 @@ class VAT4956(AbstractTablet):
 
         # The 15th, (one) god was seen with the (other) god, NA (sunrise to moonset) was 7;30
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, False, 7.5))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 7.5))
 
         # An eclipse of Sîn (Moon) which passed by
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
@@ -166,7 +166,7 @@ class VAT4956(AbstractTablet):
 
         #  NA (sunset to moonset) was 14;30
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, False, 14.5))
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 14.5))
 
         # At that time, Sagmegar (Jupiter) was behind the Elbow of Pabi[lsag by ... cubits ...] (Sagittarius)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
@@ -210,7 +210,7 @@ class VAT4956(AbstractTablet):
 
         # NA (sunset to moonset) was 25
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, False, 25))
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 25))
 
         # Night of the 2nd, the evening watch, Sîn (Moon) was ‘balanced’ 4 cubits below the Stars (Pleiades).
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
@@ -227,7 +227,7 @@ class VAT4956(AbstractTablet):
 
         # The 12th, one god was seen with the (other) god, NA (sunrise to moonset) was 1;30.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 12, LunarSix.NA, False, 1.5))
+            res.append(LunarSixQuery(self.db, month, 12, LunarSix.NA, 1.5))
 
         # was in front of the Band of the Swallow (Pisces), 1/2 cubit below Dilbat (Venus), Šiḫṭu (Mercury) passing
         # 8 fingers to the east, when it appeared it was bright and high. 1 U[Š ... Kajjamānu (Saturn)] was ‘balanced’
@@ -266,5 +266,5 @@ class VAT4956(AbstractTablet):
             self.mode = VAT4956Mode.ALL
         tests = [YearToTest(0, "Nebuchadnezzar 37", Intercalary.FALSE, self.year_37)]
         res = self.run_years(tests)
-        self.print_results(res, "Nebuchadnezzar 37")
+        self.print_results(res, "Nebuchadnezzar 37 ({})".format(self.mode.value))
         self.output_json_for_year(res, print_year, slim_results)
