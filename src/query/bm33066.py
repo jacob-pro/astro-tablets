@@ -135,6 +135,10 @@ class BM33066(AbstractTablet):
             res.append(AngularSeparationQuery(self.db, MARS, LEO.central_star, 0, LEO.radius,
                                               None, SearchRange.for_night(month, 13)))
 
+            #  Month VI, the 24th, Venus was 1 +[x cubits?] above Mars.
+            res.append(AngularSeparationQuery(self.db, VENUS, MARS, 1 * CUBIT, 5 * CUBIT,
+                                              EclipticPosition.ABOVE, SearchRange.for_night(month, 24)))
+
         return res
 
     def year_7_month_7(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
@@ -153,6 +157,25 @@ class BM33066(AbstractTablet):
             res.append(AngularSeparationQuery(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius,
                                               EclipticPosition.BEHIND, SearchRange.for_night(month, 13)))
 
+            # Year 7, month VII, the 1st, the moon became visible 3 cubits behind Mercury.
+            res.append(AngularSeparationQuery(self.db, MOON, MERCURY, 3 * CUBIT, 1 * CUBIT,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 1)))
+
+            # Month VII, the 23rd, last part of the night, Jupiter was 3 cubits above the moon.
+            res.append(AngularSeparationQuery(self.db, JUPITER, MOON, 3 * CUBIT, 1 * CUBIT,
+                                              EclipticPosition.ABOVE, SearchRange.for_night(month, 23)))
+
+            # Month VII, the 29th, last part of the night, Venus on the north side [came near?] 2 fingers to Ju[piter].
+            res.append(AngularSeparationQuery(self.db, VENUS, JUPITER, 2 * FINGER, 2 * FINGER,
+                                              None, SearchRange.for_night(month, 29)))
+
+            # Month VII, the 12th, Saturn was 1 cubit in front of Jupiter.
+            res.append(AngularSeparationQuery(self.db, SATURN, JUPITER, 1 * CUBIT, 6 * FINGER,
+                                              EclipticPosition.AHEAD, SearchRange.for_night(month, 12)))
+
+            # Month VII, the 11th, Mars came near to Jupiter 2 fingers.
+            res.append(AngularSeparationQuery(self.db, MARS, JUPITER, 2 * FINGER, 2 * FINGER,
+                                              None, SearchRange.for_night(month, 11)))
 
         return res
 
@@ -166,6 +189,11 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.ME, 1))
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 14))
             res.append(LunarSixQuery(self.db, month, 28, LunarSix.KUR, 26))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            # Month VIII, the 2nd, Saturn passed 8 fingers above Venus.
+            res.append(AngularSeparationQuery(self.db, SATURN, VENUS, 8 * FINGER, 4 * FINGER,
+                                              EclipticPosition.ABOVE, SearchRange.for_night(month, 2)))
 
         return res
 
@@ -182,6 +210,10 @@ class BM33066(AbstractTablet):
             res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.ST, SearchRange.for_night(month, 27)))
             res.append(AngularSeparationQuery(self.db, JUPITER, LIBRA.central_star, 0, LIBRA.radius,
                                               EclipticPosition.AHEAD, SearchRange.for_night(month, 27)))
+
+            # Month X, the 5th, Mercury was ½ cubit behind Venus.
+            res.append(AngularSeparationQuery(self.db, MERCURY, VENUS, 0.5 * CUBIT, 6 * FINGER,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 5)))
 
         return res
 
