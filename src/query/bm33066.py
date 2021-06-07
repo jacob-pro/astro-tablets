@@ -92,6 +92,11 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 7.5))
             res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 22.5))
 
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.LA, SearchRange.for_night(month, 22)))
+            res.append(AngularSeparationQuery(self.db, JUPITER, VIRGO.central_star, 0, VIRGO.radius,
+                                              EclipticPosition.AHEAD, SearchRange.for_night(month, 22)))
+
         return res
 
     def year_7_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
@@ -104,6 +109,11 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.ME, 1 + 1/3))
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 8 + 2/3))
             res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.FA, SearchRange.for_night(month, 22)))
+            res.append(AngularSeparationQuery(self.db, JUPITER, VIRGO.central_star, 0, VIRGO.radius,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 22)))
 
         return res
 
@@ -141,6 +151,13 @@ class BM33066(AbstractTablet):
             res.append(LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.BEFORE_SUNRISE),
                                          ExpectedEclipseType.TOTAL, None, None,
                                          SearchRange.for_night(month, 14)))
+
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.ST, SearchRange.for_night(month, 27)))
+            res.append(AngularSeparationQuery(self.db, JUPITER, LIBRA.central_star, 0, LIBRA.radius,
+                                              EclipticPosition.AHEAD, SearchRange.for_night(month, 27)))
+
         return res
 
     def year_7_month_11(self, month: List[BabylonianDay]) -> List[AbstractQuery]:

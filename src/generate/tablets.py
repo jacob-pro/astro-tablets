@@ -311,9 +311,19 @@ class BM33066(Tablet):
         self.risings_settings(MOON)
         # Synodic Phenomena
         self.planet_events(JUPITER)
+        self.separation_during_night(JUPITER, VIRGO.central_star)
+        self.separation_during_night(JUPITER, LIBRA.central_star)
         self.planet_events(VENUS)
+        self.separation_during_night(VENUS, LEO.central_star)
+        self.separation_during_night(VENUS, CANCER.central_star)
+        self.separation_during_night(VENUS, PISCES.central_star)
+        self.separation_during_night(VENUS, AURIGA.central_star)
         self.planet_events(SATURN)
+        self.separation_during_night(SATURN, VIRGO.central_star)
         self.planet_events(MARS)
+        self.separation_during_night(MARS, GEMINI.central_star)
+        self.separation_during_night(MARS, LEO.central_star)
+        self.separation_during_night(MARS, REGULUS)
         #  Year 7, month VII, the 1st, the moon became visible 3 cubits behind Mercury.
         self.separation_during_night(MOON, MERCURY)
         #  Month VI, the 24th, Venus was 1 +[x cubits?] above Mars.
