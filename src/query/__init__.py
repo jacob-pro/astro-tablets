@@ -1,5 +1,6 @@
 from query.bm32234 import BM32234
 from query.bm32312 import BM32312
+from query.bm33066 import BM33066
 from query.bm35115 import BM35115
 from query.bm38462 import BM38462
 from query.bm41222 import BM41222
@@ -22,4 +23,6 @@ def get_tablet_class(tablet: str):
         return BM38462
     if tablet == "vat4956":
         return VAT4956
+    if tablet == "bm33066":
+        return BM33066
     raise ValueError("Unknown tablet name")
