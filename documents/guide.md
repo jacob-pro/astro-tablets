@@ -69,8 +69,98 @@ Installation
 The Generate Stage
 ------------------
 
+To create the database for a given tablet use the `generate` subcommand:
+
+    usage: main.py generate [-h] [--db DB] [--overwrite] [--start START]
+                            [--end END]
+                            tablet
+
+    positional arguments:
+      tablet         name of the tablet to generate ephemeris for
+
+    optional arguments:
+      -h, --help     show this help message and exit
+      --db DB        override path to save the database to
+      --overwrite    overwrite the database if exists
+      --start START  override start year
+      --end END      override end year
+
+Valid tablets include:
+`{bm32312, bm41222, bm76738, bm35115, bm32234, bm38462, vat4956, bm33066}`.
+
+By default, the database will be saved to `./generated/TABLET_NAME.db`.
+If the file already exists it will prompt before overwriting, unless the
+`--overwrite` option is set.
+
+Each tablet has a default start and end year associated with it, roughly
+100 years around its expected dating, this can be overridden with the
+`--start` and `--end` flags.
+
+The generate stage can take a very long time (e.g. 10 hours) and
+generate a large database file (e.g. 300MB), depending on the complexity
+of the tablet, and the number of years being generated.
+
+The generated database is in *SQLite* format and stores tables with all
+the necessary event times and ephemeris, for example:
+
+![](img/events_table_example.png)
+
 The Query Stage
 ---------------
+
+Once a database has been generated for a tablet, then the `query`
+subcommands may be run:
+
+    usage: main.py query [-h] [--db DB] [--year YEAR] [--slim] tablet [subquery]
+
+    positional arguments:
+      tablet       name of the tablet to query ephemeris for
+      subquery     optional subquery
+
+    optional arguments:
+      -h, --help   show this help message and exit
+      --db DB      override path to source database
+      --year YEAR  optionally output a specific year
+      --slim       only output best compatible path
+
+The tablet names are the same as in the generate stage, by default it
+will look for the database at `./generated/TABLET_NAME.db` (although
+this can be overriden with the `--db` flag). Some tablets support an
+optional subquery that applies a filter to which observations are
+queried, check the source in `./src/query/TABLET_NAME.py` to see which
+of these are available.
+
+The query will run for all of the years that the database file contains,
+and then output the results to the console, in descending order of best
+match.
+
+To get a report for a specific base year add the `--year` flag, it will
+be saved as a JSON file in the working directory, containing all the
+details of the matched observations. By default, it will show all the
+possible year start dates (a year can in theory begin at any of the
+first lunar visibilities ±30 days from the vernal equinox, meaning there
+are about 2-3 possibilities). However if the intercalary month
+information is known then their compatibility (as in building a valid
+sequence of years) can be assessed. The compatible sequence of years
+with the highest score (as used in the main result) will be flagged with
+`best_compatible_path`, to show only these results in the JSON use the
+`--slim` flag.
+
+Other Commands
+--------------
+
+Automatically run all unit tests with this command:
+
+    usage: main.py test
+
+The unit tests check that the astronomical computation functions used
+primarily in the generate stage are working correctly, by comparing the
+results with data from other sources (commercial software, and academic
+publications).
+
+To generate the graphs found in `./documents/graphics` use this command:
+
+    usage: main.py graphs
 
 References
 ----------

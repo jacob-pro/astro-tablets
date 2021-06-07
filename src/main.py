@@ -91,7 +91,7 @@ if __name__ == "__main__":
     query_parser.add_argument('subquery', type=str, nargs='?', help='optional subquery')
     query_parser.add_argument('--db', type=str, help='override path to source database')
     query_parser.add_argument('--year', type=int, help='optionally output a specific year')
-    query_parser.add_argument('--slim', action='store_true', help='reduce size of output json')
+    query_parser.add_argument('--slim', action='store_true', help='only output best compatible path')
 
     subparsers.add_parser('test')
     subparsers.add_parser('graphs')
