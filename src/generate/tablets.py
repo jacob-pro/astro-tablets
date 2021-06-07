@@ -27,6 +27,8 @@ def get_tablet_class(tablet: str):
         return BM38462
     if tablet == "vat4956":
         return VAT4956
+    if tablet == "bm33066":
+        return BM33066
     raise ValueError("Unknown tablet name")
 
 
@@ -297,3 +299,36 @@ class VAT4956(Tablet):
         # Dilbat (Venus) and Šiḫṭu (Mercury) entered the Band of the Swallow (Pisces)
         self.separation_during_night(VENUS, PISCES.central_star)
         self.separation_during_night(MERCURY, PISCES.central_star)
+
+
+class BM33066(Tablet):
+    default_start = -590
+    default_end = -460
+
+    def compute(self):
+        super(BM33066, self).compute()
+        # Lunar Sixes
+        self.risings_settings(MOON)
+        # Synodic Phenomena
+        self.planet_events(JUPITER)
+        self.planet_events(VENUS)
+        self.planet_events(SATURN)
+        self.planet_events(MARS)
+        #  Year 7, month VII, the 1st, the moon became visible 3 cubits behind Mercury.
+        self.separation_during_night(MOON, MERCURY)
+        #  Month VI, the 24th, Venus was 1 +[x cubits?] above Mars.
+        self.separation_during_night(VENUS, MARS)
+        #  Month VII, the 23rd, last part of the night, Jupiter was 3 cubits above the moon.
+        self.separation_during_night(JUPITER, MOON)
+        #  Month VII, the 29th, last part of the night, Venus on the north side [came near?] 2 fingers to Ju[piter].
+        self.separation_during_night(VENUS, JUPITER)
+        #  Month VII, the 12th, Saturn was 1 cubit in front of Jupiter.
+        self.separation_during_night(SATURN, JUPITER)
+        #  Month VII, the 11th, Mars came near to Jupiter 2 fingers.
+        self.separation_during_night(MARS, JUPITER)
+        #  Month VIII, the 2nd, Saturn passed 8 fingers above Venus.
+        self.separation_during_night(SATURN, VENUS)
+        #  Month X, the 5th, Mercury was ½ cubit behind Venus.
+        self.separation_during_night(MERCURY, VENUS)
+        # Lunar Eclipses
+        self.lunar_eclipses()
