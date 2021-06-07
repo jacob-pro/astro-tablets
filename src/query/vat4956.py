@@ -83,7 +83,7 @@ class VAT4956(AbstractTablet):
 
         #  The 26th (KUR) (moonrise to sunrise) was 23, I did not observe Sîn.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
-            res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, predicted=True))
+            res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, low_precision=True))
 
         return res
 

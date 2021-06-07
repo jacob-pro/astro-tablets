@@ -32,7 +32,7 @@ class LunarSixQuery(AbstractQuery):
 
 
     def __init__(self, db: Database, month: List[BabylonianDay], day_number: int, six: LunarSix, value_us: float,
-                 predicted: bool = False):
+                 low_precision: bool = False):
         assert value_us >= 0
         assert 1 <= day_number <= 30
         self.six = six
@@ -49,7 +49,7 @@ class LunarSixQuery(AbstractQuery):
         self.actual_us = actual * 360
         self.moon_time = moon_time
 
-        tolerance = HIGH_TIME_TOLERANCE if predicted else REGULAR_TIME_TOLERANCE
+        tolerance = HIGH_TIME_TOLERANCE if low_precision else REGULAR_TIME_TOLERANCE
         self.score = self.lunar_six_score(self.actual_us, value_us, tolerance)
 
 
