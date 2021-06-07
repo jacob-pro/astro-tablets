@@ -304,53 +304,53 @@ example:
 References
 ----------
 
-\[1\] T. de Jong, “Babylonian astronomy,” May 2011, \[Online\].
+\[1\] T. de Jong, “Babylonian Astronomy,” May 2011, \[Online\].
 Available: <https://www.astro.ru.nl/~fverbunt/iac2011/BabAstr.pdf>.
 
 \[2\] H. Hunger and A. J. Sachs, *Astronomical diaries and related texts
-from babylonia. Vol. 1, diaries from 652 b.c. To 262 b.c. : Plates*.
+from Babylonia. Vol. 1, Diaries from 652 B.C. to 262 B.C. : Plates*.
 Verlag der Österreichischen Akademie der Wissenschaften, 1988.
 
-\[3\] M. Ossendrijver, “Translating babylonian astronomical diaries and
-procedure texts,” *Translating Writings of Early Scholars in the Ancient
+\[3\] M. Ossendrijver, “Translating Babylonian Astronomical Diaries and
+Procedure Texts,” *Translating Writings of Early Scholars in the Ancient
 Near East, Egypt, Greece and Rome: Methodological Aspects with
 Examples*, vol. 344, p. 125, 2016, \[Online\]. Available:
 <https://www.degruyter.com/view/book/9783110448818/10.1515/9783110448818-005.xml>.
 
 \[4\] J. Steele, F. Stephenson, and L. Morrison, “The accuracy of
-eclipse times measured by the babylonians,” *Journal for the History of
+eclipse times measured by the Babylonians,” *Journal for the History of
 Astronomy*, vol. 28, no. 4, pp. 337–345, 1997, \[Online\]. Available:
 <http://adsabs.harvard.edu/full/1997JHA....28..337S>.
 
-\[5\] W. H. Dubberstein and R. A. Parker, *Babylonian chronology 626
-b.c.-A.D. 75*. Brown University Press, 1956, \[Online\]. Available:
+\[5\] W. H. Dubberstein and R. A. Parker, *Babylonian Chronology 626
+B.C.-A.D. 75*. Brown University Press, 1956, \[Online\]. Available:
 <https://webspace.science.uu.nl/~gent0113/babylon/downloads/babylonian_chronology_pd_1971.pdf>.
 
-\[6\] J. A. Brinkman and D. A. Kennedy, “Documentary evidence for the
-economic base of early neo-babylonian society: A survey of dated
-babylonian economic texts, 721-626 b.c.” *Journal of Cuneiform Studies*,
+\[6\] J. A. Brinkman and D. A. Kennedy, “Documentary Evidence for the
+Economic Base of Early Neo-Babylonian Society: A Survey of Dated
+Babylonian Economic Texts, 721-626 B.C.” *Journal of Cuneiform Studies*,
 vol. 35, no. 1, pp. 1–90, 1983, \[Online\]. Available:
 <http://www.jstor.org/stable/3515942>.
 
-\[7\] A. H. Sultan, “First visibility of the lunar crescent: Beyond
-danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007,
+\[7\] A. H. Sultan, “First visibility of the lunar crescent: beyond
+Danjon’s limit,” *The Observatory*, vol. 127, pp. 53–59, 2007,
 \[Online\]. Available:
 <http://adsabs.harvard.edu/full/2007Obs...127...53S>.
 
 \[8\] L. J. Fatoohi and F. R. Stephenson, “Angular measurements in
-babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
+Babylonian astronomy,” *Archiv für Orientforschung*, pp. 210–214, 1997,
 \[Online\]. Available: <https://www.jstor.org/stable/41670130>.
 
-\[9\] Alcyone, “Planetary, stellar and lunar visibility.” \[Online\].
+\[9\] Alcyone, “Planetary, Stellar and Lunar Visibility.” \[Online\].
 Available:
 <http://www.alcyone.de/planetary_lunar_and_stellar_visibility.html>.
 
-\[10\] F. R. Stephenson and L. J. Fatoohi, “The babylonian unit of
+\[10\] F. R. Stephenson and L. J. Fatoohi, “The Babylonian unit of
 time,” *Journal for the history of astronomy*, vol. 25, no. 2, pp.
 99–110, 1994, \[Online\]. Available:
 <http://adsabs.harvard.edu/full/1994JHA....25...99S>.
 
 \[11\] J. M. Steele and F. R. Stephenson, “Lunar eclipse times predicted
-by the babylonians,” *Journal for the History of Astronomy*, vol. 28,
+by the Babylonians,” *Journal for the History of Astronomy*, vol. 28,
 no. 2, pp. 119–131, 1997, \[Online\]. Available:
 <https://journals.sagepub.com/doi/10.1177/002182869702800203>.
