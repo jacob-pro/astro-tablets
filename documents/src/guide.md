@@ -134,7 +134,7 @@ Automatically run all unit tests with this command:
 usage: main.py test
 ```
 
-The unit tests check that the astronomical computation functions used primarily in the generate stage
+The unit tests check that the astronomical computation functions (used primarily in the generate stage)
 are working correctly, by comparing the results with data from other sources (commercial software, 
 and academic publications).
 
