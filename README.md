@@ -24,3 +24,10 @@ By computing the following:
 - Visibility phenomena and stations of the inner and outer planets
 - Lunar eclipses and their durations
 - "Lunar Six" durations
+
+## Contributing
+
+If you spot any issue or are confused about something please don't hesitate to raise a ticket on the 
+[issues](https://github.com/jacob-pro/astro-tablets/issues) page.
+
+This project is [GNU GPL-3.0 Licensed](https://www.gnu.org/licenses/gpl-faq.html).
