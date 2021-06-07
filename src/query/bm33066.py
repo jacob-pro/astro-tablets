@@ -46,6 +46,11 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 14.5))
             res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 21))
 
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.LA, SearchRange.for_night(month, 28)))
+            res.append(AngularSeparationQuery(self.db, MARS, GEMINI.central_star, 0, GEMINI.radius,
+                                              EclipticPosition.AHEAD, SearchRange.for_night(month, 28)))
+
         return res
 
     def year_7_month_3(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
@@ -58,6 +63,15 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 5))
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 8.5))
             res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, VENUS, InnerPlanetPhenomena.EL, SearchRange.for_night(month, 10)))
+            res.append(AngularSeparationQuery(self.db, VENUS, LEO.central_star, 0, LEO.radius,
+                                              None, SearchRange.for_night(month, 10)))
+            res.append(PlanetaryEventQuery(self.db, VENUS, InnerPlanetPhenomena.MF, SearchRange.for_night(month, 27)))
+            res.append(AngularSeparationQuery(self.db, VENUS, CANCER.central_star, 0, CANCER.radius,
+                                              None, SearchRange.for_night(month, 27)))
+
 
         return res
 
@@ -114,6 +128,12 @@ class BM33066(AbstractTablet):
             res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.FA, SearchRange.for_night(month, 22)))
             res.append(AngularSeparationQuery(self.db, JUPITER, VIRGO.central_star, 0, VIRGO.radius,
                                               EclipticPosition.BEHIND, SearchRange.for_night(month, 22)))
+            res.append(PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, SearchRange.for_night(month, 3)))
+            res.append(AngularSeparationQuery(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius,
+                                              None, SearchRange.for_night(month, 3)))
+            res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.FA, SearchRange.for_night(month, 13)))
+            res.append(AngularSeparationQuery(self.db, MARS, LEO.central_star, 0, LEO.radius,
+                                              None, SearchRange.for_night(month, 13)))
 
         return res
 
@@ -127,6 +147,12 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 12))
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 3))
             res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, 22))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, SearchRange.for_night(month, 13)))
+            res.append(AngularSeparationQuery(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 13)))
+
 
         return res
 
@@ -151,7 +177,6 @@ class BM33066(AbstractTablet):
             res.append(LunarEclipseQuery(self.db, FirstContactTime(t, FirstContactRelative.BEFORE_SUNRISE),
                                          ExpectedEclipseType.TOTAL, None, None,
                                          SearchRange.for_night(month, 14)))
-
 
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
             res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.ST, SearchRange.for_night(month, 27)))
@@ -183,6 +208,11 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 10))
             res.append(LunarSixQuery(self.db, month, 25, LunarSix.KUR, 23))
             res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 12))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, VENUS, InnerPlanetPhenomena.ML, SearchRange.for_night(month, 7)))
+            res.append(AngularSeparationQuery(self.db, VENUS, PISCES.central_star, 0, PISCES.radius,
+                                              None, SearchRange.for_night(month, 7)))
 
         return res
 
@@ -217,13 +247,66 @@ class BM33066(AbstractTablet):
                 month_xii, month_xii2]
 
 
+    def year_8_month_1(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, VENUS, InnerPlanetPhenomena.EF, SearchRange.for_night(month, 13)))
+            res.append(AngularSeparationQuery(self.db, VENUS, AURIGA.central_star, 0, AURIGA.radius,
+                                              None, SearchRange.for_night(month, 13)))
+
+        return res
+
+    def year_8_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.ST, SearchRange.for_night(month, 25)))
+            res.append(AngularSeparationQuery(self.db, JUPITER, VIRGO.central_star, 0, VIRGO.radius,
+                                              None, SearchRange.for_night(month, 25)))
+
+        return res
+
+    def year_8_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, SearchRange.for_night(month, 29)))
+            res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.ST, SearchRange.for_night(month, 12)))
+
+        return res
+
+    def year_8_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.LA, SearchRange.for_night(month, 4)))
+            res.append(AngularSeparationQuery(self.db, JUPITER, LIBRA.central_star, 0, LIBRA.radius,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 4)))
+
+        return res
+
     def year_8(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_7_month_1)
-        return [month_i]
+        month_i = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_8_month_1)
+        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_8_month_2)
+        month_v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_8_month_5)
+        month_vi = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_8_month_6)
+        return [month_i, month_ii, month_v, month_vi]
+
+
+    def year_9_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        res = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.LA, SearchRange.for_night(month, 9)))
+            res.append(AngularSeparationQuery(self.db, MARS, REGULUS, 0, 15,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 9)))
+
+        return res
 
     def year_9(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_7_month_1)
-        return [month_i]
+        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_9_month_2)
+        return [month_ii]
 
     def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
         if subquery == "eclipse_only":
