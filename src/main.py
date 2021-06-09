@@ -97,4 +97,9 @@ if __name__ == "__main__":
     subparsers.add_parser('graphs')
 
     kwargs = vars(parser.parse_args())
-    globals()[kwargs.pop('subparser')](**kwargs)
+    subparser = kwargs.pop('subparser')
+    if subparser in globals():
+        globals()[subparser](**kwargs)
+    else:
+        raise RuntimeError("Invalid subcommand try --help")
+
