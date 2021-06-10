@@ -238,6 +238,10 @@ Lunar Six Intervals
 Times are measured in UŠ - “time degrees”. There are 360 UŠ in a day, so
 1 UŠ = 4 minutes, 1 bēru = 30 UŠ \[10\] \[2, p. 16\]
 
+> The two pairs of visibility phenomena around full moon, the first
+> being ME and GE₆ and the other consisting of ŠÚ and NA, are frequently
+> designated as the Lunar Four. \[11, p. 7\]
+
 Eclipses
 --------
 
@@ -245,17 +249,17 @@ Eclipses
 > the time of the eclipse measured relative to sunset or sunrise, the
 > approximate entrance angle of the shadow, and an estimate of the
 > eclipse magnitude. In many reports the duration of the individual
-> phases of the eclipse are also given. \[11, p. 120\]
+> phases of the eclipse are also given. \[12, p. 120\]
 
 > It is characteristic for the record of the observation to end with a
 > time. This may be understood as referring to the time of first
-> contact. \[11, p. 120\]
+> contact. \[12, p. 120\]
 
 > The eclipse records also contain descriptions of lunar eclipses that
 > proved invisible at Babylon. These descriptions must then be
 > predictions rather than observations. Usually it is possible to
 > distinguish a predicted eclipse from an observation by the terminology
-> used. \[11, p. 121\]
+> used. \[12, p. 121\]
 
 Some reports include measurements of the eclipse phases, including the
 time to maximal phase (onset), duration of maximal phase (totality), and
@@ -350,7 +354,11 @@ time,” *Journal for the history of astronomy*, vol. 25, no. 2, pp.
 99–110, 1994, \[Online\]. Available:
 <http://adsabs.harvard.edu/full/1994JHA....25...99S>.
 
-\[11\] J. M. Steele and F. R. Stephenson, “Lunar eclipse times predicted
+\[11\] J. P. Britton, “Remarks on Strassmaier Cambyses 400,” *From the
+Banks of the Euphrates: Studies in Honor of Alice Louise Slotsky*, pp.
+7–33, 2008.
+
+\[12\] J. M. Steele and F. R. Stephenson, “Lunar eclipse times predicted
 by the Babylonians,” *Journal for the History of Astronomy*, vol. 28,
 no. 2, pp. 119–131, 1997, \[Online\]. Available:
 <https://journals.sagepub.com/doi/10.1177/002182869702800203>.

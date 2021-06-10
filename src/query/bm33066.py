@@ -92,6 +92,10 @@ class BM33066(AbstractTablet):
                                          ExpectedEclipseType.TOTAL, None, None,
                                          SearchRange.for_night(month, 14)))
 
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            # Year 7, month IV, the 1st, the moon became visible 3 cubits behind Mercury.
+            res.append(AngularSeparationQuery(self.db, MOON, MERCURY, 3 * CUBIT, 1 * CUBIT,
+                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 1)))
 
         return res
 
@@ -156,10 +160,6 @@ class BM33066(AbstractTablet):
             res.append(PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, SearchRange.for_night(month, 13)))
             res.append(AngularSeparationQuery(self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius,
                                               EclipticPosition.BEHIND, SearchRange.for_night(month, 13)))
-
-            # Year 7, month VII, the 1st, the moon became visible 3 cubits behind Mercury.
-            res.append(AngularSeparationQuery(self.db, MOON, MERCURY, 3 * CUBIT, 1 * CUBIT,
-                                              EclipticPosition.BEHIND, SearchRange.for_night(month, 1)))
 
             # Month VII, the 23rd, last part of the night, Jupiter was 3 cubits above the moon.
             res.append(AngularSeparationQuery(self.db, JUPITER, MOON, 3 * CUBIT, 1 * CUBIT,

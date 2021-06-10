@@ -115,6 +115,10 @@ from Alcyone Planetary, Stellar and Lunar Visibility [@alcyoneplsv] (see `src/co
 Times are measured in UŠ - "time degrees". There are 360 UŠ in a day, so 1 UŠ = 4 minutes, 
 1 bēru = 30 UŠ [@stephenson1994babylonian] [@sachs1988adt, 16]
 
+> The two pairs of visibility phenomena around full moon, the first being 
+  ME and GE₆ and the other consisting of ŠÚ and NA, are frequently designated as the
+  Lunar Four. [@britton2008remarks, 7]
+
 ## Eclipses
 
 > Observations of eclipses by the Babylonian astronomers usually contain the time
