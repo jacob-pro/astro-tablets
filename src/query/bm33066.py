@@ -126,7 +126,7 @@ class BM33066(AbstractTablet):
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 4))
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.ME, 1 + 1/3))
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 8 + 2/3))
-            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15))
+            res.append(LunarSixQuery(self.db, month, 28, LunarSix.KUR, 15))
 
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
             res.append(PlanetaryEventQuery(self.db, JUPITER, OuterPlanetPhenomena.FA, SearchRange.for_night(month, 22)))
@@ -273,7 +273,7 @@ class BM33066(AbstractTablet):
         month_x = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_7_month_10)
         month_xi = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_7_month_11)
         month_xii = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_7_month_12)
-        month_xii2 = self.repeat_month_with_alternate_starts(nisan_1, 13, self.year_7_month_13)
+        month_xii2 = self.repeat_month_with_alternate_starts(nisan_1, 13, self.year_7_month_13, name="XII2")
 
         return [month_i, month_ii, month_iii, month_iv, month_v, month_vi, month_vii, month_viii, month_x, month_xi,
                 month_xii, month_xii2]
