@@ -166,7 +166,7 @@ class BM33066(AbstractTablet):
                                               EclipticPosition.ABOVE, SearchRange.for_night(month, 23)))
 
             # Month VII, the 29th, last part of the night, Venus on the north side [came near?] 2 fingers to Ju[piter].
-            res.append(AngularSeparationQuery(self.db, VENUS, JUPITER, 2 * FINGER, 2 * FINGER,
+            res.append(AngularSeparationQuery(self.db, VENUS, JUPITER, 2 * FINGER, 4 * FINGER,
                                               None, SearchRange.for_night(month, 29)))
 
             # Month VII, the 12th, Saturn was 1 cubit in front of Jupiter.
@@ -212,7 +212,7 @@ class BM33066(AbstractTablet):
                                               EclipticPosition.AHEAD, SearchRange.for_night(month, 27)))
 
             # Month X, the 5th, Mercury was ½ cubit behind Venus.
-            res.append(AngularSeparationQuery(self.db, MERCURY, VENUS, 0.5 * CUBIT, 6 * FINGER,
+            res.append(AngularSeparationQuery(self.db, MERCURY, VENUS, 0.5 * CUBIT, 0.5 * CUBIT,
                                               EclipticPosition.BEHIND, SearchRange.for_night(month, 5)))
 
         return res
@@ -319,7 +319,7 @@ class BM33066(AbstractTablet):
         return res
 
     def year_8(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_i = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_8_month_1)
+        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_8_month_1)
         month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_8_month_2)
         month_v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_8_month_5)
         month_vi = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_8_month_6)
