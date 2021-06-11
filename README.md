@@ -19,7 +19,7 @@ Support for these texts:
 - [X] [BM 32234 (LBAT 1419, ADT V No.4)](documents/bm32234.md)
 - [X] [BM 38462 (LBAT 1420, ADT V No.6)](documents/bm38462.md)
 - [X] [VAT 4956 (ADT I No. -567)](./documents/vat4956.md)
-- [ ] [BM 33066 (LBAT 1477, Strm. Kambys. 400)](./documents/bm33066.md)
+- [X] [BM 33066 (LBAT 1477, Strm. Kambys. 400)](./documents/bm33066.md)
 
 By computing the following:
 - A Lunar calendar (sunrise, sunset, first visibility, spring equinox)
