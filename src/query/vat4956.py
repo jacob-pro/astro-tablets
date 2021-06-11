@@ -4,7 +4,7 @@ from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import OuterPlanetPhenomena, InnerPlanetPhenomena
 from query.abstract_query import AbstractQuery, SearchRange
-from query.abstract_tablet import AbstractTablet, MonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, MonthResult, YearToTest, Intercalary, MonthLength
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import LunarEclipseQuery, ExpectedEclipseType
@@ -246,11 +246,11 @@ class VAT4956(AbstractTablet):
 
 
     def year_37(self, nisan_1: float) -> List[MonthResult]:
-        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_37_month_1)
-        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_37_month_2)
+        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_37_month_1, length=MonthLength.THIRTY)
+        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_37_month_2, length=MonthLength.TWENTY_NINE)
         month_iii = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_37_month_3)
-        month_x = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_37_month_10)
-        month_xi = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_37_month_11)
+        month_x = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_37_month_10, length=MonthLength.TWENTY_NINE)
+        month_xi = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_37_month_11, length=MonthLength.THIRTY)
         month_xii = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_37_month_12)
         return [month_i, month_ii, month_iii, month_x, month_xi, month_xii]
 
