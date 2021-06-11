@@ -13,6 +13,7 @@
           "nisan_1": "-651-03-22 18:10",
           "next_nisan": "-650-03-11 18:03",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 5.9568732733093555,
@@ -20,6 +21,7 @@
               "actual_month": 1,
               "month_sunset_1": "-651-03-23 18:11",
               "first_visibility": "-651-03-22 18:10",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -90,6 +92,7 @@
               "actual_month": 12,
               "month_sunset_1": "-650-02-11 17:42",
               "first_visibility": "-650-02-10 17:41",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {

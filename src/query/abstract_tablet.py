@@ -17,6 +17,39 @@ from query.database import Database, BabylonianDay
 from util import TimeValue
 
 
+class MonthLength(Enum):
+    UNKNOWN = "unknown"
+    TWENTY_NINE = "29"
+    THIRTY = "30"
+
+
+@dataclass
+class PotentialMonthResult:
+    score: float
+    name: str
+    actual_month: int
+    month_sunset_1: TimeValue
+    first_visibility: TimeValue
+    next_month_sunset_1: TimeValue
+    days_late: int
+    observations: List[Dict]
+    _length: MonthLength
+
+    def can_be_followed_by(self, potential2) -> bool:
+        # Months are incompatible if the month afterwards does not start when this one ends
+        # Although we can only do this check if we know the length of this month for certain
+        # noinspection PyProtectedMember
+        if self._length != MonthLength.UNKNOWN and self.actual_month == potential2.actual_month - 1:
+            if potential2.month_sunset_1.inner != self.next_month_sunset_1.inner:
+                return False
+        return True
+
+
+@dataclass
+class MonthResult:
+    potentials: List[PotentialMonthResult]
+
+
 class Intercalary(Enum):
     UNKNOWN = "unknown"
     FALSE = "false"
@@ -28,22 +61,12 @@ class Intercalary(Enum):
 
 
 @dataclass
-class PotentialMonthResult:
-    score: float
-    name: str
-    actual_month: int
-    month_sunset_1: TimeValue
-    first_visibility: TimeValue
-    days_late: int
-    observations: List[Dict]
-
-
-@dataclass
 class PotentialYearResult:
     score: float
     nisan_1: TimeValue
     next_nisan: TimeValue   # 12 or 13 months later depending on intercalary status
     best_compatible_path: bool
+    month_lengths_compatible: bool
     _actual_year: int
     _intercalary: Intercalary
     months: List[PotentialMonthResult]
@@ -99,10 +122,11 @@ class YearToTest:
     index: int
     name: str
     intercalary: Intercalary
-    func: Callable
+    func: Callable[[float], List[MonthResult]]
 
 
 class AbstractTablet(ABC):
+    INVALID_MONTH_LENGTH_PENALTY = 0.8
 
     def __init__(self, data: AstroData, db: Database):
         self.data = data
@@ -113,8 +137,9 @@ class AbstractTablet(ABC):
         pass
 
     def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int,
-                                           func: Callable[[List[BabylonianDay]], List[AbstractQuery]], name=None
-                                           ) -> PotentialMonthResult:
+                                           func: Callable[[List[BabylonianDay]], List[AbstractQuery]],
+                                           name=None, length=MonthLength.UNKNOWN
+                                           ) -> MonthResult:
         """
         Tries repeating the same month observations but assuming the month started either 0 or 1 days later
         than first lunar visibility
@@ -135,12 +160,39 @@ class AbstractTablet(ABC):
                                }, results))
             sunset_one = TimeValue(month_days[start_offset].sunset)
             first_vis = TimeValue(month_days[0].sunset)
-            all_results.append(PotentialMonthResult(score, name, month_number, sunset_one, first_vis, start_offset, output))
+            next_month = None
+            if length == MonthLength.TWENTY_NINE:
+                next_month = TimeValue(month_days[start_offset + 29].sunset)
+            elif length == MonthLength.THIRTY:
+                next_month = TimeValue(month_days[start_offset + 30].sunset)
+            all_results.append(PotentialMonthResult(score=score, name=name, actual_month=month_number,
+                                                    month_sunset_1=sunset_one, next_month_sunset_1=next_month,
+                                                    first_visibility=first_vis,
+                                                    days_late=start_offset, observations=output, _length=length))
         all_results.sort(key=lambda x: x.score, reverse=True)
-        return all_results[0]
+        return MonthResult(all_results)
+
+    @staticmethod
+    def generate_compatible_month_combinations(months: List[MonthResult]) -> List[List[PotentialMonthResult]]:
+        paths = []  # type: List[List[PotentialMonthResult]]
+        for idx, y in enumerate(months):
+            if idx == 0:
+                for potential in y.potentials:
+                    paths.append([potential])
+            else:
+                new_paths = []
+                for path in paths:
+                    for potential in y.potentials:
+                        path_tail = path[len(path) - 1]
+                        if path_tail.can_be_followed_by(potential):
+                            new_path = path.copy()
+                            new_path.append(potential)
+                            new_paths.append(new_path)
+                paths = new_paths
+        return paths
 
     def repeat_year_with_alternate_starts(self, potential_years: List[Dict], name: str, intercalary: Intercalary,
-                                           func: Callable[[float], List[PotentialMonthResult]]
+                                           func: Callable[[float], List[MonthResult]]
                                            ) -> YearResult:
         """
         Tries repeating the same set of year observations, but starting at different dates for Nisan I
@@ -155,17 +207,25 @@ class AbstractTablet(ABC):
                 # Exclude a late start if this year is intercalary, i.e. make sure that whichever year
                 # would follow this one is still valid
                 next_nisan = months[13]
-                next_venal = self.db.nearest_event_match_to_time(SUN, VERNAL_EQUINOX, next_nisan)
-                if abs(next_venal - next_nisan) > MAX_NISAN_EQUINOX_DIFF_DAYS:
+                next_vernal = self.db.nearest_event_match_to_time(SUN, VERNAL_EQUINOX, next_nisan)
+                if abs(next_vernal - next_nisan) > MAX_NISAN_EQUINOX_DIFF_DAYS:
                     continue
             else:
                 next_nisan = months[12]
             results = func(y['nisan_1'])
-            total_score = sum(item.score for item in results)
+            compatible_paths = self.generate_compatible_month_combinations(results)
+            compatible_paths.sort(key=lambda y: sum(x.score for x in y), reverse=True)
+            if len(compatible_paths) == 0:
+                months_list = list(map(lambda x: x.potentials[0], results))
+                total_score = sum(item.score for item in months_list) * self.INVALID_MONTH_LENGTH_PENALTY
+            else:
+                months_list = compatible_paths[0]
+                total_score = sum(item.score for item in months_list)
             all_results.append(
                 PotentialYearResult(score=total_score, nisan_1=TimeValue(y['nisan_1']),
-                                    next_nisan=TimeValue(next_nisan), months=results,
-                                    _intercalary=intercalary, _actual_year=year_number, best_compatible_path=False))
+                                    next_nisan=TimeValue(next_nisan), months=months_list,
+                                    _intercalary=intercalary, _actual_year=year_number, best_compatible_path=False,
+                                    month_lengths_compatible=len(compatible_paths) > 0))
         all_results.sort(key=lambda x: x.score, reverse=True)
         return YearResult(name, year_number, TimeValue(vernal), intercalary, all_results)
 
@@ -200,7 +260,7 @@ class AbstractTablet(ABC):
                 outfile.write(raw)
 
     @staticmethod
-    def generate_compatible_combinations(yrs: List[YearResult]) -> List[List[PotentialYearResult]]:
+    def generate_compatible_year_combinations(yrs: List[YearResult]) -> List[List[PotentialYearResult]]:
         paths = []  # type: List[List[PotentialYearResult]]
         for idx, y in enumerate(yrs):
             if idx == 0:
@@ -219,8 +279,8 @@ class AbstractTablet(ABC):
         return paths
 
     @staticmethod
-    def total_score(yrs: List[YearResult]) -> float:
-        compatible_products = AbstractTablet.generate_compatible_combinations(yrs)
+    def total_year_score(yrs: List[YearResult]) -> float:
+        compatible_products = AbstractTablet.generate_compatible_year_combinations(yrs)
         assert len(compatible_products) > 0
         compatible_products.sort(key=lambda y: sum(x.score for x in y), reverse=True)
         for e in compatible_products[0]:
@@ -239,18 +299,18 @@ class AbstractTablet(ABC):
             yrs = []  # type: List[YearResult]
             for idx, x in enumerate(ys):
                 yrs.append(self.repeat_year_with_alternate_starts(years[i + x.index], x.name, x.intercalary, x.func))
-            total_score = self.total_score(yrs)
+            total_score = self.total_year_score(yrs)
             results.append(MultiyearResult(years[i][0]['year'], total_score, yrs))
         return results
 
     def try_multiple_months(self, nisan_1: float, start: int, end: int,
-                            fn: Callable[[List[BabylonianDay]], List[AbstractQuery]], comment=None) -> PotentialMonthResult:
-        attempts = []
+                            fn: Callable[[List[BabylonianDay]], List[AbstractQuery]], comment=None) -> MonthResult:
+        attempts = [] # type: List[MonthResult]
         comment = "Unknown month between {} and {}".format(start, end) if comment is None else comment
         for m in range(start, end+1):
             attempts.append(
                 self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment))
-        attempts.sort(key=lambda x: x.score, reverse=True)
+        attempts.sort(key=lambda x: x.potentials[0].score, reverse=True)
         return attempts[0]
 
     @staticmethod

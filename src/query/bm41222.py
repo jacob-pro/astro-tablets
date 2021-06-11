@@ -5,7 +5,7 @@ from query.database import BabylonianDay
 from query.abstract_query import SearchRange, AbstractQuery
 from query.planetary_event_query import PlanetaryEventQuery
 from query.angular_separation_query import AngularSeparationQuery
-from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, MonthResult, YearToTest, Intercalary
 
 
 class BM41222(AbstractTablet):
@@ -20,7 +20,7 @@ class BM41222(AbstractTablet):
         res2 = AngularSeparationQuery(self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day4)
         return [res1, res2]
 
-    def shamash_year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def shamash_year_14(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 12, self.shamash_14_xii)
         return [res1]
 
@@ -33,7 +33,7 @@ class BM41222(AbstractTablet):
         res2 = AngularSeparationQuery(self.db, MARS, MERCURY, 0, 30, EclipticPosition.AHEAD, day19)
         return [res1, res2]
 
-    def shamash_year_17(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def shamash_year_17(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 2, self.shamash_17_ii)
         return [res1]
 
@@ -44,7 +44,7 @@ class BM41222(AbstractTablet):
         res1 = AngularSeparationQuery(self.db, MERCURY, MARS, (2 / 3 * CUBIT), 1 * CUBIT, EclipticPosition.ABOVE, day4)
         return [res1]
 
-    def shamash_year_19(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def shamash_year_19(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.shamash_19_vii)
         return [res1]
 
@@ -60,7 +60,7 @@ class BM41222(AbstractTablet):
         res2 = AngularSeparationQuery(self.db, MERCURY, LEO.central_star, 0, LEO.radius, None, day29)
         return [res1, res2]
 
-    def kand_year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def kand_year_1(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 3, self.kand_1_iii)
         return [res1]
 
@@ -73,7 +73,7 @@ class BM41222(AbstractTablet):
         res2 = AngularSeparationQuery(self.db, MERCURY, MARS, (2 + 2 / 3) * CUBIT, 2 * CUBIT, EclipticPosition.ABOVE, day8)
         return [res1, res2]
 
-    def kand_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def kand_year_12(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 1, self.kand_12_i)
         return [res1]
 
@@ -84,7 +84,7 @@ class BM41222(AbstractTablet):
         res1 = AngularSeparationQuery(self.db, MERCURY, MARS, (1 * CUBIT + 4 * FINGER), 1 * CUBIT, EclipticPosition.BEHIND, day20)
         return [res1]
 
-    def kand_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def kand_year_16(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.repeat_month_with_alternate_starts(nisan_1, 3, self.kand_16_iii)
         return [res1]
 
@@ -96,7 +96,7 @@ class BM41222(AbstractTablet):
                                       SearchRange.any_day(month))
         return [res1]
 
-    def nabo_year_7(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def nabo_year_7(self, nisan_1: float) -> List[MonthResult]:
         res1 = self.try_multiple_months(nisan_1, 1, 13, self.nabo_7_unknown)
         return [res1]
 
@@ -113,7 +113,7 @@ class BM41222(AbstractTablet):
         res1 = AngularSeparationQuery(self.db, MARS, AURIGA.central_star, 0, AURIGA.radius, None, day13)
         return [res1]
 
-    def nabo_year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def nabo_year_12(self, nisan_1: float) -> List[MonthResult]:
         iv = self.repeat_month_with_alternate_starts(nisan_1, 4, self.nabo_12_iv)
         vi = self.repeat_month_with_alternate_starts(nisan_1, 6, self.nabo_12_vi)
         return [iv, vi]
@@ -131,7 +131,7 @@ class BM41222(AbstractTablet):
         res1 = AngularSeparationQuery(self.db, MARS, BETA_VIRGINIS, 0, 10, None, day3)
         return [res1]
 
-    def nabo_year_13(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def nabo_year_13(self, nisan_1: float) -> List[MonthResult]:
         iii = self.repeat_month_with_alternate_starts(nisan_1, 3, self.nabo_13_iii)
         v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.nabo_13_v)
         return [iii, v]

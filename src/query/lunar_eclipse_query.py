@@ -10,6 +10,7 @@ from query.abstract_query import AbstractQuery, SearchRange
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import Database
 from util import diff_time_degrees_signed, TimeValue
+from dataclasses import dataclass
 
 
 @unique

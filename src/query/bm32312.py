@@ -1,11 +1,11 @@
 from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
-from query.database import BabylonianDay
 from query.abstract_query import AbstractQuery, SearchRange
-from query.planetary_event_query import PlanetaryEventQuery
+from query.abstract_tablet import AbstractTablet, YearToTest, Intercalary, MonthResult
 from query.angular_separation_query import AngularSeparationQuery
-from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.database import BabylonianDay
+from query.planetary_event_query import PlanetaryEventQuery
 
 
 class BM32312(AbstractTablet):
@@ -46,7 +46,7 @@ class BM32312(AbstractTablet):
 
         return res
 
-    def shamash_year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def shamash_year_16(self, nisan_1: float) -> List[MonthResult]:
         # Unknown intercalary status
         month_a = self.try_multiple_months(nisan_1, 1, 13, self.month_a, comment="Month A (Probably I)")
         month_b = self.try_multiple_months(nisan_1, 1, 13, self.month_b, comment="Month B")

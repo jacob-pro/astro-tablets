@@ -1,6 +1,6 @@
 from data import *
 from query.abstract_query import SearchRange, AbstractQuery
-from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, MonthResult, YearToTest, Intercalary
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import FirstContactTime, FirstContactRelative, ExpectedEclipseType, LunarEclipseQuery, \
     CompositePhaseTiming
@@ -20,7 +20,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_1(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_1(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_1_month_3)
         month_b = self.try_multiple_months(nisan_1, 4, 12, self.year_1_month_4_plus)
         return [month_a, month_b]
@@ -41,7 +41,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.PARTIAL, CompositePhaseTiming(0.5 * BERU_US), None,
                                   SearchRange.any_day(month))]
 
-    def year_2(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_2(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 5, self.year_2_month_a)
         month_b = self.try_multiple_months(nisan_1, 8, 13, self.year_2_month_b)  # Intercalary Ululu
         return [month_a, month_b]
@@ -59,7 +59,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_3(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_3(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_3_month_1)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_3_month_7)
         return [month_a, month_b]
@@ -80,7 +80,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_4(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_4(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_4_month_1)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_4_month_7)
         return [month_a, month_b]
@@ -107,7 +107,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.PARTIAL, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_5(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_5(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_5_month_a)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_5_month_7)
         month_c = self.try_multiple_months(nisan_1, 8, 13, self.year_5_month_c)
@@ -121,7 +121,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_10(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_10(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 8, self.year_10_month_8)
         return [month_a]
 
@@ -140,7 +140,7 @@ class BM38462(AbstractTablet):
                                   SearchRange.any_day(month))]
 
 
-    def year_11(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_11(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_11_month_2)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 8, self.year_11_month_8)
         return [month_a, month_b]
@@ -166,7 +166,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.PARTIAL_OR_TOTAL, CompositePhaseTiming(length), None,
                                   SearchRange.for_night_and_day(month, 15))]
 
-    def year_12(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_12(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 6, self.year_12_month_a)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_12_month_7)
         month_c = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_12_month_12)
@@ -185,7 +185,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.PARTIAL_OR_TOTAL, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_13(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_13(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_13_month_6)
         month_b = self.try_multiple_months(nisan_1, 7, 12, self.year_13_month_b)
         return [month_a, month_b]
@@ -203,7 +203,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_14(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_14_month_6)
         month_b = self.try_multiple_months(nisan_1, 7, 12, self.year_14_month_b)
         return [month_a, month_b]
@@ -221,7 +221,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_15(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_15(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_15_month_5)
         month_b = self.try_multiple_months(nisan_1, 10, 12, self.year_15_month_b)
         return [month_a, month_b]
@@ -241,7 +241,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.PARTIAL, None, None,
                                   SearchRange.for_night_and_day(month, 14))]
 
-    def year_16(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_16(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_16_month_4)
         month_b = self.try_multiple_months(nisan_1, 5, 12, self.year_16_month_b)
         return [month_a, month_b]
@@ -261,7 +261,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.TOTAL, None, None,
                                   SearchRange.for_night_and_day(month, 13))]
 
-    def year_17(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_17(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_17_month_4)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_17_month_10)
         return [month_a, month_b]
@@ -274,7 +274,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_24(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_24(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 12, self.year_24_month_a)
         return [month_a]
 
@@ -293,7 +293,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_25(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_25(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_25_month_5)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_25_month_11)
         return [month_a, month_b]
@@ -311,7 +311,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_26(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_26(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_26_month_5)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_26_month_11)
         return [month_a, month_b]
@@ -329,7 +329,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_27(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_27(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_27_month_3)
         month_b = self.repeat_month_with_alternate_starts(nisan_1, 9, self.year_27_month_9)
         return [month_a, month_b]
@@ -352,7 +352,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.TOTAL, None, None,
                                   SearchRange.any_day(month))]
 
-    def year_28(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_28(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_28_month_3)
         month_b = self.try_multiple_months(nisan_1, 4, 13, self.year_28_month_b)  # Intercalary
         return [month_a, month_b]
@@ -366,7 +366,7 @@ class BM38462(AbstractTablet):
                                   ExpectedEclipseType.PARTIAL_OR_TOTAL, None, None,
                                   SearchRange.for_night_and_day(month, 14))]
 
-    def year_29(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_29(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_29_month_2)
         return [month_a]
 

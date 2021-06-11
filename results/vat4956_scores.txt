@@ -1,5 +1,5 @@
 Opened database generated on 2021-06-06 17:05:29 for VAT4956 covering -620 to -510
-Scores for Nebuchadnezzar 37
+Scores for Nebuchadnezzar 37 (All)
 Year   Score
 -567 43.2681892738362
 -543 29.883735177719693

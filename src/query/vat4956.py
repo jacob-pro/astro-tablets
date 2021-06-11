@@ -4,7 +4,7 @@ from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import OuterPlanetPhenomena, InnerPlanetPhenomena
 from query.abstract_query import AbstractQuery, SearchRange
-from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, MonthResult, YearToTest, Intercalary
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import LunarEclipseQuery, ExpectedEclipseType
@@ -245,7 +245,7 @@ class VAT4956(AbstractTablet):
         return res
 
 
-    def year_37(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_37(self, nisan_1: float) -> List[MonthResult]:
         month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_37_month_1)
         month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_37_month_2)
         month_iii = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_37_month_3)

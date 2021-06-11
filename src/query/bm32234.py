@@ -1,11 +1,11 @@
 from data import *
 from generate.angular_separation import EclipticPosition
 from query.abstract_query import SearchRange, AbstractQuery
+from query.abstract_tablet import AbstractTablet, YearToTest, Intercalary, MonthResult
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import FirstContactTime, FirstContactRelative, ExpectedEclipseType, LunarEclipseQuery, \
     EclipsePosition, SeparatePhaseTimings
-from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
 
 
 class BM32234(AbstractTablet):
@@ -25,7 +25,7 @@ class BM32234(AbstractTablet):
                                   ExpectedEclipseType.UNKNOWN, None, None,
                                   SearchRange.for_night_and_day(month, 14))]
 
-    def year_14(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_14(self, nisan_1: float) -> List[MonthResult]:
         month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_14_month_6)
         month_12 = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_14_month_12)
         return [month_6, month_12]
@@ -54,7 +54,7 @@ class BM32234(AbstractTablet):
         saturn = AngularSeparationQuery(self.db, SATURN, CAPRICORNUS.central_star, 0, CAPRICORNUS.radius, None, range)
         return [eclipse, mars, saturn]
 
-    def year_31(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_31(self, nisan_1: float) -> List[MonthResult]:
         month_a = self.try_multiple_months(nisan_1, 1, 13, self.year_31_month_unknown)
         return [month_a]
 
@@ -73,7 +73,7 @@ class BM32234(AbstractTablet):
         range = SearchRange.for_night_and_day(month, 15)
         return [LunarEclipseQuery(self.db, None, ExpectedEclipseType.UNKNOWN, None, None, range)]
 
-    def year_32(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_32(self, nisan_1: float) -> List[MonthResult]:
         month_6 = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_32_month_6)
         month_12 = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_32_month_12)
         return [month_6, month_12]
@@ -99,7 +99,7 @@ class BM32234(AbstractTablet):
         range = SearchRange.for_night_and_day(month, 15)
         return [LunarEclipseQuery(self.db, None, ExpectedEclipseType.UNKNOWN, None, None, range)]
 
-    def year_50(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_50(self, nisan_1: float) -> List[MonthResult]:
         month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_50_month_7)
         month_13 = self.repeat_month_with_alternate_starts(nisan_1, 13, self.year_50_month_13, name="Addaru II")
         return [month_7, month_13]
@@ -121,7 +121,7 @@ class BM32234(AbstractTablet):
         res1 = LunarEclipseQuery(self.db, eclipse_time, ExpectedEclipseType.UNKNOWN, None, location, range)
         return [res1]
 
-    def year_68(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_68(self, nisan_1: float) -> List[MonthResult]:
         month_7 = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_68_month_7)
         return [month_7]
 

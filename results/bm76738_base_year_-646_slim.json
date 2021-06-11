@@ -13,6 +13,7 @@
           "nisan_1": "-646-03-28 18:14",
           "next_nisan": "-645-03-17 18:07",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -20,6 +21,7 @@
               "actual_month": 3,
               "month_sunset_1": "-646-05-25 18:50",
               "first_visibility": "-646-05-25 18:50",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -39,6 +41,7 @@
               "actual_month": 4,
               "month_sunset_1": "-646-06-24 19:06",
               "first_visibility": "-646-06-24 19:06",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -67,6 +70,7 @@
           "nisan_1": "-645-03-17 18:07",
           "next_nisan": "-644-03-05 17:59",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -74,6 +78,7 @@
               "actual_month": 4,
               "month_sunset_1": "-645-06-13 19:01",
               "first_visibility": "-645-06-13 19:01",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -93,6 +98,7 @@
               "actual_month": 5,
               "month_sunset_1": "-645-07-13 19:09",
               "first_visibility": "-645-07-13 19:09",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -132,6 +138,7 @@
           "nisan_1": "-644-04-04 18:18",
           "next_nisan": "-643-03-24 18:11",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -139,6 +146,7 @@
               "actual_month": 4,
               "month_sunset_1": "-644-07-02 19:09",
               "first_visibility": "-644-07-01 19:08",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -158,6 +166,7 @@
               "actual_month": 5,
               "month_sunset_1": "-644-07-31 19:03",
               "first_visibility": "-644-07-31 19:03",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -197,6 +206,7 @@
           "nisan_1": "-643-03-24 18:11",
           "next_nisan": "-642-03-13 18:04",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 0.9999999999999699,
@@ -204,6 +214,7 @@
               "actual_month": 4,
               "month_sunset_1": "-643-06-22 19:06",
               "first_visibility": "-643-06-21 19:05",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -223,6 +234,7 @@
               "actual_month": 6,
               "month_sunset_1": "-643-08-19 18:49",
               "first_visibility": "-643-08-19 18:49",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -262,6 +274,7 @@
           "nisan_1": "-642-03-13 18:04",
           "next_nisan": "-641-04-01 18:16",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 0.9999999999999712,
@@ -269,6 +282,7 @@
               "actual_month": 5,
               "month_sunset_1": "-642-07-11 19:09",
               "first_visibility": "-642-07-10 19:09",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -288,6 +302,7 @@
               "actual_month": 6,
               "month_sunset_1": "-642-08-08 18:58",
               "first_visibility": "-642-08-08 18:58",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -316,6 +331,7 @@
           "nisan_1": "-641-04-01 18:16",
           "next_nisan": "-640-03-20 18:09",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -323,6 +339,7 @@
               "actual_month": 5,
               "month_sunset_1": "-641-07-28 19:05",
               "first_visibility": "-641-07-28 19:05",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -342,6 +359,7 @@
               "actual_month": 6,
               "month_sunset_1": "-641-08-27 18:41",
               "first_visibility": "-641-08-27 18:41",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -381,6 +399,7 @@
           "nisan_1": "-640-03-20 18:09",
           "next_nisan": "-639-03-10 18:03",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -388,6 +407,7 @@
               "actual_month": 6,
               "month_sunset_1": "-640-08-15 18:52",
               "first_visibility": "-640-08-15 18:52",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -407,6 +427,7 @@
               "actual_month": 7,
               "month_sunset_1": "-640-09-14 18:19",
               "first_visibility": "-640-09-14 18:19",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -446,6 +467,7 @@
           "nisan_1": "-639-03-10 18:03",
           "next_nisan": "-638-03-29 18:14",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.9999999999999993,
@@ -453,6 +475,7 @@
               "actual_month": 7,
               "month_sunset_1": "-639-09-04 18:32",
               "first_visibility": "-639-09-03 18:33",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -483,6 +506,7 @@
               "actual_month": 8,
               "month_sunset_1": "-639-10-04 17:54",
               "first_visibility": "-639-10-03 17:55",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -522,6 +546,7 @@
           "nisan_1": "-638-03-29 18:14",
           "next_nisan": "-637-03-19 18:08",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -529,6 +554,7 @@
               "actual_month": 6,
               "month_sunset_1": "-638-08-23 18:45",
               "first_visibility": "-638-08-23 18:45",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -548,6 +574,7 @@
               "actual_month": 7,
               "month_sunset_1": "-638-09-22 18:09",
               "first_visibility": "-638-09-22 18:09",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -587,6 +614,7 @@
           "nisan_1": "-637-03-19 18:08",
           "next_nisan": "-636-04-05 18:19",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.9999999999999996,
@@ -594,6 +622,7 @@
               "actual_month": 7,
               "month_sunset_1": "-637-09-12 18:23",
               "first_visibility": "-637-09-11 18:24",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -624,6 +653,7 @@
               "actual_month": 8,
               "month_sunset_1": "-637-10-11 17:45",
               "first_visibility": "-637-10-11 17:45",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -663,6 +693,7 @@
           "nisan_1": "-636-04-05 18:19",
           "next_nisan": "-635-03-26 18:13",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -670,6 +701,7 @@
               "actual_month": 7,
               "month_sunset_1": "-636-10-01 17:57",
               "first_visibility": "-636-09-30 17:58",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -689,6 +721,7 @@
               "actual_month": 8,
               "month_sunset_1": "-636-10-29 17:24",
               "first_visibility": "-636-10-29 17:24",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -728,6 +761,7 @@
           "nisan_1": "-635-03-26 18:13",
           "next_nisan": "-634-03-15 18:06",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -735,6 +769,7 @@
               "actual_month": 8,
               "month_sunset_1": "-635-10-20 17:34",
               "first_visibility": "-635-10-19 17:35",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -754,6 +789,7 @@
               "actual_month": 9,
               "month_sunset_1": "-635-11-18 17:07",
               "first_visibility": "-635-11-17 17:08",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -793,6 +829,7 @@
           "nisan_1": "-634-03-15 18:06",
           "next_nisan": "-633-03-04 17:58",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 0.9999999999999817,
@@ -800,6 +837,7 @@
               "actual_month": 8,
               "month_sunset_1": "-634-10-09 17:47",
               "first_visibility": "-634-10-08 17:49",
+              "next_month_sunset_1": null,
               "days_late": 1,
               "observations": [
                 {
@@ -819,6 +857,7 @@
               "actual_month": 10,
               "month_sunset_1": "-634-12-06 17:01",
               "first_visibility": "-634-12-06 17:01",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -858,6 +897,7 @@
           "nisan_1": "-633-03-04 17:58",
           "next_nisan": "-632-02-21 17:50",
           "best_compatible_path": true,
+          "month_lengths_compatible": true,
           "months": [
             {
               "score": 1.0,
@@ -865,6 +905,7 @@
               "actual_month": 9,
               "month_sunset_1": "-633-10-27 17:27",
               "first_visibility": "-633-10-27 17:27",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {
@@ -884,6 +925,7 @@
               "actual_month": 10,
               "month_sunset_1": "-633-11-25 17:04",
               "first_visibility": "-633-11-25 17:04",
+              "next_month_sunset_1": null,
               "days_late": 0,
               "observations": [
                 {

@@ -18,3 +18,4 @@ $CMD $SCRIPT bm35115 --year -667 --slim > bm35115_scores.txt
 $CMD $SCRIPT bm32234 --year -590 --slim > bm32234_scores.txt
 $CMD $SCRIPT bm38462 --year -603 --slim > bm38462_scores.txt
 $CMD $SCRIPT vat4956 --year -567 --slim > vat4956_scores.txt
+$CMD $SCRIPT bm33066 --year -522 --slim > bm33066_scores.txt

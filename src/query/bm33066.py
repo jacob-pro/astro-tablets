@@ -4,7 +4,7 @@ from data import *
 from generate.angular_separation import EclipticPosition
 from generate.planet_events import OuterPlanetPhenomena, InnerPlanetPhenomena
 from query.abstract_query import AbstractQuery, SearchRange
-from query.abstract_tablet import AbstractTablet, PotentialMonthResult, YearToTest, Intercalary
+from query.abstract_tablet import AbstractTablet, YearToTest, Intercalary, MonthLength, MonthResult
 from query.angular_separation_query import AngularSeparationQuery
 from query.database import BabylonianDay
 from query.lunar_eclipse_query import LunarEclipseQuery, ExpectedEclipseType, FirstContactTime, FirstContactRelative
@@ -261,18 +261,18 @@ class BM33066(AbstractTablet):
 
         return res
 
-    def year_7(self, nisan_1: float) -> List[PotentialMonthResult]:
-        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_7_month_1)
-        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_7_month_2)
-        month_iii = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_7_month_3)
-        month_iv = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_7_month_4)
-        month_v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_7_month_5)
-        month_vi = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_7_month_6)
-        month_vii = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_7_month_7)
+    def year_7(self, nisan_1: float) -> List[MonthResult]:
+        month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_7_month_1, length=MonthLength.TWENTY_NINE)
+        month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_7_month_2, length=MonthLength.TWENTY_NINE)
+        month_iii = self.repeat_month_with_alternate_starts(nisan_1, 3, self.year_7_month_3, length=MonthLength.THIRTY)
+        month_iv = self.repeat_month_with_alternate_starts(nisan_1, 4, self.year_7_month_4, length=MonthLength.TWENTY_NINE)
+        month_v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_7_month_5, length=MonthLength.THIRTY)
+        month_vi = self.repeat_month_with_alternate_starts(nisan_1, 6, self.year_7_month_6, length=MonthLength.THIRTY)
+        month_vii = self.repeat_month_with_alternate_starts(nisan_1, 7, self.year_7_month_7, length=MonthLength.TWENTY_NINE)
         month_viii = self.repeat_month_with_alternate_starts(nisan_1, 8, self.year_7_month_8)
-        month_x = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_7_month_10)
-        month_xi = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_7_month_11)
-        month_xii = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_7_month_12)
+        month_x = self.repeat_month_with_alternate_starts(nisan_1, 10, self.year_7_month_10, length=MonthLength.THIRTY)
+        month_xi = self.repeat_month_with_alternate_starts(nisan_1, 11, self.year_7_month_11, length=MonthLength.TWENTY_NINE)
+        month_xii = self.repeat_month_with_alternate_starts(nisan_1, 12, self.year_7_month_12, length=MonthLength.THIRTY)
         month_xii2 = self.repeat_month_with_alternate_starts(nisan_1, 13, self.year_7_month_13, name="XII2")
 
         return [month_i, month_ii, month_iii, month_iv, month_v, month_vi, month_vii, month_viii, month_x, month_xi,
@@ -318,7 +318,7 @@ class BM33066(AbstractTablet):
 
         return res
 
-    def year_8(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_8(self, nisan_1: float) -> List[MonthResult]:
         month_i = self.repeat_month_with_alternate_starts(nisan_1, 1, self.year_8_month_1)
         month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_8_month_2)
         month_v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.year_8_month_5)
@@ -336,7 +336,7 @@ class BM33066(AbstractTablet):
 
         return res
 
-    def year_9(self, nisan_1: float) -> List[PotentialMonthResult]:
+    def year_9(self, nisan_1: float) -> List[MonthResult]:
         month_ii = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_9_month_2)
         return [month_ii]
 
