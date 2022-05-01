@@ -1,5 +1,7 @@
 .idea/
 venv/
-skyfield-data/
 generated/
 *base_year_*.json
+
+skyfield-data/*
+!skyfield-data/.gitkeep

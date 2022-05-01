@@ -64,14 +64,14 @@ Installation
 2.  Install `requirements.txt` using Pip
 3.  If using an IDE like PyCharm define `./src` as a source folder in
     project structure
-4.  Run `python ./src/main.py *SUBCOMMAND* *ARGS*`
+4.  Run `python ./src/cli.py *SUBCOMMAND* *ARGS*`
 
 The Generate Stage
 ------------------
 
 To create the database for a given tablet use the `generate` subcommand:
 
-    usage: main.py generate [-h] [--db DB] [--overwrite] [--start START]
+    usage: cli.py generate [-h] [--db DB] [--overwrite] [--start START]
                             [--end END]
                             tablet
 
@@ -111,7 +111,7 @@ The Query Stage
 Once a database has been generated for a tablet, then the `query`
 subcommands may be run:
 
-    usage: main.py query [-h] [--db DB] [--year YEAR] [--slim] tablet [subquery]
+    usage: cli.py query [-h] [--db DB] [--year YEAR] [--slim] tablet [subquery]
 
     positional arguments:
       tablet       name of the tablet to query ephemeris for
@@ -149,18 +149,19 @@ with the highest score (as used in the main result) will be flagged with
 Other Commands
 --------------
 
-Automatically run all unit tests with this command:
+To generate the graphs found in `./documents/graphics` use this command:
 
-    usage: main.py test
+    cli.py graphs
+
+Testing
+-------
+
+    make test
 
 The unit tests check that the astronomical computation functions (used
 primarily in the generate stage) are working correctly, by comparing the
 results with data from other sources (commercial software, and academic
 publications).
-
-To generate the graphs found in `./documents/graphics` use this command:
-
-    usage: main.py graphs
 
 References
 ----------
