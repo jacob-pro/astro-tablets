@@ -13,6 +13,7 @@ from astro_tablets.constants import (
     PISCES,
     REGULUS,
 )
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.generate.planet_events import InnerPlanetPhenomena
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
@@ -23,7 +24,7 @@ from astro_tablets.query.abstract_tablet import (
     YearToTest,
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
 
 
@@ -193,68 +194,9 @@ class BM41222(AbstractTablet):
         v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.nabo_13_v)
         return [iii, v]
 
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
-
-        if subquery is not None:
-
-            if subquery == "shamash":
-                tests = [
-                    YearToTest(
-                        0,
-                        "Shamash-shum-ukin 14",
-                        Intercalary.ADDARU,
-                        self.shamash_year_14,
-                    ),
-                    YearToTest(
-                        3,
-                        "Shamash-shum-ukin 17",
-                        Intercalary.UNKNOWN,
-                        self.shamash_year_17,
-                    ),
-                    YearToTest(
-                        5,
-                        "Shamash-shum-ukin 19",
-                        Intercalary.UNKNOWN,
-                        self.shamash_year_19,
-                    ),
-                ]
-                res = self.run_years(tests)
-                self.print_results(res, "Shamash-shum-ukin year 14")
-
-            elif subquery == "kandalanu":
-                tests = [
-                    YearToTest(0, "Kandalanu 1", Intercalary.UNKNOWN, self.kand_year_1),
-                    YearToTest(
-                        11, "Kandalanu 12", Intercalary.UNKNOWN, self.kand_year_12
-                    ),
-                    YearToTest(
-                        15, "Kandalanu 16", Intercalary.UNKNOWN, self.kand_year_16
-                    ),
-                ]
-                res = self.run_years(tests)
-                self.print_results(res, "Kandalanu year 1")
-
-            elif subquery == "nabopolassar":
-                tests = [
-                    YearToTest(
-                        0, "Nabopolassar 7", Intercalary.ADDARU, self.nabo_year_7
-                    ),
-                    YearToTest(
-                        5, "Nabopolassar 12", Intercalary.ADDARU, self.nabo_year_12
-                    ),
-                    YearToTest(
-                        6, "Nabopolassar 13", Intercalary.FALSE, self.nabo_year_13
-                    ),
-                ]
-                res = self.run_years(tests)
-                self.print_results(res, "Nabopolassar year 7")
-
-            else:
-                raise RuntimeError("Please specify a valid subquery for this tablet")
-
-        else:
+    def __init__(self, data: AstroData, db: Database, subquery: Optional[str]):
+        if subquery is None:
+            title = "Shamash-shum-ukin year 14 to Nabopolassar (assuming reigns of 20, and 22)"
             tests = [
                 YearToTest(
                     0, "Shamash-shum-ukin 14", Intercalary.ADDARU, self.shamash_year_14
@@ -274,10 +216,42 @@ class BM41222(AbstractTablet):
                 ),
                 YearToTest(41, "Nabopolassar 13", Intercalary.FALSE, self.nabo_year_13),
             ]
-            res = self.run_years(tests)
-            self.print_results(
-                res,
-                "Shamash-shum-ukin year 14 to Nabopolassar (assuming reigns of 20, and 22)",
-            )
-
-        self.output_json_for_year(res, print_year, slim_results)
+        elif subquery == "shamash":
+            title = "Shamash-shum-ukin year 14"
+            tests = [
+                YearToTest(
+                    0,
+                    "Shamash-shum-ukin 14",
+                    Intercalary.ADDARU,
+                    self.shamash_year_14,
+                ),
+                YearToTest(
+                    3,
+                    "Shamash-shum-ukin 17",
+                    Intercalary.UNKNOWN,
+                    self.shamash_year_17,
+                ),
+                YearToTest(
+                    5,
+                    "Shamash-shum-ukin 19",
+                    Intercalary.UNKNOWN,
+                    self.shamash_year_19,
+                ),
+            ]
+        elif subquery == "kandalanu":
+            title = "Kandalanu year 1"
+            tests = [
+                YearToTest(0, "Kandalanu 1", Intercalary.UNKNOWN, self.kand_year_1),
+                YearToTest(11, "Kandalanu 12", Intercalary.UNKNOWN, self.kand_year_12),
+                YearToTest(15, "Kandalanu 16", Intercalary.UNKNOWN, self.kand_year_16),
+            ]
+        elif subquery == "nabopolassar":
+            title = "Nabopolassar year 7"
+            tests = [
+                YearToTest(0, "Nabopolassar 7", Intercalary.ADDARU, self.nabo_year_7),
+                YearToTest(5, "Nabopolassar 12", Intercalary.ADDARU, self.nabo_year_12),
+                YearToTest(6, "Nabopolassar 13", Intercalary.FALSE, self.nabo_year_13),
+            ]
+        else:
+            raise ValueError("Unknown subquery")
+        super().__init__(data, db, tests, title)

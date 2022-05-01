@@ -1,4 +1,4 @@
-Opened database generated on 2021-01-22 22:00:15 for BM41222 covering -726 to -576
+Database generated on 2021-01-22 22:00:15 for BM41222 covering -726 to -576
 Scores for Nabopolassar year 7
 Year   Score
 -712 4.998496503345157

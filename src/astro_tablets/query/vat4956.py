@@ -30,6 +30,7 @@ from astro_tablets.constants import (
     THETA_LEONIS,
     VENUS,
 )
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.generate.planet_events import (
     InnerPlanetPhenomena,
@@ -44,7 +45,7 @@ from astro_tablets.query.abstract_tablet import (
     YearToTest,
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.lunar_eclipse_query import (
     ExpectedEclipseType,
     LunarEclipseQuery,
@@ -644,18 +645,17 @@ class VAT4956(AbstractTablet):
         )
         return [month_i, month_ii, month_iii, month_x, month_xi, month_xii]
 
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
-        if subquery == "lunar_only":
+    def __init__(self, data: AstroData, db: Database, subquery: Optional[str]):
+        if subquery is None:
+            self.mode = VAT4956Mode.ALL
+        elif subquery == "lunar_only":
             self.mode = VAT4956Mode.LUNAR_ONLY
         elif subquery == "lunar_six_only":
             self.mode = VAT4956Mode.LUNAR_SIX_ONLY
         elif subquery == "planet_only":
             self.mode = VAT4956Mode.PLANET_ONLY
         else:
-            self.mode = VAT4956Mode.ALL
+            raise ValueError("Unknown subquery")
+        title = "Nebuchadnezzar 37 ({})".format(self.mode.value)
         tests = [YearToTest(0, "Nebuchadnezzar 37", Intercalary.FALSE, self.year_37)]
-        res = self.run_years(tests)
-        self.print_results(res, "Nebuchadnezzar 37 ({})".format(self.mode.value))
-        self.output_json_for_year(res, print_year, slim_results)
+        super().__init__(data, db, tests, title)

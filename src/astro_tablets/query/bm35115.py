@@ -1,6 +1,6 @@
-from typing import List, Optional
+from typing import List
 
-from astro_tablets.data import ANTARES
+from astro_tablets.data import ANTARES, AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
 from astro_tablets.query.abstract_tablet import (
@@ -9,7 +9,7 @@ from astro_tablets.query.abstract_tablet import (
     MonthResult,
     YearToTest,
 )
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.lunar_eclipse_query import (
     CompositePhaseTiming,
     EclipsePosition,
@@ -138,15 +138,11 @@ class BM35115(AbstractTablet):
         )
         return [month_3]
 
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
+    def __init__(self, data: AstroData, db: Database):
         tests = [
             YearToTest(0, "Shamashshumukin Acc.", Intercalary.UNKNOWN, self.year_0),
             YearToTest(2, "Shamashshumukin 2", Intercalary.UNKNOWN, self.year_2),
             YearToTest(18, "Shamashshumukin 18", Intercalary.UNKNOWN, self.year_18),
             YearToTest(36, "Kandalanu 16", Intercalary.UNKNOWN, self.year_36),
         ]
-        res = self.run_years(tests)
-        self.print_results(res, "Shamashshumukin Acc.")
-        self.output_json_for_year(res, print_year, slim_results)
+        super().__init__(data, db, tests, "Shamashshumukin Acc.")

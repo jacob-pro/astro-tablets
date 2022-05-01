@@ -7,7 +7,7 @@ from skyfield.units import Angle
 
 from astro_tablets.constants import LUNAR_VISIBILITY
 from astro_tablets.data import MOON, AstroData
-from astro_tablets.generate import OPTIONAL_PROGRESS
+from astro_tablets.util import PROGRESS_CALLBACK
 
 VERNAL_EQUINOX = "vernal_equinox"
 
@@ -62,7 +62,7 @@ class BabylonianDay:
 
 
 def days_in_range(
-    data: AstroData, start: Time, end: Time, progress: OPTIONAL_PROGRESS = None
+    data: AstroData, start: Time, end: Time, progress: PROGRESS_CALLBACK = None
 ) -> List[BabylonianDay]:
     assert start.tt < end.tt
     position = data.timescale.tt_jd(start.tt - 2)

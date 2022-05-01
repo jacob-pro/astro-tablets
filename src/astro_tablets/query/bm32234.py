@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from astro_tablets.constants import (
     ALCYONE,
@@ -10,6 +10,7 @@ from astro_tablets.constants import (
     MARS,
     SATURN,
 )
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
 from astro_tablets.query.abstract_tablet import (
@@ -19,7 +20,7 @@ from astro_tablets.query.abstract_tablet import (
     YearToTest,
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.lunar_eclipse_query import (
     EclipsePosition,
     ExpectedEclipseType,
@@ -215,9 +216,7 @@ class BM32234(AbstractTablet):
         )
         return [month_7]
 
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
+    def __init__(self, data: AstroData, db: Database):
         tests = [
             YearToTest(0, "Nebuchadnezzar 14", Intercalary.ADDARU, self.year_14),
             YearToTest(17, "Nebuchadnezzar 31", Intercalary.ULULU, self.year_31),
@@ -225,6 +224,4 @@ class BM32234(AbstractTablet):
             YearToTest(36, "Nebuchadnezzar 50", Intercalary.ADDARU, self.year_50),
             YearToTest(54, "Nebuchadnezzar 68", Intercalary.UNKNOWN, self.year_68),
         ]
-        res = self.run_years(tests)
-        self.print_results(res, "Nebuchadnezzar 14")
-        self.output_json_for_year(res, print_year, slim_results)
+        super().__init__(data, db, tests, "Nebuchadnezzar 14")

@@ -1,4 +1,4 @@
-Opened database generated on 2021-01-23 01:34:17 for BM32312 covering -701 to -601
+Database generated on 2021-01-23 01:34:17 for BM32312 covering -701 to -601
 Scores for Shamash-shum-ukin year 16
 Year   Score
 -651 10.956387753116433

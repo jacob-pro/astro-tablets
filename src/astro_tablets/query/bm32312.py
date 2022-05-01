@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from astro_tablets.constants import (
     ANTARES,
@@ -10,6 +10,7 @@ from astro_tablets.constants import (
     SATURN,
     VENUS,
 )
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.generate.planet_events import (
     InnerPlanetPhenomena,
@@ -23,7 +24,7 @@ from astro_tablets.query.abstract_tablet import (
     YearToTest,
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
 
 
@@ -112,14 +113,10 @@ class BM32312(AbstractTablet):
         )
         return [month_a, month_b]
 
-    def do_query(
-        self, _subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
+    def __init__(self, data: AstroData, db: Database):
         tests = [
             YearToTest(
                 0, "Shamash-shum-ukin 16", Intercalary.UNKNOWN, self.shamash_year_16
             )
         ]
-        results = self.run_years(tests)
-        self.print_results(results, "Shamash-shum-ukin year 16")
-        self.output_json_for_year(results, print_year, slim_results)
+        super().__init__(data, db, tests, "Shamash-shum-ukin year 16")

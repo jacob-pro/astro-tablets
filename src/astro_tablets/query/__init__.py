@@ -1,3 +1,5 @@
+from typing import Optional
+
 from astro_tablets.data import AstroData
 from astro_tablets.query.abstract_tablet import AbstractTablet
 from astro_tablets.query.bm32234 import BM32234
@@ -11,11 +13,13 @@ from astro_tablets.query.database import Database
 from astro_tablets.query.vat4956 import VAT4956
 
 
-def get_tablet(tablet: str, data: AstroData, db: Database) -> AbstractTablet:
+def get_tablet(
+    tablet: str, data: AstroData, db: Database, subquery: Optional[str]
+) -> AbstractTablet:
     if tablet == "bm32312":
         return BM32312(data, db)
     if tablet == "bm41222":
-        return BM41222(data, db)
+        return BM41222(data, db, subquery)
     if tablet == "bm76738":
         return BM76738(data, db)
     if tablet == "bm35115":
@@ -25,7 +29,7 @@ def get_tablet(tablet: str, data: AstroData, db: Database) -> AbstractTablet:
     if tablet == "bm38462":
         return BM38462(data, db)
     if tablet == "vat4956":
-        return VAT4956(data, db)
+        return VAT4956(data, db, subquery)
     if tablet == "bm33066":
-        return BM33066(data, db)
+        return BM33066(data, db, subquery)
     raise ValueError("Unknown tablet name")

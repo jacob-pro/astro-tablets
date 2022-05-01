@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List
 
 from astro_tablets.constants import (
     ANTARES,
@@ -11,6 +11,7 @@ from astro_tablets.constants import (
     SATURN,
     VIRGO,
 )
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.generate.planet_events import OuterPlanetPhenomena
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
@@ -21,7 +22,7 @@ from astro_tablets.query.abstract_tablet import (
     YearToTest,
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
 
 
@@ -317,9 +318,7 @@ class BM76738(AbstractTablet):
         month_b = self.try_multiple_months(nisan_1, 1, 12, self.year_14_month_b)
         return [month_a, month_b]
 
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
+    def __init__(self, data: AstroData, db: Database):
         tests = [
             YearToTest(0, "Kandalanu 1", Intercalary.UNKNOWN, self.year_1),
             YearToTest(1, "Kandalanu 2", Intercalary.UNKNOWN, self.year_2),
@@ -336,6 +335,4 @@ class BM76738(AbstractTablet):
             YearToTest(12, "Kandalanu 13", Intercalary.UNKNOWN, self.year_13),
             YearToTest(13, "Kandalanu 14", Intercalary.UNKNOWN, self.year_14),
         ]
-        res = self.run_years(tests)
-        self.print_results(res, "Kandalanu year 1")
-        self.output_json_for_year(res, print_year, slim_results)
+        super().__init__(data, db, tests, "Kandalanu year 1")

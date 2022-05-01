@@ -1,4 +1,4 @@
-Opened database generated on 2021-05-31 16:00:10 for BM35115 covering -720 to -581
+Database generated on 2021-05-31 16:00:10 for BM35115 covering -720 to -581
 Scores for Shamashshumukin Acc.
 Year   Score
 -667 5.80320813837127

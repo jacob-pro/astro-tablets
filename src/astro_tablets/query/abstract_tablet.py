@@ -1,7 +1,6 @@
 import dataclasses
 import json
-import sys
-from abc import ABC, abstractmethod
+from abc import ABC
 from dataclasses import dataclass
 from enum import Enum
 from typing import Callable, Dict, List, Optional
@@ -14,7 +13,7 @@ from astro_tablets.data import SUN, AstroData
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX
 from astro_tablets.query.abstract_query import AbstractQuery
 from astro_tablets.query.database import BabylonianDay, Database
-from astro_tablets.util import TimeValue
+from astro_tablets.util import PROGRESS_CALLBACK, TimeValue
 
 
 class MonthLength(Enum):
@@ -133,15 +132,26 @@ class YearToTest:
 class AbstractTablet(ABC):
     INVALID_MONTH_LENGTH_PENALTY = 0.8
 
-    def __init__(self, data: AstroData, db: Database):
+    tests: List[YearToTest]
+    scores_title: str
+
+    def __init__(
+        self, data: AstroData, db: Database, tests: List[YearToTest], scores_title: str
+    ):
+        """
+        Constructor for an Abstract Query Tablet, should be called by all subclasses.
+        @param data: Reference to the Astronomical Data files.
+        @param db: A connection to the generated database for this tablet.
+        @param tests: A set of tests we are querying.
+        @param scores_title: The title the scores output should be given.
+        """
+        # Validate tests are setup correctly
+        if tests[0].index != 0:
+            raise RuntimeError("First test index must be 0")
         self.data = data
         self.db = db
-
-    @abstractmethod
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
-        pass
+        self.tests = tests
+        self.scores_title = scores_title
 
     def repeat_month_with_alternate_starts(
         self,
@@ -233,6 +243,8 @@ class AbstractTablet(ABC):
         vernal = self.db.nearest_event_match_to_time(
             SUN, VERNAL_EQUINOX, potential_years[0]["nisan_1"]
         )
+        if vernal is None:
+            raise RuntimeError("Unable to find vernal equinox time")
         year_number = potential_years[0]["year"]
         for y in potential_years:
             months = self.db.get_months(y["nisan_1"], count=14)
@@ -276,13 +288,19 @@ class AbstractTablet(ABC):
             name, year_number, TimeValue(vernal), intercalary, all_results
         )
 
-    @staticmethod
-    def print_results(results: List[MultiyearResult], for_comment: str):
+    def write_scores(self, path: str, progress: PROGRESS_CALLBACK) -> None:
+        """
+        Computes and outputs the score for each base year in the database in descending order
+        @param progress: Callback to report on computation progress
+        @param path: The path to save the scores file
+        """
+        results = self._run_years(progress)
         results.sort(key=lambda x: x.best_score, reverse=True)
-        print("Scores for {}".format(for_comment))
-        print("Year   Score")
+        lines = [self.db.info_text, f"Scores for {self.scores_title}", "Year   Score"]
         for i in results:
-            print(i.base_year, i.best_score)
+            lines.append(f"{i.base_year} {i.best_score}")
+        with open(path, "w") as file:
+            file.write("\n".join(lines))
 
     def output_json_for_year(
         self, results: List[MultiyearResult], year: Optional[int], slim_results: bool
@@ -340,17 +358,18 @@ class AbstractTablet(ABC):
             e.best_compatible_path = True
         return sum(x.score for x in compatible_products[0])
 
-    def run_years(self, ys: List[YearToTest]) -> List[MultiyearResult]:
+    def _run_years(self, progress: PROGRESS_CALLBACK) -> List[MultiyearResult]:
         years = list(map(lambda x: x[1], self.db.get_years().items()))
         results = []
-        max_index = max(d.index for d in ys)
-        assert ys[0].index == 0, "First index must be 0"
+        max_index = max(d.index for d in self.tests)
         range_top = len(years) - max_index
-        assert range_top >= 0, "Data range must be greater or equal to query range"
+        if range_top < 0:
+            raise RuntimeError("Data range must be greater or equal to query range")
         for i in range(0, range_top):
-            self.print_progress((i / range_top))
-            yrs = []  # type: List[YearResult]
-            for idx, x in enumerate(ys):
+            if progress:
+                progress(i / range_top)
+            yrs: List[YearResult] = []
+            for idx, x in enumerate(self.tests):
                 yrs.append(
                     self.repeat_year_with_alternate_starts(
                         years[i + x.index], x.name, x.intercalary, x.func
@@ -368,7 +387,7 @@ class AbstractTablet(ABC):
         fn: Callable[[List[BabylonianDay]], List[AbstractQuery]],
         comment=None,
     ) -> MonthResult:
-        attempts = []  # type: List[MonthResult]
+        attempts: List[MonthResult] = []
         comment = (
             "Unknown month between {} and {}".format(start, end)
             if comment is None
@@ -380,10 +399,3 @@ class AbstractTablet(ABC):
             )
         attempts.sort(key=lambda x: x.potentials[0].score, reverse=True)
         return attempts[0]
-
-    @staticmethod
-    def print_progress(progress: float):
-        if progress > 0.99:
-            progress = 1
-        sys.stderr.write("\rProgress {:02.0f}%".format(progress * 100))
-        sys.stderr.flush()

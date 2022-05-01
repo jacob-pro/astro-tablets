@@ -1,9 +1,12 @@
 import os
 import subprocess
+import sys
 from collections import OrderedDict
-from typing import Callable, List
+from typing import Callable, List, Optional, TypeVar
 
 from skyfield.timelib import Time, Timescale
+
+PROGRESS_CALLBACK = Optional[Callable[[float], None]]
 
 
 def diff_mins(t1: Time, t2: Time) -> float:
@@ -25,6 +28,13 @@ def diff_time_degrees_signed(t1: float, t2: float) -> float:
 
 def same_sign(num1, num2) -> bool:
     return (num1 >= 0 and num2 >= 0) or (num1 < 0 and num2 < 0)
+
+
+def print_progress(prefix: str, progress: float):
+    if progress > 0.99:
+        progress = 1
+    sys.stdout.write(f"\r{prefix}{progress * 100:05.2f}%")
+    sys.stdout.flush()
 
 
 def change_in_longitude(old: float, new: float) -> float:
@@ -67,8 +77,12 @@ def get_git_changes() -> bool:
     return False
 
 
-def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
-    res: OrderedDict = OrderedDict()
+E = TypeVar("E")
+K = TypeVar("K")
+
+
+def array_group_by(input: List[E], key_fn: Callable[[E], K]) -> OrderedDict[K, List[E]]:
+    res: OrderedDict[K, List[E]] = OrderedDict()
     for item in input:
         key = key_fn(item)
         if key in res:
@@ -79,7 +93,7 @@ def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
 
 
 class TimeValue:
-    def __init__(self, inner):
+    def __init__(self, inner: float):
         self.inner = inner
 
     def string(self, timescale: Timescale):

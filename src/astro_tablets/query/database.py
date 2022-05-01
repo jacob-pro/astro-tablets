@@ -1,6 +1,6 @@
 import sqlite3
 from dataclasses import dataclass
-from typing import Dict, List, Optional, OrderedDict
+from typing import Any, Dict, List, Optional, OrderedDict
 
 from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS, Body
 from astro_tablets.data import MOON, SUN
@@ -22,13 +22,12 @@ class Database:
         )
         cursor = self.conn.cursor()
         cursor.execute("SELECT * FROM db_info")
-        res = self.fetch_one_as_dict(cursor)
-        print(
-            "Opened database generated on {} for {} covering {} to {}".format(
-                res["time"], res["tablet"], res["start_year"], res["end_year"]
-            )
+        info = self.fetch_one(cursor)
+        self.tablet_name = info["tablet"]
+        self.info_text = (
+            f"Database generated on {info['time']} for {info['tablet']} "
+            f"covering {info['start_year']} to {info['end_year']}"
         )
-        self.tablet_name = res["tablet"]
 
     def get_days(self, month_sunset_1: float) -> List[BabylonianDay]:
         """
@@ -148,7 +147,7 @@ class Database:
             SELECT sunset FROM days d ORDER BY ABS(d.sunset - ?) LIMIT 1""",
             (time,),
         )
-        res = self.fetch_one_as_dict(cursor)
+        res = self.fetch_one(cursor)
         return res["sunset"]
 
     def nearest_sunrise(self, time: float) -> float:
@@ -158,7 +157,7 @@ class Database:
             SELECT sunrise FROM days d ORDER BY ABS(d.sunrise - ?) LIMIT 1""",
             (time,),
         )
-        res = self.fetch_one_as_dict(cursor)
+        res = self.fetch_one(cursor)
         return res["sunrise"]
 
     def nearest_rising_setting(self, body: Body, r: RiseSetType, time: float) -> float:
@@ -168,7 +167,7 @@ class Database:
             SELECT time FROM risings_settings WHERE body == ? AND r_type == ? ORDER BY ABS(time - ?) LIMIT 1""",
             (body.name, r.value, time),
         )
-        res = self.fetch_one_as_dict(cursor)
+        res = self.fetch_one(cursor)
         return res["time"]
 
     @staticmethod
@@ -178,6 +177,11 @@ class Database:
         return rows
 
     @staticmethod
-    def fetch_one_as_dict(cursor: sqlite3.Cursor) -> Dict:
+    def fetch_one(cursor: sqlite3.Cursor) -> Dict[str, Any]:
+        """
+        Fetches one row from a cursor
+        @param cursor: The cursor to fetch from
+        @return: A Dict of row names to values
+        """
         columns = [col[0] for col in cursor.description]
         return dict(zip(columns, cursor.fetchone()))

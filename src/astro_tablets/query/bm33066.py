@@ -19,6 +19,7 @@ from astro_tablets.constants import (
     VENUS,
     VIRGO,
 )
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.generate.planet_events import (
     InnerPlanetPhenomena,
@@ -33,7 +34,7 @@ from astro_tablets.query.abstract_tablet import (
     YearToTest,
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
-from astro_tablets.query.database import BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.lunar_eclipse_query import (
     ExpectedEclipseType,
     FirstContactRelative,
@@ -744,22 +745,21 @@ class BM33066(AbstractTablet):
         )
         return [month_ii]
 
-    def do_query(
-        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
-    ):
-        if subquery == "eclipse_only":
+    def __init__(self, data: AstroData, db: Database, subquery: Optional[str]):
+        if subquery is None:
+            self.mode = BM33066Mode.ALL
+        elif subquery == "eclipse":
             self.mode = BM33066Mode.ECLIPSE_ONLY
-        elif subquery == "lunar_six_only":
+        elif subquery == "lunar_six":
             self.mode = BM33066Mode.LUNAR_SIX_ONLY
-        elif subquery == "planet_only":
+        elif subquery == "planet":
             self.mode = BM33066Mode.PLANET_ONLY
         else:
-            self.mode = BM33066Mode.ALL
+            raise ValueError("Unknown subquery")
         tests = [
             YearToTest(0, "Cambyses 7", Intercalary.ADDARU, self.year_7),
             YearToTest(1, "Cambyses 8", Intercalary.FALSE, self.year_8),
             YearToTest(2, "Cambyses 9", Intercalary.FALSE, self.year_9),
         ]
-        res = self.run_years(tests)
-        self.print_results(res, "Cambyses 7 ({})".format(self.mode.value))
-        self.output_json_for_year(res, print_year, slim_results)
+        title = "Cambyses 7 ({})".format(self.mode.value)
+        super().__init__(data, db, tests, title)

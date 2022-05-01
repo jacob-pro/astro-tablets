@@ -13,8 +13,7 @@ from astro_tablets.constants import (
     Planet,
 )
 from astro_tablets.data import EARTH, SUN, AstroData
-from astro_tablets.generate import OPTIONAL_PROGRESS
-from astro_tablets.util import change_in_longitude, same_sign
+from astro_tablets.util import PROGRESS_CALLBACK, change_in_longitude, same_sign
 
 
 @unique
@@ -53,7 +52,7 @@ def planet_events(
     planet: Planet,
     t0: Time,
     t1: Time,
-    progress: OPTIONAL_PROGRESS = None,
+    progress: PROGRESS_CALLBACK = None,
 ) -> List[SynodicEvent]:
     if planet.is_inner:
         ac1: InnerPlanetArcusVisionis = planet.arcus_visionis  # type: ignore
@@ -69,7 +68,7 @@ def _inner_planet_events(
     t0: Time,
     t1: Time,
     ac: InnerPlanetArcusVisionis,
-    progress: OPTIONAL_PROGRESS = None,
+    progress: PROGRESS_CALLBACK = None,
 ) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an inner planet
@@ -169,7 +168,7 @@ def _outer_planet_events(
     t0: Time,
     t1: Time,
     ac: OuterPlanetArcusVisionis,
-    progress: OPTIONAL_PROGRESS = None,
+    progress: PROGRESS_CALLBACK = None,
 ) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an outer planet

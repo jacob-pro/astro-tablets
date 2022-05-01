@@ -1,4 +1,4 @@
-Opened database generated on 2021-01-31 20:53:28 for BM76738 covering -697 to -583
+Database generated on 2021-01-31 20:53:28 for BM76738 covering -697 to -583
 Scores for Kandalanu year 1
 Year   Score
 -646 40.99999999999989

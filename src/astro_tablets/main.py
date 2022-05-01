@@ -1,11 +1,10 @@
 import argparse
 import os
 import pathlib
-import unittest
 from distutils.util import strtobool
 from typing import Optional
 
-import astro_tablets.query as query_pkg
+import astro_tablets
 from astro_tablets.constants import CUBIT, FINGER, HALO
 from astro_tablets.data import AstroData
 from astro_tablets.generate import tablets
@@ -17,6 +16,7 @@ from astro_tablets.graphics.eclipse_score_plots import (
 )
 from astro_tablets.graphics.separation_score_plot import plot_separation_score
 from astro_tablets.query.database import Database as QueryDatabase
+from astro_tablets.util import print_progress
 
 
 def get_answer(question: str) -> bool:
@@ -68,38 +68,36 @@ def generate_impl(
     db.close()
 
 
-def query(
+def query_all(
     tablet: str,
     subquery: Optional[str],
     db: Optional[str],
-    year: Optional[int],
-    slim: bool,
+    output: Optional[str],
 ):
-    query_impl(tablet, subquery, db, year, slim)
+    query_all_impl(tablet, subquery, db, output)
 
 
-def query_impl(
+def query_all_impl(
     tablet_name: str,
     subquery: Optional[str],
     db_path_override: Optional[str],
-    year: Optional[int],
-    slim: bool,
+    output_path_override: Optional[str],
 ):
     data = AstroData(time_only=True)
     db_file = database_path(tablet_name, db_path_override)
     db = QueryDatabase(db_file)
     if db.tablet_name.lower() != tablet_name.lower():
         raise RuntimeError("Database info table doesn't match the requested tablet")
-    tablet = query_pkg.get_tablet(tablet_name, data, db)
-    tablet.do_query(subquery, year, slim)
-
-
-def test():
-    loader = unittest.TestLoader()
-    src = pathlib.Path(__file__).parent.absolute().as_posix()
-    suite = loader.discover(src)
-    runner = unittest.TextTestRunner(verbosity=2)
-    runner.run(suite)
+    tablet = astro_tablets.query.get_tablet(tablet_name, data, db, subquery)
+    subquery_component = "" if subquery is None else f"_{subquery}"
+    output_path = (
+        f"{tablet_name.lower()}{subquery_component}_scores.txt"
+        if output_path_override is None
+        else output_path_override
+    )
+    tablet.write_scores(
+        output_path, lambda progress: print_progress("Progress: ", progress)
+    )
 
 
 def graphs():
@@ -135,20 +133,27 @@ def main():
     generate_parser.add_argument("--start", type=int, help="override start year")
     generate_parser.add_argument("--end", type=int, help="override end year")
 
-    query_parser = subparsers.add_parser("query")
-    query_parser.add_argument(
+    query_all_parser = subparsers.add_parser("query_all")
+    query_all_parser.add_argument(
         "tablet", type=str, help="name of the tablet to query ephemeris for"
     )
-    query_parser.add_argument("subquery", type=str, nargs="?", help="optional subquery")
-    query_parser.add_argument("--db", type=str, help="override path to source database")
-    query_parser.add_argument(
-        "--year", type=int, help="optionally output a specific year"
+    query_all_parser.add_argument(
+        "subquery", type=str, nargs="?", help="optional subquery"
     )
-    query_parser.add_argument(
-        "--slim", action="store_true", help="only output best compatible path"
+    query_all_parser.add_argument(
+        "--db", type=str, help="override path to source database"
+    )
+    query_all_parser.add_argument(
+        "--output", type=str, help="override path to save output"
     )
 
-    subparsers.add_parser("test")
+    # query_parser.add_argument(
+    #     "--year", type=int, help="optionally output a specific year"
+    # )
+    # query_parser.add_argument(
+    #     "--slim", action="store_true", help="only output best compatible path"
+    # )
+
     subparsers.add_parser("graphs")
 
     kwargs = vars(parser.parse_args())
