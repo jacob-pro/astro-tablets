@@ -1,9 +1,18 @@
+import pathlib
+from typing import List
 from unittest import TestCase
+
 from bs4 import BeautifulSoup
 from parse import parse
 
-from astro_tablets.data import *
-from astro_tablets.generate.planet_events import *
+from astro_tablets.constants import JUPITER, MARS, MERCURY, SATURN, VENUS
+from astro_tablets.data import AstroData
+from astro_tablets.generate.planet_events import (
+    InnerPlanetPhenomena,
+    OuterPlanetPhenomena,
+    SynodicEvent,
+    planet_events,
+)
 from astro_tablets.util import diff_hours
 
 
@@ -20,29 +29,68 @@ class PlanetEventsTest(TestCase):
         end = self.data.timescale.ut1(-600, 12, 31)
         events = planet_events(self.data, MERCURY, start, end)
 
-        visibilities = list(filter(lambda x: x.type not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
+        visibilities = list(
+            filter(
+                lambda x: x.type
+                not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES],
+                events,
+            )
+        )
         for idx, val in enumerate(expected_visibity):
             actual = visibilities[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24.5, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24.5,
+                msg=f"Expected {val} Got {actual}",
+            )
 
-        stations = list(filter(lambda x: x.type in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
-        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
-            SynodicEvent(self.data.timescale.ut1(-610, 1, 17, 10, 5), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-610, 2, 8, 17, 49), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-610, 5, 20, 0, 49), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-610, 6, 13, 4, 57), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-610, 9, 14, 8, 45), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-610, 10, 4, 22, 4), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-610, 12, 31, 23, 15), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-609, 1, 22, 13, 14), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-609, 4, 30, 21, 1), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-609, 5, 24, 21, 18), InnerPlanetPhenomena.MS),
+        stations = list(
+            filter(
+                lambda x: x.type in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES],
+                events,
+            )
+        )
+        expected_stations = [  # Data from Alcyone Astronomical Tables 3.0
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 1, 17, 10, 5), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 2, 8, 17, 49), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 5, 20, 0, 49), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 6, 13, 4, 57), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 9, 14, 8, 45), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 10, 4, 22, 4), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 12, 31, 23, 15), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-609, 1, 22, 13, 14), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-609, 4, 30, 21, 1), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-609, 5, 24, 21, 18), InnerPlanetPhenomena.MS
+            ),
         ]
         for idx, val in enumerate(expected_stations):
             actual = stations[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24,
+                msg=f"Expected {val} Got {actual}",
+            )
 
     def test_venus(self):
         expected_visibity = self.parse_plsv_inner("plsv_venus.html")
@@ -50,31 +98,74 @@ class PlanetEventsTest(TestCase):
         end = self.data.timescale.ut1(-601, 12, 31)
         events = planet_events(self.data, VENUS, start, end)
 
-        visibilities = list(filter(lambda x: x.type not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
+        visibilities = list(
+            filter(
+                lambda x: x.type
+                not in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES],
+                events,
+            )
+        )
         for idx, val in enumerate(expected_visibity):
             actual = visibilities[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24.5, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24.5,
+                msg=f"Expected {val} Got {actual}",
+            )
 
-        stations = list(filter(lambda x: x.type in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES], events))
-        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
-            SynodicEvent(self.data.timescale.ut1(-610, 6, 24, 0, 37), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-610, 8, 5, 21, 17), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-608, 2, 2, 6, 24), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-608, 3, 15, 12, 4), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-607, 9, 5, 0, 9), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-607, 10, 16, 12, 39), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-605, 4, 12, 15, 51), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-605, 5, 25, 19, 7), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-604, 11, 18, 21, 1), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-604, 12, 29, 18, 16), InnerPlanetPhenomena.MS),
-            SynodicEvent(self.data.timescale.ut1(-602, 6, 21, 16, 18), InnerPlanetPhenomena.ES),
-            SynodicEvent(self.data.timescale.ut1(-602, 8, 3, 13, 38), InnerPlanetPhenomena.MS)
+        stations = list(
+            filter(
+                lambda x: x.type in [InnerPlanetPhenomena.MS, InnerPlanetPhenomena.ES],
+                events,
+            )
+        )
+        expected_stations = [  # Data from Alcyone Astronomical Tables 3.0
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 6, 24, 0, 37), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-610, 8, 5, 21, 17), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-608, 2, 2, 6, 24), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-608, 3, 15, 12, 4), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-607, 9, 5, 0, 9), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-607, 10, 16, 12, 39), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-605, 4, 12, 15, 51), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-605, 5, 25, 19, 7), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-604, 11, 18, 21, 1), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-604, 12, 29, 18, 16), InnerPlanetPhenomena.MS
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-602, 6, 21, 16, 18), InnerPlanetPhenomena.ES
+            ),
+            SynodicEvent(
+                self.data.timescale.ut1(-602, 8, 3, 13, 38), InnerPlanetPhenomena.MS
+            ),
         ]
         for idx, val in enumerate(expected_stations):
             actual = stations[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24,
+                msg=f"Expected {val} Got {actual}",
+            )
 
     def test_mars(self):
         expected = self.parse_plsv_outer("plsv_mars.html")
@@ -84,11 +175,15 @@ class PlanetEventsTest(TestCase):
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
             actual = visibilities[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24.5, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24.5,
+                msg=f"Expected {val} Got {actual}",
+            )
 
         stations = list(filter(lambda x: x.type == OuterPlanetPhenomena.ST, events))
-        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
+        expected_stations = [  # Data from Alcyone Astronomical Tables 3.0
             self.data.timescale.ut1(-750, 12, 31, 20, 21),
             self.data.timescale.ut1(-749, 3, 22, 3, 35),
             self.data.timescale.ut1(-747, 2, 11, 6, 33),
@@ -100,7 +195,11 @@ class PlanetEventsTest(TestCase):
         ]
         for idx, val in enumerate(expected_stations):
             actual = stations[idx]
-            self.assertLessEqual(diff_hours(val, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+            self.assertLessEqual(
+                diff_hours(val, actual.time),
+                24,
+                msg=f"Expected {val} Got {actual}",
+            )
 
     def test_jupiter(self):
         expected = self.parse_plsv_outer("plsv_jupiter.html")
@@ -111,21 +210,29 @@ class PlanetEventsTest(TestCase):
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
             actual = visibilities[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24.5, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24.5,
+                msg=f"Expected {val} Got {actual}",
+            )
 
         stations = list(filter(lambda x: x.type == OuterPlanetPhenomena.ST, events))
-        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
+        expected_stations = [  # Data from Alcyone Astronomical Tables 3.0
             self.data.timescale.ut1(-600, 6, 8, 2, 29),
             self.data.timescale.ut1(-600, 10, 4, 21, 26),
             self.data.timescale.ut1(-599, 7, 15, 18, 41),
             self.data.timescale.ut1(-599, 11, 10, 13, 46),
             self.data.timescale.ut1(-598, 8, 21, 3, 53),
-            self.data.timescale.ut1(-598, 12, 16, 23, 39)
+            self.data.timescale.ut1(-598, 12, 16, 23, 39),
         ]
         for idx, val in enumerate(expected_stations):
             actual = stations[idx]
-            self.assertLessEqual(diff_hours(val, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+            self.assertLessEqual(
+                diff_hours(val, actual.time),
+                24,
+                msg=f"Expected {val} Got {actual}",
+            )
 
     def test_saturn(self):
         expected = self.parse_plsv_outer("plsv_saturn.html")
@@ -136,11 +243,15 @@ class PlanetEventsTest(TestCase):
         visibilities = list(filter(lambda x: x.type != OuterPlanetPhenomena.ST, events))
         for idx, val in enumerate(expected):
             actual = visibilities[idx]
-            self.assertEqual(val.type, actual.type, msg="Expected {} Got {}".format(val, actual))
-            self.assertLessEqual(diff_hours(val.time, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
+            self.assertEqual(val.type, actual.type, msg=f"Expected {val} Got {actual}")
+            self.assertLessEqual(
+                diff_hours(val.time, actual.time),
+                24,
+                msg=f"Expected {val} Got {actual}",
+            )
 
         stations = list(filter(lambda x: x.type == OuterPlanetPhenomena.ST, events))
-        expected_stations = [       # Data from Alcyone Astronomical Tables 3.0
+        expected_stations = [  # Data from Alcyone Astronomical Tables 3.0
             self.data.timescale.ut1(-550, 1, 17, 15, 43),
             self.data.timescale.ut1(-550, 6, 7, 1, 59),
             self.data.timescale.ut1(-549, 1, 29, 7, 43),
@@ -152,11 +263,14 @@ class PlanetEventsTest(TestCase):
         ]
         for idx, val in enumerate(expected_stations):
             actual = stations[idx]
-            self.assertLessEqual(diff_hours(val, actual.time), 24, msg="Expected {} Got {}".format(val, actual))
-
+            self.assertLessEqual(
+                diff_hours(val, actual.time),
+                24,
+                msg=f"Expected {val} Got {actual}",
+            )
 
     def parse_plsv_inner(self, name: str) -> List[SynodicEvent]:
-        path = pathlib.Path(__file__).parent / 'data' / name
+        path = pathlib.Path(__file__).parent / "data" / name
         with open(path.as_posix()) as f:
             soup = BeautifulSoup(f, "html.parser", from_encoding="cp1252")
         table = soup.findAll("table")[1]
@@ -177,13 +291,13 @@ class PlanetEventsTest(TestCase):
                 type = InnerPlanetPhenomena.EF
             else:
                 raise ValueError
-            x = parse("{:d}-{:d}-{:d} {:d}:{:d}", "{} {}".format(date, time))
+            x = parse("{:d}-{:d}-{:d} {:d}:{:d}", f"{date} {time}")
             time = self.data.timescale.ut1(*x.fixed)
             expected.append(SynodicEvent(time, type))
         return expected
 
     def parse_plsv_outer(self, name: str) -> List[SynodicEvent]:
-        path = pathlib.Path(__file__).parent / 'data' / name
+        path = pathlib.Path(__file__).parent / "data" / name
         with open(path.as_posix()) as f:
             soup = BeautifulSoup(f, "html.parser", from_encoding="cp1252")
         table = soup.findAll("table")[1]
@@ -201,10 +315,10 @@ class PlanetEventsTest(TestCase):
             elif name == "acronychal rising":
                 type = OuterPlanetPhenomena.AR
             elif name == "cosmical setting":
-                continue    # Skip these
+                continue  # Skip these
             else:
                 raise ValueError
-            x = parse("{:d}-{:d}-{:d} {:d}:{:d}", "{} {}".format(date, time))
+            x = parse("{:d}-{:d}-{:d} {:d}:{:d}", f"{date} {time}")
             time = self.data.timescale.ut1(*x.fixed)
             expected.append(SynodicEvent(time, type))
         return expected

@@ -2,22 +2,33 @@ import math
 from typing import Union
 
 from astro_tablets.constants import Planet
-from astro_tablets.generate.planet_events import InnerPlanetPhenomena, OuterPlanetPhenomena
-from astro_tablets.query.database import Database
+from astro_tablets.generate.planet_events import (
+    InnerPlanetPhenomena,
+    OuterPlanetPhenomena,
+)
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
+from astro_tablets.query.database import Database
 from astro_tablets.util import TimeValue
 
 
 class PlanetaryEventQuery(AbstractQuery):
-
-    def __init__(self, db: Database, planet: Planet, event: Union[InnerPlanetPhenomena, OuterPlanetPhenomena],
-                 target_time: SearchRange):
+    def __init__(
+        self,
+        db: Database,
+        planet: Planet,
+        event: Union[InnerPlanetPhenomena, OuterPlanetPhenomena],
+        target_time: SearchRange,
+    ):
         self.target_time = target_time
         self.event = event
         nearest = db.nearest_event_match_to_time(planet, event.value, target_time.start)
         self.planet = planet
         if nearest is None:
-            raise RuntimeError("Failed to find any event {} for {} - check database".format(event, planet.name))
+            raise RuntimeError(
+                "Failed to find any event {} for {} - check database".format(
+                    event, planet.name
+                )
+            )
         self.nearest = nearest
 
     def get_search_range(self) -> SearchRange:
@@ -47,7 +58,7 @@ class PlanetaryEventQuery(AbstractQuery):
 
     def output(self) -> dict:
         return {
-            'planet': self.planet.name,
-            'event': self.event.value,
-            'nearest_time': TimeValue(self.nearest),
+            "planet": self.planet.name,
+            "event": self.event.value,
+            "nearest_time": TimeValue(self.nearest),
         }

@@ -4,16 +4,16 @@ import sys
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
-from typing import *
+from typing import Callable, Dict, List, Optional
 
 import roman
 from skyfield.timelib import Timescale
 
 from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS
-from astro_tablets.data import AstroData, SUN
+from astro_tablets.data import SUN, AstroData
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX
 from astro_tablets.query.abstract_query import AbstractQuery
-from astro_tablets.query.database import Database, BabylonianDay
+from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.util import TimeValue
 
 
@@ -39,7 +39,10 @@ class PotentialMonthResult:
         # Months are incompatible if the month afterwards does not start when this one ends
         # Although we can only do this check if we know the length of this month for certain
         # noinspection PyProtectedMember
-        if self._length != MonthLength.UNKNOWN and self.actual_month == potential2.actual_month - 1:
+        if (
+            self._length != MonthLength.UNKNOWN
+            and self.actual_month == potential2.actual_month - 1
+        ):
             if potential2.month_sunset_1.inner != self.next_month_sunset_1.inner:  # type: ignore
                 return False
         return True
@@ -64,7 +67,7 @@ class Intercalary(Enum):
 class PotentialYearResult:
     score: float
     nisan_1: TimeValue
-    next_nisan: TimeValue   # 12 or 13 months later depending on intercalary status
+    next_nisan: TimeValue  # 12 or 13 months later depending on intercalary status
     best_compatible_path: bool
     month_lengths_compatible: bool
     _actual_year: int
@@ -75,7 +78,10 @@ class PotentialYearResult:
         # Years are incompatible if the year afterwards does not start when this one ends
         # Although we can only do this check if we know the length of this year for certain
         # noinspection PyProtectedMember
-        if self._intercalary != Intercalary.UNKNOWN and self._actual_year == potential2._actual_year - 1:
+        if (
+            self._intercalary != Intercalary.UNKNOWN
+            and self._actual_year == potential2._actual_year - 1
+        ):
             if potential2.nisan_1 != self.next_nisan:
                 return False
         return True
@@ -98,7 +104,6 @@ class MultiyearResult:
 
 
 class EnhancedJSONEncoder(json.JSONEncoder):
-
     def __init__(self, ts: Timescale, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.ts = ts
@@ -107,7 +112,7 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         if dataclasses.is_dataclass(o):
             dict = o.__dict__
             for k in list(dict.keys()):
-                if k.startswith('_'):
+                if k.startswith("_"):
                     dict.pop(k)
             return dict
         if type(o) == Intercalary:
@@ -133,13 +138,19 @@ class AbstractTablet(ABC):
         self.db = db
 
     @abstractmethod
-    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
+    def do_query(
+        self, subquery: Optional[str], print_year: Optional[int], slim_results: bool
+    ):
         pass
 
-    def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int,
-                                           func: Callable[[List[BabylonianDay]], List[AbstractQuery]],
-                                           name=None, length=MonthLength.UNKNOWN
-                                           ) -> MonthResult:
+    def repeat_month_with_alternate_starts(
+        self,
+        nisan_1: float,
+        month_number: int,
+        func: Callable[[List[BabylonianDay]], List[AbstractQuery]],
+        name=None,
+        length=MonthLength.UNKNOWN,
+    ) -> MonthResult:
         """
         Tries repeating the same month observations but assuming the month started either 0 or 1 days later
         than first lunar visibility
@@ -153,11 +164,16 @@ class AbstractTablet(ABC):
         for start_offset in range(0, 2):
             results = func(month_days[start_offset:])
             score = sum(item.quality_score() for item in results)
-            output = list(map(lambda x:
-                              {**x.output(),
-                               **{'score': x.quality_score()},
-                               **x.get_search_range().output()
-                               }, results))
+            output = list(
+                map(
+                    lambda x: {
+                        **x.output(),
+                        **{"score": x.quality_score()},
+                        **x.get_search_range().output(),
+                    },
+                    results,
+                )
+            )
             sunset_one = TimeValue(month_days[start_offset].sunset)
             first_vis = TimeValue(month_days[0].sunset)
             next_month = None
@@ -165,15 +181,26 @@ class AbstractTablet(ABC):
                 next_month = TimeValue(month_days[start_offset + 29].sunset)
             elif length == MonthLength.THIRTY:
                 next_month = TimeValue(month_days[start_offset + 30].sunset)
-            all_results.append(PotentialMonthResult(score=score, name=name, actual_month=month_number,
-                                                    month_sunset_1=sunset_one, next_month_sunset_1=next_month,
-                                                    first_visibility=first_vis,
-                                                    days_late=start_offset, observations=output, _length=length))
+            all_results.append(
+                PotentialMonthResult(
+                    score=score,
+                    name=name,
+                    actual_month=month_number,
+                    month_sunset_1=sunset_one,
+                    next_month_sunset_1=next_month,
+                    first_visibility=first_vis,
+                    days_late=start_offset,
+                    observations=output,
+                    _length=length,
+                )
+            )
         all_results.sort(key=lambda x: x.score, reverse=True)
         return MonthResult(all_results)
 
     @staticmethod
-    def generate_compatible_month_combinations(months: List[MonthResult]) -> List[List[PotentialMonthResult]]:
+    def generate_compatible_month_combinations(
+        months: List[MonthResult],
+    ) -> List[List[PotentialMonthResult]]:
         paths = []  # type: List[List[PotentialMonthResult]]
         for idx, y in enumerate(months):
             if idx == 0:
@@ -191,43 +218,63 @@ class AbstractTablet(ABC):
                 paths = new_paths
         return paths
 
-    def repeat_year_with_alternate_starts(self, potential_years: List[Dict], name: str, intercalary: Intercalary,
-                                           func: Callable[[float], List[MonthResult]]
-                                           ) -> YearResult:
+    def repeat_year_with_alternate_starts(
+        self,
+        potential_years: List[Dict],
+        name: str,
+        intercalary: Intercalary,
+        func: Callable[[float], List[MonthResult]],
+    ) -> YearResult:
         """
         Tries repeating the same set of year observations, but starting at different dates for Nisan I
         Returns a list in order of highest score, descending
         """
         all_results = []
-        vernal = self.db.nearest_event_match_to_time(SUN, VERNAL_EQUINOX, potential_years[0]['nisan_1'])
-        year_number = potential_years[0]['year']
+        vernal = self.db.nearest_event_match_to_time(
+            SUN, VERNAL_EQUINOX, potential_years[0]["nisan_1"]
+        )
+        year_number = potential_years[0]["year"]
         for y in potential_years:
-            months = self.db.get_months(y['nisan_1'], count=14)
+            months = self.db.get_months(y["nisan_1"], count=14)
             if intercalary.is_intercalary():
                 # Exclude a late start if this year is intercalary, i.e. make sure that whichever year
                 # would follow this one is still valid
                 next_nisan = months[13]
-                next_vernal = self.db.nearest_event_match_to_time(SUN, VERNAL_EQUINOX, next_nisan)
+                next_vernal = self.db.nearest_event_match_to_time(
+                    SUN, VERNAL_EQUINOX, next_nisan
+                )
                 if abs(next_vernal - next_nisan) > MAX_NISAN_EQUINOX_DIFF_DAYS:  # type: ignore
                     continue
             else:
                 next_nisan = months[12]
-            results = func(y['nisan_1'])
+            results = func(y["nisan_1"])
             compatible_paths = self.generate_compatible_month_combinations(results)
             compatible_paths.sort(key=lambda y: sum(x.score for x in y), reverse=True)
             if len(compatible_paths) == 0:
                 months_list = list(map(lambda x: x.potentials[0], results))
-                total_score = sum(item.score for item in months_list) * self.INVALID_MONTH_LENGTH_PENALTY
+                total_score = (
+                    sum(item.score for item in months_list)
+                    * self.INVALID_MONTH_LENGTH_PENALTY
+                )
             else:
                 months_list = compatible_paths[0]
                 total_score = sum(item.score for item in months_list)
             all_results.append(
-                PotentialYearResult(score=total_score, nisan_1=TimeValue(y['nisan_1']),
-                                    next_nisan=TimeValue(next_nisan), months=months_list,
-                                    _intercalary=intercalary, _actual_year=year_number, best_compatible_path=False,
-                                    month_lengths_compatible=len(compatible_paths) > 0))
+                PotentialYearResult(
+                    score=total_score,
+                    nisan_1=TimeValue(y["nisan_1"]),
+                    next_nisan=TimeValue(next_nisan),
+                    months=months_list,
+                    _intercalary=intercalary,
+                    _actual_year=year_number,
+                    best_compatible_path=False,
+                    month_lengths_compatible=len(compatible_paths) > 0,
+                )
+            )
         all_results.sort(key=lambda x: x.score, reverse=True)
-        return YearResult(name, year_number, TimeValue(vernal), intercalary, all_results)
+        return YearResult(
+            name, year_number, TimeValue(vernal), intercalary, all_results
+        )
 
     @staticmethod
     def print_results(results: List[MultiyearResult], for_comment: str):
@@ -237,7 +284,9 @@ class AbstractTablet(ABC):
         for i in results:
             print(i.base_year, i.best_score)
 
-    def output_json_for_year(self, results: List[MultiyearResult], year: Optional[int], slim_results: bool):
+    def output_json_for_year(
+        self, results: List[MultiyearResult], year: Optional[int], slim_results: bool
+    ):
         if year is not None:
             filtered = list(filter(lambda x: x.base_year == year, results))
             if len(filtered) < 1:
@@ -246,21 +295,25 @@ class AbstractTablet(ABC):
 
             if slim_results is True:
                 for y in year_to_print.years:
-                    y.potentials = list(filter(lambda x: x.best_compatible_path is True, y.potentials))
+                    y.potentials = list(
+                        filter(lambda x: x.best_compatible_path is True, y.potentials)
+                    )
 
             tablet = self.__class__.__name__.lower()
-            filename = '{}_base_year_{}'.format(tablet, year)
+            filename = "{}_base_year_{}".format(tablet, year)
             if slim_results:
                 filename += "_slim"
             filename += ".json"
 
-            with open(filename, 'w') as outfile:
+            with open(filename, "w") as outfile:
                 encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
                 raw = encoder.encode(year_to_print)
                 outfile.write(raw)
 
     @staticmethod
-    def generate_compatible_year_combinations(yrs: List[YearResult]) -> List[List[PotentialYearResult]]:
+    def generate_compatible_year_combinations(
+        yrs: List[YearResult],
+    ) -> List[List[PotentialYearResult]]:
         paths = []  # type: List[List[PotentialYearResult]]
         for idx, y in enumerate(yrs):
             if idx == 0:
@@ -298,18 +351,33 @@ class AbstractTablet(ABC):
             self.print_progress((i / range_top))
             yrs = []  # type: List[YearResult]
             for idx, x in enumerate(ys):
-                yrs.append(self.repeat_year_with_alternate_starts(years[i + x.index], x.name, x.intercalary, x.func))
+                yrs.append(
+                    self.repeat_year_with_alternate_starts(
+                        years[i + x.index], x.name, x.intercalary, x.func
+                    )
+                )
             total_score = self.total_year_score(yrs)
-            results.append(MultiyearResult(years[i][0]['year'], total_score, yrs))
+            results.append(MultiyearResult(years[i][0]["year"], total_score, yrs))
         return results
 
-    def try_multiple_months(self, nisan_1: float, start: int, end: int,
-                            fn: Callable[[List[BabylonianDay]], List[AbstractQuery]], comment=None) -> MonthResult:
-        attempts = [] # type: List[MonthResult]
-        comment = "Unknown month between {} and {}".format(start, end) if comment is None else comment
-        for m in range(start, end+1):
+    def try_multiple_months(
+        self,
+        nisan_1: float,
+        start: int,
+        end: int,
+        fn: Callable[[List[BabylonianDay]], List[AbstractQuery]],
+        comment=None,
+    ) -> MonthResult:
+        attempts = []  # type: List[MonthResult]
+        comment = (
+            "Unknown month between {} and {}".format(start, end)
+            if comment is None
+            else comment
+        )
+        for m in range(start, end + 1):
             attempts.append(
-                self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment))
+                self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment)
+            )
         attempts.sort(key=lambda x: x.potentials[0].score, reverse=True)
         return attempts[0]
 

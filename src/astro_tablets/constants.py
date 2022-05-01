@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import *
+from typing import Union
 
 import inflect
 
@@ -20,6 +20,7 @@ REGULAR_TIME_TOLERANCE = 5
 HIGH_TIME_TOLERANCE = 1.5
 
 INFLECT_ENGINE = inflect.engine()
+
 
 @dataclass
 class InnerPlanetArcusVisionis:
@@ -48,7 +49,6 @@ class Planet(Body):
     arcus_visionis: Union[InnerPlanetArcusVisionis, OuterPlanetArcusVisionis]
     is_inner: bool
     event_frequency: float  # Approx. average number of synodic events that occur in a one year period
-
 
 
 MERCURY = Planet("mercury", InnerPlanetArcusVisionis(13.0, 9.5, 10.5, 11.0), True, 12)

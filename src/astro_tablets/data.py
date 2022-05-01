@@ -1,5 +1,5 @@
-import pathlib
 import os
+import pathlib
 
 from skyfield.data import hipparcos
 from skyfield.iokit import Loader
@@ -7,20 +7,54 @@ from skyfield.starlib import Star
 from skyfield.timelib import GREGORIAN_START
 from skyfield.toposlib import Topos
 
-from astro_tablets.constants import *
+from astro_tablets.constants import (
+    ALCYONE,
+    ANTARES,
+    ASCELLA,
+    BABYLON_COORDS,
+    BETA_CAPRICORNI,
+    BETA_GEMINORUM,
+    BETA_LIBRAE,
+    BETA_VIRGINIS,
+    EARTH,
+    EPSILON_LEONIS,
+    EPSILON_PISCIUM,
+    EPSILON_TAURI,
+    ETA_CAPRICORNI,
+    FIFTY_EIGHT_PISCIUM,
+    FIFTY_TWO_LEONIS,
+    FORTY_TWO_CANCRI,
+    JUPITER,
+    MARS,
+    MERCURY,
+    MOON,
+    NU_ARIETIS,
+    NU_AURIGAE,
+    NU_LIBRAE,
+    OMEGA_GEMINORUM,
+    REGULUS,
+    SATURN,
+    SHERATAN,
+    SUN,
+    THETA_CANCRI,
+    THETA_LEONIS,
+    THETA_VIRGINIS,
+    THIRTY_SIX_PERSEI,
+    VENUS,
+    Body,
+)
 
 
 class AstroData:
-
     def __init__(self, time_only=False):
-        path = pathlib.Path(__file__).parent.parent.parent.absolute() / 'skyfield-data'
+        path = pathlib.Path(__file__).parent.parent.parent.absolute() / "skyfield-data"
         if not os.path.isdir(path):
-            raise RuntimeError('\'skyfield-data\' folder does not exist')
+            raise RuntimeError("'skyfield-data' folder does not exist")
         load = Loader(path.as_posix())
         self.timescale = load.timescale()
         self.timescale.julian_calendar_cutoff = GREGORIAN_START
         if not time_only:
-            self.ephemeris = load('de431t.bsp')
+            self.ephemeris = load("de431t.bsp")
             self.babylon_topos = Topos(*BABYLON_COORDS)
             with load.open(hipparcos.URL) as f:
                 self.stars = hipparcos.load_dataframe(f)
@@ -94,7 +128,7 @@ class AstroData:
         if body == THETA_VIRGINIS:
             return Star.from_dataframe(self.stars.loc[64238])
 
-        raise ValueError(f'unknown body {body}')
+        raise ValueError(f"unknown body {body}")
 
     def get_babylon(self):
         return self.get_body(EARTH) + self.babylon_topos

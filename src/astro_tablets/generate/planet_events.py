@@ -1,15 +1,20 @@
 from dataclasses import dataclass
-from enum import unique, Enum
-from typing import *
+from enum import Enum, unique
+from typing import List, Union
 
 from skyfield import almanac
 from skyfield.timelib import Time
 from skyfield.units import Angle
 
-from astro_tablets.constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis, Planet, Body
-from astro_tablets.data import AstroData, SUN, EARTH
+from astro_tablets.constants import (
+    Body,
+    InnerPlanetArcusVisionis,
+    OuterPlanetArcusVisionis,
+    Planet,
+)
+from astro_tablets.data import EARTH, SUN, AstroData
 from astro_tablets.generate import OPTIONAL_PROGRESS
-from astro_tablets.util import same_sign, change_in_longitude
+from astro_tablets.util import change_in_longitude, same_sign
 
 
 @unique
@@ -43,8 +48,13 @@ def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
     return alt
 
 
-def planet_events(data: AstroData, planet: Planet, t0: Time, t1: Time, progress: OPTIONAL_PROGRESS = None
-                  ) -> List[SynodicEvent]:
+def planet_events(
+    data: AstroData,
+    planet: Planet,
+    t0: Time,
+    t1: Time,
+    progress: OPTIONAL_PROGRESS = None,
+) -> List[SynodicEvent]:
     if planet.is_inner:
         ac1: InnerPlanetArcusVisionis = planet.arcus_visionis  # type: ignore
         return _inner_planet_events(data, data.get_body(planet), t0, t1, ac1, progress)
@@ -53,8 +63,14 @@ def planet_events(data: AstroData, planet: Planet, t0: Time, t1: Time, progress:
         return _outer_planet_events(data, data.get_body(planet), t0, t1, ac2, progress)
 
 
-def _inner_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis,
-                         progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
+def _inner_planet_events(
+    data: AstroData,
+    body: Body,
+    t0: Time,
+    t1: Time,
+    ac: InnerPlanetArcusVisionis,
+    progress: OPTIONAL_PROGRESS = None,
+) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an inner planet
     Evening/Morning Last is the night of last visibility (not first invisible)
@@ -64,7 +80,9 @@ def _inner_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: In
     if progress is not None:
         progress(0)
     f = almanac.risings_and_settings(data.ephemeris, body, data.babylon_topos)
-    times, types = almanac.find_discrete(data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f)
+    times, types = almanac.find_discrete(
+        data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f
+    )
 
     zipped = list(zip(times, types))
     events = []  # type: List[SynodicEvent]
@@ -86,7 +104,9 @@ def _inner_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: In
         _, eclon, _ = data.get_body(EARTH).at(time).observe(body).ecliptic_latlon()
         if previous_eclon is not None:
             change = change_in_longitude(previous_eclon, eclon.degrees)
-            if previous_eclon_change is not None and not same_sign(previous_eclon_change, change):
+            if previous_eclon_change is not None and not same_sign(
+                previous_eclon_change, change
+            ):
                 if change < 0:
                     events.append(SynodicEvent(time, InnerPlanetPhenomena.ES))
                 else:
@@ -116,7 +136,7 @@ def _inner_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: In
 
             yesterday_rise = time
 
-        else: # planet set
+        else:  # planet set
 
             if solar_alt > -ac.ef:
                 morning_set = False
@@ -143,8 +163,14 @@ def _inner_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: In
     return events
 
 
-def _outer_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis,
-                         progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
+def _outer_planet_events(
+    data: AstroData,
+    body: Body,
+    t0: Time,
+    t1: Time,
+    ac: OuterPlanetArcusVisionis,
+    progress: OPTIONAL_PROGRESS = None,
+) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an outer planet
     Note stations are not precise, but at the time of nearest/rise set
@@ -153,7 +179,9 @@ def _outer_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: Ou
     if progress is not None:
         progress(0)
     f = almanac.risings_and_settings(data.ephemeris, body, data.babylon_topos)
-    times, types = almanac.find_discrete(data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f)
+    times, types = almanac.find_discrete(
+        data.timescale.tt_jd(t0.tt - 2), data.timescale.tt_jd(t1.tt + 2), f
+    )
 
     zipped = list(zip(times, types))
     events = []  # type: List[SynodicEvent]
@@ -174,7 +202,9 @@ def _outer_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: Ou
         _, eclon, _ = data.get_body(EARTH).at(time).observe(body).ecliptic_latlon()
         if previous_eclon is not None:
             change = change_in_longitude(previous_eclon, eclon.degrees)
-            if previous_eclon_change is not None and not same_sign(previous_eclon_change, change):
+            if previous_eclon_change is not None and not same_sign(
+                previous_eclon_change, change
+            ):
                 events.append(SynodicEvent(time, OuterPlanetPhenomena.ST))
             previous_eclon_change = change
         previous_eclon = eclon.degrees
@@ -201,7 +231,7 @@ def _outer_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: Ou
 
             yesterday_rise = time
 
-        else: # planet set
+        else:  # planet set
 
             if solar_alt < -ac.hs:
                 evening_set = True

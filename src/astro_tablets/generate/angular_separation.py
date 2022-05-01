@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from enum import unique, Enum
+from enum import Enum, unique
 
 from skyfield.framelib import ecliptic_frame
 from skyfield.timelib import Time
@@ -37,7 +37,9 @@ class AngularSeparationResult:
         return iter((self.angle, self.position))
 
 
-def angular_separation(data: AstroData, body1, body2, t0: Time) -> AngularSeparationResult:
+def angular_separation(
+    data: AstroData, body1, body2, t0: Time
+) -> AngularSeparationResult:
     """
     Computes angle between the two bodies
     And also the position of body1 relative to body2 along the ecliptic

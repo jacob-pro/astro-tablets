@@ -1,7 +1,7 @@
 import os
 import subprocess
 from collections import OrderedDict
-from typing import *
+from typing import Callable, List
 
 from skyfield.timelib import Time, Timescale
 
@@ -43,21 +43,25 @@ def change_in_longitude(old: float, new: float) -> float:
 
 
 def get_git_hash() -> str:
-    hash = os.getenv('GIT_HASH')
+    hash = os.getenv("GIT_HASH")
     if hash is not None and len(hash) > 0:
         return hash
     try:
-        return subprocess.check_output(['git', 'rev-parse', '--short', 'HEAD']).decode("utf-8").partition('\n')[0]
-    except subprocess.CalledProcessError as e:
+        return (
+            subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
+            .decode("utf-8")
+            .partition("\n")[0]
+        )
+    except subprocess.CalledProcessError:
         return "unknown"
 
 
 def get_git_changes() -> bool:
-    modified = os.getenv('GIT_MODIFIED')
+    modified = os.getenv("GIT_MODIFIED")
     if modified is not None:
         return modified == "1"
     try:
-        subprocess.check_output(['git', 'diff', '--exit-code'], stderr=subprocess.PIPE)
+        subprocess.check_output(["git", "diff", "--exit-code"], stderr=subprocess.PIPE)
     except subprocess.CalledProcessError:
         return True
     return False
@@ -74,11 +78,7 @@ def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
     return res
 
 
-
-
-
 class TimeValue:
-
     def __init__(self, inner):
         self.inner = inner
 

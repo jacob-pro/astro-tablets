@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import *
+from typing import List, Tuple
 
 from skyfield import almanac
-from skyfield.timelib import Time, GREGORIAN_START, compute_calendar_date
+from skyfield.timelib import GREGORIAN_START, Time, compute_calendar_date
 from skyfield.units import Angle
 
 from astro_tablets.constants import LUNAR_VISIBILITY
-from astro_tablets.data import AstroData, MOON
+from astro_tablets.data import MOON, AstroData
 from astro_tablets.generate import OPTIONAL_PROGRESS
 
 VERNAL_EQUINOX = "vernal_equinox"
@@ -23,17 +23,21 @@ def vernal_equinox(data: AstroData, year: int) -> Time:
     data.timescale.julian_calendar_cutoff = before
     times, types = almanac.find_discrete(t0, t1, almanac.seasons(data.ephemeris))
     assert len(times) == 1
-    assert almanac.SEASON_EVENTS[(types[0])] == 'Vernal Equinox'
+    assert almanac.SEASON_EVENTS[(types[0])] == "Vernal Equinox"
     return times[0]
 
 
-def sunset_and_rise_for_date(data: AstroData, year: int, month: int, day: int) -> Tuple[Time, Time]:
+def sunset_and_rise_for_date(
+    data: AstroData, year: int, month: int, day: int
+) -> Tuple[Time, Time]:
     """
     For a given date find the time of sunset in Babylon
     """
     t0 = data.timescale.ut1(year, month, day, 12)
     t1 = data.timescale.tt_jd(t0.tt + 1)
-    times, types = almanac.find_discrete(t0, t1, almanac.sunrise_sunset(data.ephemeris, data.babylon_topos))
+    times, types = almanac.find_discrete(
+        t0, t1, almanac.sunrise_sunset(data.ephemeris, data.babylon_topos)
+    )
     assert len(times) == 2
     assert types[0] == 0  # 0 = Sunset
     assert types[1] == 1  # 1 = Sunrise
@@ -57,7 +61,9 @@ class BabylonianDay:
     first_visibility: bool
 
 
-def days_in_range(data: AstroData, start: Time, end: Time, progress: OPTIONAL_PROGRESS = None) -> List[BabylonianDay]:
+def days_in_range(
+    data: AstroData, start: Time, end: Time, progress: OPTIONAL_PROGRESS = None
+) -> List[BabylonianDay]:
     assert start.tt < end.tt
     position = data.timescale.tt_jd(start.tt - 2)
     end = data.timescale.tt_jd(end.tt + 1)
@@ -81,5 +87,7 @@ def days_in_range(data: AstroData, start: Time, end: Time, progress: OPTIONAL_PR
         if progress is not None:
             progress((position.tt - start.tt) / (end.tt - start.tt))
 
-    results = list(filter(lambda x: x.sunset.tt >= start.tt and x.sunrise.tt <= end.tt, results))
+    results = list(
+        filter(lambda x: x.sunset.tt >= start.tt and x.sunrise.tt <= end.tt, results)
+    )
     return results

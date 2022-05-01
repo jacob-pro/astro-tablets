@@ -1,6 +1,11 @@
 from unittest import TestCase
 
-from astro_tablets.generate.eclipse import *
+from astro_tablets.data import AstroData
+from astro_tablets.generate.eclipse import (
+    EclipsePhases,
+    TimeUnit,
+    lunar_eclipse_on_date,
+)
 
 
 class EclipseTest(TestCase):
@@ -24,7 +29,9 @@ class EclipseTest(TestCase):
         eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-225, 8, 1))
         self.compare_total_triple(eclipse.phases(TimeUnit.DEGREE), 16.75, 16.00, 16.75)
 
-    def compare_total_triple(self, phases: EclipsePhases, onset: float, maximal: float, clearing: float):
+    def compare_total_triple(
+        self, phases: EclipsePhases, onset: float, maximal: float, clearing: float
+    ):
         self.assertLessEqual(abs(onset - phases.onset), self.SFM_AET_ACCURACY)
         self.assertLessEqual(abs(maximal - phases.maximal), self.SFM_AET_ACCURACY)
         self.assertLessEqual(abs(clearing - phases.clearing), self.SFM_AET_ACCURACY)
@@ -34,14 +41,24 @@ class EclipseTest(TestCase):
         eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-423, 9, 28))
         # self.compare_partial_double(eclipse.phases(TimeUnit.DEGREE), 17.50, 17.50) - Wrong Data?
 
-        eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-409, 12, 22))
-        self.assertLessEqual(abs(47.75 - eclipse.phases(TimeUnit.DEGREE).sum), self.SFM_AET_ACCURACY)
+        eclipse = lunar_eclipse_on_date(
+            self.data, self.data.timescale.ut1(-409, 12, 22)
+        )
+        self.assertLessEqual(
+            abs(47.75 - eclipse.phases(TimeUnit.DEGREE).sum), self.SFM_AET_ACCURACY
+        )
 
-        eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-407, 10, 31))
-        self.assertLessEqual(abs(22.75 - eclipse.phases(TimeUnit.DEGREE).sum), self.SFM_AET_ACCURACY)
+        eclipse = lunar_eclipse_on_date(
+            self.data, self.data.timescale.ut1(-407, 10, 31)
+        )
+        self.assertLessEqual(
+            abs(22.75 - eclipse.phases(TimeUnit.DEGREE).sum), self.SFM_AET_ACCURACY
+        )
 
         eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-396, 4, 5))
-        self.assertLessEqual(abs(16.25 - eclipse.phases(TimeUnit.DEGREE).sum), self.SFM_AET_ACCURACY)
+        self.assertLessEqual(
+            abs(16.25 - eclipse.phases(TimeUnit.DEGREE).sum), self.SFM_AET_ACCURACY
+        )
 
         eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-153, 3, 21))
         self.compare_partial_double(eclipse.phases(TimeUnit.DEGREE), 24.75, 24.75)
@@ -49,7 +66,8 @@ class EclipseTest(TestCase):
         eclipse = lunar_eclipse_on_date(self.data, self.data.timescale.ut1(-128, 11, 4))
         self.compare_partial_double(eclipse.phases(TimeUnit.DEGREE), 21.50, 21.50)
 
-    def compare_partial_double(self, phases: EclipsePhases, onset: float, clearing: float):
+    def compare_partial_double(
+        self, phases: EclipsePhases, onset: float, clearing: float
+    ):
         self.assertLessEqual(abs(onset - phases.onset), self.SFM_AET_ACCURACY)
         self.assertLessEqual(abs(clearing - phases.clearing), self.SFM_AET_ACCURACY)
-

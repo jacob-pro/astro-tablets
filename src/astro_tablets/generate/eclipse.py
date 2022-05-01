@@ -1,11 +1,11 @@
 from dataclasses import dataclass
-from enum import unique, Enum
-from typing import *
+from enum import Enum, unique
+from typing import List
 
 from numpy.ma import arcsin
 from skyfield import eclipselib
 from skyfield.constants import ERAD
-from skyfield.functions import length_of, angle_between
+from skyfield.functions import angle_between, length_of
 from skyfield.searchlib import find_discrete
 from skyfield.timelib import Time
 
@@ -13,13 +13,14 @@ from astro_tablets.data import AstroData
 from astro_tablets.generate.lunar_calendar import altitude_of_moon
 from astro_tablets.util import diff_mins
 
+# https://github.com/skyfielders/python-skyfield/issues/545
 
-## https://github.com/skyfielders/python-skyfield/issues/545
 
 class EclipseTool:
-
     def __init__(self, data: AstroData):
-        sdict = dict(((s.center, s.target), s.spk_segment) for s in data.ephemeris.segments)
+        sdict = dict(
+            ((s.center, s.target), s.spk_segment) for s in data.ephemeris.segments
+        )
         self.sun = sdict[0, 10]
         self.earth_barycenter = sdict[0, 3]
         self.earth = sdict[3, 399]
@@ -79,15 +80,16 @@ class EclipsePhases:
 
 
 class Eclipse:
-
-    def __init__(self,
-                 data: AstroData,
-                 time: Time,
-                 type: int,
-                 closest_approach_radians: float,
-                 moon_radius_radians: float,
-                 penumbra_radius_radians: float,
-                 umbra_radius_radians: float):
+    def __init__(
+        self,
+        data: AstroData,
+        time: Time,
+        type: int,
+        closest_approach_radians: float,
+        moon_radius_radians: float,
+        penumbra_radius_radians: float,
+        umbra_radius_radians: float,
+    ):
         self.data = data
         self.closest_approach_time = time
         self.type = eclipselib.LUNAR_ECLIPSES[type]
@@ -98,10 +100,15 @@ class Eclipse:
 
         calc = EclipseTool(data)
 
-        f = lambda t: calc.angle_between(t) < calc.umbra_radius(t) + calc.moon_radius(t)
+        f = lambda t: calc.angle_between(t) < calc.umbra_radius(  # noqa: E731
+            t
+        ) + calc.moon_radius(t)
         f.step_days = 0.01  # type: ignore
-        times, values = find_discrete(data.timescale.tt_jd(time.tt - 1), data.timescale.tt_jd(time.tt + 1), f)
-        if self.type != 'Penumbral':
+
+        times, values = find_discrete(
+            data.timescale.tt_jd(time.tt - 1), data.timescale.tt_jd(time.tt + 1), f
+        )
+        if self.type != "Penumbral":
             assert len(times) == 2
             assert (values == [1, 0]).all()
             assert times[0].tt < time.tt
@@ -109,10 +116,15 @@ class Eclipse:
             self.partial_eclipse_begin = times[0]
             self.partial_eclipse_end = times[1]
 
-        f = lambda t: calc.angle_between(t) < calc.umbra_radius(t) - calc.moon_radius(t)
+        f = lambda t: calc.angle_between(t) < calc.umbra_radius(  # noqa: E731
+            t
+        ) - calc.moon_radius(t)
         f.step_days = 0.01  # type: ignore
-        times, values = find_discrete(data.timescale.tt_jd(time.tt - 0.5), data.timescale.tt_jd(time.tt + 0.5), f)
-        if self.type == 'Total':
+
+        times, values = find_discrete(
+            data.timescale.tt_jd(time.tt - 0.5), data.timescale.tt_jd(time.tt + 0.5), f
+        )
+        if self.type == "Total":
             assert len(times) == 2
             assert (values == [1, 0]).all()
             assert times[0].tt < time.tt
@@ -122,14 +134,22 @@ class Eclipse:
 
     def phases(self, unit=TimeUnit.MINUTE) -> EclipsePhases:
         phases = EclipsePhases(0, 0, 0, 0, unit)
-        if self.type == 'Partial':
-            phases.onset = diff_mins(self.partial_eclipse_begin, self.closest_approach_time)
-            phases.clearing = diff_mins(self.closest_approach_time, self.partial_eclipse_end)
+        if self.type == "Partial":
+            phases.onset = diff_mins(
+                self.partial_eclipse_begin, self.closest_approach_time
+            )
+            phases.clearing = diff_mins(
+                self.closest_approach_time, self.partial_eclipse_end
+            )
             phases.sum = diff_mins(self.partial_eclipse_begin, self.partial_eclipse_end)
-        if self.type == 'Total':
-            phases.onset = diff_mins(self.partial_eclipse_begin, self.total_eclipse_begin)
+        if self.type == "Total":
+            phases.onset = diff_mins(
+                self.partial_eclipse_begin, self.total_eclipse_begin
+            )
             phases.maximal = diff_mins(self.total_eclipse_begin, self.total_eclipse_end)
-            phases.clearing = diff_mins(self.total_eclipse_end, self.partial_eclipse_end)
+            phases.clearing = diff_mins(
+                self.total_eclipse_end, self.partial_eclipse_end
+            )
             phases.sum = diff_mins(self.partial_eclipse_begin, self.partial_eclipse_end)
         if unit == TimeUnit.MINUTE:
             pass
@@ -144,7 +164,8 @@ class Eclipse:
 
     def visibility_in_babylon(self) -> bool:
         from astro_tablets.constants import LUNAR_VISIBILITY
-        if self.type == 'Penumbral':
+
+        if self.type == "Penumbral":
             return False
         alt1 = altitude_of_moon(self.data, self.partial_eclipse_begin).degrees
         alt2 = altitude_of_moon(self.data, self.partial_eclipse_end).degrees
@@ -157,15 +178,19 @@ class Eclipse:
 
 def lunar_eclipses_in_range(data: AstroData, start: Time, end: Time) -> List[Eclipse]:
     times, types, details = eclipselib.lunar_eclipses(start, end, data.ephemeris)
-    list = []  # type: List[Eclipse]
+    list: List[Eclipse] = []
     for idx, _ in enumerate(times):
-        list.append(Eclipse(data=data,
-                            time=times[idx],
-                            type=types[idx],
-                            closest_approach_radians=details['closest_approach_radians'][idx],
-                            moon_radius_radians=details['moon_radius_radians'][idx],
-                            penumbra_radius_radians=details['penumbra_radius_radians'][idx],
-                            umbra_radius_radians=details['umbra_radius_radians'][idx]))
+        list.append(
+            Eclipse(
+                data=data,
+                time=times[idx],
+                type=types[idx],
+                closest_approach_radians=details["closest_approach_radians"][idx],
+                moon_radius_radians=details["moon_radius_radians"][idx],
+                penumbra_radius_radians=details["penumbra_radius_radians"][idx],
+                umbra_radius_radians=details["umbra_radius_radians"][idx],
+            )
+        )
     return list
 
 

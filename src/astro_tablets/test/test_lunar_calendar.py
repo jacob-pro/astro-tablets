@@ -1,12 +1,19 @@
 import pathlib
+from typing import List
 from unittest import TestCase
 
 from bs4 import BeautifulSoup
 from parse import parse
-from skyfield.timelib import CalendarTuple
+from skyfield.timelib import CalendarTuple, Time
 
-from astro_tablets.generate.lunar_calendar import *
-from astro_tablets.util import *
+from astro_tablets.data import AstroData
+from astro_tablets.generate.lunar_calendar import (
+    altitude_of_moon,
+    days_in_range,
+    sunset_and_rise_for_date,
+    vernal_equinox,
+)
+from astro_tablets.util import diff_hours, diff_mins
 
 
 class LunarCalendarTest(TestCase):
@@ -36,19 +43,29 @@ class LunarCalendarTest(TestCase):
     # Sunset calculated in Starry Night 6.4.4
     def test_sunset_and_rise_for_date(self):
         sunset = sunset_and_rise_for_date(self.data, 2020, 6, 1)[0]
-        self.assertLessEqual(diff_mins(sunset, self.data.timescale.ut1(2020, 6, 1, 16, 5)), 3)
+        self.assertLessEqual(
+            diff_mins(sunset, self.data.timescale.ut1(2020, 6, 1, 16, 5)), 3
+        )
 
         sunset = sunset_and_rise_for_date(self.data, 1000, 6, 1)[0]
-        self.assertLessEqual(diff_mins(sunset, self.data.timescale.ut1(1000, 6, 1, 16, 5)), 3)
+        self.assertLessEqual(
+            diff_mins(sunset, self.data.timescale.ut1(1000, 6, 1, 16, 5)), 3
+        )
 
         sunset = sunset_and_rise_for_date(self.data, 200, 6, 1)[0]
-        self.assertLessEqual(diff_mins(sunset, self.data.timescale.ut1(200, 6, 1, 16, 0)), 3)
+        self.assertLessEqual(
+            diff_mins(sunset, self.data.timescale.ut1(200, 6, 1, 16, 0)), 3
+        )
 
         sunset = sunset_and_rise_for_date(self.data, -400, 6, 1)[0]
-        self.assertLessEqual(diff_mins(sunset, self.data.timescale.ut1(-400, 6, 1, 15, 56)), 3)
+        self.assertLessEqual(
+            diff_mins(sunset, self.data.timescale.ut1(-400, 6, 1, 15, 56)), 3
+        )
 
         sunset = sunset_and_rise_for_date(self.data, -800, 6, 1)[0]
-        self.assertLessEqual(diff_mins(sunset, self.data.timescale.ut1(-800, 6, 1, 15, 53)), 3)
+        self.assertLessEqual(
+            diff_mins(sunset, self.data.timescale.ut1(-800, 6, 1, 15, 53)), 3
+        )
 
     # Altitude at sunset calculated in Starry Night 6.4.4
     def test_altitude_of_moon(self):
@@ -63,7 +80,11 @@ class LunarCalendarTest(TestCase):
     # Parker/Dubberstein months in 568 BC
     # Do not expect a 100% match because of using slightly different visibility criteria
     def test_days_in_range_pd(self):
-        days = days_in_range(self.data, self.data.timescale.ut1(-567, 3, 1), self.data.timescale.ut1(-566, 3, 30))
+        days = days_in_range(
+            self.data,
+            self.data.timescale.ut1(-567, 3, 1),
+            self.data.timescale.ut1(-566, 3, 30),
+        )
         months = list(filter(lambda x: x.first_visibility is True, days))
         self.assertTrue(same_day(months[0].sunrise.utc, -567, 3, 25))
         self.assertTrue(same_day(months[1].sunrise.utc, -567, 4, 23))
@@ -81,14 +102,18 @@ class LunarCalendarTest(TestCase):
 
     def test_days_in_range_(self):
         expected = self.parse_plsv_moon("plsv_moon.html")
-        days = days_in_range(self.data, self.data.timescale.ut1(-580, 1, 1), self.data.timescale.ut1(-579, 12, 31))
+        days = days_in_range(
+            self.data,
+            self.data.timescale.ut1(-580, 1, 1),
+            self.data.timescale.ut1(-579, 12, 31),
+        )
         months = list(filter(lambda x: x.first_visibility is True, days))
         for idx, val in enumerate(expected):
             actual = months[idx].sunset
             self.assertLessEqual(diff_hours(val, actual), 24)
 
     def parse_plsv_moon(self, name: str) -> List[Time]:
-        path = pathlib.Path(__file__).parent / 'data' / name
+        path = pathlib.Path(__file__).parent / "data" / name
         with open(path.as_posix()) as f:
             soup = BeautifulSoup(f, "html.parser")
         table = soup.findAll("table")[1]
@@ -100,7 +125,7 @@ class LunarCalendarTest(TestCase):
             date = v.contents[3].string
             time = v.contents[5].string
             if name == "first visibility":
-                x = parse("{:d}-{:d}-{:d} {:d}:{:d}", "{} {}".format(date, time))
+                x = parse("{:d}-{:d}-{:d} {:d}:{:d}", f"{date} {time}")
                 time = self.data.timescale.ut1(*x.fixed)
                 expected.append(time)
         return expected

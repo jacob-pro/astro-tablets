@@ -3,12 +3,15 @@ from unittest import TestCase
 from skyfield.starlib import Star
 
 from astro_tablets.constants import MERCURY, MOON
-from astro_tablets.generate.angular_separation import *
+from astro_tablets.data import AstroData
+from astro_tablets.generate.angular_separation import (
+    EclipticPosition,
+    angular_separation,
+)
 from astro_tablets.generate.lunar_calendar import sunset_and_rise_for_date
 
 
 class AngularSeparationTest(TestCase):
-
     @classmethod
     def setUpClass(cls):
         cls.data = AstroData()

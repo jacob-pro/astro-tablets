@@ -9,6 +9,12 @@ venv:
 
 .PHONY: test
 test: venv
+	flake8 src/
 	mypy src/
 	pytest src/ -v
+	python src/cli.py --help
 
+.PHONY: format
+format:
+	black src/
+	isort src/

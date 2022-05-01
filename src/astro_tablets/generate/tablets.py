@@ -1,12 +1,45 @@
 import sys
 import time
 from abc import ABC
+from typing import List, Optional
 
-from astro_tablets.data import *
+from astro_tablets.constants import (
+    ALCYONE,
+    ANTARES,
+    ARIES,
+    AURIGA,
+    BETA_CAPRICORNI,
+    BETA_GEMINORUM,
+    BETA_LIBRAE,
+    BETA_VIRGINIS,
+    CANCER,
+    CAPRICORNUS,
+    EPSILON_LEONIS,
+    FORTY_TWO_CANCRI,
+    GEMINI,
+    JUPITER,
+    LEO,
+    LIBRA,
+    MARS,
+    MERCURY,
+    MOON,
+    PERSEUS,
+    PISCES,
+    REGULUS,
+    SAGITTARIUS,
+    SATURN,
+    TAURUS,
+    THETA_LEONIS,
+    VENUS,
+    VIRGO,
+    Body,
+    Planet,
+)
+from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import angular_separation
 from astro_tablets.generate.database import Database
 from astro_tablets.generate.eclipse import lunar_eclipses_in_range
-from astro_tablets.generate.lunar_calendar import vernal_equinox, days_in_range
+from astro_tablets.generate.lunar_calendar import days_in_range, vernal_equinox
 from astro_tablets.generate.planet_events import planet_events
 from astro_tablets.generate.risings_settings import risings_and_settings
 
@@ -36,7 +69,13 @@ class Tablet(ABC):
     default_start = 0
     default_end = 0
 
-    def __init__(self, data: AstroData, db: Database, start_year: Optional[int], end_year: Optional[int]):
+    def __init__(
+        self,
+        data: AstroData,
+        db: Database,
+        start_year: Optional[int],
+        end_year: Optional[int],
+    ):
         self.data = data
         self.db = db
         self.start_year = self.default_start if start_year is None else start_year
@@ -52,8 +91,12 @@ class Tablet(ABC):
     def calendar(self):
         for i in range(self.start_day.utc.year, self.end_day.utc.year + 1):
             self.db.save_equinox(vernal_equinox(self.data, i))
-        days = days_in_range(self.data, self.start_day, self.end_day,
-                             lambda x: self.print_progress("Computing Lunar calendar", x))
+        days = days_in_range(
+            self.data,
+            self.start_day,
+            self.end_day,
+            lambda x: self.print_progress("Computing Lunar calendar", x),
+        )
         self.db.save_days(days)
         print("")
         return days
@@ -64,15 +107,27 @@ class Tablet(ABC):
         for idx, day in enumerate(self.days):
             night_len = day.sunrise.tt - day.sunset.tt
             for i in range(intervals):
-                time = self.data.timescale.tt_jd(day.sunset.tt + (i/intervals * night_len))
+                time = self.data.timescale.tt_jd(
+                    day.sunset.tt + (i / intervals * night_len)
+                )
                 res = angular_separation(self.data, b1, b2, time)
                 self.db.save_separation(of, to, res, time)
-            self.print_progress(f"Computing separation between {of.name} and {to.name}", idx / len(self.days))
+            self.print_progress(
+                f"Computing separation between {of.name} and {to.name}",
+                idx / len(self.days),
+            )
         print("")
 
     def planet_events(self, planet: Planet):
-        events = planet_events(self.data, planet, self.start_day, self.end_day,
-                               lambda x: self.print_progress("Computing {} visibility".format(planet.name), x))
+        events = planet_events(
+            self.data,
+            planet,
+            self.start_day,
+            self.end_day,
+            lambda x: self.print_progress(
+                "Computing {} visibility".format(planet.name), x
+            ),
+        )
         self.db.save_synodic_events(planet.name, events)
         print("")
 
@@ -86,7 +141,10 @@ class Tablet(ABC):
             for idx, e in enumerate(eclipses):
                 res = angular_separation(self.data, b1, b2, e.closest_approach_time)
                 self.db.save_separation(MOON, body, res, e.closest_approach_time)
-                self.print_progress("Computing separation between {} and {}".format(MOON, body), idx / len(eclipses))
+                self.print_progress(
+                    "Computing separation between {} and {}".format(MOON, body),
+                    idx / len(eclipses),
+                )
             print("")
         return eclipses
 
@@ -97,9 +155,17 @@ class Tablet(ABC):
 
     def compute(self):
         self.start_time = time.time()
-        print("Computing {} for {} to {}".format(type(self).__name__, self.start_year, self.end_year))
-        self.start_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.start_year).tt - 32)
-        self.end_day = self.data.timescale.tt_jd(vernal_equinox(self.data, self.end_year + 1).tt + 64)
+        print(
+            "Computing {} for {} to {}".format(
+                type(self).__name__, self.start_year, self.end_year
+            )
+        )
+        self.start_day = self.data.timescale.tt_jd(
+            vernal_equinox(self.data, self.start_year).tt - 32
+        )
+        self.end_day = self.data.timescale.tt_jd(
+            vernal_equinox(self.data, self.end_year + 1).tt + 64
+        )
         self.days = self.calendar()
 
     def post_compute(self):

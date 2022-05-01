@@ -1,10 +1,9 @@
 from unittest import TestCase
 
-from astro_tablets.util import *
+from astro_tablets.util import change_in_longitude
 
 
 class UtilTest(TestCase):
-
     def test_change_in_longitude(self):
         self.assertEqual(change_in_longitude(350, 360), +10)
         self.assertEqual(change_in_longitude(360, 360), +0)
