@@ -83,7 +83,7 @@ class BM35115(AbstractTablet):
         return [month_3]
 
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         tests = [YearToTest(0, "Shamashshumukin Acc.", Intercalary.UNKNOWN, self.year_0),
                  YearToTest(2, "Shamashshumukin 2", Intercalary.UNKNOWN, self.year_2),
                  YearToTest(18, "Shamashshumukin 18", Intercalary.UNKNOWN, self.year_18),

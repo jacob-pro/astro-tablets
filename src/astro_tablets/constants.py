@@ -38,11 +38,17 @@ class OuterPlanetArcusVisionis:
 
 
 @dataclass
-class Planet:
+class Body:
+    name: str
+
+
+@dataclass
+class Planet(Body):
     name: str
     arcus_visionis: Union[InnerPlanetArcusVisionis, OuterPlanetArcusVisionis]
     is_inner: bool
     event_frequency: float  # Approx. average number of synodic events that occur in a one year period
+
 
 
 MERCURY = Planet("mercury", InnerPlanetArcusVisionis(13.0, 9.5, 10.5, 11.0), True, 12)
@@ -52,24 +58,42 @@ JUPITER = Planet("jupiter", OuterPlanetArcusVisionis(9.3, 7.4, 6.0, 6.0), False,
 SATURN = Planet("saturn", OuterPlanetArcusVisionis(13.0, 10.0, 8.0, 8.0), False, 3.9)
 
 
+EARTH = Body("earth")
+MOON = Body("moon")
+SUN = Body("sun")
+
+ALCYONE = Body("alcyone")
+ANTARES = Body("antares")
+BETA_CAPRICORNI = Body("beta capricorni")
+BETA_GEMINORUM = Body("beta geminorum")
+BETA_LIBRAE = Body("beta librae")
+BETA_VIRGINIS = Body("beta virginis")
+EPSILON_LEONIS = Body("epsilon leonis")
+EPSILON_PISCIUM = Body("epsilon piscium")
+FORTY_TWO_CANCRI = Body("42 cancri")
+REGULUS = Body("regulus")
+THETA_LEONIS = Body("theta leonis")
+SHERATAN = Body("sheratan")
+
+
 @dataclass
 class Constellation:
-    central_star: str
+    central_star: Body
     radius: float
 
 
-NU_ARIETIS = "nu arietis"
-NU_AURIGAE = "nu aurigae"
-THETA_CANCRI = "theta cancri"
-ETA_CAPRICORNI = "eta_capricorni"
-OMEGA_GEMINORUM = "omega geminorum"
-FIFTY_TWO_LEONIS = "52 leonis"
-NU_LIBRAE = "nu librae"
-THIRTY_SIX_PERSEI = "36 persei"
-FIFTY_EIGHT_PISCIUM = "58 piscium"
-ASCELLA = "ascella"
-EPSILON_TAURI = "epsilon tauri"
-THETA_VIRGINIS = "theta virginis"
+NU_ARIETIS = Body("nu arietis")
+NU_AURIGAE = Body("nu aurigae")
+THETA_CANCRI = Body("theta cancri")
+ETA_CAPRICORNI = Body("eta_capricorni")
+OMEGA_GEMINORUM = Body("omega geminorum")
+FIFTY_TWO_LEONIS = Body("52 leonis")
+NU_LIBRAE = Body("nu librae")
+THIRTY_SIX_PERSEI = Body("36 persei")
+FIFTY_EIGHT_PISCIUM = Body("58 piscium")
+ASCELLA = Body("ascella")
+EPSILON_TAURI = Body("epsilon tauri")
+THETA_VIRGINIS = Body("theta virginis")
 
 ARIES = Constellation(NU_ARIETIS, 30)
 AURIGA = Constellation(NU_AURIGAE, 32)

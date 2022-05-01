@@ -4,5 +4,5 @@ beautifulsoup4==4.9.3
 parse==1.18.0
 inflect== 5.0.2
 roman==3.3
-numpy~=1.19.5
+numpy~=1.20
 matplotlib~=3.4.2

@@ -4,7 +4,7 @@ from typing import *
 
 from skyfield.timelib import Time
 
-from astro_tablets.data import SUN
+from astro_tablets.data import SUN, Body
 from astro_tablets.generate.angular_separation import AngularSeparationResult
 from astro_tablets.generate.eclipse import Eclipse, TimeUnit
 from astro_tablets.generate.lunar_calendar import BabylonianDay, VERNAL_EQUINOX
@@ -90,19 +90,19 @@ class Database:
             self.cursor.execute("INSERT INTO days (sunset, sunrise, `year`, first_visibility) VALUES (?, ?, ?, ?)",
                                 (e.sunset.tt, e.sunrise.tt, int(e.sunset.utc.year), e.first_visibility))
 
-    def save_risings_settings(self, body: str, events: List[RisingOrSetting]):
+    def save_risings_settings(self, body: Body, events: List[RisingOrSetting]):
         for r in events:
             self.cursor.execute("INSERT INTO risings_settings (r_type, time, body) VALUES (?, ?, ?)",
-                                (r.type.value, r.time.tt, body))
+                                (r.type.value, r.time.tt, body.name))
 
     def save_equinox(self, time: Time):
         self.cursor.execute("INSERT INTO events (body, event, time) VALUES (?, ?, ?)",
-                            (SUN, VERNAL_EQUINOX, time.tt,))
+                            (SUN.name, VERNAL_EQUINOX, time.tt,))
 
-    def save_separation(self, of: str, to: str, res: AngularSeparationResult, time: Time):
+    def save_separation(self, of: Body, to: Body, res: AngularSeparationResult, time: Time):
         self.cursor.execute(
             "INSERT INTO separations (from_body, to_body, angle, position, time) VALUES (?, ?, ?, ?, ?)",
-            (of, to, res.angle.degrees, res.position.value, time.tt))
+            (of.name, to.name, res.angle.degrees, res.position.value, time.tt))
 
     def save_lunar_eclipses(self, events: List[Eclipse]):
         for e in events:

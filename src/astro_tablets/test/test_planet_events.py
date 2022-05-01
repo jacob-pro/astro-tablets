@@ -1,4 +1,3 @@
-import pathlib
 from unittest import TestCase
 from bs4 import BeautifulSoup
 from parse import parse
@@ -9,6 +8,7 @@ from astro_tablets.util import diff_hours
 
 
 class PlanetEventsTest(TestCase):
+    data: AstroData
 
     @classmethod
     def setUpClass(cls):

@@ -30,7 +30,7 @@ class PotentialMonthResult:
     actual_month: int
     month_sunset_1: TimeValue
     first_visibility: TimeValue
-    next_month_sunset_1: TimeValue
+    next_month_sunset_1: Optional[TimeValue]
     days_late: int
     observations: List[Dict]
     _length: MonthLength
@@ -40,7 +40,7 @@ class PotentialMonthResult:
         # Although we can only do this check if we know the length of this month for certain
         # noinspection PyProtectedMember
         if self._length != MonthLength.UNKNOWN and self.actual_month == potential2.actual_month - 1:
-            if potential2.month_sunset_1.inner != self.next_month_sunset_1.inner:
+            if potential2.month_sunset_1.inner != self.next_month_sunset_1.inner:  # type: ignore
                 return False
         return True
 
@@ -133,7 +133,7 @@ class AbstractTablet(ABC):
         self.db = db
 
     @abstractmethod
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         pass
 
     def repeat_month_with_alternate_starts(self, nisan_1: float, month_number: int,
@@ -208,7 +208,7 @@ class AbstractTablet(ABC):
                 # would follow this one is still valid
                 next_nisan = months[13]
                 next_vernal = self.db.nearest_event_match_to_time(SUN, VERNAL_EQUINOX, next_nisan)
-                if abs(next_vernal - next_nisan) > MAX_NISAN_EQUINOX_DIFF_DAYS:
+                if abs(next_vernal - next_nisan) > MAX_NISAN_EQUINOX_DIFF_DAYS:  # type: ignore
                     continue
             else:
                 next_nisan = months[12]
@@ -237,7 +237,7 @@ class AbstractTablet(ABC):
         for i in results:
             print(i.base_year, i.best_score)
 
-    def output_json_for_year(self, results: List[MultiyearResult], year: Union[int, None], slim_results: bool):
+    def output_json_for_year(self, results: List[MultiyearResult], year: Optional[int], slim_results: bool):
         if year is not None:
             filtered = list(filter(lambda x: x.base_year == year, results))
             if len(filtered) < 1:

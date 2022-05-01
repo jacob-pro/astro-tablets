@@ -6,7 +6,7 @@ from skyfield import almanac
 from skyfield.timelib import Time
 from skyfield.units import Angle
 
-from astro_tablets.constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis, Planet
+from astro_tablets.constants import InnerPlanetArcusVisionis, OuterPlanetArcusVisionis, Planet, Body
 from astro_tablets.data import AstroData, SUN, EARTH
 from astro_tablets.generate import OPTIONAL_PROGRESS
 from astro_tablets.util import same_sign, change_in_longitude
@@ -46,12 +46,14 @@ def _apparent_altitude_of_sun(data: AstroData, t0: Time) -> Angle:
 def planet_events(data: AstroData, planet: Planet, t0: Time, t1: Time, progress: OPTIONAL_PROGRESS = None
                   ) -> List[SynodicEvent]:
     if planet.is_inner:
-        return _inner_planet_events(data, data.get_body(planet.name), t0, t1, planet.arcus_visionis, progress)
+        ac1: InnerPlanetArcusVisionis = planet.arcus_visionis  # type: ignore
+        return _inner_planet_events(data, data.get_body(planet), t0, t1, ac1, progress)
     else:
-        return _outer_planet_events(data, data.get_body(planet.name), t0, t1, planet.arcus_visionis, progress)
+        ac2: OuterPlanetArcusVisionis = planet.arcus_visionis  # type: ignore
+        return _outer_planet_events(data, data.get_body(planet), t0, t1, ac2, progress)
 
 
-def _inner_planet_events(data: AstroData, body: str, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis,
+def _inner_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: InnerPlanetArcusVisionis,
                          progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an inner planet
@@ -141,7 +143,7 @@ def _inner_planet_events(data: AstroData, body: str, t0: Time, t1: Time, ac: Inn
     return events
 
 
-def _outer_planet_events(data: AstroData, body: str, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis,
+def _outer_planet_events(data: AstroData, body: Body, t0: Time, t1: Time, ac: OuterPlanetArcusVisionis,
                          progress: OPTIONAL_PROGRESS = None) -> List[SynodicEvent]:
     """
     Returns a list of synodic events for an outer planet

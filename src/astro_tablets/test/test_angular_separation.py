@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from skyfield.starlib import Star
 
+from astro_tablets.constants import MERCURY, MOON
 from astro_tablets.generate.angular_separation import *
 from astro_tablets.generate.lunar_calendar import sunset_and_rise_for_date
 
@@ -16,8 +17,8 @@ class AngularSeparationTest(TestCase):
     def test_angular_separation(self):
         time = sunset_and_rise_for_date(self.data, 2020, 12, 17)[0]
 
-        moon = self.data.ephemeris['moon']
-        mercury = self.data.get_body("Mercury")
+        moon = self.data.get_body(MOON)
+        mercury = self.data.get_body(MERCURY)
 
         sep, pos = angular_separation(self.data, moon, mercury, time)
         self.assertLessEqual(abs(sep.degrees - 39.1), 1.0)

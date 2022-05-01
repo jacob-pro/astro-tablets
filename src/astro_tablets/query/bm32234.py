@@ -47,8 +47,8 @@ class BM32234(AbstractTablet):
         eclipse = LunarEclipseQuery(self.db, eclipse_time, ExpectedEclipseType.PARTIAL_OR_TOTAL, None, eclipse_pos, range)
 
         if eclipse.best is not None:
-            eclipse_time = eclipse.best['closest_approach_time']
-            range = SearchRange(eclipse_time - 1, eclipse_time + 1, "Within a day of the eclipse")
+            time = eclipse.best['closest_approach_time']
+            range = SearchRange(time - 1, time + 1, "Within a day of the eclipse")
 
         mars = AngularSeparationQuery(self.db, MARS, ANTARES, 2 * CUBIT, 1 * CUBIT, EclipticPosition.AHEAD, range)
         saturn = AngularSeparationQuery(self.db, SATURN, CAPRICORNUS.central_star, 0, CAPRICORNUS.radius, None, range)
@@ -126,7 +126,7 @@ class BM32234(AbstractTablet):
         return [month_7]
 
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         tests = [YearToTest(0, "Nebuchadnezzar 14", Intercalary.ADDARU, self.year_14),
                  YearToTest(17, "Nebuchadnezzar 31", Intercalary.ULULU, self.year_31),
                  YearToTest(18, "Nebuchadnezzar 32", Intercalary.FALSE, self.year_32),

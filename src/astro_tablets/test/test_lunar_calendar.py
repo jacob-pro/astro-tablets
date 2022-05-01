@@ -10,6 +10,7 @@ from astro_tablets.util import *
 
 
 class LunarCalendarTest(TestCase):
+    data: AstroData
 
     @classmethod
     def setUpClass(cls):

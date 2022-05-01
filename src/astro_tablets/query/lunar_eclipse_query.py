@@ -41,27 +41,29 @@ class PhaseTiming(ABC):
 
 @dataclass
 class SeparatePhaseTimings(PhaseTiming):
-    onset: [None, float]
-    maximal: [None, float]
-    clearing: [None, float]
+    onset: Optional[float]
+    maximal: Optional[float]
+    clearing: Optional[float]
 
 
 @dataclass
 class CompositePhaseTiming(PhaseTiming):
-    sum: [None, float]
+    sum: Optional[float]
 
 
 # Position of the moon relative to a Normal Star
 @dataclass
 class EclipsePosition:
-    body: str
+    body: Body
     target_angle: float
     tolerance: float
-    target_position: Union[EclipticPosition, None]
+    target_position: Optional[EclipticPosition]
 
 
 class LunarEclipseQuery(AbstractQuery):
     ECLIPSE_SEARCH_TOLERANCE = 6/24
+    best: Optional[Dict]
+    score: float
 
     def __init__(self, db: Database, first_contact: Union[None, FirstContactTime],
                  type: ExpectedEclipseType, phase_timing: Union[None, PhaseTiming],
@@ -112,11 +114,11 @@ class LunarEclipseQuery(AbstractQuery):
             weights.append(0.25)
         score = np.average(scores, weights=weights)
         assert 0 <= score <= 1
-        return score
+        return float(score)
 
     @staticmethod
     def eclipse_core_score(eclipse: Dict, type: ExpectedEclipseType) -> float:
-        score = 0
+        score = 0.0
         if type == ExpectedEclipseType.UNKNOWN:
             score = 1.0
             if eclipse['e_type'] == 'Penumbral':  # Tie breaker, when two predicted eclipses, favour non penumbral
@@ -173,7 +175,7 @@ class LunarEclipseQuery(AbstractQuery):
                 diffs.append((timings.clearing, eclipse['clearing_us']))
         else:
             raise RuntimeError
-        score = 0
+        score = 0.0
         for (observed, actual) in diffs:
             if actual != 0:
                 percent_err = abs(actual - observed) / abs(actual)
@@ -183,7 +185,7 @@ class LunarEclipseQuery(AbstractQuery):
         return score
 
     def output(self) -> dict:
-        dict = {}
+        dict: Dict[str, Any] = {}
         if self.best is not None:
             dict['closest_approach_time'] = TimeValue(self.best['closest_approach_time'])
             dict['visible'] = self.best['visible']

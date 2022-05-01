@@ -99,7 +99,7 @@ class Eclipse:
         calc = EclipseTool(data)
 
         f = lambda t: calc.angle_between(t) < calc.umbra_radius(t) + calc.moon_radius(t)
-        f.step_days = 0.01
+        f.step_days = 0.01  # type: ignore
         times, values = find_discrete(data.timescale.tt_jd(time.tt - 1), data.timescale.tt_jd(time.tt + 1), f)
         if self.type != 'Penumbral':
             assert len(times) == 2
@@ -110,7 +110,7 @@ class Eclipse:
             self.partial_eclipse_end = times[1]
 
         f = lambda t: calc.angle_between(t) < calc.umbra_radius(t) - calc.moon_radius(t)
-        f.step_days = 0.01
+        f.step_days = 0.01  # type: ignore
         times, values = find_discrete(data.timescale.tt_jd(time.tt - 0.5), data.timescale.tt_jd(time.tt + 0.5), f)
         if self.type == 'Total':
             assert len(times) == 2

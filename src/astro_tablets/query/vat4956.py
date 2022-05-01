@@ -23,7 +23,7 @@ class VAT4956Mode(Enum):
 class VAT4956(AbstractTablet):
 
     def year_37_month_1(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
 
         # Sîn (Moon) appeared behind the Bull of Heaven (Taurus)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
@@ -52,7 +52,7 @@ class VAT4956(AbstractTablet):
         return res
 
     def year_37_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
 
         # Sîn (Moon) appeared below the Rear Bright Star of the Large Twins (β Geminorum)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
@@ -88,7 +88,7 @@ class VAT4956(AbstractTablet):
         return res
 
     def year_37_month_3(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
         # Sîn (Moon) appeared behind the Crab (Cancer);
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(AngularSeparationQuery(self.db, MOON, CANCER.central_star, 0, CANCER.radius,
@@ -150,7 +150,7 @@ class VAT4956(AbstractTablet):
         return res
 
     def year_37_month_10(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
         # The 19th, Dilbat (Venus) was below the Middle Star of the Horn of the Goat [...] (β Capricorni)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(AngularSeparationQuery(self.db, VENUS, BETA_CAPRICORNI, 0, 15,
@@ -158,7 +158,7 @@ class VAT4956(AbstractTablet):
         return res
 
     def year_37_month_11(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
         # Sîn (Moon) appeared in the Swallow (Pisces)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(AngularSeparationQuery(self.db, MOON, PISCES.central_star, 0, PISCES.radius,
@@ -202,7 +202,7 @@ class VAT4956(AbstractTablet):
         return res
 
     def year_37_month_12(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
         # Addaru, the 1st, Sîn (Moon) appeared behind the Hired Man (Aries) while Šamaš was present
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(AngularSeparationQuery(self.db, MOON, ARIES.central_star, 0, ARIES.radius,
@@ -255,7 +255,7 @@ class VAT4956(AbstractTablet):
         return [month_i, month_ii, month_iii, month_x, month_xi, month_xii]
 
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         if subquery == "lunar_only":
             self.mode = VAT4956Mode.LUNAR_ONLY
         elif subquery == "lunar_six_only":

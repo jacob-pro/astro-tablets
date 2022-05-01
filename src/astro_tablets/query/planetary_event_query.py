@@ -14,10 +14,11 @@ class PlanetaryEventQuery(AbstractQuery):
                  target_time: SearchRange):
         self.target_time = target_time
         self.event = event
-        self.nearest = db.nearest_event_match_to_time(planet.name, event.value, target_time.start)
+        nearest = db.nearest_event_match_to_time(planet, event.value, target_time.start)
         self.planet = planet
-        if self.nearest is None:
+        if nearest is None:
             raise RuntimeError("Failed to find any event {} for {} - check database".format(event, planet.name))
+        self.nearest = nearest
 
     def get_search_range(self) -> SearchRange:
         return self.target_time

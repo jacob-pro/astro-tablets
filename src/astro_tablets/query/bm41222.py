@@ -136,7 +136,7 @@ class BM41222(AbstractTablet):
         v = self.repeat_month_with_alternate_starts(nisan_1, 5, self.nabo_13_v)
         return [iii, v]
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
 
         if subquery is not None:
 

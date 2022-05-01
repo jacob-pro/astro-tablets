@@ -1,7 +1,7 @@
 import math
-from typing import Union
+from typing import *
 
-from astro_tablets.constants import Planet
+from astro_tablets.constants import Body
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.database import Database
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
@@ -10,12 +10,8 @@ from astro_tablets.util import TimeValue
 
 class AngularSeparationQuery(AbstractQuery):
 
-    def __init__(self, db: Database, from_body: Union[Planet, str], to_body: Union[Planet, str], target_angle: float,
-                 tolerance: float, target_position: Union[EclipticPosition, None], target_time: SearchRange):
-        if type(from_body) == Planet:
-            from_body = from_body.name
-        if type(to_body) == Planet:
-            to_body = to_body.name
+    def __init__(self, db: Database, from_body: Body, to_body: Body, target_angle: float,
+                 tolerance: float, target_position: Optional[EclipticPosition], target_time: SearchRange):
         self.target_time = target_time
         self.from_body = from_body
         self.to_body = to_body
@@ -25,10 +21,10 @@ class AngularSeparationQuery(AbstractQuery):
         sep = db.separations_in_range(from_body, to_body, target_time.start, target_time.end)
         if len(sep) < 1:
             raise RuntimeError("Failed to find any separations between {} and {} at {} to {}, check database"
-                               .format(from_body, to_body, target_time.start, target_time.end))
+                               .format(from_body.name, to_body.name, target_time.start, target_time.end))
         sep.sort(key=lambda x: abs(x['angle'] - target_angle))
         if target_position is not None:
-            filtered = list(filter(lambda x: x['angle'] <= tolerance and x['position'] == target_position.value, sep))
+            filtered = list(filter(lambda x: x['angle'] <= tolerance and x['position'] == target_position.value, sep))  # type: ignore
             if len(filtered) > 0:
                 self.best = filtered[0]
             else:
@@ -40,7 +36,7 @@ class AngularSeparationQuery(AbstractQuery):
         return self.target_time
 
     @staticmethod
-    def separation_score(target_angle: float, tolerance: float, target_position: Union[EclipticPosition, None],
+    def separation_score(target_angle: float, tolerance: float, target_position: Optional[EclipticPosition],
                          actual: float, actual_position: str):
         """
                 If angle is within tolerance of the target_angle score 1.0

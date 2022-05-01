@@ -3,7 +3,7 @@ import time
 from abc import ABC
 
 from astro_tablets.data import *
-from astro_tablets.generate import angular_separation
+from astro_tablets.generate.angular_separation import angular_separation
 from astro_tablets.generate.database import Database
 from astro_tablets.generate.eclipse import lunar_eclipses_in_range
 from astro_tablets.generate.lunar_calendar import vernal_equinox, days_in_range
@@ -33,10 +33,10 @@ def get_tablet_class(tablet: str):
 
 
 class Tablet(ABC):
-    default_start = None
-    default_end = None
+    default_start = 0
+    default_end = 0
 
-    def __init__(self, data: AstroData, db: Database, start_year: Union[None, int], end_year: Union[None, int]):
+    def __init__(self, data: AstroData, db: Database, start_year: Optional[int], end_year: Optional[int]):
         self.data = data
         self.db = db
         self.start_year = self.default_start if start_year is None else start_year
@@ -58,11 +58,7 @@ class Tablet(ABC):
         print("")
         return days
 
-    def separation_during_night(self, of: Union[str, Planet], to: Union[str, Planet], intervals: int = 4):
-        if type(of) == Planet:
-            of = of.name
-        if type(to) == Planet:
-            to = to.name
+    def separation_during_night(self, of: Body, to: Body, intervals: int = 4):
         b1 = self.data.get_body(of)
         b2 = self.data.get_body(to)
         for idx, day in enumerate(self.days):
@@ -71,7 +67,7 @@ class Tablet(ABC):
                 time = self.data.timescale.tt_jd(day.sunset.tt + (i/intervals * night_len))
                 res = angular_separation(self.data, b1, b2, time)
                 self.db.save_separation(of, to, res, time)
-            self.print_progress("Computing separation between {} and {}".format(of, to), idx / len(self.days))
+            self.print_progress(f"Computing separation between {of.name} and {to.name}", idx / len(self.days))
         print("")
 
     def planet_events(self, planet: Planet):
@@ -80,7 +76,7 @@ class Tablet(ABC):
         self.db.save_synodic_events(planet.name, events)
         print("")
 
-    def lunar_eclipses(self, position_bodies: List[str] = []):
+    def lunar_eclipses(self, position_bodies: List[Body] = []):
         print("Computing lunar eclipses")
         eclipses = lunar_eclipses_in_range(self.data, self.start_day, self.end_day)
         self.db.save_lunar_eclipses(eclipses)
@@ -94,8 +90,8 @@ class Tablet(ABC):
             print("")
         return eclipses
 
-    def risings_settings(self, body: str):
-        print("Computing risings and settings for {}".format(body))
+    def risings_settings(self, body: Body):
+        print(f"Computing risings and settings for {body.name}")
         rs = risings_and_settings(self.data, body, self.start_day, self.end_day)
         self.db.save_risings_settings(body, rs)
 

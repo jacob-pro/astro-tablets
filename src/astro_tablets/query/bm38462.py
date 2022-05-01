@@ -370,7 +370,7 @@ class BM38462(AbstractTablet):
         month_a = self.repeat_month_with_alternate_starts(nisan_1, 2, self.year_29_month_2)
         return [month_a]
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         tests = [YearToTest(0, "Nebuchadnezzar 1", Intercalary.FALSE, self.year_1),
                  YearToTest(1, "Nebuchadnezzar 2", Intercalary.ULULU, self.year_2),
                  YearToTest(2, "Nebuchadnezzar 3", Intercalary.FALSE, self.year_3),

@@ -20,41 +20,48 @@ def get_answer(question: str) -> bool:
     while True:
         print("{} [Y/N]".format(question))
         try:
-            return strtobool(input())
+            return strtobool(input()) == 1
         except ValueError:
             pass
 
 
-def database_path(tablet: str, db: Union[str, None]) -> str:
+def database_path(tablet: str, override_path: Optional[str]) -> str:
     default_path = pathlib.Path(__file__).parent.parent.parent.absolute() / "./generated/{}.db".format(tablet.lower())
-    path = db if db is not None else default_path.as_posix()
-    if not pathlib.Path(path).exists():
-        raise RuntimeError(f'database {path} not found')
+    path = override_path if override_path is not None else default_path.as_posix()
     return path
 
 
-def generate(tablet: str, db: Union[str, None], overwrite: bool, start: Union[int, None], end: Union[int, None]):
+def generate(tablet: str, db: Optional[str], overwrite: bool, start: Optional[int], end: Optional[int]):
+    generate_impl(tablet, db, overwrite, start, end)
+
+
+def generate_impl(tablet_name: str, db_path_override: Optional[str], overwrite: bool, start: Optional[int], end: Optional[int]):
     data = AstroData()
-    tablet_gen_class = tablets.get_tablet_class(tablet)
-    db_file = database_path(tablet, db)
-    if os.path.isfile(db_file):
+    tablet_gen_class = tablets.get_tablet_class(tablet_name)
+    db_path = database_path(tablet_name, db_path_override)
+    if os.path.isfile(db_path):
         if overwrite or get_answer("Database file already exists, overwrite?"):
-            os.remove(db_file)
+            os.remove(db_path)
         else:
             exit(1)
-    db = GenerateDatabase(db_file)
+    db = GenerateDatabase(db_path)
     obj = tablet_gen_class(data, db, start, end)
     obj.compute()
     obj.post_compute()
     db.close()
 
 
-def query(tablet: str, subquery: Union[str, None], db: Union[str, None], year: Union[int, None], slim: bool):
+def query(tablet: str, subquery: Optional[str], db: Optional[str], year: Optional[int], slim: bool):
+    query_impl(tablet, subquery, db, year, slim)
+
+
+def query_impl(tablet_name: str, subquery: Optional[str], db_path_override: Optional[str], year: Optional[int], slim: bool):
     data = AstroData(time_only=True)
-    db_file = database_path(tablet, db)
+    db_file = database_path(tablet_name, db_path_override)
     db = QueryDatabase(db_file)
-    assert db.tablet_name.lower() == tablet.lower(), "Database info table doesn't match the requested tablet"
-    tablet = query_pkg.get_tablet_class(tablet)(data, db)
+    if db.tablet_name.lower() != tablet_name.lower():
+        raise RuntimeError("Database info table doesn't match the requested tablet")
+    tablet = query_pkg.get_tablet(tablet_name, data, db)
     tablet.do_query(subquery, year, slim)
 
 

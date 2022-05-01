@@ -58,12 +58,13 @@ def get_git_changes() -> bool:
         return modified == "1"
     try:
         subprocess.check_output(['git', 'diff', '--exit-code'], stderr=subprocess.PIPE)
-    except subprocess.CalledProcessError as e:
+    except subprocess.CalledProcessError:
         return True
+    return False
 
 
 def array_group_by(input: List, key_fn: Callable) -> OrderedDict:
-    res = OrderedDict()
+    res: OrderedDict = OrderedDict()
     for item in input:
         key = key_fn(item)
         if key in res:

@@ -11,7 +11,7 @@ from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
 class BM32312(AbstractTablet):
 
     def month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
         day14 = SearchRange.for_night(month, 14)
         # Mercury's last appearance in the east behind Pisces
         res.append(PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.ML, day14))
@@ -29,7 +29,7 @@ class BM32312(AbstractTablet):
         return res
 
     def month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res = []
+        res: List[AbstractQuery] = []
         day5 = SearchRange.for_night(month, 5)
         # Mercury's first appearance in the east in Pisces
         res.append(PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.MF, day5))
@@ -52,7 +52,7 @@ class BM32312(AbstractTablet):
         month_b = self.try_multiple_months(nisan_1, 1, 13, self.month_b, comment="Month B")
         return [month_a, month_b]
 
-    def do_query(self, _subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, _subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         tests = [YearToTest(0, "Shamash-shum-ukin 16", Intercalary.UNKNOWN, self.shamash_year_16)]
         results = self.run_years(tests)
         self.print_results(results, "Shamash-shum-ukin year 16")

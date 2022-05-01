@@ -234,7 +234,7 @@ class BM76738(AbstractTablet):
         return [month_a, month_b]
 
 
-    def do_query(self, subquery: Union[str, None], print_year: Union[int, None], slim_results: bool):
+    def do_query(self, subquery: Optional[str], print_year: Optional[int], slim_results: bool):
         tests = [YearToTest(0, "Kandalanu 1", Intercalary.UNKNOWN, self.year_1),
                  YearToTest(1, "Kandalanu 2", Intercalary.UNKNOWN, self.year_2),
                  YearToTest(2, "Kandalanu 3", Intercalary.UNKNOWN, self.year_3),

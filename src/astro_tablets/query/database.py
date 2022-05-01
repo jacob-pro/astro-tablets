@@ -2,7 +2,7 @@ import sqlite3
 from dataclasses import dataclass
 from typing import *
 
-from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS
+from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS, Body
 from astro_tablets.data import SUN, MOON
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX
 from astro_tablets.generate.risings_settings import RiseSetType
@@ -70,27 +70,31 @@ class Database:
             ON days.sunset >= (equinox.time - ?) and days.sunset <= (equinox.time + ?) and days.first_visibility==1
             WHERE equinox.event=? and equinox.body=?
             AND days.year <= (SELECT end_year FROM db_info LIMIT 1)""",
-                       (MAX_NISAN_EQUINOX_DIFF_DAYS, MAX_NISAN_EQUINOX_DIFF_DAYS, VERNAL_EQUINOX, SUN, ))
+                       (MAX_NISAN_EQUINOX_DIFF_DAYS, MAX_NISAN_EQUINOX_DIFF_DAYS, VERNAL_EQUINOX, SUN.name, ))
         res = self.fetch_all_as_dict(cursor)
         return array_group_by(res, lambda x: x["year"])
 
-    def nearest_event_match_to_time(self, body: str, event: str, time: float) -> Union[float, None]:
+    def nearest_event_match_to_time(self, body: Body, event: str, time: float) -> Optional[float]:
         cursor = self.conn.cursor()
         cursor.execute("""SELECT time FROM events WHERE body=? AND event=? ORDER BY ABS(time - ?) LIMIT 1""",
-                       (body, event, time,))
-        time = cursor.fetchone()
-        if time is not None:
-            return time[0]
+                       (body.name, event, time,))
+        result = cursor.fetchone()
+        if result is not None:
+            return result[0]
         return None
 
-    def separations_in_range(self, from_body: str, to_body: str, start_time: float, end_time: float) -> List[Dict]:
+    def separations_in_range(self, from_body: Body, to_body: Body, start_time: float, end_time: float) -> List[Dict]:
         cursor = self.conn.cursor()
         cursor.execute("""SELECT angle, position, time FROM separations 
             WHERE from_body=? AND to_body=? AND time >= ? AND time <= ?""",
-                       (from_body, to_body, start_time, end_time))
+                       (from_body.name, to_body.name, start_time, end_time))
         return self.fetch_all_as_dict(cursor)
 
-    def lunar_eclipses_in_range(self, start_time: float, end_time: float, position_body: Union[None, str]) -> List[Dict]:
+    def lunar_eclipses_in_range(self, start_time: float, end_time: float, position_body: Optional[Body]) -> List[Dict]:
+        if position_body is not None:
+            body = position_body.name
+        else:
+            body = None
         cursor = self.conn.cursor()
         cursor.execute("""
             SELECT e_type, closest_approach_time, partial_eclipse_begin, onset_us,
@@ -99,7 +103,7 @@ class Database:
             LEFT JOIN separations s 
             ON s.time == e.closest_approach_time AND s.to_body == ? AND s.from_body == ?
             WHERE (closest_approach_time >= ? AND closest_approach_time <= ?)""",
-                       (position_body, MOON, start_time, end_time))
+                       (body, MOON.name, start_time, end_time))
         eclipses = self.fetch_all_as_dict(cursor)
         for e in eclipses:
             e['sunset'] = self.nearest_sunset(e['closest_approach_time'])
@@ -123,11 +127,11 @@ class Database:
         return res['sunrise']
 
 
-    def nearest_rising_setting(self, body: str, r: RiseSetType, time: float) -> float:
+    def nearest_rising_setting(self, body: Body, r: RiseSetType, time: float) -> float:
         cursor = self.conn.cursor()
         cursor.execute("""
             SELECT time FROM risings_settings WHERE body == ? AND r_type == ? ORDER BY ABS(time - ?) LIMIT 1""",
-                       (body, r.value, time))
+                       (body.name, r.value, time))
         res = self.fetch_one_as_dict(cursor)
         return res['time']
 
