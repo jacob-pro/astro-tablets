@@ -28,12 +28,12 @@ def get_answer(question: str) -> bool:
             pass
 
 
-def database_path(tablet: str, override_path: Optional[str]) -> str:
-    default_path = pathlib.Path(
-        __file__
-    ).parent.parent.parent.absolute() / "./generated/{}.db".format(tablet.lower())
-    path = override_path if override_path is not None else default_path.as_posix()
-    return path
+def default_database_path(tablet: str) -> str:
+    default_path = (
+        pathlib.Path(__file__).parent.parent.parent.absolute()
+        / f"./generated/{tablet.lower()}.db"
+    )
+    return default_path.as_posix()
 
 
 def generate(
@@ -55,7 +55,11 @@ def generate_impl(
 ):
     data = AstroData()
     tablet_gen_class = tablets.get_tablet_class(tablet_name)
-    db_path = database_path(tablet_name, db_path_override)
+    db_path = (
+        default_database_path(tablet_name)
+        if db_path_override is None
+        else db_path_override
+    )
     if os.path.isfile(db_path):
         if overwrite or get_answer("Database file already exists, overwrite?"):
             os.remove(db_path)
@@ -84,10 +88,14 @@ def query_all_impl(
     output_path_override: Optional[str],
 ):
     data = AstroData(time_only=True)
-    db_file = database_path(tablet_name, db_path_override)
-    db = QueryDatabase(db_file)
-    if db.tablet_name.lower() != tablet_name.lower():
-        raise RuntimeError("Database info table doesn't match the requested tablet")
+    db_path = (
+        default_database_path(tablet_name)
+        if db_path_override is None
+        else db_path_override
+    )
+    db = QueryDatabase(db_path)
+    if db.info.tablet.lower() != tablet_name.lower():
+        raise RuntimeError("Database info doesn't match the requested tablet")
     tablet = astro_tablets.query.get_tablet(tablet_name, data, db, subquery)
     subquery_component = "" if subquery is None else f"_{subquery}"
     output_path = (
@@ -98,6 +106,45 @@ def query_all_impl(
     tablet.write_scores(
         output_path, lambda progress: print_progress("Progress: ", progress)
     )
+
+
+def query_year(
+    tablet: str,
+    year: int,
+    subquery: Optional[str],
+    db: Optional[str],
+    output: Optional[str],
+    full: bool,
+):
+    query_year_impl(tablet, year, subquery, db, output, full)
+
+
+def query_year_impl(
+    tablet_name: str,
+    year: int,
+    subquery: Optional[str],
+    db_path_override: Optional[str],
+    output_path_override: Optional[str],
+    full: bool,
+):
+    data = AstroData(time_only=True)
+    db_path = (
+        default_database_path(tablet_name)
+        if db_path_override is None
+        else db_path_override
+    )
+    db = QueryDatabase(db_path)
+    if db.info.tablet.lower() != tablet_name.lower():
+        raise RuntimeError("Database info doesn't match the requested tablet")
+    tablet = astro_tablets.query.get_tablet(tablet_name, data, db, subquery)
+    subquery_component = "" if subquery is None else f"_{subquery}"
+    full_component = "" if full is False else "full"
+    output_path = (
+        f"{tablet_name.lower()}_base_year_{year}{subquery_component}{full_component}.json"
+        if output_path_override is None
+        else output_path_override
+    )
+    tablet.write_single_year(year, full, output_path)
 
 
 def graphs():
@@ -138,7 +185,7 @@ def main():
         "tablet", type=str, help="name of the tablet to query ephemeris for"
     )
     query_all_parser.add_argument(
-        "subquery", type=str, nargs="?", help="optional subquery"
+        "subquery", type=str, nargs="?", help="Optional subquery"
     )
     query_all_parser.add_argument(
         "--db", type=str, help="override path to source database"
@@ -147,12 +194,25 @@ def main():
         "--output", type=str, help="override path to save output"
     )
 
-    # query_parser.add_argument(
-    #     "--year", type=int, help="optionally output a specific year"
-    # )
-    # query_parser.add_argument(
-    #     "--slim", action="store_true", help="only output best compatible path"
-    # )
+    query_all_parser = subparsers.add_parser("query_year")
+    query_all_parser.add_argument(
+        "tablet", type=str, help="name of the tablet to query ephemeris for"
+    )
+    query_all_parser.add_argument("year", type=int, help="the base year to query")
+    query_all_parser.add_argument(
+        "subquery", type=str, nargs="?", help="Optional subquery"
+    )
+    query_all_parser.add_argument(
+        "--db", type=str, help="override path to source database"
+    )
+    query_all_parser.add_argument(
+        "--output", type=str, help="override path to save output"
+    )
+    query_all_parser.add_argument(
+        "--full",
+        action="store_true",
+        help="output all possible year start combinations",
+    )
 
     subparsers.add_parser("graphs")
 

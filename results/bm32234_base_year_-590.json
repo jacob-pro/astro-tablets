@@ -26,7 +26,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-590-09-15 07:51",
-                  "visible": 0,
+                  "visible": false,
                   "type": "Total",
                   "onset_us": 16.266492353752255,
                   "maximal_us": 25.59599851258099,
@@ -52,7 +52,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-589-03-12 10:05",
-                  "visible": 0,
+                  "visible": false,
                   "type": "Partial",
                   "onset_us": 19.476802172139287,
                   "maximal_us": 0.0,
@@ -95,7 +95,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-572-04-02 01:58",
-                  "visible": 1,
+                  "visible": true,
                   "type": "Total",
                   "onset_us": 14.1313311830163,
                   "maximal_us": 24.559435369446874,
@@ -163,7 +163,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-572-09-25 15:32",
-                  "visible": 0,
+                  "visible": false,
                   "type": "Total",
                   "onset_us": 16.376229487359524,
                   "maximal_us": 25.04803603515029,
@@ -189,7 +189,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-571-03-22 17:52",
-                  "visible": 1,
+                  "visible": true,
                   "type": "Partial",
                   "onset_us": 20.716546587646008,
                   "maximal_us": 0.0,
@@ -232,7 +232,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-554-10-06 23:21",
-                  "visible": 1,
+                  "visible": true,
                   "type": "Total",
                   "onset_us": 16.47797506302595,
                   "maximal_us": 24.527499228715897,
@@ -261,7 +261,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-553-04-03 01:31",
-                  "visible": 1,
+                  "visible": true,
                   "type": "Partial",
                   "onset_us": 21.923530669882894,
                   "maximal_us": 0.0,
@@ -304,7 +304,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-536-10-17 07:21",
-                  "visible": 0,
+                  "visible": false,
                   "type": "Total",
                   "onset_us": 16.546537773683667,
                   "maximal_us": 24.122411906719208,

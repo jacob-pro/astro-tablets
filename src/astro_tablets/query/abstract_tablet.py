@@ -12,7 +12,7 @@ from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS
 from astro_tablets.data import SUN, AstroData
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX
 from astro_tablets.query.abstract_query import AbstractQuery
-from astro_tablets.query.database import BabylonianDay, Database
+from astro_tablets.query.database import BabylonianDay, Database, PotentialYear
 from astro_tablets.util import PROGRESS_CALLBACK, TimeValue
 
 
@@ -230,7 +230,7 @@ class AbstractTablet(ABC):
 
     def repeat_year_with_alternate_starts(
         self,
-        potential_years: List[Dict],
+        potential_years: List[PotentialYear],
         name: str,
         intercalary: Intercalary,
         func: Callable[[float], List[MonthResult]],
@@ -241,13 +241,13 @@ class AbstractTablet(ABC):
         """
         all_results = []
         vernal = self.db.nearest_event_match_to_time(
-            SUN, VERNAL_EQUINOX, potential_years[0]["nisan_1"]
+            SUN, VERNAL_EQUINOX, potential_years[0].nisan_1
         )
         if vernal is None:
             raise RuntimeError("Unable to find vernal equinox time")
-        year_number = potential_years[0]["year"]
+        year_number = potential_years[0].year
         for y in potential_years:
-            months = self.db.get_months(y["nisan_1"], count=14)
+            months = self.db.get_months(y.nisan_1, count=14)
             if intercalary.is_intercalary():
                 # Exclude a late start if this year is intercalary, i.e. make sure that whichever year
                 # would follow this one is still valid
@@ -259,7 +259,7 @@ class AbstractTablet(ABC):
                     continue
             else:
                 next_nisan = months[12]
-            results = func(y["nisan_1"])
+            results = func(y.nisan_1)
             compatible_paths = self.generate_compatible_month_combinations(results)
             compatible_paths.sort(key=lambda y: sum(x.score for x in y), reverse=True)
             if len(compatible_paths) == 0:
@@ -274,7 +274,7 @@ class AbstractTablet(ABC):
             all_results.append(
                 PotentialYearResult(
                     score=total_score,
-                    nisan_1=TimeValue(y["nisan_1"]),
+                    nisan_1=TimeValue(y.nisan_1),
                     next_nisan=TimeValue(next_nisan),
                     months=months_list,
                     _intercalary=intercalary,
@@ -296,37 +296,42 @@ class AbstractTablet(ABC):
         """
         results = self._run_years(progress)
         results.sort(key=lambda x: x.best_score, reverse=True)
-        lines = [self.db.info_text, f"Scores for {self.scores_title}", "Year   Score"]
+        info_text = (
+            f"Database generated on {self.db.info.time} for {self.db.info.tablet} "
+            f"covering {self.db.info.start_year} to {self.db.info.end_year}"
+        )
+        lines = [info_text, f"Scores for {self.scores_title}", "Year   Score"]
         for i in results:
             lines.append(f"{i.base_year} {i.best_score}")
         with open(path, "w") as file:
             file.write("\n".join(lines))
 
-    def output_json_for_year(
-        self, results: List[MultiyearResult], year: Optional[int], slim_results: bool
-    ):
-        if year is not None:
-            filtered = list(filter(lambda x: x.base_year == year, results))
-            if len(filtered) < 1:
-                raise RuntimeError("Base year {} not found".format(year))
-            year_to_print = filtered[0]
+    def write_single_year(self, base_year: int, full_results: bool, path: str):
+        # Filter so that base_year has the first index in the list
+        years = list(
+            filter(lambda y_list: y_list[0].year >= base_year, self.db.get_years())
+        )
 
-            if slim_results is True:
-                for y in year_to_print.years:
-                    y.potentials = list(
-                        filter(lambda x: x.best_compatible_path is True, y.potentials)
-                    )
+        yrs: List[YearResult] = []
+        for idx, x in enumerate(self.tests):
+            yrs.append(
+                self.repeat_year_with_alternate_starts(
+                    years[x.index], x.name, x.intercalary, x.func
+                )
+            )
+        total_score = self.total_year_score(yrs)
+        year_to_print = MultiyearResult(base_year, total_score, yrs)
 
-            tablet = self.__class__.__name__.lower()
-            filename = "{}_base_year_{}".format(tablet, year)
-            if slim_results:
-                filename += "_slim"
-            filename += ".json"
+        if full_results is False:
+            for y in year_to_print.years:
+                y.potentials = list(
+                    filter(lambda x: x.best_compatible_path is True, y.potentials)
+                )
 
-            with open(filename, "w") as outfile:
-                encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
-                raw = encoder.encode(year_to_print)
-                outfile.write(raw)
+        with open(path, "w") as outfile:
+            encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
+            raw = encoder.encode(year_to_print)
+            outfile.write(raw)
 
     @staticmethod
     def generate_compatible_year_combinations(
@@ -359,7 +364,7 @@ class AbstractTablet(ABC):
         return sum(x.score for x in compatible_products[0])
 
     def _run_years(self, progress: PROGRESS_CALLBACK) -> List[MultiyearResult]:
-        years = list(map(lambda x: x[1], self.db.get_years().items()))
+        years = self.db.get_years()
         results = []
         max_index = max(d.index for d in self.tests)
         range_top = len(years) - max_index
@@ -376,7 +381,7 @@ class AbstractTablet(ABC):
                     )
                 )
             total_score = self.total_year_score(yrs)
-            results.append(MultiyearResult(years[i][0]["year"], total_score, yrs))
+            results.append(MultiyearResult(years[i][0].year, total_score, yrs))
         return results
 
     def try_multiple_months(

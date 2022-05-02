@@ -2,6 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 
 from astro_tablets.constants import HIGH_TIME_TOLERANCE, REGULAR_TIME_TOLERANCE
+from astro_tablets.query.database import LunarEclipse
 from astro_tablets.query.lunar_eclipse_query import (
     CompositePhaseTiming,
     FirstContactRelative,
@@ -12,13 +13,22 @@ from astro_tablets.util import diff_time_degrees_signed
 
 
 def plot_eclipse_time_of_day_score(dest: str):
-    eclipse = {
-        "sunrise": 1458133.8958227257,
-        "partial_eclipse_begin": 1458133.9258227257,
-    }
-    actual = diff_time_degrees_signed(
-        eclipse["partial_eclipse_begin"], eclipse["sunrise"]
+    eclipse = LunarEclipse(
+        sunrise=1458133.8958227257,
+        partial_eclipse_begin=1458133.9258227257,
+        e_type="",
+        closest_approach_time=0,
+        onset_us=0,
+        maximal_us=0,
+        clearing_us=0,
+        sum_us=0,
+        visible=False,
+        angle=0,
+        position=None,
+        sunset=0,
     )
+    assert eclipse.partial_eclipse_begin is not None
+    actual = diff_time_degrees_signed(eclipse.partial_eclipse_begin, eclipse.sunrise)
 
     f, ax1 = plt.subplots()
     ax1.set_xlabel("Observed Time After Sunrise (UŠ)")
@@ -57,7 +67,20 @@ def plot_eclipse_time_of_day_score(dest: str):
 
 
 def plot_eclipse_phase_length_score(dest: str):
-    eclipse = {"sum_us": 62.75}
+    eclipse = LunarEclipse(
+        sunrise=0,
+        partial_eclipse_begin=0,
+        e_type="",
+        closest_approach_time=0,
+        onset_us=0,
+        maximal_us=0,
+        clearing_us=0,
+        sum_us=62.75,
+        visible=False,
+        angle=0,
+        position=None,
+        sunset=0,
+    )
     xs = np.arange(40, 80, 0.01)
     ys = list(
         map(

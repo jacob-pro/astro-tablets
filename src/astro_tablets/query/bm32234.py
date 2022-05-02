@@ -95,7 +95,7 @@ class BM32234(AbstractTablet):
         )
 
         if eclipse.best is not None:
-            time = eclipse.best["closest_approach_time"]
+            time = eclipse.best.closest_approach_time
             range = SearchRange(time - 1, time + 1, "Within a day of the eclipse")
 
         mars = AngularSeparationQuery(

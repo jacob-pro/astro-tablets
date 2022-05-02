@@ -335,7 +335,7 @@
                 },
                 {
                   "closest_approach_time": "-522-07-16 23:30",
-                  "visible": 1,
+                  "visible": true,
                   "type": "Partial",
                   "onset_us": 20.6231424305588,
                   "maximal_us": 0.0,
@@ -798,7 +798,7 @@
               "observations": [
                 {
                   "closest_approach_time": "-521-01-10 04:39",
-                  "visible": 1,
+                  "visible": true,
                   "type": "Total",
                   "onset_us": 14.043290941044688,
                   "maximal_us": 24.699978344142437,

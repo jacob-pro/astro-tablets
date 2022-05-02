@@ -1,8 +1,7 @@
 import os
 import subprocess
 import sys
-from collections import OrderedDict
-from typing import Callable, List, Optional, TypeVar
+from typing import Callable, Optional
 
 from skyfield.timelib import Time, Timescale
 
@@ -75,21 +74,6 @@ def get_git_changes() -> bool:
     except subprocess.CalledProcessError:
         return True
     return False
-
-
-E = TypeVar("E")
-K = TypeVar("K")
-
-
-def array_group_by(input: List[E], key_fn: Callable[[E], K]) -> OrderedDict[K, List[E]]:
-    res: OrderedDict[K, List[E]] = OrderedDict()
-    for item in input:
-        key = key_fn(item)
-        if key in res:
-            res[key].append(item)
-        else:
-            res[key] = [item]
-    return res
 
 
 class TimeValue:

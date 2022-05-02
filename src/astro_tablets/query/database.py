@@ -1,12 +1,14 @@
+import os
 import sqlite3
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, OrderedDict
+from typing import Any, Dict, List, Optional
+
+from dataclass_wizard import JSONWizard
 
 from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS, Body
 from astro_tablets.data import MOON, SUN
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX
 from astro_tablets.generate.risings_settings import RiseSetType
-from astro_tablets.util import array_group_by
 
 
 @dataclass
@@ -15,19 +17,50 @@ class BabylonianDay:
     sunrise: float
 
 
+@dataclass
+class DbInfo(JSONWizard):
+    tablet: str
+    start_year: int
+    end_year: int
+    time: str
+
+
+@dataclass
+class LunarEclipse(JSONWizard):
+    e_type: str
+    closest_approach_time: float
+    partial_eclipse_begin: Optional[float]
+    onset_us: float
+    maximal_us: float
+    clearing_us: float
+    sum_us: float
+    visible: bool
+    angle: Optional[float]
+    position: Optional[str]
+    sunset: float
+    sunrise: float
+
+
+@dataclass
+class PotentialYear(JSONWizard):
+    """A year may at one of 2 to 3 different lunar visibilities, within ~30 days of vernal equinox"""
+
+    nisan_1: float
+    """Time of sunset for a possible Nisan 1"""
+    year: int
+    """Year AD, e.g. -600"""
+
+
 class Database:
-    def __init__(self, file: str):
+    def __init__(self, file_path: str):
+        if not os.path.isfile(file_path):
+            raise RuntimeError(f"Database file {file_path} not found")
         self.conn = sqlite3.connect(
-            "file:{}?mode=ro".format(file), isolation_level=None, uri=True
+            "file:{}?mode=ro".format(file_path), isolation_level=None, uri=True
         )
         cursor = self.conn.cursor()
         cursor.execute("SELECT * FROM db_info")
-        info = self.fetch_one(cursor)
-        self.tablet_name = info["tablet"]
-        self.info_text = (
-            f"Database generated on {info['time']} for {info['tablet']} "
-            f"covering {info['start_year']} to {info['end_year']}"
-        )
+        self.info = DbInfo.from_dict(self.fetch_one(cursor))
 
     def get_days(self, month_sunset_1: float) -> List[BabylonianDay]:
         """
@@ -62,12 +95,10 @@ class Database:
         assert res[0] == nisan_1_sunset
         return res
 
-    def get_years(self) -> OrderedDict:
+    def get_years(self) -> List[List[PotentialYear]]:
         """
-        Gets a list of years from the database
-        The key will be the year number e.g. -600
-        And the value will be a list of possible Nisan Is for that year
-        i.e. each year may possibly start at one of 2 to 3 different lunar visibilities, within 30 days of equinox
+        Gets a list of potential years from the database
+        Grouped into sub-arrays by year
         """
         cursor = self.conn.cursor()
         cursor.execute(
@@ -85,8 +116,18 @@ class Database:
                 SUN.name,
             ),
         )
-        res = self.fetch_all_as_dict(cursor)
-        return array_group_by(res, lambda x: x["year"])
+        res = list(
+            map(lambda year: PotentialYear.from_dict(year), self.fetch_all(cursor))
+        )
+        output: List[List[PotentialYear]] = [[]]
+        current_year = res[0].year
+        for y in res:
+            if current_year == y.year:
+                output[len(output) - 1].append(y)
+            else:
+                current_year = y.year
+                output.append([y])
+        return output
 
     def nearest_event_match_to_time(
         self, body: Body, event: str, time: float
@@ -100,9 +141,9 @@ class Database:
                 time,
             ),
         )
-        result = cursor.fetchone()
+        result = self.fetch_one(cursor)
         if result is not None:
-            return result[0]
+            return result["time"]
         return None
 
     def separations_in_range(
@@ -114,11 +155,11 @@ class Database:
             WHERE from_body=? AND to_body=? AND time >= ? AND time <= ?""",
             (from_body.name, to_body.name, start_time, end_time),
         )
-        return self.fetch_all_as_dict(cursor)
+        return self.fetch_all(cursor)
 
     def lunar_eclipses_in_range(
         self, start_time: float, end_time: float, position_body: Optional[Body]
-    ) -> List[Dict]:
+    ) -> List[LunarEclipse]:
         if position_body is not None:
             body = position_body.name
         else:
@@ -134,11 +175,11 @@ class Database:
             WHERE (closest_approach_time >= ? AND closest_approach_time <= ?)""",
             (body, MOON.name, start_time, end_time),
         )
-        eclipses = self.fetch_all_as_dict(cursor)
+        eclipses = self.fetch_all(cursor)
         for e in eclipses:
             e["sunset"] = self.nearest_sunset(e["closest_approach_time"])
             e["sunrise"] = self.nearest_sunrise(e["closest_approach_time"])
-        return eclipses
+        return list(map(lambda eclipse: LunarEclipse.from_dict(eclipse), eclipses))
 
     def nearest_sunset(self, time: float) -> float:
         cursor = self.conn.cursor()
@@ -171,7 +212,12 @@ class Database:
         return res["time"]
 
     @staticmethod
-    def fetch_all_as_dict(cursor: sqlite3.Cursor) -> List[Dict]:
+    def fetch_all(cursor: sqlite3.Cursor) -> List[Dict[str, Any]]:
+        """
+        Fetches all rows from a cursor
+        @param cursor: The cursor to fetch from
+        @return: A List of rows, where each row is Dict of column names to values
+        """
         columns = [col[0] for col in cursor.description]
         rows = [dict(zip(columns, row)) for row in cursor.fetchall()]
         return rows
@@ -181,7 +227,7 @@ class Database:
         """
         Fetches one row from a cursor
         @param cursor: The cursor to fetch from
-        @return: A Dict of row names to values
+        @return: A Dict of column names to values
         """
         columns = [col[0] for col in cursor.description]
         return dict(zip(columns, cursor.fetchone()))
