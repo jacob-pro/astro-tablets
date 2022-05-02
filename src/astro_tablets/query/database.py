@@ -12,7 +12,7 @@ from astro_tablets.generate.risings_settings import RiseSetType
 
 
 @dataclass
-class BabylonianDay:
+class BabylonianDay(JSONWizard):
     sunset: float
     sunrise: float
 
@@ -43,12 +43,15 @@ class LunarEclipse(JSONWizard):
 
 @dataclass
 class PotentialYear(JSONWizard):
-    """A year may at one of 2 to 3 different lunar visibilities, within ~30 days of vernal equinox"""
-
     nisan_1: float
-    """Time of sunset for a possible Nisan 1"""
     year: int
-    """Year AD, e.g. -600"""
+
+
+@dataclass
+class Separation(JSONWizard):
+    angle: float
+    position: str
+    time: float
 
 
 class Database:
@@ -66,14 +69,14 @@ class Database:
         """
         Get days in a given month
         @param month_sunset_1: The time of sunset on the first day of the month
+        @return A List of days
         """
         cursor = self.conn.cursor()
         cursor.execute(
             "SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT 32",
             (month_sunset_1,),
         )
-        res = cursor.fetchall()
-        res = list(map(lambda x: BabylonianDay(*x), res))
+        res = list(map(BabylonianDay.from_dict, self.fetch_all(cursor)))
         assert res[0].sunset == month_sunset_1
         return res
 
@@ -98,7 +101,8 @@ class Database:
     def get_years(self) -> List[List[PotentialYear]]:
         """
         Gets a list of potential years from the database
-        Grouped into sub-arrays by year
+        A year may at one of 2 to 3 different lunar visibilities, within ~30 days of vernal equinox
+        @return List of potential years, grouped into sub-arrays for each year, in ascending order
         """
         cursor = self.conn.cursor()
         cursor.execute(
@@ -117,7 +121,7 @@ class Database:
             ),
         )
         res = list(
-            map(lambda year: PotentialYear.from_dict(year), self.fetch_all(cursor))
+            map(PotentialYear.from_dict, self.fetch_all(cursor))
         )
         output: List[List[PotentialYear]] = [[]]
         current_year = res[0].year
@@ -148,14 +152,14 @@ class Database:
 
     def separations_in_range(
         self, from_body: Body, to_body: Body, start_time: float, end_time: float
-    ) -> List[Dict]:
+    ) -> List[Separation]:
         cursor = self.conn.cursor()
         cursor.execute(
             """SELECT angle, position, time FROM separations
             WHERE from_body=? AND to_body=? AND time >= ? AND time <= ?""",
             (from_body.name, to_body.name, start_time, end_time),
         )
-        return self.fetch_all(cursor)
+        return list(map(Separation.from_dict, self.fetch_all(cursor)))
 
     def lunar_eclipses_in_range(
         self, start_time: float, end_time: float, position_body: Optional[Body]
@@ -179,7 +183,7 @@ class Database:
         for e in eclipses:
             e["sunset"] = self.nearest_sunset(e["closest_approach_time"])
             e["sunrise"] = self.nearest_sunrise(e["closest_approach_time"])
-        return list(map(lambda eclipse: LunarEclipse.from_dict(eclipse), eclipses))
+        return list(map(LunarEclipse.from_dict, eclipses))
 
     def nearest_sunset(self, time: float) -> float:
         cursor = self.conn.cursor()

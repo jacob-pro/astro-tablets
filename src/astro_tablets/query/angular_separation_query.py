@@ -1,10 +1,10 @@
 import math
-from typing import Any, Dict, Optional
+from typing import Optional
 
 from astro_tablets.constants import Body
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
-from astro_tablets.query.database import Database
+from astro_tablets.query.database import Database, Separation
 from astro_tablets.util import TimeValue
 
 
@@ -34,13 +34,13 @@ class AngularSeparationQuery(AbstractQuery):
                     from_body.name, to_body.name, target_time.start, target_time.end
                 )
             )
-        sep.sort(key=lambda x: abs(x["angle"] - target_angle))
+        sep.sort(key=lambda x: abs(x.angle - target_angle))
 
         if target_position is not None:
             target_some = target_position
 
-            def filter_fn(x: Dict[str, Any]):
-                return x["angle"] <= tolerance and x["position"] == target_some.value
+            def filter_fn(x: Separation):
+                return x.angle <= tolerance and x.position == target_some.value
 
             filtered = list(
                 filter(
@@ -95,15 +95,15 @@ class AngularSeparationQuery(AbstractQuery):
             self.target_angle,
             self.tolerance,
             self.target_position,
-            self.best["angle"],
-            self.best["position"],
+            self.best.angle,
+            self.best.position,
         )
 
     def output(self) -> dict:
         return {
             "from_body": self.from_body.name,
             "to_body": self.to_body.name,
-            "angle": self.best["angle"],
-            "position": self.best["position"],
-            "at_time": TimeValue(self.best["time"]),
+            "angle": self.best.angle,
+            "position": self.best.position,
+            "at_time": TimeValue(self.best.time),
         }

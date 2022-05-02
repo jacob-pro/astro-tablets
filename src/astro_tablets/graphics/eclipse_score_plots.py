@@ -95,7 +95,7 @@ def plot_eclipse_phase_length_score(dest: str):
     ax1.set_xlabel("Observed Eclipse Total Length (UŠ)")
     ax1.set_ylabel("Score")
     ax1.plot(xs, ys)
-    ax1.axvline(x=eclipse["sum_us"], color="r", label="Correct Time")
+    ax1.axvline(x=eclipse.sum_us, color="r", label="Correct Time")
     ax1.legend()
 
     plt.savefig(dest)
