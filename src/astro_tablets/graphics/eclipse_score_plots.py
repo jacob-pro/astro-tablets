@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import HIGH_TIME_TOLERANCE, REGULAR_TIME_TOLERANCE
+from astro_tablets.constants import TimePrecision
 from astro_tablets.query.database import LunarEclipse
 from astro_tablets.query.lunar_eclipse_query import (
     CompositePhaseTiming,
@@ -40,12 +40,14 @@ def plot_eclipse_time_of_day_score(dest: str):
             lambda x: LunarEclipseQuery.eclipse_time_of_day_score(
                 eclipse,
                 FirstContactTime(x, FirstContactRelative.AFTER_SUNRISE),
-                REGULAR_TIME_TOLERANCE,
+                TimePrecision.REGULAR.value,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Regular (λ = {})".format(REGULAR_TIME_TOLERANCE), color="g")
+    ax1.plot(
+        xs, ys, label="Regular (λ = {})".format(TimePrecision.REGULAR.value), color="g"
+    )
 
     xs = np.arange(-15, 25, 0.01)
     ys = list(
@@ -53,12 +55,12 @@ def plot_eclipse_time_of_day_score(dest: str):
             lambda x: LunarEclipseQuery.eclipse_time_of_day_score(
                 eclipse,
                 FirstContactTime(x, FirstContactRelative.AFTER_SUNRISE),
-                HIGH_TIME_TOLERANCE,
+                TimePrecision.LOW.value,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="High (λ = {})".format(HIGH_TIME_TOLERANCE), color="b")
+    ax1.plot(xs, ys, label="High (λ = {})".format(TimePrecision.LOW.value), color="b")
 
     ax1.axvline(x=actual, color="r", label="Correct Time")
     ax1.legend()

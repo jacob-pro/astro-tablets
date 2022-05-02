@@ -6,7 +6,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-from astro_tablets.constants import HIGH_TIME_TOLERANCE, REGULAR_TIME_TOLERANCE, Body
+from astro_tablets.constants import Body, TimePrecision
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
@@ -129,16 +129,16 @@ class LunarEclipseQuery(AbstractQuery):
             weights.append(0.25)
         if first_contact is not None:
             if type == ExpectedEclipseType.UNKNOWN:
-                # If the eclipse is a prediction then allow a higher time tolerance
+                # If the eclipse is a prediction then assume low time precision
                 scores.append(
                     LunarEclipseQuery.eclipse_time_of_day_score(
-                        eclipse, first_contact, HIGH_TIME_TOLERANCE
+                        eclipse, first_contact, TimePrecision.LOW.value
                     )
                 )
             else:
                 scores.append(
                     LunarEclipseQuery.eclipse_time_of_day_score(
-                        eclipse, first_contact, REGULAR_TIME_TOLERANCE
+                        eclipse, first_contact, TimePrecision.REGULAR.value
                     )
                 )
             weights.append(0.25)
@@ -229,7 +229,7 @@ class LunarEclipseQuery(AbstractQuery):
         for (observed, actual) in diffs:
             if actual != 0:
                 percent_err = abs(actual - observed) / abs(actual)
-                score = score + math.pow(REGULAR_TIME_TOLERANCE, -percent_err)
+                score = score + math.pow(TimePrecision.REGULAR.value, -percent_err)
         score = score / len(diffs)
         assert 0 <= score <= 1
         return score

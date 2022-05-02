@@ -16,7 +16,6 @@ from astro_tablets.constants import (
     FINGER,
     FORTY_TWO_CANCRI,
     GEMINI,
-    HALO,
     JUPITER,
     LEO,
     MARS,
@@ -29,6 +28,7 @@ from astro_tablets.constants import (
     TAURUS,
     THETA_LEONIS,
     VENUS,
+    TimePrecision,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -46,6 +46,7 @@ from astro_tablets.query.abstract_tablet import (
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 from astro_tablets.query.database import BabylonianDay, Database
+from astro_tablets.query.halo_query import HaloQuery
 from astro_tablets.query.lunar_eclipse_query import (
     ExpectedEclipseType,
     LunarEclipseQuery,
@@ -209,7 +210,7 @@ class VAT4956(AbstractTablet):
         #  The 26th (KUR) (moonrise to sunrise) was 23, I did not observe Sîn.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
             res.append(
-                LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, low_precision=True)
+                LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, TimePrecision.LOW)
             )
 
         return res
@@ -445,15 +446,7 @@ class VAT4956(AbstractTablet):
         #  the Bull of Heaven (Taurus), the Chariot (Auriga) [stood within the ‘fold’ ...]
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
-                    self.db,
-                    MOON,
-                    ALCYONE,
-                    0,
-                    HALO,
-                    None,
-                    SearchRange.for_night(month, 6),
-                )
+                HaloQuery(self.db, MOON, ALCYONE, SearchRange.for_night(month, 6))
             )
             res.append(
                 AngularSeparationQuery(
@@ -567,15 +560,7 @@ class VAT4956(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
-                    self.db,
-                    REGULUS,
-                    MOON,
-                    0,
-                    HALO,
-                    None,
-                    SearchRange.for_night(month, 7),
-                )
+                HaloQuery(self.db, REGULUS, MOON, SearchRange.for_night(month, 7))
             )
 
         # The 12th, one god was seen with the (other) god, NA (sunrise to moonset) was 1;30.

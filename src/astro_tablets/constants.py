@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from enum import Enum, unique
 from typing import Union
 
 import inflect
@@ -7,6 +8,7 @@ LUNAR_VISIBILITY = 7.5
 
 BABYLON_COORDS = ("32.55 N", "44.42 E")
 
+# Babylonian angular separations converted to degrees
 FINGER = 0.092
 CUBIT = 2.2
 HALO = 22.0
@@ -16,8 +18,16 @@ BERU_US = 30
 # about 30 days - slightly more tolerant
 MAX_NISAN_EQUINOX_DIFF_DAYS = 34
 
-REGULAR_TIME_TOLERANCE = 5
-HIGH_TIME_TOLERANCE = 1.5
+
+@unique
+class TimePrecision(Enum):
+    """When measurements of time are used (e.g. eclipse duration, lunar six), how highly time should be weighted when
+    computing a score; e.g. for predictions we should expect the time to not be particularly accurate.
+    A higher value means less tolerance for error"""
+
+    REGULAR = 5
+    LOW = 1.5
+
 
 INFLECT_ENGINE = inflect.engine()
 

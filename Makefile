@@ -15,6 +15,6 @@ test: venv
 	python src/cli.py --help
 
 .PHONY: format
-format:
+format: venv
 	black src/
 	isort src/

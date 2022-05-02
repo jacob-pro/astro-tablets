@@ -120,9 +120,7 @@ class Database:
                 SUN.name,
             ),
         )
-        res = list(
-            map(PotentialYear.from_dict, self.fetch_all(cursor))
-        )
+        res = list(map(PotentialYear.from_dict, self.fetch_all(cursor)))
         output: List[List[PotentialYear]] = [[]]
         current_year = res[0].year
         for y in res:

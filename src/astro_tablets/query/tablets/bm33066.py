@@ -18,6 +18,7 @@ from astro_tablets.constants import (
     SATURN,
     VENUS,
     VIRGO,
+    TimePrecision,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -199,11 +200,11 @@ class BM33066(AbstractTablet):
 
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
             res.append(
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, low_precision=True)
+                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, TimePrecision.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.SU2, 3.5))
             res.append(
-                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, low_precision=True)
+                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, TimePrecision.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 11))
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 7.5))
@@ -535,7 +536,7 @@ class BM33066(AbstractTablet):
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
             res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 19))
             res.append(
-                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, low_precision=True)
+                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, TimePrecision.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 5 + 1 / 3))
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 3))

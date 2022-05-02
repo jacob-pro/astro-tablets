@@ -2,11 +2,7 @@ import math
 from enum import Enum, unique
 from typing import List
 
-from astro_tablets.constants import (
-    HIGH_TIME_TOLERANCE,
-    INFLECT_ENGINE,
-    REGULAR_TIME_TOLERANCE,
-)
+from astro_tablets.constants import INFLECT_ENGINE, TimePrecision
 from astro_tablets.data import MOON
 from astro_tablets.generate.risings_settings import RiseSetType
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
@@ -41,7 +37,7 @@ class LunarSixQuery(AbstractQuery):
         day_number: int,
         six: LunarSix,
         value_us: float,
-        low_precision: bool = False,
+        time_precision: TimePrecision = TimePrecision.REGULAR,
     ):
         assert value_us >= 0
         assert 1 <= day_number <= 30
@@ -67,8 +63,9 @@ class LunarSixQuery(AbstractQuery):
         self.actual_us = actual * 360
         self.moon_time = moon_time
 
-        tolerance = HIGH_TIME_TOLERANCE if low_precision else REGULAR_TIME_TOLERANCE
-        self.score = self.lunar_six_score(self.actual_us, value_us, tolerance)
+        self.score = self.lunar_six_score(
+            self.actual_us, value_us, time_precision.value
+        )
 
     @staticmethod
     def lunar_six_score(actual_us: float, tablet_us: float, tolerance: float) -> float:
