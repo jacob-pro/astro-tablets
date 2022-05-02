@@ -9,8 +9,8 @@ venv:
 
 .PHONY: test
 test: venv
-	flake8 src/
 	mypy src/
+	flake8 src/
 	pytest src/ -v
 	python src/cli.py --help
 

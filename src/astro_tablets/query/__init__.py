@@ -2,15 +2,15 @@ from typing import Optional
 
 from astro_tablets.data import AstroData
 from astro_tablets.query.abstract_tablet import AbstractTablet
-from astro_tablets.query.bm32234 import BM32234
-from astro_tablets.query.bm32312 import BM32312
-from astro_tablets.query.bm33066 import BM33066
-from astro_tablets.query.bm35115 import BM35115
-from astro_tablets.query.bm38462 import BM38462
-from astro_tablets.query.bm41222 import BM41222
-from astro_tablets.query.bm76738 import BM76738
 from astro_tablets.query.database import Database
-from astro_tablets.query.vat4956 import VAT4956
+from astro_tablets.query.tablets.bm32234 import BM32234
+from astro_tablets.query.tablets.bm32312 import BM32312
+from astro_tablets.query.tablets.bm33066 import BM33066
+from astro_tablets.query.tablets.bm35115 import BM35115
+from astro_tablets.query.tablets.bm38462 import BM38462
+from astro_tablets.query.tablets.bm41222 import BM41222
+from astro_tablets.query.tablets.bm76738 import BM76738
+from astro_tablets.query.tablets.vat4956 import VAT4956
 
 
 def get_tablet(

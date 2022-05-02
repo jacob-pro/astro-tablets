@@ -12,6 +12,11 @@ from astro_tablets.constants import MAX_NISAN_EQUINOX_DIFF_DAYS
 from astro_tablets.data import SUN, AstroData
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX
 from astro_tablets.query.abstract_query import AbstractQuery
+from astro_tablets.query.compatible_combinations import (
+    CanBeFollowedBy,
+    Result,
+    generate_compatible_combinations,
+)
 from astro_tablets.query.database import BabylonianDay, Database, PotentialYear
 from astro_tablets.util import PROGRESS_CALLBACK, TimeValue
 
@@ -23,7 +28,7 @@ class MonthLength(Enum):
 
 
 @dataclass
-class PotentialMonthResult:
+class PotentialMonthResult(CanBeFollowedBy):
     score: float
     name: str
     actual_month: int
@@ -48,7 +53,7 @@ class PotentialMonthResult:
 
 
 @dataclass
-class MonthResult:
+class MonthResult(Result):
     potentials: List[PotentialMonthResult]
 
 
@@ -63,7 +68,7 @@ class Intercalary(Enum):
 
 
 @dataclass
-class PotentialYearResult:
+class PotentialYearResult(CanBeFollowedBy):
     score: float
     nisan_1: TimeValue
     next_nisan: TimeValue  # 12 or 13 months later depending on intercalary status
@@ -87,7 +92,7 @@ class PotentialYearResult:
 
 
 @dataclass
-class YearResult:
+class YearResult(Result):
     name: str
     actual_year: int
     vernal_equinox: TimeValue
@@ -162,9 +167,14 @@ class AbstractTablet(ABC):
         length=MonthLength.UNKNOWN,
     ) -> MonthResult:
         """
-        Tries repeating the same month observations but assuming the month started either 0 or 1 days later
-        than first lunar visibility
-        Returns the best / highest scoring month
+        Tries repeating the same set of month observations but starting at different dates for first lunar visibility
+        (either the first or one day later)
+        @param nisan_1: The time of first possible lunar visibility at sunset
+        @param month_number: The month number in the year
+        @param func: Individual queries for the month
+        @param name: Name of the month
+        @param length: If the month is confirmed to be 29 or 30 days long
+        @return: A MonthResult
         """
         assert 1 <= month_number <= 13
         months = self.db.get_months(nisan_1)
@@ -207,27 +217,6 @@ class AbstractTablet(ABC):
         all_results.sort(key=lambda x: x.score, reverse=True)
         return MonthResult(all_results)
 
-    @staticmethod
-    def generate_compatible_month_combinations(
-        months: List[MonthResult],
-    ) -> List[List[PotentialMonthResult]]:
-        paths = []  # type: List[List[PotentialMonthResult]]
-        for idx, y in enumerate(months):
-            if idx == 0:
-                for potential in y.potentials:
-                    paths.append([potential])
-            else:
-                new_paths = []
-                for path in paths:
-                    for potential in y.potentials:
-                        path_tail = path[len(path) - 1]
-                        if path_tail.can_be_followed_by(potential):
-                            new_path = path.copy()
-                            new_path.append(potential)
-                            new_paths.append(new_path)
-                paths = new_paths
-        return paths
-
     def repeat_year_with_alternate_starts(
         self,
         potential_years: List[PotentialYear],
@@ -236,8 +225,13 @@ class AbstractTablet(ABC):
         func: Callable[[float], List[MonthResult]],
     ) -> YearResult:
         """
-        Tries repeating the same set of year observations, but starting at different dates for Nisan I
+        Tries repeating the same set of year observations, but starting at different possible dates for Nisan 1
         Returns a list in order of highest score, descending
+        @param potential_years: Possible start dates for a given year
+        @param name: The name the year is referenced as within the tablet
+        @param intercalary: Whether this year is known to be intercalary or not
+        @param func: The month queries
+        @return: A YearResult
         """
         all_results = []
         vernal = self.db.nearest_event_match_to_time(
@@ -260,7 +254,9 @@ class AbstractTablet(ABC):
             else:
                 next_nisan = months[12]
             results = func(y.nisan_1)
-            compatible_paths = self.generate_compatible_month_combinations(results)
+            compatible_paths: List[
+                List[PotentialMonthResult]
+            ] = generate_compatible_combinations(results)
             compatible_paths.sort(key=lambda y: sum(x.score for x in y), reverse=True)
             if len(compatible_paths) == 0:
                 months_list = list(map(lambda x: x.potentials[0], results))
@@ -288,80 +284,46 @@ class AbstractTablet(ABC):
             name, year_number, TimeValue(vernal), intercalary, all_results
         )
 
-    def write_scores(self, path: str, progress: PROGRESS_CALLBACK) -> None:
-        """
-        Computes and outputs the score for each base year in the database in descending order
-        @param progress: Callback to report on computation progress
-        @param path: The path to save the scores file
-        """
-        results = self._run_years(progress)
-        results.sort(key=lambda x: x.best_score, reverse=True)
-        info_text = (
-            f"Database generated on {self.db.info.time} for {self.db.info.tablet} "
-            f"covering {self.db.info.start_year} to {self.db.info.end_year}"
-        )
-        lines = [info_text, f"Scores for {self.scores_title}", "Year   Score"]
-        for i in results:
-            lines.append(f"{i.base_year} {i.best_score}")
-        with open(path, "w") as file:
-            file.write("\n".join(lines))
-
-    def write_single_year(self, base_year: int, full_results: bool, path: str):
-        # Filter so that base_year has the first index in the list
-        years = list(
-            filter(lambda y_list: y_list[0].year >= base_year, self.db.get_years())
-        )
-
-        yrs: List[YearResult] = []
-        for idx, x in enumerate(self.tests):
-            yrs.append(
-                self.repeat_year_with_alternate_starts(
-                    years[x.index], x.name, x.intercalary, x.func
-                )
-            )
-        total_score = self.total_year_score(yrs)
-        year_to_print = MultiyearResult(base_year, total_score, yrs)
-
-        if full_results is False:
-            for y in year_to_print.years:
-                y.potentials = list(
-                    filter(lambda x: x.best_compatible_path is True, y.potentials)
-                )
-
-        with open(path, "w") as outfile:
-            encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
-            raw = encoder.encode(year_to_print)
-            outfile.write(raw)
-
     @staticmethod
-    def generate_compatible_year_combinations(
-        yrs: List[YearResult],
-    ) -> List[List[PotentialYearResult]]:
-        paths = []  # type: List[List[PotentialYearResult]]
-        for idx, y in enumerate(yrs):
-            if idx == 0:
-                for potential in y.potentials:
-                    paths.append([potential])
-            else:
-                new_paths = []
-                for path in paths:
-                    for potential in y.potentials:
-                        path_tail = path[len(path) - 1]
-                        if path_tail.can_be_followed_by(potential):
-                            new_path = path.copy()
-                            new_path.append(potential)
-                            new_paths.append(new_path)
-                paths = new_paths
-        return paths
-
-    @staticmethod
-    def total_year_score(yrs: List[YearResult]) -> float:
-        compatible_products = AbstractTablet.generate_compatible_year_combinations(yrs)
+    def _total_year_score(yrs: List[YearResult]) -> float:
+        compatible_products: List[
+            List[PotentialYearResult]
+        ] = generate_compatible_combinations(yrs)
         assert len(compatible_products) > 0
         compatible_products.sort(key=lambda y: sum(x.score for x in y), reverse=True)
         for e in compatible_products[0]:
             e.best_compatible_path = True
         return sum(x.score for x in compatible_products[0])
+
+    def try_multiple_months(
+        self,
+        nisan_1: float,
+        start: int,
+        end: int,
+        fn: Callable[[List[BabylonianDay]], List[AbstractQuery]],
+        comment=None,
+    ) -> MonthResult:
+        """
+        Useful when the month number is not clear / damaged
+        @param nisan_1: The start of the year
+        @param start: The first month number to scan from
+        @param end: The last month number to test (inclusive)
+        @param fn: The individual queries for the month
+        @param comment: A comment describing this month
+        @return: The best MonthResult that was found
+        """
+        attempts: List[MonthResult] = []
+        comment = (
+            "Unknown month between {} and {}".format(start, end)
+            if comment is None
+            else comment
+        )
+        for m in range(start, end + 1):
+            attempts.append(
+                self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment)
+            )
+        attempts.sort(key=lambda x: x.potentials[0].score, reverse=True)
+        return attempts[0]
 
     def _run_years(self, progress: PROGRESS_CALLBACK) -> List[MultiyearResult]:
         years = self.db.get_years()
@@ -380,27 +342,57 @@ class AbstractTablet(ABC):
                         years[i + x.index], x.name, x.intercalary, x.func
                     )
                 )
-            total_score = self.total_year_score(yrs)
+            total_score = self._total_year_score(yrs)
             results.append(MultiyearResult(years[i][0].year, total_score, yrs))
         return results
 
-    def try_multiple_months(
-        self,
-        nisan_1: float,
-        start: int,
-        end: int,
-        fn: Callable[[List[BabylonianDay]], List[AbstractQuery]],
-        comment=None,
-    ) -> MonthResult:
-        attempts: List[MonthResult] = []
-        comment = (
-            "Unknown month between {} and {}".format(start, end)
-            if comment is None
-            else comment
+    def write_scores(self, path: str, progress: PROGRESS_CALLBACK) -> None:
+        """
+        Computes and outputs the score for each base year in the database in descending order.
+        @param progress: Callback to report on computation progress.
+        @param path: The path to save the scores file.
+        """
+        results = self._run_years(progress)
+        results.sort(key=lambda x: x.best_score, reverse=True)
+        info_text = (
+            f"Database generated on {self.db.info.time} for {self.db.info.tablet} "
+            f"covering {self.db.info.start_year} to {self.db.info.end_year}"
         )
-        for m in range(start, end + 1):
-            attempts.append(
-                self.repeat_month_with_alternate_starts(nisan_1, m, fn, name=comment)
+        lines = [info_text, f"Scores for {self.scores_title}", "Year   Score"]
+        for i in results:
+            lines.append(f"{i.base_year} {i.best_score}")
+        with open(path, "w") as file:
+            file.write("\n".join(lines))
+
+    def write_single_year(self, base_year: int, full_results: bool, path: str):
+        """
+        Computes and outputs detailed results for a single base year.
+        @param base_year: The year (AD) to use.
+        @param full_results: Whether all possible year results should be output.
+        @param path: The path to save the JSON file.
+        """
+
+        # Filter so that base_year has the first index in the list
+        years = list(
+            filter(lambda y_list: y_list[0].year >= base_year, self.db.get_years())
+        )
+        yrs: List[YearResult] = []
+        for idx, x in enumerate(self.tests):
+            yrs.append(
+                self.repeat_year_with_alternate_starts(
+                    years[x.index], x.name, x.intercalary, x.func
+                )
             )
-        attempts.sort(key=lambda x: x.potentials[0].score, reverse=True)
-        return attempts[0]
+        total_score = self._total_year_score(yrs)
+        year_to_print = MultiyearResult(base_year, total_score, yrs)
+
+        if full_results is False:
+            for y in year_to_print.years:
+                y.potentials = list(
+                    filter(lambda x: x.best_compatible_path is True, y.potentials)
+                )
+
+        with open(path, "w") as outfile:
+            encoder = EnhancedJSONEncoder(self.data.timescale, indent=2)
+            raw = encoder.encode(year_to_print)
+            outfile.write(raw)
