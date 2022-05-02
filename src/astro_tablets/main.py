@@ -147,19 +147,23 @@ def query_year_impl(
     tablet.write_single_year(year, full, output_path)
 
 
-def graphs():
+def graphs(path: str):
+    if not os.path.isdir(path):
+        raise RuntimeError(f"{path} is not a directory")
+    if path.endswith("/"):
+        path = path[:-1]
     data = AstroData()
     plot_eclipse(
-        data, data.timescale.ut1(-554, 10, 7), "documents/graphics/total_eclipse.png"
+        data, data.timescale.ut1(-554, 10, 7), f"{path}/total_eclipse.png"
     )
     plot_eclipse(
-        data, data.timescale.ut1(-153, 3, 21), "documents/graphics/partial_eclipse.png"
+        data, data.timescale.ut1(-153, 3, 21), f"{path}/partial_eclipse.png"
     )
-    plot_eclipse_time_of_day_score("documents/graphics/eclipse_time_of_day_score.png")
-    plot_eclipse_phase_length_score("documents/graphics/eclipse_phase_length_score.png")
-    plot_separation_score(0, HALO, "documents/graphics/separation_score_1.png")
+    plot_eclipse_time_of_day_score(f"{path}/eclipse_time_of_day_score.png")
+    plot_eclipse_phase_length_score(f"{path}/eclipse_phase_length_score.png")
+    plot_separation_score(0, HALO, f"{path}/separation_score_1.png")
     plot_separation_score(
-        1 * CUBIT, 6 * FINGER, "documents/graphics/separation_score_2.png"
+        1 * CUBIT, 6 * FINGER, f"{path}/separation_score_2.png"
     )
 
 
@@ -214,7 +218,10 @@ def main():
         help="output all possible year start combinations",
     )
 
-    subparsers.add_parser("graphs")
+    graphs_parser = subparsers.add_parser("graphs")
+    graphs_parser.add_argument(
+        "path", type=str, help="set directory to save graphs"
+    )
 
     kwargs = vars(parser.parse_args())
     subparser = kwargs.pop("subparser")
