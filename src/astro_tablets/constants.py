@@ -15,18 +15,14 @@ HALO = 22.0
 
 BERU_US = 30
 
-# about 30 days - slightly more tolerant
 MAX_NISAN_EQUINOX_DIFF_DAYS = 34
 
 
 @unique
-class TimePrecision(Enum):
-    """When measurements of time are used (e.g. eclipse duration, lunar six), how highly time should be weighted when
-    computing a score; e.g. for predictions we should expect the time to not be particularly accurate.
-    A higher value means less tolerance for error"""
-
-    REGULAR = 5
-    LOW = 1.5
+class Precision(Enum):
+    REGULAR = 0
+    # Low precision is useful when the text is damaged  / unclear / or is a prediction
+    LOW = 1
 
 
 INFLECT_ENGINE = inflect.engine()

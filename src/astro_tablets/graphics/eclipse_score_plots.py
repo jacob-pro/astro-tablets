@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import TimePrecision
+from astro_tablets.constants import Precision
 from astro_tablets.query.database import LunarEclipse
 from astro_tablets.query.lunar_eclipse_query import (
     CompositePhaseTiming,
@@ -40,14 +40,12 @@ def plot_eclipse_time_of_day_score(dest: str):
             lambda x: LunarEclipseQuery.eclipse_time_of_day_score(
                 eclipse,
                 FirstContactTime(x, FirstContactRelative.AFTER_SUNRISE),
-                TimePrecision.REGULAR.value,
+                Precision.REGULAR,
             ),
             xs,
         )
     )
-    ax1.plot(
-        xs, ys, label="Regular (λ = {})".format(TimePrecision.REGULAR.value), color="g"
-    )
+    ax1.plot(xs, ys, label="Regular Precision", color="b")
 
     xs = np.arange(-15, 25, 0.01)
     ys = list(
@@ -55,14 +53,14 @@ def plot_eclipse_time_of_day_score(dest: str):
             lambda x: LunarEclipseQuery.eclipse_time_of_day_score(
                 eclipse,
                 FirstContactTime(x, FirstContactRelative.AFTER_SUNRISE),
-                TimePrecision.LOW.value,
+                Precision.LOW,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="High (λ = {})".format(TimePrecision.LOW.value), color="b")
+    ax1.plot(xs, ys, label="Low Precision", color="g")
 
-    ax1.axvline(x=actual, color="r", label="Correct Time")
+    ax1.axvline(x=actual, color="r", label="Expected Time")
     ax1.legend()
 
     plt.savefig(dest)
@@ -97,7 +95,7 @@ def plot_eclipse_phase_length_score(dest: str):
     ax1.set_xlabel("Observed Eclipse Total Length (UŠ)")
     ax1.set_ylabel("Score")
     ax1.plot(xs, ys)
-    ax1.axvline(x=eclipse.sum_us, color="r", label="Correct Time")
+    ax1.axvline(x=eclipse.sum_us, color="r", label="Expected Length")
     ax1.legend()
 
     plt.savefig(dest)

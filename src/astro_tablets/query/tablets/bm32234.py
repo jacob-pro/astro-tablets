@@ -29,6 +29,7 @@ from astro_tablets.query.lunar_eclipse_query import (
     LunarEclipseQuery,
     SeparatePhaseTimings,
 )
+from astro_tablets.query.radius_query import WithinRadiusQuery
 
 
 class BM32234(AbstractTablet):
@@ -99,13 +100,12 @@ class BM32234(AbstractTablet):
             range = SearchRange(time - 1, time + 1, "Within a day of the eclipse")
 
         mars = AngularSeparationQuery(
-            self.db, MARS, ANTARES, 2 * CUBIT, 1 * CUBIT, EclipticPosition.AHEAD, range
+            self.db, MARS, ANTARES, 2 * CUBIT, EclipticPosition.AHEAD, range
         )
-        saturn = AngularSeparationQuery(
+        saturn = WithinRadiusQuery(
             self.db,
             SATURN,
             CAPRICORNUS.central_star,
-            0,
             CAPRICORNUS.radius,
             None,
             range,

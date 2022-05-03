@@ -18,7 +18,7 @@ from astro_tablets.constants import (
     SATURN,
     VENUS,
     VIRGO,
-    TimePrecision,
+    Precision,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -44,6 +44,7 @@ from astro_tablets.query.lunar_eclipse_query import (
 )
 from astro_tablets.query.lunar_six_query import LunarSix, LunarSixQuery
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
+from astro_tablets.query.radius_query import WithinRadiusQuery
 
 
 @unique
@@ -89,11 +90,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MARS,
                     GEMINI.central_star,
-                    0,
                     GEMINI.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 28),
@@ -123,11 +123,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     LEO.central_star,
-                    0,
                     LEO.radius,
                     None,
                     SearchRange.for_night(month, 10),
@@ -142,11 +141,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     CANCER.central_star,
-                    0,
                     CANCER.radius,
                     None,
                     SearchRange.for_night(month, 27),
@@ -187,7 +185,6 @@ class BM33066(AbstractTablet):
                     MOON,
                     MERCURY,
                     3 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 1),
                 )
@@ -200,11 +197,11 @@ class BM33066(AbstractTablet):
 
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
             res.append(
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, TimePrecision.LOW)
+                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, Precision.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.SU2, 3.5))
             res.append(
-                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, TimePrecision.LOW)
+                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, Precision.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 11))
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 7.5))
@@ -220,11 +217,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     JUPITER,
                     VIRGO.central_star,
-                    0,
                     VIRGO.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 22),
@@ -254,11 +250,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     JUPITER,
                     VIRGO.central_star,
-                    0,
                     VIRGO.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 22),
@@ -273,11 +268,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     SATURN,
                     VIRGO.central_star,
-                    0,
                     VIRGO.radius,
                     None,
                     SearchRange.for_night(month, 3),
@@ -292,11 +286,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MARS,
                     LEO.central_star,
-                    0,
                     LEO.radius,
                     None,
                     SearchRange.for_night(month, 13),
@@ -310,9 +303,9 @@ class BM33066(AbstractTablet):
                     VENUS,
                     MARS,
                     1 * CUBIT,
-                    5 * CUBIT,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 24),
+                    Precision.LOW,
                 )
             )
 
@@ -339,11 +332,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     SATURN,
                     VIRGO.central_star,
-                    0,
                     VIRGO.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 13),
@@ -357,7 +349,6 @@ class BM33066(AbstractTablet):
                     JUPITER,
                     MOON,
                     3 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 23),
                 )
@@ -370,7 +361,6 @@ class BM33066(AbstractTablet):
                     VENUS,
                     JUPITER,
                     2 * FINGER,
-                    4 * FINGER,
                     None,
                     SearchRange.for_night(month, 29),
                 )
@@ -383,7 +373,6 @@ class BM33066(AbstractTablet):
                     SATURN,
                     JUPITER,
                     1 * CUBIT,
-                    6 * FINGER,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 12),
                 )
@@ -395,7 +384,6 @@ class BM33066(AbstractTablet):
                     self.db,
                     MARS,
                     JUPITER,
-                    2 * FINGER,
                     2 * FINGER,
                     None,
                     SearchRange.for_night(month, 11),
@@ -423,7 +411,6 @@ class BM33066(AbstractTablet):
                     SATURN,
                     VENUS,
                     8 * FINGER,
-                    4 * FINGER,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 2),
                 )
@@ -457,11 +444,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     JUPITER,
                     LIBRA.central_star,
-                    0,
                     LIBRA.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 27),
@@ -474,7 +460,6 @@ class BM33066(AbstractTablet):
                     self.db,
                     MERCURY,
                     VENUS,
-                    0.5 * CUBIT,
                     0.5 * CUBIT,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 5),
@@ -517,11 +502,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     PISCES.central_star,
-                    0,
                     PISCES.radius,
                     None,
                     SearchRange.for_night(month, 7),
@@ -536,7 +520,7 @@ class BM33066(AbstractTablet):
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
             res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 19))
             res.append(
-                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, TimePrecision.LOW)
+                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, Precision.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 5 + 1 / 3))
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 3))
@@ -611,11 +595,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     AURIGA.central_star,
-                    0,
                     AURIGA.radius,
                     None,
                     SearchRange.for_night(month, 13),
@@ -637,11 +620,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     JUPITER,
                     VIRGO.central_star,
-                    0,
                     VIRGO.radius,
                     None,
                     SearchRange.for_night(month, 25),
@@ -686,11 +668,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     JUPITER,
                     LIBRA.central_star,
-                    0,
                     LIBRA.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 4),
@@ -718,6 +699,7 @@ class BM33066(AbstractTablet):
         res: List[AbstractQuery] = []
 
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            #  Year 9, month II, the 9th, last appearance behind α Leonis.
             res.append(
                 PlanetaryEventQuery(
                     self.db,
@@ -727,11 +709,10 @@ class BM33066(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MARS,
                     REGULUS,
-                    0,
                     15,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 9),

@@ -14,7 +14,7 @@ from astro_tablets.graphics.eclipse_score_plots import (
     plot_eclipse_phase_length_score,
     plot_eclipse_time_of_day_score,
 )
-from astro_tablets.graphics.halo_score_plot import plot_halo_score
+from astro_tablets.graphics.radius_score_plot import plot_radius_score
 from astro_tablets.graphics.separation_score_plot import plot_separation_score
 from astro_tablets.query.database import Database as QueryDatabase
 from astro_tablets.util import print_progress
@@ -158,8 +158,9 @@ def graphs(path: str):
     plot_eclipse(data, data.timescale.ut1(-153, 3, 21), f"{path}/partial_eclipse.png")
     plot_eclipse_time_of_day_score(f"{path}/eclipse_time_of_day_score.png")
     plot_eclipse_phase_length_score(f"{path}/eclipse_phase_length_score.png")
-    plot_halo_score(f"{path}/halo_score.png")
-    plot_separation_score(1 * CUBIT, 6 * FINGER, f"{path}/separation_score.png")
+    plot_radius_score(f"{path}/radius_score.png")
+    plot_separation_score(1 * CUBIT, f"{path}/separation_score_cubit.png")
+    plot_separation_score(1 * FINGER, f"{path}/separation_score_finger.png")
 
 
 def main():

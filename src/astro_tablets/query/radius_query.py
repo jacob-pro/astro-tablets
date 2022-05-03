@@ -1,73 +1,73 @@
 import math
 from typing import Optional
 
-from astro_tablets.constants import Body, Precision
+from astro_tablets.constants import MOON, Body
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
 from astro_tablets.query.database import Database
 from astro_tablets.util import TimeValue
 
-
-def angular_separation_tolerance(precision: Precision) -> float:
-    if precision == Precision.REGULAR:
-        return 5.0
-    elif precision == Precision.LOW:
-        return 1.5
-    else:
-        raise ValueError
+LAMBDA = 8
 
 
-class AngularSeparationQuery(AbstractQuery):
+class WithinRadiusQuery(AbstractQuery):
     def __init__(
         self,
         db: Database,
         from_body: Body,
         to_body: Body,
-        target_angle: float,
+        radius: float,
         target_position: Optional[EclipticPosition],
         target_time: SearchRange,
-        angle_precision: Precision = Precision.REGULAR,
     ):
         self.target_time = target_time
         self.from_body = from_body
         self.to_body = to_body
-        self.target_angle = target_angle
+        self.radius = radius
         self.target_position = target_position
-        self.precision = angle_precision
         sep = db.separations_in_range(
             from_body, to_body, target_time.start, target_time.end
         )
         if len(sep) < 1:
             raise RuntimeError(
                 "Failed to find any separations between {} and {} at {} to {}, check database".format(
-                    from_body.name, to_body.name, target_time.start, target_time.end
+                    MOON.name, to_body.name, target_time.start, target_time.end
                 )
             )
-        sep.sort(
-            key=lambda x: self.score(
-                target_angle, target_position, x.angle, x.position, angle_precision
-            ),
-            reverse=True,
+        results = list(
+            map(
+                lambda x: (
+                    x,
+                    self.score(radius, target_position, x.angle, x.position),
+                ),
+                sep,
+            )
         )
-        self.best = sep[0]
+        # Sort by score descending
+        results.sort(key=lambda x: x[1], reverse=True)
+        # Tiebreaker for matching top scores
+        tie_breaker = list(filter(lambda x: x[1] == results[0][1], results))
+        # Sort by closest angle
+        tie_breaker.sort(key=lambda x: x[0].angle)
+        self.best = tie_breaker[0][0]
 
     def get_search_range(self) -> SearchRange:
         return self.target_time
 
     @staticmethod
     def score(
-        tablet_angle: float,
+        radius: float,
         tablet_position: Optional[EclipticPosition],
-        actual: float,
+        actual_angle: float,
         actual_position: str,
-        precision: Precision,
-    ):
+    ) -> float:
         """
         Correct position (if specified) adds 0.2 to score
         """
-        t = angular_separation_tolerance(precision)
-        diff = abs(actual - tablet_angle)
-        angle_score = math.pow(t, -diff)
+        if actual_angle <= radius:
+            return 1.0
+        diff = abs(actual_angle - radius) / radius
+        angle_score = math.pow(LAMBDA, -diff)
         assert 0 <= angle_score <= 1
 
         if tablet_position is not None:
@@ -78,11 +78,7 @@ class AngularSeparationQuery(AbstractQuery):
 
     def quality_score(self) -> float:
         return self.score(
-            self.target_angle,
-            self.target_position,
-            self.best.angle,
-            self.best.position,
-            self.precision,
+            self.radius, self.target_position, self.best.angle, self.best.position
         )
 
     def output(self) -> dict:

@@ -21,9 +21,9 @@ from astro_tablets.query.abstract_tablet import (
     MonthResult,
     YearToTest,
 )
-from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
+from astro_tablets.query.radius_query import WithinRadiusQuery
 
 
 class BM76738(AbstractTablet):
@@ -53,9 +53,7 @@ class BM76738(AbstractTablet):
     def year_2_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         any_day = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, any_day)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, EPSILON_LEONIS, 0, 20, None, any_day
-        )
+        res2 = WithinRadiusQuery(self.db, SATURN, EPSILON_LEONIS, 20, None, any_day)
         return [res1, res2]
 
     def year_2(self, nisan_1: float) -> List[MonthResult]:
@@ -74,8 +72,8 @@ class BM76738(AbstractTablet):
     def year_3_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 16)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, REGULUS, 0, 20, EclipticPosition.BEHIND, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, REGULUS, 20, EclipticPosition.BEHIND, range
         )
         return [res1, res2]
 
@@ -95,8 +93,8 @@ class BM76738(AbstractTablet):
     def year_4_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, LEO.central_star, 0, LEO.radius, None, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, LEO.central_star, LEO.radius, None, range
         )
         return [res1, res2]
 
@@ -132,8 +130,13 @@ class BM76738(AbstractTablet):
     def year_6_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 22)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, BETA_VIRGINIS, 0, 20, EclipticPosition.BEHIND, range
+        res2 = WithinRadiusQuery(
+            self.db,
+            SATURN,
+            BETA_VIRGINIS,
+            20,
+            EclipticPosition.BEHIND,
+            range,
         )
         return [res1, res2]
 
@@ -153,8 +156,8 @@ class BM76738(AbstractTablet):
     def year_7_month_7(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 15)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, VIRGO.central_star, VIRGO.radius, None, range
         )
         return [res1, res2]
 
@@ -170,16 +173,16 @@ class BM76738(AbstractTablet):
     def year_8_month_vi2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, VIRGO.central_star, VIRGO.radius, None, range
         )
         return [res1, res2]
 
     def year_8_month_vii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, VIRGO.central_star, 0, VIRGO.radius, None, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, VIRGO.central_star, VIRGO.radius, None, range
         )
         return [res1, res2]
 
@@ -200,8 +203,8 @@ class BM76738(AbstractTablet):
     def year_9_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, LIBRA.central_star, 0, LIBRA.radius, None, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, LIBRA.central_star, LIBRA.radius, None, range
         )
         return [res1, res2]
 
@@ -213,16 +216,16 @@ class BM76738(AbstractTablet):
     def year_10_month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 20)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, LIBRA.central_star, 0, LIBRA.radius, None, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, LIBRA.central_star, LIBRA.radius, None, range
         )
         return [res1, res2]
 
     def year_10_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 23)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, ANTARES, 0, 20, EclipticPosition.AHEAD, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, ANTARES, 20, EclipticPosition.AHEAD, range
         )
         return [res1, res2]
 
@@ -238,8 +241,8 @@ class BM76738(AbstractTablet):
     def year_11_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
-            self.db, SATURN, ANTARES, 0, 20, EclipticPosition.ABOVE, range
+        res2 = WithinRadiusQuery(
+            self.db, SATURN, ANTARES, 20, EclipticPosition.ABOVE, range
         )
         return [res1, res2]
 
@@ -257,11 +260,10 @@ class BM76738(AbstractTablet):
     def year_12_month_9(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
+        res2 = WithinRadiusQuery(
             self.db,
             SATURN,
             SAGITTARIUS.central_star,
-            0,
             SAGITTARIUS.radius,
             None,
             range,
@@ -284,11 +286,10 @@ class BM76738(AbstractTablet):
     def year_13_month_10(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         range = SearchRange.for_night(month, 1)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
-        res2 = AngularSeparationQuery(
+        res2 = WithinRadiusQuery(
             self.db,
             SATURN,
             SAGITTARIUS.central_star,
-            0,
             SAGITTARIUS.radius,
             None,
             range,

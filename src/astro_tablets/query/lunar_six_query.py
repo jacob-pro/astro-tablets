@@ -2,7 +2,7 @@ import math
 from enum import Enum, unique
 from typing import List
 
-from astro_tablets.constants import INFLECT_ENGINE, TimePrecision
+from astro_tablets.constants import INFLECT_ENGINE, Precision
 from astro_tablets.data import MOON
 from astro_tablets.generate.risings_settings import RiseSetType
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
@@ -29,6 +29,15 @@ class LunarSix(Enum):
         return self == LunarSix.NA1 or self == LunarSix.NA or self == LunarSix.GI6
 
 
+def lunar_six_tolerance(precision: Precision) -> float:
+    if precision == Precision.REGULAR:
+        return 5.0
+    elif precision == Precision.LOW:
+        return 1.5
+    else:
+        raise ValueError
+
+
 class LunarSixQuery(AbstractQuery):
     def __init__(
         self,
@@ -37,7 +46,7 @@ class LunarSixQuery(AbstractQuery):
         day_number: int,
         six: LunarSix,
         value_us: float,
-        time_precision: TimePrecision = TimePrecision.REGULAR,
+        time_precision: Precision = Precision.REGULAR,
     ):
         assert value_us >= 0
         assert 1 <= day_number <= 30
@@ -63,16 +72,17 @@ class LunarSixQuery(AbstractQuery):
         self.actual_us = actual * 360
         self.moon_time = moon_time
 
-        self.score = self.lunar_six_score(
-            self.actual_us, value_us, time_precision.value
-        )
+        self.score = self.lunar_six_score(self.actual_us, value_us, time_precision)
 
     @staticmethod
-    def lunar_six_score(actual_us: float, tablet_us: float, tolerance: float) -> float:
+    def lunar_six_score(
+        actual_us: float, tablet_us: float, time_precision: Precision
+    ) -> float:
+        t = lunar_six_tolerance(time_precision)
         err = abs(tablet_us - actual_us) - 2  # +-2 degrees accuracy readings
         err = 0 if err < 0 else err
         percent_err = err / abs(actual_us)
-        score = math.pow(tolerance, -percent_err)
+        score = math.pow(t, -percent_err)
         if actual_us < 0:  # Reduce score when they are in the wrong order
             score *= 0.5
         assert 0 <= score <= 1

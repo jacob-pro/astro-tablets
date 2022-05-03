@@ -1,6 +1,6 @@
 {
   "base_year": -522,
-  "best_score": 86.19193772276773,
+  "best_score": 85.4433716994334,
   "years": [
     {
       "name": "Cambyses 7",
@@ -9,7 +9,7 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 80.39193772276784,
+          "score": 79.31121675049386,
           "nisan_1": "-522-04-05 18:19",
           "next_nisan": "-521-04-24 18:30",
           "best_compatible_path": true,
@@ -81,7 +81,7 @@
               ]
             },
             {
-              "score": 6.956914226726804,
+              "score": 7.156914226726804,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-522-05-05 18:37",
@@ -158,7 +158,7 @@
                   "angle": 11.974564064831393,
                   "position": "behind",
                   "at_time": "-522-06-01 18:55",
-                  "score": 0.8,
+                  "score": 1.0,
                   "search_start": "-522-06-01 18:55",
                   "search_end": "-522-06-02 04:52",
                   "date": "Night of the 28th"
@@ -271,7 +271,7 @@
               ]
             },
             {
-              "score": 7.3953310919957325,
+              "score": 7.113434572545834,
               "name": "IV",
               "actual_month": 4,
               "month_sunset_1": "-522-07-03 19:09",
@@ -354,7 +354,7 @@
                   "angle": 6.330069279093274,
                   "position": "behind",
                   "at_time": "-522-07-03 23:59",
-                  "score": 1.0,
+                  "score": 0.7181034805501014,
                   "search_start": "-522-07-03 19:09",
                   "search_end": "-522-07-04 04:50",
                   "date": "Night of the 1st"
@@ -447,7 +447,7 @@
               ]
             },
             {
-              "score": 10.49582603444545,
+              "score": 10.695922494260268,
               "name": "VI",
               "actual_month": 6,
               "month_sunset_1": "-522-08-31 18:36",
@@ -524,7 +524,7 @@
                   "angle": 0.7597735996342166,
                   "position": "below",
                   "at_time": "-522-09-22 02:52",
-                  "score": 0.8,
+                  "score": 1.0,
                   "search_start": "-522-09-21 18:10",
                   "search_end": "-522-09-22 05:46",
                   "date": "Night of the 22nd"
@@ -575,7 +575,7 @@
                   "angle": 24.454049316071135,
                   "position": "ahead",
                   "at_time": "-522-09-24 02:52",
-                  "score": 0,
+                  "score": 9.645981481858807e-05,
                   "search_start": "-522-09-23 18:07",
                   "search_end": "-522-09-24 05:48",
                   "date": "Night of the 24th"
@@ -583,7 +583,7 @@
               ]
             },
             {
-              "score": 8.947229677860106,
+              "score": 8.71778363743833,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-522-09-30 17:58",
@@ -671,7 +671,7 @@
                   "angle": 22.030476624939354,
                   "position": "behind",
                   "at_time": "-522-10-23 03:01",
-                  "score": 0,
+                  "score": 1.3111418313016653e-11,
                   "search_start": "-522-10-22 17:31",
                   "search_end": "-522-10-23 06:11",
                   "date": "Night of the 23rd"
@@ -682,7 +682,7 @@
                   "angle": 0.518614882867278,
                   "position": "above",
                   "at_time": "-522-10-28 17:24",
-                  "score": 1.0,
+                  "score": 0.5835985898970034,
                   "search_start": "-522-10-28 17:24",
                   "search_end": "-522-10-29 06:16",
                   "date": "Night of the 29th"
@@ -693,7 +693,7 @@
                   "angle": 5.294858122514769,
                   "position": "behind",
                   "at_time": "-522-10-12 02:57",
-                  "score": 0,
+                  "score": 0.005493852455199413,
                   "search_start": "-522-10-11 17:44",
                   "search_end": "-522-10-12 06:02",
                   "date": "Night of the 12th"
@@ -704,7 +704,7 @@
                   "angle": 1.2444395863596407,
                   "position": "ahead",
                   "at_time": "-522-10-11 02:57",
-                  "score": 0,
+                  "score": 0.1814615172129121,
                   "search_start": "-522-10-10 17:45",
                   "search_end": "-522-10-11 06:01",
                   "date": "Night of the 11th"
@@ -712,7 +712,7 @@
               ]
             },
             {
-              "score": 4.943916866438145,
+              "score": 4.602087754264589,
               "name": "VIII",
               "actual_month": 8,
               "month_sunset_1": "-522-10-29 17:23",
@@ -780,7 +780,7 @@
                   "angle": 1.0823131390864462,
                   "position": "behind",
                   "at_time": "-522-10-31 03:04",
-                  "score": 0.8,
+                  "score": 0.45817088782644355,
                   "search_start": "-522-10-30 17:22",
                   "search_end": "-522-10-31 06:18",
                   "date": "Night of the 2nd"
@@ -788,7 +788,7 @@
               ]
             },
             {
-              "score": 3.8561004321431844,
+              "score": 3.228454672099621,
               "name": "X",
               "actual_month": 10,
               "month_sunset_1": "-522-12-27 17:06",
@@ -837,7 +837,7 @@
                   "angle": 2.3590530877529226,
                   "position": "behind",
                   "at_time": "-522-12-31 17:08",
-                  "score": 0.933096503209947,
+                  "score": 0.3054507431663837,
                   "search_start": "-522-12-31 17:08",
                   "search_end": "-521-01-01 07:10",
                   "date": "Night of the 5th"
@@ -1070,7 +1070,7 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 5.799999999999899,
+          "score": 5.999999999999899,
           "nisan_1": "-521-04-24 18:30",
           "next_nisan": "-520-04-13 18:24",
           "best_compatible_path": true,
@@ -1168,7 +1168,7 @@
               ]
             },
             {
-              "score": 1.8,
+              "score": 2.0,
               "name": "VI",
               "actual_month": 6,
               "month_sunset_1": "-521-09-20 18:11",
@@ -1191,7 +1191,7 @@
                   "angle": 6.834513257850495,
                   "position": "ahead",
                   "at_time": "-521-09-24 02:52",
-                  "score": 0.8,
+                  "score": 1.0,
                   "search_start": "-521-09-23 18:07",
                   "search_end": "-521-09-24 05:47",
                   "date": "Night of the 4th"
@@ -1209,39 +1209,39 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 0,
+          "score": 0.13215494893964938,
           "nisan_1": "-520-04-13 18:24",
           "next_nisan": "-519-04-02 18:17",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0,
+              "score": 0.13215494893964938,
               "name": "II",
               "actual_month": 2,
-              "month_sunset_1": "-520-05-12 18:42",
+              "month_sunset_1": "-520-05-13 18:43",
               "first_visibility": "-520-05-12 18:42",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "planet": "mars",
                   "event": "last_appearance",
                   "nearest_time": "-520-07-07 20:22",
                   "score": 0,
-                  "search_start": "-520-05-20 18:48",
-                  "search_end": "-520-05-21 04:59",
+                  "search_start": "-520-05-21 18:48",
+                  "search_end": "-520-05-22 04:58",
                   "date": "Night of the 9th"
                 },
                 {
                   "from_body": "mars",
                   "to_body": "regulus",
-                  "angle": 28.607947561124448,
+                  "angle": 27.98884773976387,
                   "position": "ahead",
-                  "at_time": "-520-05-21 02:26",
-                  "score": 0,
-                  "search_start": "-520-05-20 18:48",
-                  "search_end": "-520-05-21 04:59",
+                  "at_time": "-520-05-22 02:26",
+                  "score": 0.13215494893964938,
+                  "search_start": "-520-05-21 18:48",
+                  "search_end": "-520-05-22 04:58",
                   "date": "Night of the 9th"
                 }
               ]

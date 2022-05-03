@@ -26,6 +26,7 @@ from astro_tablets.query.abstract_tablet import (
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 from astro_tablets.query.database import BabylonianDay, Database
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
+from astro_tablets.query.radius_query import WithinRadiusQuery
 
 
 class BM32312(AbstractTablet):
@@ -37,18 +38,17 @@ class BM32312(AbstractTablet):
             PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.ML, day14)
         )
         res.append(
-            AngularSeparationQuery(
-                self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day14
+            WithinRadiusQuery(
+                self.db, MERCURY, PISCES.central_star, PISCES.radius, None, day14
             )
         )
         # Saturn's last appearance behind Pisces
         res.append(PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, day14))
         res.append(
-            AngularSeparationQuery(
+            WithinRadiusQuery(
                 self.db,
                 SATURN,
                 PISCES.central_star,
-                0,
                 PISCES.radius,
                 EclipticPosition.BEHIND,
                 day14,
@@ -59,7 +59,7 @@ class BM32312(AbstractTablet):
         # Mars became stationary
         res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.ST, day17))
         # it came close to the bright star of the Scorpion's head
-        res.append(AngularSeparationQuery(self.db, MARS, ANTARES, 0, 10, None, day17))
+        res.append(WithinRadiusQuery(self.db, MARS, ANTARES, 10, None, day17))
 
         return res
 
@@ -69,8 +69,8 @@ class BM32312(AbstractTablet):
         # Mercury's first appearance in the east in Pisces
         res.append(PlanetaryEventQuery(self.db, MERCURY, InnerPlanetPhenomena.MF, day5))
         res.append(
-            AngularSeparationQuery(
-                self.db, MERCURY, PISCES.central_star, 0, PISCES.radius, None, day5
+            WithinRadiusQuery(
+                self.db, MERCURY, PISCES.central_star, PISCES.radius, None, day5
             )
         )
 
@@ -82,22 +82,21 @@ class BM32312(AbstractTablet):
                 VENUS,
                 MARS,
                 10 * FINGER,
-                10 * FINGER,
                 EclipticPosition.BEHIND,
                 day19,
             )
         )
         res.append(
-            AngularSeparationQuery(
-                self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day19
+            WithinRadiusQuery(
+                self.db, MARS, ARIES.central_star, ARIES.radius, None, day19
             )
         )
 
         day20 = SearchRange.for_night(month, 20)
         # Mars was 1 finger to the left of the front? of Aries
         res.append(
-            AngularSeparationQuery(
-                self.db, MARS, ARIES.central_star, 0, ARIES.radius, None, day20
+            WithinRadiusQuery(
+                self.db, MARS, ARIES.central_star, ARIES.radius, None, day20
             )
         )
 

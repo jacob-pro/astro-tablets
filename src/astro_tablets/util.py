@@ -81,8 +81,6 @@ class TimeValue:
         self.inner = inner
 
     def string(self, timescale: Timescale):
-        if self.inner is None:
-            return ""
         t = timescale.tt_jd(self.inner + 3 / 24)
         return "{}-{:02d}-{:02d} {:02d}:{:02d}".format(*t.ut1_calendar())
 

@@ -1,6 +1,6 @@
 {
   "base_year": -590,
-  "best_score": 9.389604822699809,
+  "best_score": 8.175890825250553,
   "years": [
     {
       "name": "Nebuchadnezzar 14",
@@ -78,14 +78,14 @@
       "intercalary": "Ululu II",
       "potentials": [
         {
-          "score": 2.79558057050214,
+          "score": 1.9418611405488972,
           "nisan_1": "-573-03-31 18:16",
           "next_nisan": "-572-04-17 18:26",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 2.79558057050214,
+              "score": 1.9418611405488972,
               "name": "Unknown month between 1 and 13",
               "actual_month": 13,
               "month_sunset_1": "-572-03-19 18:09",
@@ -106,7 +106,7 @@
                   "position_body": "nu librae",
                   "position_actual_angle": 7.865817560168329,
                   "position_actual_position": "ahead",
-                  "score": 0.9955805705021401,
+                  "score": 0.7955812059200644,
                   "search_start": "-572-03-19 18:09",
                   "search_end": "-572-04-18 05:35",
                   "date": "Any day"
@@ -117,7 +117,7 @@
                   "angle": 5.4557037137939846,
                   "position": "above",
                   "at_time": "-572-04-03 00:06",
-                  "score": 0.8,
+                  "score": 0.14627993462883276,
                   "search_start": "-572-04-01 01:58",
                   "search_end": "-572-04-03 01:58",
                   "date": "Within a day of the eclipse"
@@ -215,14 +215,14 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 1.8037247720053595,
+          "score": 1.6437298466534793,
           "nisan_1": "-554-03-30 18:15",
           "next_nisan": "-553-04-18 18:26",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.8037247720053594,
+              "score": 0.6437298466534794,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-554-09-24 18:06",
@@ -243,7 +243,7 @@
                   "position_body": "nu arietis",
                   "position_actual_angle": 6.436204731875202,
                   "position_actual_position": "below",
-                  "score": 0.8037247720053594,
+                  "score": 0.6437298466534794,
                   "search_start": "-554-10-06 17:50",
                   "search_end": "-554-10-07 17:49",
                   "date": "Night and day of the 13th"
@@ -287,14 +287,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 0.9599767388867333,
+          "score": 0.7599770967426003,
           "nisan_1": "-536-04-09 18:22",
           "next_nisan": "-535-03-29 18:15",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9599767388867333,
+              "score": 0.7599770967426003,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-536-10-04 17:52",
@@ -315,7 +315,7 @@
                   "position_body": "alcyone",
                   "position_actual_angle": 8.222558648222078,
                   "position_actual_position": "ahead",
-                  "score": 0.9599767388867333,
+                  "score": 0.7599770967426003,
                   "search_start": "-536-10-14 17:40",
                   "search_end": "-536-11-03 06:21",
                   "date": "11+"

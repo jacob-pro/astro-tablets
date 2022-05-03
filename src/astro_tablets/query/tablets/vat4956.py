@@ -16,6 +16,7 @@ from astro_tablets.constants import (
     FINGER,
     FORTY_TWO_CANCRI,
     GEMINI,
+    HALO,
     JUPITER,
     LEO,
     MARS,
@@ -28,7 +29,7 @@ from astro_tablets.constants import (
     TAURUS,
     THETA_LEONIS,
     VENUS,
-    TimePrecision,
+    Precision,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -46,13 +47,13 @@ from astro_tablets.query.abstract_tablet import (
 )
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 from astro_tablets.query.database import BabylonianDay, Database
-from astro_tablets.query.halo_query import HaloQuery
 from astro_tablets.query.lunar_eclipse_query import (
     ExpectedEclipseType,
     LunarEclipseQuery,
 )
 from astro_tablets.query.lunar_six_query import LunarSix, LunarSixQuery
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
+from astro_tablets.query.radius_query import WithinRadiusQuery
 
 
 @unique
@@ -70,11 +71,10 @@ class VAT4956(AbstractTablet):
         # Sîn (Moon) appeared behind the Bull of Heaven (Taurus)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     TAURUS.central_star,
-                    0,
                     TAURUS.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 1),
@@ -84,11 +84,10 @@ class VAT4956(AbstractTablet):
         # Kajjamānu (Saturn) was in front of the Swallow (Pisces).
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     SATURN,
                     PISCES.central_star,
-                    0,
                     PISCES.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 1),
@@ -103,7 +102,6 @@ class VAT4956(AbstractTablet):
                     MOON,
                     BETA_VIRGINIS,
                     1 * CUBIT,
-                    6 * FINGER,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 9),
                 )
@@ -132,11 +130,10 @@ class VAT4956(AbstractTablet):
         # Sîn (Moon) appeared below the Rear Bright Star of the Large Twins (β Geminorum)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     BETA_GEMINORUM,
-                    0,
                     15,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 1),
@@ -146,11 +143,10 @@ class VAT4956(AbstractTablet):
         # Kajjamānu (Saturn) was in front of the Swallow (Pisces).
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     SATURN,
                     PISCES.central_star,
-                    0,
                     PISCES.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 1),
@@ -160,11 +156,10 @@ class VAT4956(AbstractTablet):
         # The 3rd, Ṣalbaṭānu (Mars) entered the Crab (Praesepe), the 5th it emerged.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MARS,
                     FORTY_TWO_CANCRI,
-                    0,
                     5,
                     None,
                     SearchRange.range_of_nights(month, 3, 5),
@@ -182,11 +177,10 @@ class VAT4956(AbstractTablet):
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MERCURY,
                     GEMINI.central_star,
-                    0,
                     GEMINI.radius,
                     None,
                     SearchRange.for_night_and_day(month, 10),
@@ -201,7 +195,6 @@ class VAT4956(AbstractTablet):
                     VENUS,
                     REGULUS,
                     (1 * CUBIT) + (4 * FINGER),
-                    8 * CUBIT,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 18),
                 )
@@ -210,7 +203,7 @@ class VAT4956(AbstractTablet):
         #  The 26th (KUR) (moonrise to sunrise) was 23, I did not observe Sîn.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
             res.append(
-                LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, TimePrecision.LOW)
+                LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, Precision.LOW)
             )
 
         return res
@@ -220,11 +213,10 @@ class VAT4956(AbstractTablet):
         # Sîn (Moon) appeared behind the Crab (Cancer);
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     CANCER.central_star,
-                    0,
                     CANCER.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 1),
@@ -244,7 +236,6 @@ class VAT4956(AbstractTablet):
                     MARS,
                     REGULUS,
                     4 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 1),
                 )
@@ -255,17 +246,15 @@ class VAT4956(AbstractTablet):
                     MERCURY,
                     REGULUS,
                     4 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 1),
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MARS,
                     MERCURY,
-                    0,
                     10,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 1),
@@ -276,11 +265,10 @@ class VAT4956(AbstractTablet):
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
                 (
-                    AngularSeparationQuery(
+                    WithinRadiusQuery(
                         self.db,
                         JUPITER,
                         ANTARES,
-                        0,
                         15,
                         EclipticPosition.ABOVE,
                         SearchRange.for_night(month, 1),
@@ -291,11 +279,10 @@ class VAT4956(AbstractTablet):
         #  Dilbat (Venus) was in the west, opposite the Tail of the Li[on ...] (θ Leonis)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     THETA_LEONIS,
-                    0,
                     15,
                     None,
                     SearchRange.for_night(month, 1),
@@ -306,11 +293,10 @@ class VAT4956(AbstractTablet):
         # the Bright Star at the Tip of the Lion’s Foot. (Leo)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     LEO.central_star,
-                    0,
                     LEO.radius,
                     None,
                     SearchRange.for_night(month, 5),
@@ -325,7 +311,6 @@ class VAT4956(AbstractTablet):
                     MOON,
                     BETA_LIBRAE,
                     2.5 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 8),
                 )
@@ -339,7 +324,6 @@ class VAT4956(AbstractTablet):
                     MOON,
                     ANTARES,
                     3.5 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 10),
                 )
@@ -353,7 +337,6 @@ class VAT4956(AbstractTablet):
                     MARS,
                     REGULUS,
                     2 / 3 * CUBIT,
-                    6 * FINGER,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 12),
                 )
@@ -382,11 +365,10 @@ class VAT4956(AbstractTablet):
         # The 19th, Dilbat (Venus) was below the Middle Star of the Horn of the Goat [...] (β Capricorni)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     BETA_CAPRICORNI,
-                    0,
                     15,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 19),
@@ -399,11 +381,10 @@ class VAT4956(AbstractTablet):
         # Sîn (Moon) appeared in the Swallow (Pisces)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     PISCES.central_star,
-                    0,
                     PISCES.radius,
                     None,
                     SearchRange.for_night(month, 1),
@@ -417,11 +398,10 @@ class VAT4956(AbstractTablet):
         # At that time, Sagmegar (Jupiter) was behind the Elbow of Pabi[lsag by ... cubits ...] (Sagittarius)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     JUPITER,
                     SAGITTARIUS.central_star,
-                    0,
                     SAGITTARIUS.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 1),
@@ -431,11 +411,10 @@ class VAT4956(AbstractTablet):
         # The 4th, Dilbat (Venus) was ‘balanced’ 1/2 cubit below the Goat-Fish. (Capricorn)
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     CAPRICORNUS.central_star,
-                    0,
                     CAPRICORNUS.radius,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 4),
@@ -446,25 +425,25 @@ class VAT4956(AbstractTablet):
         #  the Bull of Heaven (Taurus), the Chariot (Auriga) [stood within the ‘fold’ ...]
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                HaloQuery(self.db, MOON, ALCYONE, SearchRange.for_night(month, 6))
+                WithinRadiusQuery(
+                    self.db, MOON, ALCYONE, HALO, None, SearchRange.for_night(month, 6)
+                )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     TAURUS.central_star,
-                    0,
                     TAURUS.radius,
                     None,
                     SearchRange.for_night(month, 6),
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     AURIGA.central_star,
-                    0,
                     AURIGA.radius,
                     None,
                     SearchRange.for_night(month, 6),
@@ -474,22 +453,20 @@ class VAT4956(AbstractTablet):
         # Sîn (Moon) was surrounded by a ‘fold’ (Halo); the Lion (Leo) and the Crab (Cancer) were inside the ‘fold’.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     LEO.central_star,
-                    0,
                     LEO.radius,
                     None,
                     SearchRange.range_of_nights(month, 7, 15),
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     CANCER.central_star,
-                    0,
                     CANCER.radius,
                     None,
                     SearchRange.range_of_nights(month, 7, 15),
@@ -504,7 +481,6 @@ class VAT4956(AbstractTablet):
                     REGULUS,
                     MOON,
                     1 * CUBIT,
-                    6 * FINGER,
                     EclipticPosition.BELOW,
                     SearchRange.range_of_nights(month, 7, 15),
                 )
@@ -516,11 +492,10 @@ class VAT4956(AbstractTablet):
         # Addaru, the 1st, Sîn (Moon) appeared behind the Hired Man (Aries) while Šamaš was present
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     ARIES.central_star,
-                    0,
                     ARIES.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 1),
@@ -539,7 +514,6 @@ class VAT4956(AbstractTablet):
                     MOON,
                     ALCYONE,
                     4 * CUBIT,
-                    1 * CUBIT,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 2),
                 )
@@ -549,18 +523,19 @@ class VAT4956(AbstractTablet):
         # King (Regulus) were within [the ‘fold’, ...]
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MOON,
                     CANCER.central_star,
-                    0,
                     CANCER.radius,
                     None,
                     SearchRange.for_night(month, 7),
                 )
             )
             res.append(
-                HaloQuery(self.db, REGULUS, MOON, SearchRange.for_night(month, 7))
+                WithinRadiusQuery(
+                    self.db, REGULUS, MOON, HALO, None, SearchRange.for_night(month, 7)
+                )
             )
 
         # The 12th, one god was seen with the (other) god, NA (sunrise to moonset) was 1;30.
@@ -576,8 +551,7 @@ class VAT4956(AbstractTablet):
                     self.db,
                     VENUS,
                     MERCURY,
-                    1 * CUBIT,
-                    6 * FINGER,
+                    9 * FINGER,
                     None,
                     SearchRange.range_of_nights(month, 13, 21),
                 )
@@ -586,22 +560,20 @@ class VAT4956(AbstractTablet):
         # Around the 20th Dilbat (Venus) and Šiḫṭu (Mercury) entered the Band of the Swallow (Pisces).
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.PLANET_ONLY:
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     VENUS,
                     PISCES.central_star,
-                    0,
                     PISCES.radius,
                     None,
                     SearchRange.for_night(month, 20),
                 )
             )
             res.append(
-                AngularSeparationQuery(
+                WithinRadiusQuery(
                     self.db,
                     MERCURY,
                     PISCES.central_star,
-                    0,
                     PISCES.radius,
                     None,
                     SearchRange.for_night(month, 20),
