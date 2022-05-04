@@ -43,7 +43,7 @@ def generate(
     overwrite: bool,
     start: Optional[int],
     end: Optional[int],
-):
+) -> None:
     generate_impl(tablet, db, overwrite, start, end)
 
 
@@ -53,7 +53,7 @@ def generate_impl(
     overwrite: bool,
     start: Optional[int],
     end: Optional[int],
-):
+) -> None:
     data = AstroData()
     tablet_gen_class = tablets.get_tablet_class(tablet_name)
     db_path = (
@@ -78,7 +78,7 @@ def query_all(
     subquery: Optional[str],
     db: Optional[str],
     output: Optional[str],
-):
+) -> None:
     query_all_impl(tablet, subquery, db, output)
 
 
@@ -87,7 +87,7 @@ def query_all_impl(
     subquery: Optional[str],
     db_path_override: Optional[str],
     output_path_override: Optional[str],
-):
+) -> None:
     data = AstroData(time_only=True)
     db_path = (
         default_database_path(tablet_name)
@@ -116,7 +116,7 @@ def query_year(
     db: Optional[str],
     output: Optional[str],
     full: bool,
-):
+) -> None:
     query_year_impl(tablet, year, subquery, db, output, full)
 
 
@@ -127,7 +127,7 @@ def query_year_impl(
     db_path_override: Optional[str],
     output_path_override: Optional[str],
     full: bool,
-):
+) -> None:
     data = AstroData(time_only=True)
     db_path = (
         default_database_path(tablet_name)
@@ -148,7 +148,7 @@ def query_year_impl(
     tablet.write_single_year(year, full, output_path)
 
 
-def graphs(path: str):
+def graphs(path: str) -> None:
     if not os.path.isdir(path):
         raise RuntimeError(f"{path} is not a directory")
     if path.endswith("/"):

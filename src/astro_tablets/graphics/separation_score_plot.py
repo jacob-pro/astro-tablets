@@ -16,7 +16,7 @@ def plot_separation_score(angle: float, dest: str):
 
     ys = list(
         map(
-            lambda x: AngularSeparationQuery.score(
+            lambda x: AngularSeparationQuery.calculate_score(
                 tablet_angle=angle,
                 tablet_position=None,
                 actual=x,
@@ -30,7 +30,7 @@ def plot_separation_score(angle: float, dest: str):
 
     ys = list(
         map(
-            lambda x: AngularSeparationQuery.score(
+            lambda x: AngularSeparationQuery.calculate_score(
                 tablet_angle=angle,
                 tablet_position=None,
                 actual=x,

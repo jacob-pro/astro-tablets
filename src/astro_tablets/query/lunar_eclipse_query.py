@@ -8,7 +8,7 @@ import numpy as np
 
 from astro_tablets.constants import Body, Precision
 from astro_tablets.generate.angular_separation import EclipticPosition
-from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
+from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 from astro_tablets.query.database import Database, LunarEclipse
 from astro_tablets.util import TimeValue, diff_time_degrees_signed
@@ -97,25 +97,21 @@ class LunarEclipseQuery(AbstractQuery):
         matched_eclipses = db.lunar_eclipses_in_range(
             start_wider, end_wider, position.body if position is not None else None
         )
-        results = list(
-            map(
-                lambda x: (
-                    x,
-                    self.score_eclipse(x, first_contact, type, phase_timing, position),
-                ),
-                matched_eclipses,
-            )
+        results = ScoredResult.score_results(
+            matched_eclipses,
+            lambda x: self.calculate_score(
+                x, first_contact, type, phase_timing, position
+            ),
         )
-        results.sort(key=lambda x: x[1], reverse=True)
         if len(results) > 0:
-            self.best = results[0][0]
-            self.score = results[0][1]
+            self.best = results[0].result
+            self.score = results[0].score
         else:
             self.best = None
             self.score = 0.0
 
     @staticmethod
-    def score_eclipse(
+    def calculate_score(
         eclipse: LunarEclipse,
         first_contact: Optional[FirstContactTime],
         type: ExpectedEclipseType,
@@ -128,7 +124,7 @@ class LunarEclipseQuery(AbstractQuery):
             assert eclipse.angle is not None
             assert eclipse.position is not None
             scores.append(
-                AngularSeparationQuery.score(
+                AngularSeparationQuery.calculate_score(
                     location.target_angle,
                     location.target_position,
                     eclipse.angle,
@@ -247,6 +243,9 @@ class LunarEclipseQuery(AbstractQuery):
         assert 0 <= score <= 1
         return score
 
+    def quality_score(self) -> float:
+        return self.score
+
     def output(self) -> dict:
         out: Dict[str, Any] = {}
         if self.best is not None:
@@ -273,6 +272,3 @@ class LunarEclipseQuery(AbstractQuery):
 
     def get_search_range(self) -> SearchRange:
         return self.target_time
-
-    def quality_score(self) -> float:
-        return self.score

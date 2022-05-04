@@ -1,9 +1,9 @@
 import math
 from typing import Optional
 
-from astro_tablets.constants import MOON, Body
+from astro_tablets.constants import Body
 from astro_tablets.generate.angular_separation import EclipticPosition
-from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
+from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
 from astro_tablets.util import TimeValue
 
@@ -31,31 +31,25 @@ class WithinRadiusQuery(AbstractQuery):
         if len(sep) < 1:
             raise RuntimeError(
                 "Failed to find any separations between {} and {} at {} to {}, check database".format(
-                    MOON.name, to_body.name, target_time.start, target_time.end
+                    from_body.name, to_body.name, target_time.start, target_time.end
                 )
             )
-        results = list(
-            map(
-                lambda x: (
-                    x,
-                    self.score(radius, target_position, x.angle, x.position),
-                ),
-                sep,
-            )
+        results = ScoredResult.score_results(
+            sep,
+            lambda x: self.calculate_score(
+                radius, target_position, x.angle, x.position
+            ),
         )
-        # Sort by score descending
-        results.sort(key=lambda x: x[1], reverse=True)
-        # Tiebreaker for matching top scores
-        tie_breaker = list(filter(lambda x: x[1] == results[0][1], results))
-        # Sort by closest angle
-        tie_breaker.sort(key=lambda x: x[0].angle)
-        self.best = tie_breaker[0][0]
 
-    def get_search_range(self) -> SearchRange:
-        return self.target_time
+        # Tiebreaker for matching top scores
+        tie_breaker = list(filter(lambda x: x.score == results[0].score, results))
+        # Sort by closest angle
+        tie_breaker.sort(key=lambda x: x.result.angle)
+        self.best = tie_breaker[0].result
+        self.score = tie_breaker[0].score
 
     @staticmethod
-    def score(
+    def calculate_score(
         radius: float,
         tablet_position: Optional[EclipticPosition],
         actual_angle: float,
@@ -77,9 +71,7 @@ class WithinRadiusQuery(AbstractQuery):
             return angle_score
 
     def quality_score(self) -> float:
-        return self.score(
-            self.radius, self.target_position, self.best.angle, self.best.position
-        )
+        return self.score
 
     def output(self) -> dict:
         return {
@@ -89,3 +81,6 @@ class WithinRadiusQuery(AbstractQuery):
             "position": self.best.position,
             "at_time": TimeValue(self.best.time),
         }
+
+    def get_search_range(self) -> SearchRange:
+        return self.target_time

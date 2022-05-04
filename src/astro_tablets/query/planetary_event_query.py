@@ -31,9 +31,6 @@ class PlanetaryEventQuery(AbstractQuery):
             )
         self.nearest = nearest
 
-    def get_search_range(self) -> SearchRange:
-        return self.target_time
-
     @staticmethod
     def result_function(x: float, cut_off: float) -> float:
         """
@@ -62,3 +59,6 @@ class PlanetaryEventQuery(AbstractQuery):
             "event": self.event.value,
             "nearest_time": TimeValue(self.nearest),
         }
+
+    def get_search_range(self) -> SearchRange:
+        return self.target_time

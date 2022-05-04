@@ -1,6 +1,6 @@
 import math
 from enum import Enum, unique
-from typing import List
+from typing import Any, Dict, List
 
 from astro_tablets.constants import INFLECT_ENGINE, Precision
 from astro_tablets.data import MOON
@@ -19,13 +19,13 @@ class LunarSix(Enum):
     GI6 = "sunset to moonrise"
     KUR = "moonrise to sunrise"
 
-    def contains_sunset(self):
+    def contains_sunset(self) -> bool:
         return self == LunarSix.NA1 or self == LunarSix.ME or self == LunarSix.GI6
 
-    def lunar_set(self):
+    def lunar_set(self) -> bool:
         return self == LunarSix.NA1 or self == LunarSix.SU2 or self == LunarSix.NA
 
-    def sun_first(self):
+    def sun_first(self) -> bool:
         return self == LunarSix.NA1 or self == LunarSix.NA or self == LunarSix.GI6
 
 
@@ -72,10 +72,10 @@ class LunarSixQuery(AbstractQuery):
         self.actual_us = actual * 360
         self.moon_time = moon_time
 
-        self.score = self.lunar_six_score(self.actual_us, value_us, time_precision)
+        self.score = self.calculate_score(self.actual_us, value_us, time_precision)
 
     @staticmethod
-    def lunar_six_score(
+    def calculate_score(
         actual_us: float, tablet_us: float, time_precision: Precision
     ) -> float:
         t = lunar_six_tolerance(time_precision)
@@ -88,16 +88,16 @@ class LunarSixQuery(AbstractQuery):
         assert 0 <= score <= 1
         return score
 
+    def quality_score(self) -> float:
+        return self.score
+
     def output(self) -> dict:
-        d = {"time_us": self.actual_us, "six": self.six.value}
+        out: Dict[str, Any] = {"time_us": self.actual_us, "six": self.six.value}
         if self.six.lunar_set():
-            d["moonset"] = TimeValue(self.moon_time)
+            out["moonset"] = TimeValue(self.moon_time)
         else:
-            d["moonrise"] = TimeValue(self.moon_time)
-        return d
+            out["moonrise"] = TimeValue(self.moon_time)
+        return out
 
     def get_search_range(self) -> SearchRange:
         return self.search_range
-
-    def quality_score(self) -> float:
-        return self.score

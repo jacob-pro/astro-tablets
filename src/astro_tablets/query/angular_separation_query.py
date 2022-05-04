@@ -3,7 +3,7 @@ from typing import Optional
 
 from astro_tablets.constants import Body, Precision
 from astro_tablets.generate.angular_separation import EclipticPosition
-from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
+from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
 from astro_tablets.util import TimeValue
 
@@ -43,25 +43,23 @@ class AngularSeparationQuery(AbstractQuery):
                     from_body.name, to_body.name, target_time.start, target_time.end
                 )
             )
-        sep.sort(
-            key=lambda x: self.score(
+        results = ScoredResult.score_results(
+            sep,
+            lambda x: self.calculate_score(
                 target_angle, target_position, x.angle, x.position, angle_precision
             ),
-            reverse=True,
         )
-        self.best = sep[0]
-
-    def get_search_range(self) -> SearchRange:
-        return self.target_time
+        self.best = results[0].result
+        self.score = results[0].score
 
     @staticmethod
-    def score(
+    def calculate_score(
         tablet_angle: float,
         tablet_position: Optional[EclipticPosition],
         actual: float,
         actual_position: str,
         precision: Precision,
-    ):
+    ) -> float:
         """
         Correct position (if specified) adds 0.2 to score
         """
@@ -77,13 +75,7 @@ class AngularSeparationQuery(AbstractQuery):
             return angle_score
 
     def quality_score(self) -> float:
-        return self.score(
-            self.target_angle,
-            self.target_position,
-            self.best.angle,
-            self.best.position,
-            self.precision,
-        )
+        return self.score
 
     def output(self) -> dict:
         return {
@@ -93,3 +85,6 @@ class AngularSeparationQuery(AbstractQuery):
             "position": self.best.position,
             "at_time": TimeValue(self.best.time),
         }
+
+    def get_search_range(self) -> SearchRange:
+        return self.target_time

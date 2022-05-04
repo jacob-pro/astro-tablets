@@ -12,7 +12,7 @@ def plot_radius_score(dest: str):
     xs = np.arange(0, range, 0.01)
     ys = list(
         map(
-            lambda x: WithinRadiusQuery.score(
+            lambda x: WithinRadiusQuery.calculate_score(
                 radius=HALO,
                 actual_angle=x,
                 tablet_position=None,

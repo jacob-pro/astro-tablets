@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import dataclasses
 import json
 from abc import ABC
@@ -39,7 +41,7 @@ class PotentialMonthResult(CanBeFollowedBy):
     observations: List[Dict]
     _length: MonthLength
 
-    def can_be_followed_by(self, potential2) -> bool:
+    def can_be_followed_by(self, potential2: PotentialMonthResult) -> bool:
         # Months are incompatible if the month afterwards does not start when this one ends
         # Although we can only do this check if we know the length of this month for certain
         # noinspection PyProtectedMember
@@ -63,7 +65,7 @@ class Intercalary(Enum):
     ULULU = "Ululu II"
     ADDARU = "Addaru II"
 
-    def is_intercalary(self):
+    def is_intercalary(self) -> bool:
         return self == Intercalary.ULULU or self == Intercalary.ADDARU
 
 
@@ -74,11 +76,11 @@ class PotentialYearResult(CanBeFollowedBy):
     next_nisan: TimeValue  # 12 or 13 months later depending on intercalary status
     best_compatible_path: bool
     month_lengths_compatible: bool
-    _actual_year: int
+    _actual_year: int  # Underscore to hide from JSON output
     _intercalary: Intercalary
     months: List[PotentialMonthResult]
 
-    def can_be_followed_by(self, potential2) -> bool:
+    def can_be_followed_by(self, potential2: PotentialYearResult) -> bool:
         # Years are incompatible if the year afterwards does not start when this one ends
         # Although we can only do this check if we know the length of this year for certain
         # noinspection PyProtectedMember
