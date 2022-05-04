@@ -1,7 +1,7 @@
 import math
 from typing import Optional
 
-from astro_tablets.constants import Body, Precision
+from astro_tablets.constants import MOON, Body, Precision
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
@@ -10,9 +10,9 @@ from astro_tablets.util import TimeValue
 
 def angular_separation_tolerance(precision: Precision) -> float:
     if precision == Precision.REGULAR:
-        return 5.0
+        return 2.4
     elif precision == Precision.LOW:
-        return 1.5
+        return 1.3
     else:
         raise ValueError
 
@@ -28,6 +28,11 @@ class AngularSeparationQuery(AbstractQuery):
         target_time: SearchRange,
         angle_precision: Precision = Precision.REGULAR,
     ):
+        # The moon moves relatively quick, so our ephemeris which
+        # are computed every few hours aren't super accurate
+        if from_body == MOON or to_body == MOON:
+            angle_precision = Precision.LOW
+
         self.target_time = target_time
         self.from_body = from_body
         self.to_body = to_body

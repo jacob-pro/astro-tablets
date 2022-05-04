@@ -1,6 +1,6 @@
 {
   "base_year": -653,
-  "best_score": 12.69839580871516,
+  "best_score": 12.957804520874747,
   "years": [
     {
       "name": "Shamash-shum-ukin 14",
@@ -107,14 +107,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 0.7610563059511344,
+          "score": 0.778575348864734,
           "nisan_1": "-648-03-19 18:09",
           "next_nisan": "-647-03-09 18:02",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.7610563059511344,
+              "score": 0.778575348864734,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-648-09-14 18:19",
@@ -128,7 +128,7 @@
                   "angle": 1.4356593300465514,
                   "position": "ahead",
                   "at_time": "-648-09-17 18:15",
-                  "score": 0.7610563059511344,
+                  "score": 0.778575348864734,
                   "search_start": "-648-09-17 18:15",
                   "search_end": "-648-09-18 05:43",
                   "date": "Night of the 4th"
@@ -196,14 +196,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 1.2029548519039037,
+          "score": 1.2380083874322345,
           "nisan_1": "-635-03-26 18:13",
           "next_nisan": "-634-03-15 18:06",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.2029548519039037,
+              "score": 1.2380083874322345,
               "name": "I",
               "actual_month": 1,
               "month_sunset_1": "-635-03-27 18:13",
@@ -228,7 +228,7 @@
                   "angle": 2.386468299326809,
                   "position": "above",
                   "at_time": "-635-04-04 03:01",
-                  "score": 0.20295485190390375,
+                  "score": 0.2380083874322345,
                   "search_start": "-635-04-03 18:17",
                   "search_end": "-635-04-04 05:55",
                   "date": "Night of the 8th"
@@ -246,14 +246,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 0.18482927337134517,
+          "score": 0.3605439536800977,
           "nisan_1": "-631-03-11 18:03",
           "next_nisan": "-630-03-01 17:56",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.18482927337134517,
+              "score": 0.3605439536800977,
               "name": "III",
               "actual_month": 3,
               "month_sunset_1": "-631-05-09 18:39",
@@ -267,7 +267,7 @@
                   "angle": 1.6576329929868634,
                   "position": "ahead",
                   "at_time": "-631-05-28 18:52",
-                  "score": 0.18482927337134517,
+                  "score": 0.3605439536800977,
                   "search_start": "-631-05-28 18:52",
                   "search_end": "-631-05-29 04:54",
                   "date": "Night of the 20th"
@@ -285,14 +285,14 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 0.9300175101869772,
+          "score": 0.9611389635958805,
           "nisan_1": "-618-03-18 18:08",
           "next_nisan": "-617-04-06 18:19",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9300175101869772,
+              "score": 0.9611389635958805,
               "name": "Unknown month between 1 and 13",
               "actual_month": 5,
               "month_sunset_1": "-618-07-14 19:09",
@@ -306,7 +306,7 @@
                   "angle": 0.4951210073104273,
                   "position": "above",
                   "at_time": "-618-08-01 02:35",
-                  "score": 0.9300175101869772,
+                  "score": 0.9611389635958805,
                   "search_start": "-618-07-14 19:09",
                   "search_end": "-618-08-13 05:15",
                   "date": "Any day"

@@ -45,6 +45,7 @@ class WithinRadiusQuery(AbstractQuery):
         tie_breaker = list(filter(lambda x: x.score == results[0].score, results))
         # Sort by closest angle
         tie_breaker.sort(key=lambda x: x.result.angle)
+
         self.best = tie_breaker[0].result
         self.score = tie_breaker[0].score
 

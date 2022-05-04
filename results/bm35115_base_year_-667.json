@@ -1,6 +1,6 @@
 {
   "base_year": -667,
-  "best_score": 5.608716851852338,
+  "best_score": 5.60871685301592,
   "years": [
     {
       "name": "Shamashshumukin Acc.",
@@ -190,14 +190,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 0.7869310882461217,
+          "score": 0.7869310894097032,
           "nisan_1": "-631-03-11 18:03",
           "next_nisan": "-630-03-01 17:56",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.7869310882461217,
+              "score": 0.7869310894097032,
               "name": "III",
               "actual_month": 3,
               "month_sunset_1": "-631-05-09 18:39",
@@ -218,7 +218,7 @@
                   "position_body": "antares",
                   "position_actual_angle": 21.659625482009226,
                   "position_actual_position": "behind",
-                  "score": 0.7869310882461217,
+                  "score": 0.7869310894097032,
                   "search_start": "-631-05-23 18:49",
                   "search_end": "-631-05-24 18:49",
                   "date": "Night and day of the 15th"

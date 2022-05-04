@@ -29,12 +29,14 @@ from astro_tablets.query.radius_query import WithinRadiusQuery
 class BM76738(AbstractTablet):
     def year_1_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         return [
+            # [Year 1 of Kand]alanu, ⌜month⌝ [..., day ..., last appearance.]
             PlanetaryEventQuery(
                 self.db, SATURN, OuterPlanetPhenomena.LA, SearchRange.any_day(month)
             )
         ]
 
     def year_1_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 1, mont]h 4, day 24, in fr[ont of ... the Crab, first appearance.]
         range = SearchRange.for_night(month, 24)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         return [res1]
@@ -47,10 +49,12 @@ class BM76738(AbstractTablet):
         return [month_a, month_4]
 
     def year_2_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Ye]ar 2, month 4, day 10+[x, ..., last appearance.]
         range = SearchRange.x_plus(month, 10)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_2_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 2, mon]th 5, broken, in the head of the Lion, first appearance; not [observed?.]
         any_day = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, any_day)
         res2 = WithinRadiusQuery(self.db, SATURN, EPSILON_LEONIS, 20, None, any_day)
@@ -66,10 +70,12 @@ class BM76738(AbstractTablet):
         return [month_4, month_5]
 
     def year_3_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Ye]ar 3, month 4, day 7, [last appearance.]
         range = SearchRange.for_night(month, 7)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_3_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 3], month 5, day 16, in the Lion behind the King (= α Leonis)
         range = SearchRange.for_night(month, 16)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -87,10 +93,12 @@ class BM76738(AbstractTablet):
         return [month_4, month_5]
 
     def year_4_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year] ⌜4⌝, at the end of month 4, last appearance
         range = SearchRange.for_night(month, 29)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_4_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 4, month 6?], day [x], in the middle of the Lion, first appearance
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -106,10 +114,12 @@ class BM76738(AbstractTablet):
         return [month_4, month_b]
 
     def year_5_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 5], month 5, day 23, last appearance.
         range = SearchRange.for_night(month, 23)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_5_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 5], at the end of month 6, first appearance;
         range = SearchRange.for_night(month, 29)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         return [res1]
@@ -124,10 +134,12 @@ class BM76738(AbstractTablet):
         return [month_5, month_6]
 
     def year_6_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # Year 6, month 5, day 20, last appearance.
         range = SearchRange.for_night(month, 20)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_6_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 6], month 6, day 22, behind ⌜the rear foot of⌝ the Lion (= β Virginis), behind AN.GÚ.ME.MAR, first appearance.
         range = SearchRange.for_night(month, 22)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -150,10 +162,12 @@ class BM76738(AbstractTablet):
         return [month_5, month_6]
 
     def year_7_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # Year 7, month 6, day 10+[x], last appearance.
         range = SearchRange.x_plus(month, 10)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_7_month_7(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 7], month 7, day 15, ⌜in front of⌝ the Furrow (α+ Virginis), first appearance.
         range = SearchRange.for_night(month, 15)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -179,6 +193,7 @@ class BM76738(AbstractTablet):
         return [res1, res2]
 
     def year_8_month_vii(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # Year 8, month 6 (Ululu II), day 5, behind the Furrow (α+ Virginis), last appearance.
         range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -197,10 +212,12 @@ class BM76738(AbstractTablet):
         return [month_6, month_7]
 
     def year_9_month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year] ⌜9, month 6⌝, [day] ⌜27/28?⌝, last appearance.
         range = SearchRange.any_day(month)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_9_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 9, month 8, day x]+1, ⌜within?⌝ the Balance,... [..., first appearance]
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -214,6 +231,7 @@ class BM76738(AbstractTablet):
         return [month_a, month_b]
 
     def year_10_month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # Year 10, month] ⌜7⌝, day 20, behind the Balance, [last appearance].
         range = SearchRange.for_night(month, 20)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)
         res2 = WithinRadiusQuery(
@@ -222,6 +240,7 @@ class BM76738(AbstractTablet):
         return [res1, res2]
 
     def year_10_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 10, month 8, day] 23, in front of the Forehead of the Scorpion, on the north side, first appearance;
         range = SearchRange.for_night(month, 23)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -235,10 +254,12 @@ class BM76738(AbstractTablet):
         return [month_a, month_b]
 
     def year_11_month_7(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 11, month] 7, day 13, last appearance.
         range = SearchRange.for_night(month, 13)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_11_month_unknown(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 11, month 8, day] ⌜15⌝, above Lisi (= α Scorpii) ⌜6½ degrees⌝, first appearance;
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -254,10 +275,12 @@ class BM76738(AbstractTablet):
         return [month_7, month_b]
 
     def year_12_month_8(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 12, month] 8, day 5, last appearance; ⌜because of⌝ cloud computed.
         range = SearchRange.for_night(month, 5)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_12_month_9(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 12, month] 9, day 5, at the beginning of Pabilsag (= Sagittarius + part of Ophiuchus), [first appearance?];
         range = SearchRange.for_night(month, 5)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -280,10 +303,12 @@ class BM76738(AbstractTablet):
         return [month_8, month_9]
 
     def year_13_month_8(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year] 13, month 8, day 26, last appearance;
         range = SearchRange.for_night(month, 26)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_13_month_10(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 13, month] 10, day 1, in the middle of Pabilsag, [first appearance;...]
         range = SearchRange.for_night(month, 1)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
@@ -306,10 +331,12 @@ class BM76738(AbstractTablet):
         return [month_8, month_10]
 
     def year_14_month_a(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year] ⌜14⌝, month ⌜8⌝, ⌜day 20⌝, [last appearance;...]
         range = SearchRange.any_day(month)
         return [PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.LA, range)]
 
     def year_14_month_b(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
+        # [Year 14, month 9, day] ⌜20⌝[+?,...] ... [..., first appearance;...]
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         return [res1]
