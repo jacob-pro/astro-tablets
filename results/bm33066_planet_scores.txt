@@ -1,5 +1,5 @@
 Database generated on 2021-06-08 07:20:55 for BM33066 covering -590 to -460
-Scores for Cambyses 7 (Planetary Only)
+Scores for Cambyses 7 (Planetary)
 Year   Score
 -522 29.344680203507558
 -546 19.553107787658618

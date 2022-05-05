@@ -1,5 +1,5 @@
 Database generated on 2021-06-08 07:20:55 for BM33066 covering -590 to -460
-Scores for Cambyses 7 (Eclipses Only)
+Scores for Cambyses 7 (Eclipses)
 Year   Score
 -522 1.5326721580477134
 -576 1.0948878901810255
