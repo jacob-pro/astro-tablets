@@ -164,7 +164,7 @@ class LunarEclipseQuery(AbstractQuery):
             score = 1.0
             if (
                 eclipse.e_type == "Penumbral"
-            ):  # Tie breaker, when two predicted eclipses, favour non penumbral
+            ):  # Tiebreaker; when two predicted eclipses, favour non-penumbral
                 score -= 0.001
         elif type == ExpectedEclipseType.TOTAL and eclipse.visible:
             if eclipse.e_type == "Total":

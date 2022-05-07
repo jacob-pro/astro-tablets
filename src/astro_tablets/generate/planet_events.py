@@ -8,7 +8,9 @@ from skyfield.units import Angle
 
 from astro_tablets.constants import (
     Body,
+    InnerPlanet,
     InnerPlanetArcusVisionis,
+    OuterPlanet,
     OuterPlanetArcusVisionis,
     Planet,
 )
@@ -54,12 +56,16 @@ def planet_events(
     t1: Time,
     progress: PROGRESS_CALLBACK = None,
 ) -> List[SynodicEvent]:
-    if planet.is_inner:
-        ac1: InnerPlanetArcusVisionis = planet.arcus_visionis  # type: ignore
-        return _inner_planet_events(data, data.get_body(planet), t0, t1, ac1, progress)
+    if isinstance(planet, InnerPlanet):
+        return _inner_planet_events(
+            data, data.get_body(planet), t0, t1, planet.arcus_visionis, progress
+        )
+    elif isinstance(planet, OuterPlanet):
+        return _outer_planet_events(
+            data, data.get_body(planet), t0, t1, planet.arcus_visionis, progress
+        )
     else:
-        ac2: OuterPlanetArcusVisionis = planet.arcus_visionis  # type: ignore
-        return _outer_planet_events(data, data.get_body(planet), t0, t1, ac2, progress)
+        raise ValueError
 
 
 def _inner_planet_events(
@@ -84,7 +90,7 @@ def _inner_planet_events(
     )
 
     zipped = list(zip(times, types))
-    events = []  # type: List[SynodicEvent]
+    events: List[SynodicEvent] = []
 
     morning_rise = None
     morning_set = None

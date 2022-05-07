@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 from enum import Enum, unique
-from typing import Union
 
 import inflect
 
@@ -52,16 +51,24 @@ class Body:
 @dataclass
 class Planet(Body):
     name: str
-    arcus_visionis: Union[InnerPlanetArcusVisionis, OuterPlanetArcusVisionis]
-    is_inner: bool
     event_frequency: float  # Approx. average number of synodic events that occur in a one year period
 
 
-MERCURY = Planet("mercury", InnerPlanetArcusVisionis(13.0, 9.5, 10.5, 11.0), True, 12)
-VENUS = Planet("venus", InnerPlanetArcusVisionis(5.7, 6.0, 6.0, 5.2), True, 2.7)
-MARS = Planet("mars", OuterPlanetArcusVisionis(14.5, 13.2, 6.0, 6.0), False, 1.9)
-JUPITER = Planet("jupiter", OuterPlanetArcusVisionis(9.3, 7.4, 6.0, 6.0), False, 3.9)
-SATURN = Planet("saturn", OuterPlanetArcusVisionis(13.0, 10.0, 8.0, 8.0), False, 3.9)
+@dataclass
+class InnerPlanet(Planet):
+    arcus_visionis: InnerPlanetArcusVisionis
+
+
+@dataclass
+class OuterPlanet(Planet):
+    arcus_visionis: OuterPlanetArcusVisionis
+
+
+MERCURY = InnerPlanet("mercury", 12, InnerPlanetArcusVisionis(13.0, 9.5, 10.5, 11.0))
+VENUS = InnerPlanet("venus", 2.7, InnerPlanetArcusVisionis(5.7, 6.0, 6.0, 5.2))
+MARS = OuterPlanet("mars", 1.9, OuterPlanetArcusVisionis(14.5, 13.2, 6.0, 6.0))
+JUPITER = OuterPlanet("jupiter", 3.9, OuterPlanetArcusVisionis(9.3, 7.4, 6.0, 6.0))
+SATURN = OuterPlanet("saturn", 3.9, OuterPlanetArcusVisionis(13.0, 10.0, 8.0, 8.0))
 
 
 EARTH = Body("earth")
