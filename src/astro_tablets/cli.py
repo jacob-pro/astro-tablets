@@ -14,6 +14,7 @@ from astro_tablets.graphics.eclipse_score_plots import (
     plot_eclipse_phase_length_score,
     plot_eclipse_time_of_day_score,
 )
+from astro_tablets.graphics.planetary_event_score_plot import plot_planetary_event_score
 from astro_tablets.graphics.radius_score_plot import plot_radius_score
 from astro_tablets.graphics.separation_score_plot import plot_separation_score
 from astro_tablets.query.database import Database as QueryDatabase
@@ -161,9 +162,10 @@ def graphs(path: str) -> None:
     plot_radius_score(f"{path}/radius_score.png")
     plot_separation_score(1 * CUBIT, f"{path}/separation_score_cubit.png")
     plot_separation_score(1 * FINGER, f"{path}/separation_score_finger.png")
+    plot_planetary_event_score(f"{path}/planetary_event_score.png")
 
 
-def main():
+def cli():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="subparser")
 

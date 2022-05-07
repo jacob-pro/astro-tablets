@@ -1,6 +1,6 @@
 {
   "base_year": -567,
-  "best_score": 41.77590089121303,
+  "best_score": 41.597012642715725,
   "years": [
     {
       "name": "Nebuchadnezzar 37",
@@ -9,14 +9,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 41.77590089121303,
+          "score": 41.597012642715725,
           "nisan_1": "-567-04-22 18:29",
           "next_nisan": "-566-04-12 18:23",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 4.076438921502499,
+              "score": 3.9079788920161715,
               "name": "I",
               "actual_month": 1,
               "month_sunset_1": "-567-04-22 18:29",
@@ -61,7 +61,7 @@
                   "planet": "jupiter",
                   "event": "acronychal_rising",
                   "nearest_time": "-567-04-30 19:00",
-                  "score": 0.9999999999999999,
+                  "score": 0.8315399705136731,
                   "search_start": "-567-05-02 18:35",
                   "search_end": "-567-05-04 05:16",
                   "date": "11-12"
@@ -78,7 +78,7 @@
               ]
             },
             {
-              "score": 6.528029042060133,
+              "score": 6.517600823049157,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-567-05-22 18:49",
@@ -123,7 +123,7 @@
                   "planet": "mercury",
                   "event": "evening_first",
                   "nearest_time": "-567-06-01 19:53",
-                  "score": 0.999994192586825,
+                  "score": 0.989565973575848,
                   "search_start": "-567-05-31 18:54",
                   "search_end": "-567-06-01 18:55",
                   "date": "Night and day of the 10th"

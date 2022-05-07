@@ -29,29 +29,39 @@ class PlanetaryEventQuery(AbstractQuery):
                     event, planet.name
                 )
             )
+        assert nearest is not None
         self.nearest = nearest
+        self.score = self.calculate_score(
+            nearest, target_time.start, target_time.end, planet.event_frequency
+        )
 
     @staticmethod
-    def result_function(x: float, cut_off: float) -> float:
+    def calculate_score(
+        time: float, expected_start: float, expected_end: float, event_frequency: float
+    ) -> float:
         """
-        An exponential function means the closest will be asymptotically closer to 1,
-        but score will decrease as x approaches the cut_off
+        Calculates score based on the difference in time between when a synodic event actually occurred, and the
+        date (or date range) it was observed in the text.
+        The more frequent that synodic occur for this planet, the greater accuracy we should expect from
+        the observations.
+        @param time: The actual time of the event
+        @param expected_start: The beginning of the expected time interval
+        @param expected_end: The end of the expected time interval
+        @param event_frequency: How many synodic events occur in a year on average for this planet
+        @return: A score value (between 0 and 1)
         """
-        if x > cut_off:
-            return 0
-        return 1 - math.pow((1 + 10 * math.sqrt(cut_off)), x - cut_off)
-
-    def quality_score(self) -> float:
-        if self.nearest > self.target_time.end:
-            diff = self.nearest - self.target_time.end
-        elif self.nearest < self.target_time.start:
-            diff = self.target_time.start - self.nearest
+        if time > expected_end:
+            diff = time - expected_end
+        elif time < expected_start:
+            diff = expected_start - time
         else:
             return 1.0
-        # The higher the cut_off the more lenient the result is
-        cut_off = 48.0 / self.planet.event_frequency
-        res = self.result_function(diff, cut_off)
-        return max(res, 0)
+        theta = 1 + event_frequency / 40
+        score = math.pow(theta, -diff)
+        return score
+
+    def quality_score(self) -> float:
+        return self.score
 
     def output(self) -> dict:
         return {

@@ -1,6 +1,6 @@
 {
   "base_year": -653,
-  "best_score": 12.957804520874747,
+  "best_score": 12.636612780274257,
   "years": [
     {
       "name": "Shamash-shum-ukin 14",
@@ -9,14 +9,14 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 1.9995354743905813,
+          "score": 1.678343733790091,
           "nisan_1": "-653-03-15 18:05",
           "next_nisan": "-652-04-02 18:17",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.9995354743905813,
+              "score": 1.678343733790091,
               "name": "XII",
               "actual_month": 12,
               "month_sunset_1": "-652-02-04 17:36",
@@ -28,7 +28,7 @@
                   "planet": "mercury",
                   "event": "evening_first",
                   "nearest_time": "-652-02-09 18:32",
-                  "score": 0.9995354743905814,
+                  "score": 0.678343733790091,
                   "search_start": "-652-02-07 17:38",
                   "search_end": "-652-02-08 07:02",
                   "date": "Night of the 4th"

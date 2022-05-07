@@ -1,6 +1,6 @@
 {
   "base_year": -646,
-  "best_score": 40.99999999999989,
+  "best_score": 38.61114271019635,
   "years": [
     {
       "name": "Kandalanu 1",
@@ -134,14 +134,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 2.9999999999999707,
+          "score": 2.573384720535918,
           "nisan_1": "-644-04-04 18:18",
           "next_nisan": "-643-03-24 18:11",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.0,
+              "score": 0.8590092868285776,
               "name": "IV",
               "actual_month": 4,
               "month_sunset_1": "-644-07-02 19:09",
@@ -153,7 +153,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-644-07-10 20:04",
-                  "score": 1.0,
+                  "score": 0.8590092868285776,
                   "search_start": "-644-07-08 19:09",
                   "search_end": "-644-07-09 04:51",
                   "date": "Night of the 7th"
@@ -161,7 +161,7 @@
               ]
             },
             {
-              "score": 1.999999999999971,
+              "score": 1.7143754337073402,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-644-07-31 19:03",
@@ -173,7 +173,7 @@
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-644-08-12 04:06",
-                  "score": 0.9999999999999709,
+                  "score": 0.7143754337073401,
                   "search_start": "-644-08-15 18:52",
                   "search_end": "-644-08-16 05:17",
                   "date": "Night of the 16th"
@@ -202,14 +202,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 2.99999999999997,
+          "score": 2.713755930986518,
           "nisan_1": "-643-03-24 18:11",
           "next_nisan": "-642-03-13 18:04",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9999999999999699,
+              "score": 0.7137559309865182,
               "name": "IV",
               "actual_month": 4,
               "month_sunset_1": "-643-06-22 19:06",
@@ -221,7 +221,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-643-07-24 19:57",
-                  "score": 0.9999999999999699,
+                  "score": 0.7137559309865182,
                   "search_start": "-643-07-20 19:08",
                   "search_end": "-643-07-21 04:58",
                   "date": "Night of the 29th"
@@ -270,14 +270,14 @@
       "intercalary": "Ululu II",
       "potentials": [
         {
-          "score": 1.9999999999999711,
+          "score": 1.7145634288999148,
           "nisan_1": "-642-03-13 18:04",
           "next_nisan": "-641-04-01 18:16",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9999999999999712,
+              "score": 0.7145634288999146,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-642-07-11 19:09",
@@ -289,7 +289,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-642-08-06 19:49",
-                  "score": 0.9999999999999712,
+                  "score": 0.7145634288999146,
                   "search_start": "-642-08-02 19:02",
                   "search_end": "-642-08-03 05:07",
                   "date": "Night of the 23rd"
@@ -327,28 +327,28 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 3.0,
+          "score": 2.945893969584609,
           "nisan_1": "-641-04-01 18:16",
           "next_nisan": "-640-03-20 18:09",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.0,
+              "score": 0.9458939695846088,
               "name": "V",
               "actual_month": 5,
-              "month_sunset_1": "-641-07-28 19:05",
+              "month_sunset_1": "-641-07-29 19:05",
               "first_visibility": "-641-07-28 19:05",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-641-08-18 19:39",
-                  "score": 1.0,
-                  "search_start": "-641-08-16 18:52",
-                  "search_end": "-641-08-17 05:17",
+                  "score": 0.9458939695846088,
+                  "search_start": "-641-08-17 18:51",
+                  "search_end": "-641-08-18 05:18",
                   "date": "Night of the 20th"
                 }
               ]
@@ -357,29 +357,29 @@
               "score": 2.0,
               "name": "VI",
               "actual_month": 6,
-              "month_sunset_1": "-641-08-27 18:41",
+              "month_sunset_1": "-641-08-28 18:40",
               "first_visibility": "-641-08-27 18:41",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-641-09-19 04:41",
                   "score": 1.0,
-                  "search_start": "-641-09-17 18:16",
-                  "search_end": "-641-09-18 05:42",
+                  "search_start": "-641-09-18 18:15",
+                  "search_end": "-641-09-19 05:43",
                   "date": "Night of the 22nd"
                 },
                 {
                   "from_body": "saturn",
                   "to_body": "beta virginis",
-                  "angle": 15.496478176930328,
+                  "angle": 15.615000860362791,
                   "position": "behind",
-                  "at_time": "-641-09-17 18:16",
+                  "at_time": "-641-09-18 18:15",
                   "score": 1.0,
-                  "search_start": "-641-09-17 18:16",
-                  "search_end": "-641-09-18 05:42",
+                  "search_start": "-641-09-18 18:15",
+                  "search_end": "-641-09-19 05:43",
                   "date": "Night of the 22nd"
                 }
               ]
@@ -425,29 +425,29 @@
               "score": 2.0,
               "name": "VII",
               "actual_month": 7,
-              "month_sunset_1": "-640-09-14 18:19",
+              "month_sunset_1": "-640-09-15 18:18",
               "first_visibility": "-640-09-14 18:19",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-640-09-30 04:51",
                   "score": 1.0,
-                  "search_start": "-640-09-28 18:01",
-                  "search_end": "-640-09-29 05:51",
+                  "search_start": "-640-09-29 18:00",
+                  "search_end": "-640-09-30 05:52",
                   "date": "Night of the 15th"
                 },
                 {
                   "from_body": "saturn",
                   "to_body": "theta virginis",
-                  "angle": 5.660228486777289,
+                  "angle": 5.777692314458091,
                   "position": "behind",
-                  "at_time": "-640-09-28 18:01",
+                  "at_time": "-640-09-29 18:00",
                   "score": 1.0,
-                  "search_start": "-640-09-28 18:01",
-                  "search_end": "-640-09-29 05:51",
+                  "search_start": "-640-09-29 18:00",
+                  "search_end": "-640-09-30 05:52",
                   "date": "Night of the 15th"
                 }
               ]
@@ -463,14 +463,14 @@
       "intercalary": "Ululu II",
       "potentials": [
         {
-          "score": 3.999999999999999,
+          "score": 3.6210241476071707,
           "nisan_1": "-639-03-10 18:03",
           "next_nisan": "-638-03-29 18:14",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.9999999999999993,
+              "score": 1.787781788917873,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-639-09-04 18:32",
@@ -482,7 +482,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-639-09-11 19:08",
-                  "score": 0.9999999999999993,
+                  "score": 0.787781788917873,
                   "search_start": "-639-09-08 18:27",
                   "search_end": "-639-09-09 05:36",
                   "date": "Night of the 5th"
@@ -501,7 +501,7 @@
               ]
             },
             {
-              "score": 2.0,
+              "score": 1.8332423586892976,
               "name": "VIII",
               "actual_month": 8,
               "month_sunset_1": "-639-10-04 17:54",
@@ -513,7 +513,7 @@
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-639-10-11 05:03",
-                  "score": 0.9999999999999999,
+                  "score": 0.8332423586892976,
                   "search_start": "-639-10-08 17:49",
                   "search_end": "-639-10-09 05:59",
                   "date": "Night of the 5th"
@@ -552,18 +552,18 @@
               "score": 1.0,
               "name": "Unknown month between 1 and 12",
               "actual_month": 6,
-              "month_sunset_1": "-638-08-23 18:45",
+              "month_sunset_1": "-638-08-24 18:44",
               "first_visibility": "-638-08-23 18:45",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-638-09-22 18:55",
                   "score": 1.0,
-                  "search_start": "-638-08-23 18:45",
-                  "search_end": "-638-09-22 05:46",
+                  "search_start": "-638-08-24 18:44",
+                  "search_end": "-638-09-23 05:46",
                   "date": "Any day"
                 }
               ]
@@ -572,29 +572,29 @@
               "score": 2.0,
               "name": "Unknown month between 1 and 12",
               "actual_month": 7,
-              "month_sunset_1": "-638-09-22 18:09",
+              "month_sunset_1": "-638-09-23 18:08",
               "first_visibility": "-638-09-22 18:09",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-638-10-23 05:10",
                   "score": 1.0,
-                  "search_start": "-638-09-22 18:09",
-                  "search_end": "-638-10-22 06:09",
+                  "search_start": "-638-09-23 18:08",
+                  "search_end": "-638-10-23 06:10",
                   "date": "Any day"
                 },
                 {
                   "from_body": "saturn",
                   "to_body": "nu librae",
-                  "angle": 2.017959484917139,
+                  "angle": 1.9133155414209726,
                   "position": "ahead",
-                  "at_time": "-638-10-22 03:00",
+                  "at_time": "-638-10-23 03:01",
                   "score": 1.0,
-                  "search_start": "-638-09-22 18:09",
-                  "search_end": "-638-10-22 06:09",
+                  "search_start": "-638-09-23 18:08",
+                  "search_end": "-638-10-23 06:10",
                   "date": "Any day"
                 }
               ]
@@ -610,14 +610,14 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 3.9999999999999996,
+          "score": 3.790121702037491,
           "nisan_1": "-637-03-19 18:08",
           "next_nisan": "-636-04-05 18:19",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.9999999999999996,
+              "score": 1.7901217020374909,
               "name": "Unknown month between 1 and 12",
               "actual_month": 7,
               "month_sunset_1": "-637-09-12 18:23",
@@ -629,7 +629,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-637-10-04 18:39",
-                  "score": 0.9999999999999994,
+                  "score": 0.7901217020374909,
                   "search_start": "-637-10-01 17:58",
                   "search_end": "-637-10-02 05:53",
                   "date": "Night of the 20th"
@@ -689,14 +689,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 3.0,
+          "score": 2.8686088619035885,
           "nisan_1": "-636-04-05 18:19",
           "next_nisan": "-635-03-26 18:13",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.0,
+              "score": 0.8686088619035888,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-636-10-01 17:57",
@@ -708,7 +708,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-636-10-15 18:23",
-                  "score": 1.0,
+                  "score": 0.8686088619035888,
                   "search_start": "-636-10-13 17:42",
                   "search_end": "-636-10-14 06:03",
                   "date": "Night of the 13th"
@@ -757,14 +757,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 3.0,
+          "score": 2.7032535906447155,
           "nisan_1": "-635-03-26 18:13",
           "next_nisan": "-634-03-15 18:06",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.0,
+              "score": 0.8697224641168975,
               "name": "VIII",
               "actual_month": 8,
               "month_sunset_1": "-635-10-20 17:34",
@@ -776,7 +776,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-635-10-26 18:13",
-                  "score": 1.0,
+                  "score": 0.8697224641168975,
                   "search_start": "-635-10-24 17:29",
                   "search_end": "-635-10-25 06:12",
                   "date": "Night of the 5th"
@@ -784,7 +784,7 @@
               ]
             },
             {
-              "score": 2.0,
+              "score": 1.8335311265278178,
               "name": "IX",
               "actual_month": 9,
               "month_sunset_1": "-635-11-18 17:07",
@@ -796,7 +796,7 @@
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-635-11-25 05:38",
-                  "score": 0.9999999999999999,
+                  "score": 0.8335311265278178,
                   "search_start": "-635-11-22 17:05",
                   "search_end": "-635-11-23 06:40",
                   "date": "Night of the 5th"
@@ -825,14 +825,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 2.999999999999982,
+          "score": 2.6805363579964245,
           "nisan_1": "-634-03-15 18:06",
           "next_nisan": "-633-03-04 17:58",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9999999999999817,
+              "score": 0.7230303884922289,
               "name": "VIII",
               "actual_month": 8,
               "month_sunset_1": "-634-10-09 17:47",
@@ -844,7 +844,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-634-11-07 18:01",
-                  "score": 0.9999999999999817,
+                  "score": 0.7230303884922289,
                   "search_start": "-634-11-03 17:19",
                   "search_end": "-634-11-04 06:21",
                   "date": "Night of the 26th"
@@ -852,7 +852,7 @@
               ]
             },
             {
-              "score": 2.0,
+              "score": 1.9575059695041959,
               "name": "X",
               "actual_month": 10,
               "month_sunset_1": "-634-12-06 17:01",
@@ -864,7 +864,7 @@
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-634-12-06 05:49",
-                  "score": 1.0,
+                  "score": 0.957505969504196,
                   "search_start": "-634-12-06 17:01",
                   "search_end": "-634-12-07 06:53",
                   "date": "Night of the 1st"

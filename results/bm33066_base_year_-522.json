@@ -1,6 +1,6 @@
 {
   "base_year": -522,
-  "best_score": 86.40356913801129,
+  "best_score": 84.39693360811086,
   "years": [
     {
       "name": "Cambyses 7",
@@ -9,7 +9,7 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 80.27141418907175,
+          "score": 78.32087643609702,
           "nisan_1": "-522-04-05 18:19",
           "next_nisan": "-521-04-24 18:30",
           "best_compatible_path": true,
@@ -81,7 +81,7 @@
               ]
             },
             {
-              "score": 7.156914226726804,
+              "score": 6.858463861726006,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-522-05-05 18:37",
@@ -147,7 +147,7 @@
                   "planet": "mars",
                   "event": "last_appearance",
                   "nearest_time": "-522-06-09 20:11",
-                  "score": 1.0,
+                  "score": 0.7015496349992015,
                   "search_start": "-522-06-01 18:55",
                   "search_end": "-522-06-02 04:52",
                   "date": "Night of the 28th"
@@ -166,7 +166,7 @@
               ]
             },
             {
-              "score": 8.981141245170628,
+              "score": 8.724101558226762,
               "name": "III",
               "actual_month": 3,
               "month_sunset_1": "-522-06-03 18:56",
@@ -232,7 +232,7 @@
                   "planet": "venus",
                   "event": "evening_last",
                   "nearest_time": "-522-06-14 19:28",
-                  "score": 1.0,
+                  "score": 0.9001006884790128,
                   "search_start": "-522-06-12 19:02",
                   "search_end": "-522-06-13 04:48",
                   "date": "Night of the 10th"
@@ -252,7 +252,7 @@
                   "planet": "venus",
                   "event": "morning_first",
                   "nearest_time": "-522-06-27 04:19",
-                  "score": 1.0,
+                  "score": 0.8428596245771216,
                   "search_start": "-522-06-29 19:08",
                   "search_end": "-522-06-30 04:49",
                   "date": "Night of the 27th"
@@ -362,7 +362,7 @@
               ]
             },
             {
-              "score": 7.975139603555967,
+              "score": 7.692035693083211,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-522-08-01 19:02",
@@ -428,7 +428,7 @@
                   "planet": "jupiter",
                   "event": "last_appearance",
                   "nearest_time": "-522-08-26 19:15",
-                  "score": 0.9999999999999746,
+                  "score": 0.7168960895272177,
                   "search_start": "-522-08-22 18:45",
                   "search_end": "-522-08-23 05:23",
                   "date": "Night of the 22nd"
@@ -447,7 +447,7 @@
               ]
             },
             {
-              "score": 10.698156211951275,
+              "score": 10.420465012111544,
               "name": "VI",
               "actual_month": 6,
               "month_sunset_1": "-522-08-31 18:36",
@@ -513,7 +513,7 @@
                   "planet": "jupiter",
                   "event": "first_appearance",
                   "nearest_time": "-522-09-21 05:03",
-                  "score": 1.0,
+                  "score": 0.9504397452803041,
                   "search_start": "-522-09-21 18:10",
                   "search_end": "-522-09-22 05:46",
                   "date": "Night of the 22nd"
@@ -553,7 +553,7 @@
                   "planet": "mars",
                   "event": "first_appearance",
                   "nearest_time": "-522-09-07 04:26",
-                  "score": 1.0,
+                  "score": 0.7718690548799646,
                   "search_start": "-522-09-12 18:21",
                   "search_end": "-522-09-13 05:39",
                   "date": "Night of the 13th"
@@ -583,7 +583,7 @@
               ]
             },
             {
-              "score": 9.155704467254619,
+              "score": 8.567690560748705,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-522-09-30 17:58",
@@ -649,7 +649,7 @@
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-522-10-03 04:55",
-                  "score": 0.9999522850541728,
+                  "score": 0.4119383785482581,
                   "search_start": "-522-10-12 17:43",
                   "search_end": "-522-10-13 06:02",
                   "date": "Night of the 13th"
@@ -788,7 +788,7 @@
               ]
             },
             {
-              "score": 3.3886992149005684,
+              "score": 3.2350711568313955,
               "name": "X",
               "actual_month": 10,
               "month_sunset_1": "-522-12-27 17:06",
@@ -815,7 +815,7 @@
                   "planet": "jupiter",
                   "event": "stationary",
                   "nearest_time": "-521-01-20 22:23",
-                  "score": 1.0,
+                  "score": 0.846371941930827,
                   "search_start": "-521-01-22 17:25",
                   "search_end": "-521-01-23 07:10",
                   "date": "Night of the 27th"
@@ -910,7 +910,7 @@
               ]
             },
             {
-              "score": 4.875863637014021,
+              "score": 4.783253010871527,
               "name": "XII",
               "actual_month": 12,
               "month_sunset_1": "-521-02-24 17:53",
@@ -976,7 +976,7 @@
                   "planet": "venus",
                   "event": "morning_last",
                   "nearest_time": "-521-03-01 06:15",
-                  "score": 1.0,
+                  "score": 0.9073893738575067,
                   "search_start": "-521-03-02 17:57",
                   "search_end": "-521-03-03 06:38",
                   "date": "Night of the 7th"
@@ -1070,14 +1070,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 5.999999999999899,
+          "score": 5.829088500436905,
           "nisan_1": "-521-04-24 18:30",
           "next_nisan": "-520-04-13 18:24",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 2.0,
+              "score": 1.878564899551515,
               "name": "I",
               "actual_month": 1,
               "month_sunset_1": "-521-04-24 18:30",
@@ -1089,7 +1089,7 @@
                   "planet": "venus",
                   "event": "evening_first",
                   "nearest_time": "-521-05-04 19:04",
-                  "score": 1.0,
+                  "score": 0.878564899551515,
                   "search_start": "-521-05-06 18:38",
                   "search_end": "-521-05-07 05:13",
                   "date": "Night of the 13th"
@@ -1108,7 +1108,7 @@
               ]
             },
             {
-              "score": 1.0,
+              "score": 1.1049328905016875,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-521-05-24 18:50",
@@ -1120,7 +1120,7 @@
                   "planet": "jupiter",
                   "event": "stationary",
                   "nearest_time": "-521-05-24 13:30",
-                  "score": 0,
+                  "score": 0.10493289050168755,
                   "search_start": "-521-06-17 19:04",
                   "search_end": "-521-06-18 04:47",
                   "date": "Night of the 25th"
@@ -1139,7 +1139,7 @@
               ]
             },
             {
-              "score": 0.9999999999998983,
+              "score": 0.9786563020328188,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-521-08-21 18:47",
@@ -1151,7 +1151,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-521-09-14 19:04",
-                  "score": 0.9999999999998983,
+                  "score": 0.6915242822031077,
                   "search_start": "-521-09-18 18:14",
                   "search_end": "-521-09-19 05:44",
                   "date": "Night of the 29th"
@@ -1160,7 +1160,7 @@
                   "planet": "mars",
                   "event": "stationary",
                   "nearest_time": "-521-08-05 21:15",
-                  "score": 0,
+                  "score": 0.28713201982971115,
                   "search_start": "-521-09-01 18:35",
                   "search_end": "-521-09-02 05:31",
                   "date": "Night of the 12th"
@@ -1168,7 +1168,7 @@
               ]
             },
             {
-              "score": 2.0,
+              "score": 1.8669344083508834,
               "name": "VI",
               "actual_month": 6,
               "month_sunset_1": "-521-09-20 18:11",
@@ -1180,7 +1180,7 @@
                   "planet": "jupiter",
                   "event": "last_appearance",
                   "nearest_time": "-521-09-25 18:37",
-                  "score": 1.0,
+                  "score": 0.8669344083508835,
                   "search_start": "-521-09-23 18:07",
                   "search_end": "-521-09-24 05:47",
                   "date": "Night of the 4th"
@@ -1209,14 +1209,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 0.13215494893964938,
+          "score": 0.24696867157692465,
           "nisan_1": "-520-04-13 18:24",
           "next_nisan": "-519-04-02 18:17",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.13215494893964938,
+              "score": 0.24696867157692465,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-520-05-13 18:43",
@@ -1228,7 +1228,7 @@
                   "planet": "mars",
                   "event": "last_appearance",
                   "nearest_time": "-520-07-07 20:22",
-                  "score": 0,
+                  "score": 0.11481372263727525,
                   "search_start": "-520-05-21 18:48",
                   "search_end": "-520-05-22 04:58",
                   "date": "Night of the 9th"
