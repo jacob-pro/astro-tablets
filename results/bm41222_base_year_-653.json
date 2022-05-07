@@ -1,6 +1,6 @@
 {
   "base_year": -653,
-  "best_score": 12.636612780274257,
+  "best_score": 12.31094796566762,
   "years": [
     {
       "name": "Shamash-shum-ukin 14",
@@ -324,30 +324,30 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 2.0,
+          "score": 1.4842729808383635,
           "nisan_1": "-613-03-22 18:10",
           "next_nisan": "-612-04-09 18:21",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.0,
+              "score": 0.4842729808383634,
               "name": "IV",
               "actual_month": 4,
-              "month_sunset_1": "-613-06-19 19:04",
+              "month_sunset_1": "-613-06-20 19:05",
               "first_visibility": "-613-06-19 19:04",
               "next_month_sunset_1": null,
-              "days_late": 0,
+              "days_late": 1,
               "observations": [
                 {
                   "from_body": "mars",
                   "to_body": "alcyone",
-                  "angle": 7.123879438447175,
+                  "angle": 6.743512637236683,
                   "position": "below",
-                  "at_time": "-613-07-07 02:25",
-                  "score": 1.0,
-                  "search_start": "-613-07-06 19:09",
-                  "search_end": "-613-07-07 04:50",
+                  "at_time": "-613-07-08 02:25",
+                  "score": 0.4842729808383634,
+                  "search_start": "-613-07-07 19:09",
+                  "search_end": "-613-07-08 04:51",
                   "date": "Night of the 18th"
                 }
               ]
@@ -385,7 +385,7 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 1.6200023929112195,
+          "score": 1.8100645974662175,
           "nisan_1": "-612-04-09 18:21",
           "next_nisan": "-611-03-30 18:15",
           "best_compatible_path": true,
@@ -414,7 +414,7 @@
               ]
             },
             {
-              "score": 0.6200023929112195,
+              "score": 0.8100645974662176,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-612-08-06 18:59",
@@ -428,7 +428,7 @@
                   "angle": 12.298847704225693,
                   "position": "behind",
                   "at_time": "-612-08-08 18:58",
-                  "score": 0.6200023929112195,
+                  "score": 0.8100645974662176,
                   "search_start": "-612-08-08 18:58",
                   "search_end": "-612-08-09 05:12",
                   "date": "Night of the 3rd"

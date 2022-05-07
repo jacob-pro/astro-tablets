@@ -1,6 +1,6 @@
 {
   "base_year": -567,
-  "best_score": 41.597012642715725,
+  "best_score": 40.6808963863972,
   "years": [
     {
       "name": "Nebuchadnezzar 37",
@@ -9,7 +9,7 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 41.597012642715725,
+          "score": 40.6808963863972,
           "nisan_1": "-567-04-22 18:29",
           "next_nisan": "-566-04-12 18:23",
           "best_compatible_path": true,
@@ -78,7 +78,7 @@
               ]
             },
             {
-              "score": 6.517600823049157,
+              "score": 6.225056110526399,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-567-05-22 18:49",
@@ -92,7 +92,7 @@
                   "angle": 7.4839448239064055,
                   "position": "below",
                   "at_time": "-567-05-22 18:49",
-                  "score": 1.0,
+                  "score": 0.7074552874772426,
                   "search_start": "-567-05-22 18:49",
                   "search_end": "-567-05-23 04:58",
                   "date": "Night of the 1st"
@@ -162,7 +162,7 @@
               ]
             },
             {
-              "score": 11.454085340604642,
+              "score": 11.43051379680888,
               "name": "III",
               "actual_month": 3,
               "month_sunset_1": "-567-06-20 19:05",
@@ -229,7 +229,7 @@
                   "angle": 5.163197250231793,
                   "position": "above",
                   "at_time": "-567-06-21 02:22",
-                  "score": 1.0,
+                  "score": 0.9764284562042376,
                   "search_start": "-567-06-20 19:05",
                   "search_end": "-567-06-21 04:47",
                   "date": "Night of the 1st"
@@ -338,7 +338,7 @@
               ]
             },
             {
-              "score": 9.843530338979914,
+              "score": 9.443530338979915,
               "name": "XI",
               "actual_month": 11,
               "month_sunset_1": "-566-02-12 17:43",
@@ -372,7 +372,7 @@
                   "angle": 8.342436525406326,
                   "position": "above",
                   "at_time": "-566-02-12 17:43",
-                  "score": 1.0,
+                  "score": 0.8,
                   "search_start": "-566-02-12 17:43",
                   "search_end": "-566-02-13 06:57",
                   "date": "Night of the 1st"
@@ -383,7 +383,7 @@
                   "angle": 9.169121793721882,
                   "position": "behind",
                   "at_time": "-566-02-15 17:46",
-                  "score": 1.0,
+                  "score": 0.8,
                   "search_start": "-566-02-15 17:46",
                   "search_end": "-566-02-16 06:54",
                   "date": "Night of the 4th"
@@ -457,7 +457,7 @@
               ]
             },
             {
-              "score": 8.873817248065837,
+              "score": 8.673817248065838,
               "name": "XII",
               "actual_month": 12,
               "month_sunset_1": "-566-03-14 18:05",
@@ -471,7 +471,7 @@
                   "angle": 10.546183327940293,
                   "position": "below",
                   "at_time": "-566-03-14 18:05",
-                  "score": 1.0,
+                  "score": 0.8,
                   "search_start": "-566-03-14 18:05",
                   "search_end": "-566-03-15 06:23",
                   "date": "Night of the 1st"

@@ -1,13 +1,22 @@
 import math
 from typing import Optional
 
-from astro_tablets.constants import Body
+import numpy as np
+
+from astro_tablets.constants import Body, Precision
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
 from astro_tablets.util import TimeValue
 
-LAMBDA = 8
+
+def radius_tolerance(precision: Precision) -> float:
+    if precision == Precision.REGULAR:
+        return 8
+    elif precision == Precision.LOW:
+        return 2.5
+    else:
+        raise ValueError
 
 
 class WithinRadiusQuery(AbstractQuery):
@@ -19,6 +28,7 @@ class WithinRadiusQuery(AbstractQuery):
         radius: float,
         target_position: Optional[EclipticPosition],
         target_time: SearchRange,
+        precision: Precision = Precision.REGULAR,
     ):
         self.target_time = target_time
         self.from_body = from_body
@@ -37,7 +47,7 @@ class WithinRadiusQuery(AbstractQuery):
         results = ScoredResult.score_results(
             sep,
             lambda x: self.calculate_score(
-                radius, target_position, x.angle, x.position
+                radius, target_position, x.angle, x.position, precision
             ),
         )
 
@@ -55,19 +65,34 @@ class WithinRadiusQuery(AbstractQuery):
         tablet_position: Optional[EclipticPosition],
         actual_angle: float,
         actual_position: str,
+        precision: Precision,
     ) -> float:
         """
-        Correct position (if specified) adds 0.2 to score
+        Calculates score based on the actual angle between two bodies, and the angle it is expected to be less than.
+        The expected position (if specified) and actual position are also compared, giving an additional 0.2 to the
+        score if they match.
+        @param radius: The maximum expected separation angle.
+        @param tablet_position: The expected position of the two bodies relative to the ecliptic.
+        @param actual_angle: The actual angular separation.
+        @param actual_position: The actual position of the two bodies relative to the ecliptic.
+        @param precision: How confident that the radius value is correct / precise
+        @return: A score value (between 0 and 1)
         """
+        # If the angle is within the radius, then it is an exact match
+        t = radius_tolerance(precision)
         if actual_angle <= radius:
-            return 1.0
-        diff = abs(actual_angle - radius) / radius
-        angle_score = math.pow(LAMBDA, -diff)
+            angle_score = 1.0
+        else:
+            # Otherwise, score based on how far outside the radius
+            diff = abs(actual_angle - radius) / radius
+            angle_score = math.pow(t, -diff)
+
         assert 0 <= angle_score <= 1
 
+        # Compare the actual vs expected positions
         if tablet_position is not None:
             position_score = 1 if actual_position == tablet_position.value else 0
-            return (angle_score * 0.8) + (position_score * 0.2)
+            return float(np.average([angle_score, position_score], weights=[0.8, 0.2]))
         else:
             return angle_score
 

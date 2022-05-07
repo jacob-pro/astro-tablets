@@ -19,6 +19,7 @@ from astro_tablets.constants import (
     VENUS,
     VIRGO,
     Precision,
+    Radius,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -773,9 +774,10 @@ class BM33066(AbstractTablet):
                     self.db,
                     MARS,
                     REGULUS,
-                    15,
+                    Radius.MEDIUM.value,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 9),
+                    Precision.LOW,
                 ),
                 Category.PLANETARY,
             ),

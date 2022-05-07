@@ -14,7 +14,6 @@ from astro_tablets.constants import (
     CAPRICORNUS,
     CUBIT,
     FINGER,
-    FORTY_TWO_CANCRI,
     GEMINI,
     HALO,
     JUPITER,
@@ -23,6 +22,7 @@ from astro_tablets.constants import (
     MERCURY,
     MOON,
     PISCES,
+    PRAESEPE,
     REGULUS,
     SAGITTARIUS,
     SATURN,
@@ -30,6 +30,7 @@ from astro_tablets.constants import (
     THETA_LEONIS,
     VENUS,
     Precision,
+    Radius,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -134,9 +135,10 @@ class VAT4956(AbstractTablet):
                     self.db,
                     MOON,
                     BETA_GEMINORUM,
-                    15,
+                    Radius.SMALL.value,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 1),
+                    Precision.LOW,
                 )
             )
 
@@ -159,8 +161,8 @@ class VAT4956(AbstractTablet):
                 WithinRadiusQuery(
                     self.db,
                     MARS,
-                    FORTY_TWO_CANCRI,
-                    5,
+                    PRAESEPE.central_star,
+                    PRAESEPE.radius,
                     None,
                     SearchRange.range_of_nights(month, 3, 5),
                 )
@@ -255,9 +257,10 @@ class VAT4956(AbstractTablet):
                     self.db,
                     MARS,
                     MERCURY,
-                    10,
+                    Radius.SMALL.value,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 1),
+                    Precision.LOW,
                 )
             )
 
@@ -269,9 +272,10 @@ class VAT4956(AbstractTablet):
                         self.db,
                         JUPITER,
                         ANTARES,
-                        15,
+                        Radius.SMALL.value,
                         EclipticPosition.ABOVE,
                         SearchRange.for_night(month, 1),
+                        Precision.LOW,
                     )
                 )
             )
@@ -283,9 +287,10 @@ class VAT4956(AbstractTablet):
                     self.db,
                     VENUS,
                     THETA_LEONIS,
-                    15,
+                    Radius.MEDIUM.value,
                     None,
                     SearchRange.for_night(month, 1),
+                    Precision.LOW,
                 )
             )
 
@@ -369,9 +374,10 @@ class VAT4956(AbstractTablet):
                     self.db,
                     VENUS,
                     BETA_CAPRICORNI,
-                    15,
+                    Radius.SMALL.value,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 19),
+                    Precision.LOW,
                 )
             )
         return res

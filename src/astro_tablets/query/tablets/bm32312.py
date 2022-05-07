@@ -9,6 +9,8 @@ from astro_tablets.constants import (
     PISCES,
     SATURN,
     VENUS,
+    Precision,
+    Radius,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -59,7 +61,11 @@ class BM32312(AbstractTablet):
         # Mars became stationary
         res.append(PlanetaryEventQuery(self.db, MARS, OuterPlanetPhenomena.ST, day17))
         # it came close to the bright star of the Scorpion's head
-        res.append(WithinRadiusQuery(self.db, MARS, ANTARES, 10, None, day17))
+        res.append(
+            WithinRadiusQuery(
+                self.db, MARS, ANTARES, Radius.SMALL.value, None, day17, Precision.LOW
+            )
+        )
 
         return res
 

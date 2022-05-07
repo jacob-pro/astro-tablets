@@ -43,7 +43,5 @@ def plot_separation_score(angle: float, dest: str):
     ax1.plot(xs, ys, label="Low Precision", color="g")
 
     ax1.axvline(x=angle, color="r", label="Expected Separation")
-
     ax1.legend()
-
     plt.savefig(dest)

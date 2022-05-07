@@ -1,6 +1,6 @@
 {
   "base_year": -651,
-  "best_score": 8.938408267151363,
+  "best_score": 8.642271568323718,
   "years": [
     {
       "name": "Shamash-shum-ukin 16",
@@ -9,14 +9,14 @@
       "intercalary": "unknown",
       "potentials": [
         {
-          "score": 8.938408267151363,
+          "score": 8.642271568323718,
           "nisan_1": "-651-03-22 18:10",
           "next_nisan": "-650-03-11 18:03",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 4.547725198998684,
+              "score": 4.251588500171039,
               "name": "Month A (Probably I)",
               "actual_month": 1,
               "month_sunset_1": "-651-03-23 18:11",
@@ -79,7 +79,7 @@
                   "angle": 6.9162646959836005,
                   "position": "above",
                   "at_time": "-651-04-08 18:20",
-                  "score": 1.0,
+                  "score": 0.7038633011723556,
                   "search_start": "-651-04-08 18:20",
                   "search_end": "-651-04-09 05:49",
                   "date": "Night of the 17th"

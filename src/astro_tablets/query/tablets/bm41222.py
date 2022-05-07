@@ -1,7 +1,6 @@
 from typing import List, Optional
 
 from astro_tablets.constants import (
-    ALCYONE,
     AURIGA,
     BETA_VIRGINIS,
     CUBIT,
@@ -11,7 +10,10 @@ from astro_tablets.constants import (
     MERCURY,
     PERSEUS,
     PISCES,
+    PLEIADES,
     REGULUS,
+    Precision,
+    Radius,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -55,7 +57,7 @@ class BM41222(AbstractTablet):
         )
         # to the right of Mercury
         res2 = WithinRadiusQuery(
-            self.db, MARS, MERCURY, 30, EclipticPosition.AHEAD, day19
+            self.db, MARS, MERCURY, Radius.SMALL.value, None, day19, Precision.LOW
         )
         return [res1, res2]
 
@@ -86,7 +88,13 @@ class BM41222(AbstractTablet):
         day28 = SearchRange.for_night(month, 28)
         # Mercury was in the back of Mars?
         res1 = WithinRadiusQuery(
-            self.db, MERCURY, MARS, 30, EclipticPosition.BEHIND, day28
+            self.db,
+            MERCURY,
+            MARS,
+            Radius.SMALL.value,
+            EclipticPosition.BEHIND,
+            day28,
+            Precision.LOW,
         )
         day29 = SearchRange.for_night(month, 29)
         # Mercury in the area of the Lion
@@ -102,7 +110,9 @@ class BM41222(AbstractTablet):
     def kand_12_i(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day8 = SearchRange.for_night(month, 8)
         # Mercury, in the area of Pleiades
-        res1 = WithinRadiusQuery(self.db, MERCURY, ALCYONE, 10, None, day8)
+        res1 = WithinRadiusQuery(
+            self.db, MERCURY, PLEIADES.central_star, PLEIADES.radius, None, day8
+        )
         # Mercury was 2 ⅔ cubits above? Mars?
         res2 = AngularSeparationQuery(
             self.db,
@@ -156,7 +166,9 @@ class BM41222(AbstractTablet):
     def nabo_12_iv(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day18 = SearchRange.for_night(month, 18)
         # Mars was with Pleiades
-        res1 = WithinRadiusQuery(self.db, MARS, ALCYONE, 10, None, day18)
+        res1 = WithinRadiusQuery(
+            self.db, MARS, PLEIADES.central_star, PLEIADES.radius, None, day18
+        )
         return [res1]
 
     def nabo_12_vi(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
@@ -176,14 +188,22 @@ class BM41222(AbstractTablet):
         day1 = SearchRange.for_night(month, 1)
         # Mars was [....] above α Leonis.
         res1 = WithinRadiusQuery(
-            self.db, MARS, REGULUS, 20, EclipticPosition.ABOVE, day1
+            self.db,
+            MARS,
+            REGULUS,
+            Radius.SMALL.value,
+            EclipticPosition.ABOVE,
+            day1,
+            Precision.LOW,
         )
         return [res1]
 
     def nabo_13_v(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         day3 = SearchRange.for_night(month, 3)
         # Mars ... it was with β Virginis
-        res1 = WithinRadiusQuery(self.db, MARS, BETA_VIRGINIS, 10, None, day3)
+        res1 = WithinRadiusQuery(
+            self.db, MARS, BETA_VIRGINIS, Radius.MEDIUM.value, None, day3, Precision.LOW
+        )
         return [res1]
 
     def nabo_year_13(self, nisan_1: float) -> List[MonthResult]:

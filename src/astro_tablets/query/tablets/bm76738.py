@@ -3,13 +3,15 @@ from typing import List
 from astro_tablets.constants import (
     ANTARES,
     BETA_VIRGINIS,
-    EPSILON_LEONIS,
+    HEAD_OF_THE_LION,
     LEO,
     LIBRA,
     REGULUS,
     SAGITTARIUS,
     SATURN,
     VIRGO,
+    Precision,
+    Radius,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -57,7 +59,14 @@ class BM76738(AbstractTablet):
         # [Year 2, mon]th 5, broken, in the head of the Lion, first appearance; not [observed?.]
         any_day = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, any_day)
-        res2 = WithinRadiusQuery(self.db, SATURN, EPSILON_LEONIS, 20, None, any_day)
+        res2 = WithinRadiusQuery(
+            self.db,
+            SATURN,
+            HEAD_OF_THE_LION.central_star,
+            HEAD_OF_THE_LION.radius,
+            None,
+            any_day,
+        )
         return [res1, res2]
 
     def year_2(self, nisan_1: float) -> List[MonthResult]:
@@ -79,7 +88,13 @@ class BM76738(AbstractTablet):
         range = SearchRange.for_night(month, 16)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
-            self.db, SATURN, REGULUS, 20, EclipticPosition.BEHIND, range
+            self.db,
+            SATURN,
+            REGULUS,
+            Radius.SMALL.value,
+            EclipticPosition.BEHIND,
+            range,
+            Precision.LOW,
         )
         return [res1, res2]
 
@@ -146,9 +161,10 @@ class BM76738(AbstractTablet):
             self.db,
             SATURN,
             BETA_VIRGINIS,
-            20,
+            Radius.MEDIUM.value,
             EclipticPosition.BEHIND,
             range,
+            Precision.LOW,
         )
         return [res1, res2]
 
@@ -244,7 +260,13 @@ class BM76738(AbstractTablet):
         range = SearchRange.for_night(month, 23)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
-            self.db, SATURN, ANTARES, 20, EclipticPosition.AHEAD, range
+            self.db,
+            SATURN,
+            ANTARES,
+            Radius.MEDIUM.value,
+            EclipticPosition.AHEAD,
+            range,
+            Precision.LOW,
         )
         return [res1, res2]
 
@@ -263,7 +285,13 @@ class BM76738(AbstractTablet):
         range = SearchRange.any_day(month)
         res1 = PlanetaryEventQuery(self.db, SATURN, OuterPlanetPhenomena.FA, range)
         res2 = WithinRadiusQuery(
-            self.db, SATURN, ANTARES, 20, EclipticPosition.ABOVE, range
+            self.db,
+            SATURN,
+            ANTARES,
+            Radius.SMALL.value,
+            EclipticPosition.ABOVE,
+            range,
+            Precision.LOW,
         )
         return [res1, res2]
 
