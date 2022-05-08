@@ -20,6 +20,17 @@ from astro_tablets.query import get_query_tablet
 from astro_tablets.query.database import Database as QueryDatabase
 from astro_tablets.util import print_progress
 
+TABLET_CHOICES = [
+    "BM32312",
+    "BM41222",
+    "BM76738",
+    "BM35115",
+    "BM32234",
+    "BM38462",
+    "VAT4956",
+    "BM33066",
+]
+
 
 def get_answer(question: str) -> bool:
     while True:
@@ -170,7 +181,10 @@ def cli():
 
     generate_parser = subparsers.add_parser("generate")
     generate_parser.add_argument(
-        "tablet", type=str, help="name of the tablet to generate ephemeris for"
+        "tablet",
+        type=str.upper,
+        choices=TABLET_CHOICES,
+        help="name of the tablet to generate ephemeris for",
     )
     generate_parser.add_argument(
         "--db", type=str, help="override path to save the database to"
@@ -183,7 +197,10 @@ def cli():
 
     query_all_parser = subparsers.add_parser("query_all")
     query_all_parser.add_argument(
-        "tablet", type=str, help="name of the tablet to query ephemeris for"
+        "tablet",
+        type=str.upper,
+        choices=TABLET_CHOICES,
+        help="name of the tablet to query ephemeris for",
     )
     query_all_parser.add_argument(
         "subquery", type=str, nargs="?", help="Optional subquery"
@@ -197,7 +214,10 @@ def cli():
 
     query_all_parser = subparsers.add_parser("query_year")
     query_all_parser.add_argument(
-        "tablet", type=str, help="name of the tablet to query ephemeris for"
+        "tablet",
+        type=str.upper,
+        choices=TABLET_CHOICES,
+        help="name of the tablet to query ephemeris for",
     )
     query_all_parser.add_argument("year", type=int, help="the base year to query")
     query_all_parser.add_argument(

@@ -50,21 +50,21 @@ def get_tablet_generator(
     tablet: str, data: AstroData, db: Database, start: Optional[int], end: Optional[int]
 ) -> Tablet:
     tablet = tablet.lower()
-    if tablet == "bm32312":
+    if tablet == "BM32312":
         return BM32312(data, db, start, end)
-    if tablet == "bm41222":
+    if tablet == "BM41222":
         return BM41222(data, db, start, end)
-    if tablet == "bm76738":
+    if tablet == "BM76738":
         return BM76738(data, db, start, end)
-    if tablet == "bm35115":
+    if tablet == "BM35115":
         return BM35115(data, db, start, end)
-    if tablet == "bm32234":
+    if tablet == "BM32234":
         return BM32234(data, db, start, end)
-    if tablet == "bm38462":
+    if tablet == "BM38462":
         return BM38462(data, db, start, end)
-    if tablet == "vat4956":
+    if tablet == "VAT4956":
         return VAT4956(data, db, start, end)
-    if tablet == "bm33066":
+    if tablet == "BM33066":
         return BM33066(data, db, start, end)
     raise ValueError("Unknown tablet name")
 

@@ -16,20 +16,20 @@ from astro_tablets.query.tablets.vat4956 import VAT4956
 def get_query_tablet(
     tablet: str, data: AstroData, db: Database, subquery: Optional[str]
 ) -> AbstractTablet:
-    if tablet == "bm32312":
+    if tablet == "BM32312":
         return BM32312(data, db)
-    if tablet == "bm41222":
+    if tablet == "BM41222":
         return BM41222(data, db, subquery)
-    if tablet == "bm76738":
+    if tablet == "BM76738":
         return BM76738(data, db)
-    if tablet == "bm35115":
+    if tablet == "BM35115":
         return BM35115(data, db)
-    if tablet == "bm32234":
+    if tablet == "BM32234":
         return BM32234(data, db)
-    if tablet == "bm38462":
+    if tablet == "BM38462":
         return BM38462(data, db)
-    if tablet == "vat4956":
+    if tablet == "VAT4956":
         return VAT4956(data, db, subquery)
-    if tablet == "bm33066":
+    if tablet == "BM33066":
         return BM33066(data, db, subquery)
     raise ValueError("Unknown tablet name")

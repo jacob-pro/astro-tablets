@@ -1,22 +1,32 @@
+ifeq ($(OS),Windows_NT)
+	VENV_BIN = venv/Scripts
+else
+	VENV_BIN = venv/bin
+endif
+
 .PHONY: clean
 clean:
 	rm -rf ./venv
 
 venv:
 	python -m venv ./venv
-	pip install -r requirements.txt
-	pip install -r test_requirements.txt
+
+# A file used to track when the requirements were last installed
+venv/requirements: requirements.txt test_requirements.txt venv
+	${VENV_BIN}/pip install -r requirements.txt
+	${VENV_BIN}/pip install -r test_requirements.txt
+	touch venv/requirements
 
 .PHONY: check
-check: venv
-	mypy src/
-	flake8 src/
+check: venv/requirements
+	${VENV_BIN}/mypy src/
+	${VENV_BIN}/flake8 src/
 
 .PHONY: test
-test: venv check
-	pytest src/ -v
+test: venv/requirements check
+	${VENV_BIN}/pytest src/ -v
 
 .PHONY: format
-format: venv
-	black src/
-	isort src/
+format: venv/requirements
+	${VENV_BIN}/black src/
+	${VENV_BIN}/isort src/

@@ -31,10 +31,11 @@ external chronological information and assumptions.
 To do, so it works by testing a text against astronomical tables for a given base year completely automatically,
 and then repeating this in a brute force fashion across a large range of possible years.
 
-Running *astro-tablets* requires two stages, in the first stage `generate`, a database is created containing
+Using *astro-tablets* requires two stages, in the 'generate' stage, a database is created containing
 all the necessary astronomical data for the observations in a text, 
 using the [Skyfield](https://rhodesmill.org/skyfield/) astronomy library.
-In the second stage `query`, that database is then repeatedly queried with different base years,
+
+In the 'query' stage, the database is then repeatedly tested with different base years,
 and a total score is computed, allowing the base years to be ranked for the best match.
 
 ## Installation
@@ -42,49 +43,48 @@ and a total score is computed, allowing the base years to be ranked for the best
 ### Using Docker
 
 ```bash
-git clone https://github.com/jacob-pro/astro-tablets.git
-cd astro-tablets
-docker build -t astro-tablets .
-docker run --rm -it -v ${PWD}/generated:/astro-tablets/generated -v ${PWD}/skyfield-data:/astro-tablets/skyfield-data \
-astro-tablets *SUBCOMMAND* *ARGS*
+docker run --rm -it \
+  -v ${PWD}/generated:/astro-tablets/generated \
+  -v ${PWD}/skyfield-data:/astro-tablets/skyfield-data \
+  ghcr.io/jacob-pro/astro-tablets:latest \
+  --help
 ```
 
 ### Manually
 
-1. Requires Python 3.7
-2. Install `requirements.txt` using Pip
-3. If using an IDE like PyCharm define `./src` as a source folder in project structure
-4. Run `python ./src/cli.py *SUBCOMMAND* *ARGS*`
+1. Ensure you have *Python* 3.7+ and *Make* installed.
+2. Run `make venv/requirements`.
+3. Run `venv/bin/activate` (or equivalent)
+4. Run `python ./src/main.py --help`.
 
 ## The Generate Stage
 
 To create the database for a given tablet use the `generate` subcommand:
 
 ```
-usage: cli.py generate [-h] [--db DB] [--overwrite] [--start START]
-                        [--end END]
-                        tablet
+$ python ./src/main.py generate --help 
+usage: main.py generate [-h] [--db DB] [--overwrite] [--start START] [--end END] {BM32312,BM41222,BM76738,BM35115,BM32234,BM38462,VAT4956,BM33066}
 
 positional arguments:
-  tablet         name of the tablet to generate ephemeris for
+  {BM32312,BM41222,BM76738,BM35115,BM32234,BM38462,VAT4956,BM33066}
+                        name of the tablet to generate ephemeris for
 
 optional arguments:
-  -h, --help     show this help message and exit
-  --db DB        override path to save the database to
-  --overwrite    overwrite the database if exists
-  --start START  override start year
-  --end END      override end year
+  -h, --help            show this help message and exit
+  --db DB               override path to save the database to
+  --overwrite           overwrite the database if exists
+  --start START         override start year
+  --end END             override end year
+
 ```
 
-Valid tablets include: `{bm32312, bm41222, bm76738, bm35115, bm32234, bm38462, vat4956, bm33066}`.
-
-By default, the database will be saved to `./generated/TABLET_NAME.db`. If the file already exists
+By default, the database will be saved to `./generated/${TABLET}.db`. If the file already exists
 it will prompt before overwriting, unless the `--overwrite` option is set.
 
 Each tablet has a default start and end year associated with it, roughly 100 years around its expected
 dating, this can be overridden with the `--start` and `--end` flags.
 
-The generate stage can take a very long time (e.g. 10 hours) and generate a large database file (e.g. 300MB),
+The generate stage can take a very long time (e.g. 10 hours) and produce a large database file (e.g. 300MB),
 depending on the complexity of the tablet, and the number of years being generated.
 
 The generated database is in *SQLite* format and stores tables with all the necessary event times and ephemeris,
@@ -94,44 +94,61 @@ for example:
 
 ## The Query Stage
 
-Once a database has been generated for a tablet, then the `query` subcommands may be run:
+Once a database has been generated for a tablet, then the `query_all` and  `query_year` subcommands can be run:
 
 ```
-usage: cli.py query [-h] [--db DB] [--year YEAR] [--slim] tablet [subquery]
+$ python ./src/main.py query_all --help
+usage: main.py query_all [-h] [--db DB] [--output OUTPUT] {BM32312,BM41222,BM76738,BM35115,BM32234,BM38462,VAT4956,BM33066} [subquery]
 
 positional arguments:
-  tablet       name of the tablet to query ephemeris for
-  subquery     optional subquery
+  {BM32312,BM41222,BM76738,BM35115,BM32234,BM38462,VAT4956,BM33066}
+                        name of the tablet to query ephemeris for
+  subquery              Optional subquery
 
 optional arguments:
-  -h, --help   show this help message and exit
-  --db DB      override path to source database
-  --year YEAR  optionally output a specific year
-  --slim       only output best compatible path
+  -h, --help            show this help message and exit
+  --db DB               override path to source database
+  --output OUTPUT       override path to save output
 ```
 
-The tablet names are the same as in the generate stage, by default it will look for the database at
-`./generated/TABLET_NAME.db` (although this can be overriden with the `--db` flag).
-Some tablets support an optional subquery that applies a filter to which observations are queried, 
-check the source in `./src/query/TABLET_NAME.py` to see which of these are available.
+The tablet names are the same as in the previous stage, by default it will look for the database at
+`./generated/${TABLET}.db` (although this can be overridden with the `--db` flag).
 
-The query will run for all of the years that the database file contains, and then output the results to
-the console, in descending order of best match.
+`query_all` will run the tests against all the years that the database file contains, and then output a text file
+containing the scores for each.
 
-To get a report for a specific base year add the `--year` flag, it will be saved as a JSON file
-in the working directory, containing all the details of the matched observations. By default, it will show
-all the possible year start dates (a year can in theory begin at any of the first lunar visibilities ±30 days 
-from the vernal equinox, meaning there are about 2-3 possibilities). However if the intercalary month information
-is known then their compatibility (as in building a valid sequence of years) can be assessed.
+To get a report for a specific base year use the `query_year` subcommand; it will produce a JSON file containing 
+all the details of the matched observations:
+
+```
+$ python ./src/main.py query_year --help
+usage: main.py query_year [-h] [--db DB] [--output OUTPUT] [--full] {BM32312,BM41222,BM76738,BM35115,BM32234,BM38462,VAT4956,BM33066} year [subquery]
+
+positional arguments:
+  {BM32312,BM41222,BM76738,BM35115,BM32234,BM38462,VAT4956,BM33066}
+                        name of the tablet to query ephemeris for
+  year                  the base year to query
+  subquery              Optional subquery
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --db DB               override path to source database
+  --output OUTPUT       override path to save output
+  --full                output all possible year start combinations
+```
+
+Use the `--full` option to show all the possible year start dates (a year can in theory begin at any of the first lunar 
+visibilities close to the vernal equinox. 
+When the intercalary month information is known then the compatibility of adjacent year start dates can be assessed.
 The compatible sequence of years with the highest score (as used in the main result) will be flagged with 
-`best_compatible_path`, to show only these results in the JSON use the `--slim` flag. 
+`best_compatible_path` field. 
 
 ## Other Commands
 
-To generate the graphs found in `./documents/graphics` use this command:
+To regenerate the graphs found in `./documents/graphics` use this command:
 
 ```
-cli.py graphs
+python ./src/main.py graphs ./documents/graphics
 ```
 
 ## Testing
@@ -140,8 +157,7 @@ cli.py graphs
 make test
 ```
 
-The unit tests check that the astronomical computation functions (used primarily in the generate stage)
-are working correctly, by comparing the results with data from other sources (commercial software, 
-and academic publications).
+The unit tests check that the astronomical computation functions are working correctly by comparing the results with 
+data from other sources (commercial software, and academic publications).
 
 ## References
