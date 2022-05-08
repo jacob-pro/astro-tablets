@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import time
 from abc import ABC
 from typing import List, Optional
@@ -44,24 +46,26 @@ from astro_tablets.generate.risings_settings import risings_and_settings
 from astro_tablets.util import print_progress
 
 
-def get_tablet_class(tablet: str):
+def get_tablet_generator(
+    tablet: str, data: AstroData, db: Database, start: Optional[int], end: Optional[int]
+) -> Tablet:
     tablet = tablet.lower()
     if tablet == "bm32312":
-        return BM32312
+        return BM32312(data, db, start, end)
     if tablet == "bm41222":
-        return BM41222
+        return BM41222(data, db, start, end)
     if tablet == "bm76738":
-        return BM76738
+        return BM76738(data, db, start, end)
     if tablet == "bm35115":
-        return BM35115
+        return BM35115(data, db, start, end)
     if tablet == "bm32234":
-        return BM32234
+        return BM32234(data, db, start, end)
     if tablet == "bm38462":
-        return BM38462
+        return BM38462(data, db, start, end)
     if tablet == "vat4956":
-        return VAT4956
+        return VAT4956(data, db, start, end)
     if tablet == "bm33066":
-        return BM33066
+        return BM33066(data, db, start, end)
     raise ValueError("Unknown tablet name")
 
 

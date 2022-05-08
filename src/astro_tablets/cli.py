@@ -4,11 +4,10 @@ import pathlib
 from distutils.util import strtobool
 from typing import Optional
 
-import astro_tablets
 from astro_tablets.constants import CUBIT, FINGER
 from astro_tablets.data import AstroData
-from astro_tablets.generate import tablets
 from astro_tablets.generate.database import Database as GenerateDatabase
+from astro_tablets.generate.tablets import get_tablet_generator
 from astro_tablets.graphics.eclipse_plot import plot_eclipse
 from astro_tablets.graphics.eclipse_score_plots import (
     plot_eclipse_phase_length_score,
@@ -17,6 +16,7 @@ from astro_tablets.graphics.eclipse_score_plots import (
 from astro_tablets.graphics.planetary_event_score_plot import plot_planetary_event_score
 from astro_tablets.graphics.radius_score_plot import plot_radius_score
 from astro_tablets.graphics.separation_score_plot import plot_separation_score
+from astro_tablets.query import get_query_tablet
 from astro_tablets.query.database import Database as QueryDatabase
 from astro_tablets.util import print_progress
 
@@ -56,7 +56,6 @@ def generate_impl(
     end: Optional[int],
 ) -> None:
     data = AstroData()
-    tablet_gen_class = tablets.get_tablet_class(tablet_name)
     db_path = (
         default_database_path(tablet_name)
         if db_path_override is None
@@ -68,9 +67,9 @@ def generate_impl(
         else:
             exit(1)
     db = GenerateDatabase(db_path)
-    obj = tablet_gen_class(data, db, start, end)
-    obj.compute()
-    obj.post_compute()
+    tablet = get_tablet_generator(tablet_name, data, db, start, end)
+    tablet.compute()
+    tablet.post_compute()
     db.close()
 
 
@@ -98,7 +97,7 @@ def query_all_impl(
     db = QueryDatabase(db_path)
     if db.info.tablet.lower() != tablet_name.lower():
         raise RuntimeError("Database info doesn't match the requested tablet")
-    tablet = astro_tablets.query.get_tablet(tablet_name, data, db, subquery)
+    tablet = get_query_tablet(tablet_name, data, db, subquery)
     subquery_component = "" if subquery is None else f"_{subquery}"
     output_path = (
         f"{tablet_name.lower()}{subquery_component}_scores.txt"
@@ -138,7 +137,7 @@ def query_year_impl(
     db = QueryDatabase(db_path)
     if db.info.tablet.lower() != tablet_name.lower():
         raise RuntimeError("Database info doesn't match the requested tablet")
-    tablet = astro_tablets.query.get_tablet(tablet_name, data, db, subquery)
+    tablet = get_query_tablet(tablet_name, data, db, subquery)
     subquery_component = "" if subquery is None else f"_{subquery}"
     full_component = "" if full is False else "full"
     output_path = (

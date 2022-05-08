@@ -13,7 +13,7 @@ from astro_tablets.query.tablets.bm76738 import BM76738
 from astro_tablets.query.tablets.vat4956 import VAT4956
 
 
-def get_tablet(
+def get_query_tablet(
     tablet: str, data: AstroData, db: Database, subquery: Optional[str]
 ) -> AbstractTablet:
     if tablet == "bm32312":
