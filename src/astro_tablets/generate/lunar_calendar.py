@@ -68,7 +68,7 @@ def days_in_range(
     position = data.timescale.tt_jd(start.tt - 2)
     end = data.timescale.tt_jd(end.tt + 1)
     prev_altitude = float("inf")
-    results = []  # type: List[BabylonianDay]
+    results: List[BabylonianDay] = []
 
     while position.tt < end.tt:
         # Sunset for this day
@@ -90,4 +90,6 @@ def days_in_range(
     results = list(
         filter(lambda x: x.sunset.tt >= start.tt and x.sunrise.tt <= end.tt, results)
     )
+    if progress is not None:
+        progress(1.0)
     return results

@@ -1,1 +1,2 @@
-src/test/data/* linguist-vendored
+src/astro_tablets/test/data/* linguist-vendored
+documents/*.md linguist-generated

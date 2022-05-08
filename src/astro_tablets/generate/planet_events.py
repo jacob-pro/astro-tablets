@@ -165,6 +165,8 @@ def _inner_planet_events(
             progress(idx / len(zipped))
 
     events = list(filter(lambda x: t0.tt <= x.time.tt <= t1.tt, events))
+    if progress is not None:
+        progress(1.0)
     return events
 
 
@@ -189,7 +191,7 @@ def _outer_planet_events(
     )
 
     zipped = list(zip(times, types))
-    events = []  # type: List[SynodicEvent]
+    events: List[SynodicEvent] = []
 
     morning_rise = None
     evening_set = None
@@ -252,4 +254,6 @@ def _outer_planet_events(
             progress(idx / len(zipped))
 
     events = list(filter(lambda x: t0.tt <= x.time.tt <= t1.tt, events))
+    if progress is not None:
+        progress(1.0)
     return events

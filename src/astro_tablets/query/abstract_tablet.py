@@ -346,6 +346,8 @@ class AbstractTablet(ABC):
                 )
             total_score = self._total_year_score(yrs)
             results.append(MultiyearResult(years[i][0].year, total_score, yrs))
+        if progress:
+            progress(1.0)
         return results
 
     def write_scores(self, path: str, progress: PROGRESS_CALLBACK) -> None:

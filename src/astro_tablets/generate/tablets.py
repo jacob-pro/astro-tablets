@@ -1,4 +1,3 @@
-import sys
 import time
 from abc import ABC
 from typing import List, Optional
@@ -42,6 +41,7 @@ from astro_tablets.generate.eclipse import lunar_eclipses_in_range
 from astro_tablets.generate.lunar_calendar import days_in_range, vernal_equinox
 from astro_tablets.generate.planet_events import planet_events
 from astro_tablets.generate.risings_settings import risings_and_settings
+from astro_tablets.util import print_progress
 
 
 def get_tablet_class(tablet: str):
@@ -80,13 +80,10 @@ class Tablet(ABC):
         self.db = db
         self.start_year = self.default_start if start_year is None else start_year
         self.end_year = self.default_end if end_year is None else end_year
-        self.__validate__()
-
-    def __validate__(self):
         assert self.start_year is not None
         assert self.end_year is not None
         if self.start_year > self.end_year:
-            raise ValueError("Start year must be LEQ to end year")
+            raise ValueError("End year must be greater than or equal to start year")
 
     def calendar(self):
         for i in range(self.start_day.utc.year, self.end_day.utc.year + 1):
@@ -95,15 +92,15 @@ class Tablet(ABC):
             self.data,
             self.start_day,
             self.end_day,
-            lambda x: self.print_progress("Computing Lunar calendar", x),
+            lambda x: print_progress("Computing Lunar calendar ", x),
         )
         self.db.save_days(days)
-        print("")
         return days
 
     def separation_during_night(self, of: Body, to: Body, intervals: int = 4):
         b1 = self.data.get_body(of)
         b2 = self.data.get_body(to)
+        msg = f"Computing separation between {of.name} and {to.name} "
         for idx, day in enumerate(self.days):
             night_len = day.sunrise.tt - day.sunset.tt
             for i in range(intervals):
@@ -112,11 +109,8 @@ class Tablet(ABC):
                 )
                 res = angular_separation(self.data, b1, b2, time)
                 self.db.save_separation(of, to, res, time)
-            self.print_progress(
-                f"Computing separation between {of.name} and {to.name}",
-                idx / len(self.days),
-            )
-        print("")
+            print_progress(msg, idx / len(self.days))
+        print_progress(msg, 1.0)
 
     def planet_events(self, planet: Planet):
         events = planet_events(
@@ -124,12 +118,9 @@ class Tablet(ABC):
             planet,
             self.start_day,
             self.end_day,
-            lambda x: self.print_progress(
-                "Computing {} visibility".format(planet.name), x
-            ),
+            lambda x: print_progress("Computing {} visibility ".format(planet.name), x),
         )
         self.db.save_synodic_events(planet.name, events)
-        print("")
 
     def lunar_eclipses(self, position_bodies: List[Body] = []):
         print("Computing lunar eclipses")
@@ -138,14 +129,12 @@ class Tablet(ABC):
         for body in position_bodies:
             b1 = self.data.get_body(MOON)
             b2 = self.data.get_body(body)
+            msg = "Computing separation between {} and {} ".format(MOON, body)
             for idx, e in enumerate(eclipses):
                 res = angular_separation(self.data, b1, b2, e.closest_approach_time)
                 self.db.save_separation(MOON, body, res, e.closest_approach_time)
-                self.print_progress(
-                    "Computing separation between {} and {}".format(MOON, body),
-                    idx / len(eclipses),
-                )
-            print("")
+                print_progress(msg, idx / len(eclipses))
+            print_progress(msg, 1.0)
         return eclipses
 
     def risings_settings(self, body: Body):
@@ -172,13 +161,6 @@ class Tablet(ABC):
         self.db.save_info(type(self).__name__, self.start_year, self.end_year)
         elapsed = time.time() - self.start_time
         print("Completed in", time.strftime("%H:%M:%S", time.gmtime(elapsed)))
-
-    @staticmethod
-    def print_progress(prefix: str, progress: float):
-        if progress > 0.99:
-            progress = 1
-        sys.stdout.write("\r{} {:05.2f}%".format(prefix, progress * 100))
-        sys.stdout.flush()
 
 
 class BM32312(Tablet):

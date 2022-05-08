@@ -7,10 +7,10 @@ from skyfield.timelib import Time
 from astro_tablets.data import SUN, Body
 from astro_tablets.generate.angular_separation import AngularSeparationResult
 from astro_tablets.generate.eclipse import Eclipse, TimeUnit
+from astro_tablets.generate.git_info import GitInfo
 from astro_tablets.generate.lunar_calendar import VERNAL_EQUINOX, BabylonianDay
 from astro_tablets.generate.planet_events import SynodicEvent
 from astro_tablets.generate.risings_settings import RisingOrSetting
-from astro_tablets.util import get_git_changes, get_git_hash
 
 
 class Database:
@@ -59,7 +59,8 @@ class Database:
             tablet VARCHAR(255),
             start_year INT,
             end_year INT,
-            git VARCHAR,
+            git_hash VARCHAR,
+            git_dirty SMALLINT,
             time DATETIME DEFAULT CURRENT_TIMESTAMP
         );"""
         )
@@ -152,11 +153,8 @@ class Database:
             )
 
     def save_info(self, tablet: str, start: int, end: int):
-        hash = get_git_hash()
-        if hash is not None:
-            if get_git_changes():
-                hash = hash + " (modified)"
+        git = GitInfo()
         self.cursor.execute(
-            "INSERT INTO db_info (tablet, start_year, end_year, git) VALUES (?, ?, ?, ?)",
-            (tablet, start, end, hash),
+            "INSERT INTO db_info (tablet, start_year, end_year, git_hash, git_dirty) VALUES (?, ?, ?, ?, ?)",
+            (tablet, start, end, git.hash, git.dirty),
         )

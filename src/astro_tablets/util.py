@@ -1,5 +1,3 @@
-import os
-import subprocess
 import sys
 from typing import Callable, Optional
 
@@ -30,10 +28,11 @@ def same_sign(num1, num2) -> bool:
 
 
 def print_progress(prefix: str, progress: float):
-    if progress > 0.99:
-        progress = 1
     sys.stdout.write(f"\r{prefix}{progress * 100:05.2f}%")
     sys.stdout.flush()
+    # Add a line break after reaching 100%
+    if progress == 1:
+        print("")
 
 
 def change_in_longitude(old: float, new: float) -> float:
@@ -49,31 +48,6 @@ def change_in_longitude(old: float, new: float) -> float:
         return a
     else:
         return b
-
-
-def get_git_hash() -> str:
-    hash = os.getenv("GIT_HASH")
-    if hash is not None and len(hash) > 0:
-        return hash
-    try:
-        return (
-            subprocess.check_output(["git", "rev-parse", "--short", "HEAD"])
-            .decode("utf-8")
-            .partition("\n")[0]
-        )
-    except subprocess.CalledProcessError:
-        return "unknown"
-
-
-def get_git_changes() -> bool:
-    modified = os.getenv("GIT_MODIFIED")
-    if modified is not None:
-        return modified == "1"
-    try:
-        subprocess.check_output(["git", "diff", "--exit-code"], stderr=subprocess.PIPE)
-    except subprocess.CalledProcessError:
-        return True
-    return False
 
 
 class TimeValue:
