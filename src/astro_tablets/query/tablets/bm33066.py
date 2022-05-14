@@ -1,5 +1,5 @@
 from enum import Enum, unique
-from typing import List, Optional, Tuple
+from typing import List, Optional
 
 from astro_tablets.constants import (
     AURIGA,
@@ -49,64 +49,48 @@ from astro_tablets.query.radius_query import WithinRadiusQuery
 
 
 @unique
-class Category(Enum):
-    ECLIPSE = "Eclipses"
-    LUNAR_SIX = "Lunar Six"
-    PLANETARY = "Planetary"
+class BM33066Mode(Enum):
+    ALL = "All"
+    ECLIPSE_ONLY = "Eclipses Only"
+    LUNAR_SIX_ONLY = "Lunar Six Only"
+    PLANET_ONLY = "Planetary Only"
 
 
 class BM33066(AbstractTablet):
-    def category_filter(
-        self, queries: List[Tuple[AbstractQuery, Category]]
-    ) -> List[AbstractQuery]:
-        queries = list(
-            filter(lambda x: self.filter is None or x[1] == self.filter, queries)
-        )
-        return list(map(lambda x: x[0], queries))
-
     def year_7_month_1(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 30), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 13, LunarSix.ME, 9), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 13, LunarSix.SU2, 2.5), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 14, LunarSix.GI6, 8 + 1 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (
-                LunarSixQuery(self.db, month, 14, LunarSix.NA, 7 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 16), Category.LUNAR_SIX),
-        ]
+        res: List[AbstractQuery] = []
 
-        return self.category_filter(res)
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 30))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.ME, 9))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 2.5))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 8 + 1 / 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 7 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 16))
+
+        return res
 
     def year_7_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 23), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 13, LunarSix.SU2, 8 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 14, LunarSix.ME, 1), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 14, LunarSix.NA, 1 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 15, LunarSix.GI6, 14.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 21), Category.LUNAR_SIX),
-            #  Year 7, month II, the 28th, Mars' last appearance in front of Gemini.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 23))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 8 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.ME, 1))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 1 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 14.5))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 21))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     MARS,
                     OuterPlanetPhenomena.LA,
                     SearchRange.for_night(month, 28),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     MARS,
@@ -114,31 +98,32 @@ class BM33066(AbstractTablet):
                     GEMINI.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 28),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_3(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 18.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.ME, 9.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.SU2, 4), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 15, LunarSix.GI6, 5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 15, LunarSix.NA, 8.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15), Category.LUNAR_SIX),
-            #  Year 7, month III, the 10th. Venus' last appearance in the west in the beginning of Leo.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 18.5))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.ME, 9.5))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.SU2, 4))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 5))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 8.5))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     VENUS,
                     InnerPlanetPhenomena.EL,
                     SearchRange.for_night(month, 10),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     VENUS,
@@ -146,20 +131,17 @@ class BM33066(AbstractTablet):
                     LEO.radius,
                     None,
                     SearchRange.for_night(month, 10),
-                ),
-                Category.PLANETARY,
-            ),
-            #  Month III. the 27th. first appearance in the east in the area of Cancer.
-            (
+                )
+            )
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     VENUS,
                     InnerPlanetPhenomena.MF,
                     SearchRange.for_night(month, 27),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     VENUS,
@@ -167,37 +149,38 @@ class BM33066(AbstractTablet):
                     CANCER.radius,
                     None,
                     SearchRange.for_night(month, 27),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_4(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 27), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 13, LunarSix.SU2, 11), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.ME, 4), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.NA, 4), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 15, LunarSix.GI6, 8.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15), Category.LUNAR_SIX),
-            # Year 7, month IV, night of the 14th, 1 ⅔ bēru after sunset,
-            # the moon made a total eclipse, a little remained; the north wind blew.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 27))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 11))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.ME, 4))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 4))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 8.5))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 15))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.ECLIPSE_ONLY:
+            t = (1 + 2 / 3) * 30
+            res.append(
                 LunarEclipseQuery(
                     self.db,
-                    FirstContactTime(
-                        (1 + 2 / 3) * 30, FirstContactRelative.AFTER_SUNSET
-                    ),
+                    FirstContactTime(t, FirstContactRelative.AFTER_SUNSET),
                     ExpectedEclipseType.TOTAL,
                     None,
                     None,
                     SearchRange.for_night(month, 14),
-                ),
-                Category.ECLIPSE,
-            ),
+                )
+            )
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
             # Year 7, month IV, the 1st, the moon became visible 3 cubits behind Mercury.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     MOON,
@@ -205,37 +188,36 @@ class BM33066(AbstractTablet):
                     3 * CUBIT,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 1),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, Precision.LOW),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 14, LunarSix.SU2, 3.5), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, Precision.LOW),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 15, LunarSix.NA, 11), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 16, LunarSix.GI6, 7.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 22.5), Category.LUNAR_SIX),
-            #  Year 7, month V, the 22nd. Jupiter's last appearance in front of Virgo.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(
+                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, Precision.LOW)
+            )
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.SU2, 3.5))
+            res.append(
+                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, Precision.LOW)
+            )
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 11))
+            res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 7.5))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 22.5))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     JUPITER,
                     OuterPlanetPhenomena.LA,
                     SearchRange.for_night(month, 22),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     JUPITER,
@@ -243,40 +225,32 @@ class BM33066(AbstractTablet):
                     VIRGO.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 22),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 15 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 13, LunarSix.SU2, 11), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.NA, 4), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 15, LunarSix.ME, 1 + 1 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (
-                LunarSixQuery(self.db, month, 16, LunarSix.GI6, 8 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 28, LunarSix.KUR, 15), Category.LUNAR_SIX),
-            #  Month VI, the 22nd, first appearance behind Virgo.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 15 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 11))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 4))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.ME, 1 + 1 / 3))
+            res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 8 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 28, LunarSix.KUR, 15))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     JUPITER,
                     OuterPlanetPhenomena.FA,
                     SearchRange.for_night(month, 22),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     JUPITER,
@@ -284,20 +258,17 @@ class BM33066(AbstractTablet):
                     VIRGO.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 22),
-                ),
-                Category.PLANETARY,
-            ),
-            #  Year 7, month VI, the 3rd, Saturn's last appearance in the area of Virgo.
-            (
+                )
+            )
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     SATURN,
                     OuterPlanetPhenomena.LA,
                     SearchRange.for_night(month, 3),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     SATURN,
@@ -305,20 +276,17 @@ class BM33066(AbstractTablet):
                     VIRGO.radius,
                     None,
                     SearchRange.for_night(month, 3),
-                ),
-                Category.PLANETARY,
-            ),
-            # Month VI, the 13th, first appearance in the foot of Leo.
-            (
+                )
+            )
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     MARS,
                     OuterPlanetPhenomena.FA,
                     SearchRange.for_night(month, 13),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     MARS,
@@ -326,11 +294,11 @@ class BM33066(AbstractTablet):
                     LEO.radius,
                     None,
                     SearchRange.for_night(month, 13),
-                ),
-                Category.PLANETARY,
-            ),
+                )
+            )
+
             #  Month VI, the 24th, Venus was 1 +[x cubits?] above Mars.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     VENUS,
@@ -339,34 +307,32 @@ class BM33066(AbstractTablet):
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 24),
                     Precision.LOW,
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_7(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 16 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 13, LunarSix.SU2, 6.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.ME, 7.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.NA, 12), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 15, LunarSix.GI6, 3), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 26, LunarSix.KUR, 22), Category.LUNAR_SIX),
-            #  Month VII, the 13th, first appearance behind Virgo.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 16 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 6.5))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.ME, 7.5))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 12))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.GI6, 3))
+            res.append(LunarSixQuery(self.db, month, 26, LunarSix.KUR, 22))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     SATURN,
                     OuterPlanetPhenomena.FA,
                     SearchRange.for_night(month, 13),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     SATURN,
@@ -374,11 +340,11 @@ class BM33066(AbstractTablet):
                     VIRGO.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 13),
-                ),
-                Category.PLANETARY,
-            ),
+                )
+            )
+
             # Month VII, the 23rd, last part of the night, Jupiter was 3 cubits above the moon.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     JUPITER,
@@ -386,11 +352,11 @@ class BM33066(AbstractTablet):
                     3 * CUBIT,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 23),
-                ),
-                Category.PLANETARY,
-            ),
+                )
+            )
+
             # Month VII, the 29th, last part of the night, Venus on the north side [came near?] 2 fingers to Ju[piter].
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     VENUS,
@@ -398,11 +364,11 @@ class BM33066(AbstractTablet):
                     2 * FINGER,
                     None,
                     SearchRange.for_night(month, 29),
-                ),
-                Category.PLANETARY,
-            ),
+                )
+            )
+
             # Month VII, the 12th, Saturn was 1 cubit in front of Jupiter.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     SATURN,
@@ -410,11 +376,11 @@ class BM33066(AbstractTablet):
                     1 * CUBIT,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 12),
-                ),
-                Category.PLANETARY,
-            ),
+                )
+            )
+
             # Month VII, the 11th, Mars came near to Jupiter 2 fingers.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     MARS,
@@ -422,25 +388,25 @@ class BM33066(AbstractTablet):
                     2 * FINGER,
                     None,
                     SearchRange.for_night(month, 11),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_8(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 12 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 13, LunarSix.SU2, 15), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 14, LunarSix.NA, 5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 15, LunarSix.ME, 1), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 16, LunarSix.GI6, 14), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 28, LunarSix.KUR, 26), Category.LUNAR_SIX),
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 12 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 15))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 5))
+            res.append(LunarSixQuery(self.db, month, 15, LunarSix.ME, 1))
+            res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 14))
+            res.append(LunarSixQuery(self.db, month, 28, LunarSix.KUR, 26))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
             # Month VIII, the 2nd, Saturn passed 8 fingers above Venus.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     SATURN,
@@ -448,41 +414,37 @@ class BM33066(AbstractTablet):
                     8 * FINGER,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 2),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
+                )
+            )
 
-        return self.category_filter(res)
+        return res
 
     def year_7_month_10(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            # Month X, night of the 14th, when 2 ½ bēru remained to sunrise,
-            # the moon made a total eclipse; the south and north winds blew in it.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.ECLIPSE_ONLY:
+            t = (2 + 1 / 2) * 30
+            res.append(
                 LunarEclipseQuery(
                     self.db,
-                    FirstContactTime(
-                        (2 + 1 / 2) * 30, FirstContactRelative.BEFORE_SUNRISE
-                    ),
+                    FirstContactTime(t, FirstContactRelative.BEFORE_SUNRISE),
                     ExpectedEclipseType.TOTAL,
                     None,
                     None,
                     SearchRange.for_night(month, 14),
-                ),
-                Category.ECLIPSE,
-            ),
-            #  Month X, the 27th, it became stationary in front of Libra.
-            (
+                )
+            )
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     JUPITER,
                     OuterPlanetPhenomena.ST,
                     SearchRange.for_night(month, 27),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     JUPITER,
@@ -490,11 +452,11 @@ class BM33066(AbstractTablet):
                     LIBRA.radius,
                     EclipticPosition.AHEAD,
                     SearchRange.for_night(month, 27),
-                ),
-                Category.PLANETARY,
-            ),
+                )
+            )
+
             # Month X, the 5th, Mercury was ½ cubit behind Venus.
-            (
+            res.append(
                 AngularSeparationQuery(
                     self.db,
                     MERCURY,
@@ -502,54 +464,45 @@ class BM33066(AbstractTablet):
                     0.5 * CUBIT,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 5),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_11(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 22), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 13, LunarSix.ME, 17 + 1 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (
-                LunarSixQuery(self.db, month, 13, LunarSix.SU2, 4 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (
-                LunarSixQuery(self.db, month, 14, LunarSix.GI6, 1 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 14, LunarSix.NA, 7), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 17), Category.LUNAR_SIX),
-        ]
-        return self.category_filter(res)
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 22))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.ME, 17 + 1 / 3))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 4 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 1 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 7))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 17))
+
+        return res
 
     def year_7_month_12(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 15.5), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 12, LunarSix.SU2, 10.5), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 13, LunarSix.ME, 5 + 1 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 14, LunarSix.GI6, 10), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 25, LunarSix.KUR, 23), Category.LUNAR_SIX),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 12), Category.LUNAR_SIX),
-            #  Month XII, the 7th, last appearance in the east in the area of Pisces.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 15.5))
+            res.append(LunarSixQuery(self.db, month, 12, LunarSix.SU2, 10.5))
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.ME, 5 + 1 / 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 10))
+            res.append(LunarSixQuery(self.db, month, 25, LunarSix.KUR, 23))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 12))
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     VENUS,
                     InnerPlanetPhenomena.ML,
                     SearchRange.for_night(month, 7),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     VENUS,
@@ -557,31 +510,25 @@ class BM33066(AbstractTablet):
                     PISCES.radius,
                     None,
                     SearchRange.for_night(month, 7),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
-        return self.category_filter(res)
+                )
+            )
+
+        return res
 
     def year_7_month_13(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            (LunarSixQuery(self.db, month, 1, LunarSix.NA1, 19), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, Precision.LOW),
-                Category.LUNAR_SIX,
-            ),
-            (
-                LunarSixQuery(self.db, month, 13, LunarSix.SU2, 5 + 1 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 14, LunarSix.GI6, 3), Category.LUNAR_SIX),
-            (
-                LunarSixQuery(self.db, month, 14, LunarSix.NA, 5 + 2 / 3),
-                Category.LUNAR_SIX,
-            ),
-            (LunarSixQuery(self.db, month, 27, LunarSix.KUR, 21), Category.LUNAR_SIX),
-        ]
-        return self.category_filter(res)
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
+            res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 19))
+            res.append(
+                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, Precision.LOW)
+            )
+            res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 5 + 1 / 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 3))
+            res.append(LunarSixQuery(self.db, month, 14, LunarSix.NA, 5 + 2 / 3))
+            res.append(LunarSixQuery(self.db, month, 27, LunarSix.KUR, 21))
+
+        return res
 
     def year_7(self, nisan_1: float) -> List[MonthResult]:
         month_i = self.repeat_month_with_alternate_starts(
@@ -637,18 +584,18 @@ class BM33066(AbstractTablet):
         ]
 
     def year_8_month_1(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            #  Year 8, month I. the 13th. first appearance in the west in the area of the Chariot.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     VENUS,
                     InnerPlanetPhenomena.EF,
                     SearchRange.for_night(month, 13),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     VENUS,
@@ -656,26 +603,24 @@ class BM33066(AbstractTablet):
                     AURIGA.radius,
                     None,
                     SearchRange.for_night(month, 13),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
+                )
+            )
 
-        return self.category_filter(res)
+        return res
 
     def year_8_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            #  Year 8, month II. the 25th, it became stationary in the area of Virgo.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     JUPITER,
                     OuterPlanetPhenomena.ST,
                     SearchRange.for_night(month, 25),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     JUPITER,
@@ -683,51 +628,47 @@ class BM33066(AbstractTablet):
                     VIRGO.radius,
                     None,
                     SearchRange.for_night(month, 25),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
+                )
+            )
 
-        return self.category_filter(res)
+        return res
 
     def year_8_month_5(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            #  Year 8, month V, the 29th, last appearance.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     SATURN,
                     OuterPlanetPhenomena.LA,
                     SearchRange.for_night(month, 29),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     MARS,
                     OuterPlanetPhenomena.ST,
                     SearchRange.for_night(month, 12),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
+                )
+            )
 
-        return self.category_filter(res)
+        return res
 
     def year_8_month_6(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
-            #  Month VI, the 4th, last appearance behind Libra.
-            (
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     JUPITER,
                     OuterPlanetPhenomena.LA,
                     SearchRange.for_night(month, 4),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     JUPITER,
@@ -735,12 +676,10 @@ class BM33066(AbstractTablet):
                     LIBRA.radius,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 4),
-                ),
-                Category.PLANETARY,
-            ),
-        ]
+                )
+            )
 
-        return self.category_filter(res)
+        return res
 
     def year_8(self, nisan_1: float) -> List[MonthResult]:
         month_i = self.repeat_month_with_alternate_starts(
@@ -758,18 +697,19 @@ class BM33066(AbstractTablet):
         return [month_i, month_ii, month_v, month_vi]
 
     def year_9_month_2(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
-        res: List[Tuple[AbstractQuery, Category]] = [
+        res: List[AbstractQuery] = []
+
+        if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.PLANET_ONLY:
             #  Year 9, month II, the 9th, last appearance behind α Leonis.
-            (
+            res.append(
                 PlanetaryEventQuery(
                     self.db,
                     MARS,
                     OuterPlanetPhenomena.LA,
                     SearchRange.for_night(month, 9),
-                ),
-                Category.PLANETARY,
-            ),
-            (
+                )
+            )
+            res.append(
                 WithinRadiusQuery(
                     self.db,
                     MARS,
@@ -777,13 +717,11 @@ class BM33066(AbstractTablet):
                     Radius.MEDIUM.value,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 9),
-                    Precision.LOW,
-                ),
-                Category.PLANETARY,
-            ),
-        ]
+                    Precision.LOW
+                )
+            )
 
-        return self.category_filter(res)
+        return res
 
     def year_9(self, nisan_1: float) -> List[MonthResult]:
         month_ii = self.repeat_month_with_alternate_starts(
@@ -793,13 +731,13 @@ class BM33066(AbstractTablet):
 
     def __init__(self, data: AstroData, db: Database, subquery: Optional[str]):
         if subquery is None:
-            self.filter = None
+            self.mode = BM33066Mode.ALL
         elif subquery == "eclipse":
-            self.filter = Category.ECLIPSE
+            self.mode = BM33066Mode.ECLIPSE_ONLY
         elif subquery == "lunar_six":
-            self.filter = Category.LUNAR_SIX
+            self.mode = BM33066Mode.LUNAR_SIX_ONLY
         elif subquery == "planet":
-            self.filter = Category.PLANETARY
+            self.mode = BM33066Mode.PLANET_ONLY
         else:
             raise ValueError("Unknown subquery")
         tests = [
@@ -807,9 +745,5 @@ class BM33066(AbstractTablet):
             YearToTest(1, "Cambyses 8", Intercalary.FALSE, self.year_8),
             YearToTest(2, "Cambyses 9", Intercalary.FALSE, self.year_9),
         ]
-        title = (
-            "Cambyses 7"
-            if self.filter is None
-            else "Cambyses 7 ({})".format(self.filter.value)
-        )
+        title = "Cambyses 7 ({})".format(self.mode.value)
         super().__init__(data, db, tests, title)

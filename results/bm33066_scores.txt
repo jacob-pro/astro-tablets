@@ -1,5 +1,5 @@
 Database generated on 2021-06-08 07:20:55 for BM33066 covering -590 to -460
-Scores for Cambyses 7
+Scores for Cambyses 7 (All)
 Year   Score
 -522 70.44354641254591
 -575 43.56513295884504
