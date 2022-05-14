@@ -31,9 +31,9 @@ class LunarSix(Enum):
 
 def lunar_six_tolerance(precision: Precision) -> float:
     if precision == Precision.REGULAR:
-        return 5.0
+        return 1.25
     elif precision == Precision.LOW:
-        return 1.5
+        return 1.1
     else:
         raise ValueError
 
@@ -78,13 +78,22 @@ class LunarSixQuery(AbstractQuery):
     def calculate_score(
         actual_us: float, tablet_us: float, time_precision: Precision
     ) -> float:
+        """
+        Calculates score based on the actual time between the two events, compared to the expected time according
+        to the tablet.
+        The expected position (if specified) and actual position are also compared, giving an additional 0.2 to the
+        score if they match.
+        @param actual_us: The actual time difference in UŠ (can be negative if the events happen in the wrong order).
+        @param tablet_us: The expected time difference in UŠ (should always be positive).
+        @param time_precision: How precise the time difference is expected to be.
+        @return: A score value (between 0 and 1).
+        """
         t = lunar_six_tolerance(time_precision)
-        err = abs(tablet_us - actual_us) - 2  # +-2 degrees accuracy readings
-        err = 0 if err < 0 else err
-        percent_err = err / abs(actual_us)
-        score = math.pow(t, -percent_err)
-        if actual_us < 0:  # Reduce score when they are in the wrong order
-            score *= 0.5
+        diff = abs(tablet_us - actual_us)
+        score = math.pow(t, -diff)
+        if actual_us < 0:
+            # Reduce score when they are in the wrong order, proportional to how close the expected is to 0
+            score *= 1 / tablet_us
         assert 0 <= score <= 1
         return score
 
