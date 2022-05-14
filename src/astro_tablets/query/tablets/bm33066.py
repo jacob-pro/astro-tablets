@@ -717,7 +717,7 @@ class BM33066(AbstractTablet):
                     Radius.MEDIUM.value,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 9),
-                    Precision.LOW
+                    Precision.LOW,
                 )
             )
 
