@@ -21,6 +21,9 @@ python ../src/main.py query_all bm35115
 python ../src/main.py query_all bm32234
 python ../src/main.py query_all bm38462
 python ../src/main.py query_all vat4956
+python ../src/main.py query_all vat4956 lunar
+python ../src/main.py query_all vat4956 lunar_six
+python ../src/main.py query_all vat4956 planet
 python ../src/main.py query_all bm33066
 python ../src/main.py query_all bm33066 eclipse
 python ../src/main.py query_all bm33066 lunar_six

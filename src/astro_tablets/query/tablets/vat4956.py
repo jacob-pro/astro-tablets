@@ -611,11 +611,11 @@ class VAT4956(AbstractTablet):
     def __init__(self, data: AstroData, db: Database, subquery: Optional[str]):
         if subquery is None:
             self.mode = VAT4956Mode.ALL
-        elif subquery == "lunar_only":
+        elif subquery == "lunar":
             self.mode = VAT4956Mode.LUNAR_ONLY
-        elif subquery == "lunar_six_only":
+        elif subquery == "lunar_six":
             self.mode = VAT4956Mode.LUNAR_SIX_ONLY
-        elif subquery == "planet_only":
+        elif subquery == "planet":
             self.mode = VAT4956Mode.PLANET_ONLY
         else:
             raise ValueError("Unknown subquery")
