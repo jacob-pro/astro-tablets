@@ -54,6 +54,13 @@ class Separation(JSONWizard):
     time: float
 
 
+@dataclass
+class Event(JSONWizard):
+    body: str
+    event: str
+    time: float
+
+
 class Database:
     def __init__(self, file_path: str):
         if not os.path.isfile(file_path):
@@ -163,6 +170,16 @@ class Database:
         if result is not None:
             return result["time"]
         return None
+
+    def get_events_in_range(
+        self, body: str, start_time: float, end_time: float
+    ) -> List[Event]:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """SELECT body, event, time FROM events WHERE body=? AND time >= ? AND time <= ? ORDER BY time""",
+            (body, start_time, end_time),
+        )
+        return list(map(Event.from_dict, self.fetch_all(cursor)))
 
     def separations_in_range(
         self, from_body: Body, to_body: Body, start_time: float, end_time: float

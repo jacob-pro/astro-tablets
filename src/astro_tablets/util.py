@@ -54,7 +54,7 @@ class TimeValue:
     def __init__(self, inner: float):
         self.inner = inner
 
-    def to_string(self, timescale: Timescale):
+    def format(self, timescale: Timescale):
         t = timescale.tt_jd(self.inner + 3 / 24)
         return "{}-{:02d}-{:02d} {:02d}:{:02d}".format(*t.ut1_calendar())
 

@@ -34,7 +34,7 @@ def plot_eclipse(data: AstroData, t0: Time, dest: str):
     ax1.set_ylabel("Separation (° rad)")
     ax1.set_title(
         "{} (UTC+3) - {}".format(
-            TimeValue(times[0].tt).to_string(data.timescale),
+            TimeValue(times[0].tt).format(data.timescale),
             eclipselib.LUNAR_ECLIPSES[types[0]],
         )
     )
