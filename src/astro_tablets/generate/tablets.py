@@ -49,7 +49,6 @@ from astro_tablets.util import print_progress
 def get_tablet_generator(
     tablet: str, data: AstroData, db: Database, start: Optional[int], end: Optional[int]
 ) -> Tablet:
-    tablet = tablet.lower()
     if tablet == "BM32312":
         return BM32312(data, db, start, end)
     if tablet == "BM41222":

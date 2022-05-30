@@ -124,7 +124,7 @@ class EnhancedJSONEncoder(json.JSONEncoder):
         if type(o) == Intercalary:
             return o.value
         if type(o) == TimeValue:
-            return o.string(self.ts)
+            return o.to_string(self.ts)
         return super().default(o)
 
 

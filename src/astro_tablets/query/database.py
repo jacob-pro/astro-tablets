@@ -98,6 +98,22 @@ class Database:
         assert res[0] == nisan_1_sunset
         return res
 
+    def get_months_in_year(self, year: int) -> List[float]:
+        """
+        Get a list of month dates within a Julian year
+        @param year: The Julian year to fetch months for
+        @return: List of the sunset times that each month would begin at
+        """
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """
+            SELECT sunset FROM days WHERE days.first_visibility==1 AND year = ? ORDER BY sunset""",
+            (year,),
+        )
+        res = cursor.fetchall()
+        res = list(map(lambda x: x[0], res))
+        return res
+
     def get_years(self) -> List[List[PotentialYear]]:
         """
         Gets a list of potential years from the database
