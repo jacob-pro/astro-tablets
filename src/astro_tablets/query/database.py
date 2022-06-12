@@ -171,6 +171,15 @@ class Database:
             return result["time"]
         return None
 
+    def days_starting_from(self, time: float, count: int) -> List[BabylonianDay]:
+        cursor = self.conn.cursor()
+        cursor.execute(
+            """SELECT sunset, sunrise FROM days WHERE sunset >= ? ORDER BY sunset LIMIT ?""",
+            (time, count),
+        )
+        res = list(map(BabylonianDay.from_dict, self.fetch_all(cursor)))
+        return res
+
     def get_events_in_range(
         self, body: str, start_time: float, end_time: float
     ) -> List[Event]:
@@ -182,13 +191,13 @@ class Database:
         return list(map(Event.from_dict, self.fetch_all(cursor)))
 
     def separations_in_range(
-        self, from_body: Body, to_body: Body, start_time: float, end_time: float
+        self, from_body: str, to_body: str, start_time: float, end_time: float
     ) -> List[Separation]:
         cursor = self.conn.cursor()
         cursor.execute(
             """SELECT angle, position, time FROM separations
             WHERE from_body=? AND to_body=? AND time >= ? AND time <= ?""",
-            (from_body.name, to_body.name, start_time, end_time),
+            (from_body, to_body, start_time, end_time),
         )
         return list(map(Separation.from_dict, self.fetch_all(cursor)))
 

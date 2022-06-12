@@ -42,7 +42,7 @@ class AngularSeparationQuery(AbstractQuery):
         self.target_position = target_position
         self.precision = angle_precision
         sep = db.separations_in_range(
-            from_body, to_body, target_time.start, target_time.end
+            from_body.name, to_body.name, target_time.start, target_time.end
         )
         if len(sep) < 1:
             raise RuntimeError(
