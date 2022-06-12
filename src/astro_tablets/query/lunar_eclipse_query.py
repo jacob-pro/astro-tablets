@@ -95,7 +95,7 @@ class LunarEclipseQuery(AbstractQuery):
         end_wider = target_time.end + ECLIPSE_SEARCH_TOLERANCE_DAYS
 
         matched_eclipses = db.lunar_eclipses_in_range(
-            start_wider, end_wider, position.body if position is not None else None
+            start_wider, end_wider, position.body.name if position is not None else None
         )
         results = ScoredResult.score_results(
             matched_eclipses,

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from astro_tablets.cli_util import query_database_decorator
 from astro_tablets.data import AstroData
 from astro_tablets.query import Database
@@ -24,6 +26,18 @@ def setup_select_subparsers(subparsers):
     events_parser.add_argument("to_body", type=str, help="body to")
     events_parser.add_argument("--days", type=int, help="number of days", default=1)
     events_parser.set_defaults(func=separations)
+
+    events_parser = subparsers.add_parser("eclipses")
+    events_parser.add_argument("year", type=int, help="the year to get separations for")
+    events_parser.add_argument(
+        "month", type=int, help="the month to get separations for"
+    )
+    events_parser.add_argument("day", type=int, help="the day to get separations for")
+    events_parser.add_argument(
+        "--range", type=int, help="number of days before and after", default=100
+    )
+    events_parser.add_argument("--body", type=str, help="body to compare position to")
+    events_parser.set_defaults(func=eclipses)
 
     pass
 
@@ -74,9 +88,9 @@ def separations(
     days: int,
 ) -> None:
     t0 = data.timescale.ut1(year, month, day, 12).tt
-    days = db.days_starting_from(t0, days + 1)
-    start_t = days[0].sunset
-    end_t = days[len(days) - 1].sunset
+    day_list = db.days_starting_from(t0, days + 1)
+    start_t = day_list[0].sunset
+    end_t = day_list[len(day_list) - 1].sunset
     results = db.separations_in_range(from_body, to_body, start_t, end_t)
     formatted = list(
         map(
@@ -88,6 +102,49 @@ def separations(
                 }
             ),
             results,
+        )
+    )
+    print("\n".join(formatted))
+
+
+@query_database_decorator
+def eclipses(
+    data: AstroData,
+    _tablet: str,
+    db: Database,
+    year: int,
+    month: int,
+    day: int,
+    range: int,
+    body: Optional[str],
+) -> None:
+    t0 = data.timescale.ut1(year, month, day, 12).tt
+    eclipses = db.lunar_eclipses_in_range(t0 - range, t0 + range, body)
+    formatted = list(
+        map(
+            lambda s: str(
+                {
+                    "e_type": s.e_type,
+                    "closest_approach_time": TimeValue(s.closest_approach_time).format(
+                        data.timescale
+                    ),
+                    "partial_eclipse_begin": TimeValue(s.partial_eclipse_begin).format(
+                        data.timescale
+                    )
+                    if s.partial_eclipse_begin is not None
+                    else None,
+                    "onset_us": s.onset_us,
+                    "maximal_us": s.maximal_us,
+                    "clearing_us": s.clearing_us,
+                    "sum_us": s.sum_us,
+                    "visible": s.visible,
+                    "angle": s.angle,
+                    "position": s.position,
+                    "sunset": TimeValue(s.sunset).format(data.timescale),
+                    "sunrise": TimeValue(s.sunrise).format(data.timescale),
+                }
+            ),
+            eclipses,
         )
     )
     print("\n".join(formatted))
