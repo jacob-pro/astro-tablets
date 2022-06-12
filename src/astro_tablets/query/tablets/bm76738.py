@@ -10,7 +10,7 @@ from astro_tablets.constants import (
     SAGITTARIUS,
     SATURN,
     VIRGO,
-    Precision,
+    Confidence,
     Radius,
 )
 from astro_tablets.data import AstroData
@@ -94,7 +94,7 @@ class BM76738(AbstractTablet):
             Radius.SMALL.value,
             EclipticPosition.BEHIND,
             range,
-            Precision.LOW,
+            Confidence.LOW,
         )
         return [res1, res2]
 
@@ -164,7 +164,7 @@ class BM76738(AbstractTablet):
             Radius.MEDIUM.value,
             EclipticPosition.BEHIND,
             range,
-            Precision.LOW,
+            Confidence.LOW,
         )
         return [res1, res2]
 
@@ -266,7 +266,7 @@ class BM76738(AbstractTablet):
             Radius.MEDIUM.value,
             EclipticPosition.AHEAD,
             range,
-            Precision.LOW,
+            Confidence.LOW,
         )
         return [res1, res2]
 
@@ -291,7 +291,7 @@ class BM76738(AbstractTablet):
             Radius.SMALL.value,
             EclipticPosition.ABOVE,
             range,
-            Precision.LOW,
+            Confidence.LOW,
         )
         return [res1, res2]
 

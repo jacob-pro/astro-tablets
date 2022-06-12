@@ -18,7 +18,7 @@ from astro_tablets.constants import (
     SATURN,
     VENUS,
     VIRGO,
-    Precision,
+    Confidence,
     Radius,
     Watch,
 )
@@ -199,11 +199,11 @@ class BM33066(AbstractTablet):
 
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
             res.append(
-                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, Precision.LOW)
+                LunarSixQuery(self.db, month, 1, LunarSix.NA1, 10, Confidence.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.SU2, 3.5))
             res.append(
-                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, Precision.LOW)
+                LunarSixQuery(self.db, month, 15, LunarSix.ME, 2.5, Confidence.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 15, LunarSix.NA, 11))
             res.append(LunarSixQuery(self.db, month, 16, LunarSix.GI6, 7.5))
@@ -307,7 +307,7 @@ class BM33066(AbstractTablet):
                     1 * CUBIT,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 24),
-                    Precision.LOW,
+                    Confidence.LOW,
                 )
             )
 
@@ -522,7 +522,7 @@ class BM33066(AbstractTablet):
         if self.mode == BM33066Mode.ALL or self.mode == BM33066Mode.LUNAR_SIX_ONLY:
             res.append(LunarSixQuery(self.db, month, 1, LunarSix.NA1, 19))
             res.append(
-                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, Precision.LOW)
+                LunarSixQuery(self.db, month, 13, LunarSix.ME, 1.5, Confidence.LOW)
             )
             res.append(LunarSixQuery(self.db, month, 13, LunarSix.SU2, 5 + 1 / 3))
             res.append(LunarSixQuery(self.db, month, 14, LunarSix.GI6, 3))
@@ -718,7 +718,7 @@ class BM33066(AbstractTablet):
                     Radius.MEDIUM.value,
                     EclipticPosition.BEHIND,
                     SearchRange.for_night(month, 9),
-                    Precision.LOW,
+                    Confidence.LOW,
                 )
             )
 

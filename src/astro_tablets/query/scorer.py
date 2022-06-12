@@ -1,6 +1,6 @@
 import math
 
-from astro_tablets.constants import Precision
+from astro_tablets.constants import Confidence
 
 ANGLE_ABS_ERROR_DEGREES = 0.1
 TIME_ABS_ERROR_US = 1.5
@@ -13,19 +13,19 @@ def normal_pdf(x: float, mean: float, sd: float):
 
 class Scorer:
     @staticmethod
-    def time_error_factor_us(precision: Precision) -> float:
-        if precision == Precision.REGULAR:
+    def time_error_factor_us(confidence: Confidence) -> float:
+        if confidence == Confidence.REGULAR:
             return 0.2
-        elif precision == Precision.LOW:
+        elif confidence == Confidence.LOW:
             return 0.6
         else:
             raise ValueError
 
     @staticmethod
-    def angular_separation_factor(precision: Precision) -> float:
-        if precision == Precision.REGULAR:
+    def angular_separation_factor(confidence: Confidence) -> float:
+        if confidence == Confidence.REGULAR:
             return 0.4
-        elif precision == Precision.LOW:
+        elif confidence == Confidence.LOW:
             return 1.2
         else:
             raise ValueError
@@ -48,7 +48,7 @@ class Scorer:
         return score * (1 / height)
 
     @staticmethod
-    def score_time(actual: float, expected: float, confidence: Precision):
+    def score_time(actual: float, expected: float, confidence: Confidence):
         """
         A function for scoring timings
         @param actual: The actual computed value for a time being tested.
@@ -61,7 +61,7 @@ class Scorer:
         )
 
     @staticmethod
-    def score_separation(actual: float, expected: float, confidence: Precision):
+    def score_separation(actual: float, expected: float, confidence: Confidence):
         """
         A function for scoring angular separations
         @param actual: The actual computed value for a time being tested.

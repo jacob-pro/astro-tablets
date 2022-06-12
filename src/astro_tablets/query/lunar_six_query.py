@@ -1,7 +1,7 @@
 from enum import Enum, unique
 from typing import Any, Dict, List
 
-from astro_tablets.constants import INFLECT_ENGINE, Precision
+from astro_tablets.constants import INFLECT_ENGINE, Confidence
 from astro_tablets.data import MOON
 from astro_tablets.generate.risings_settings import RiseSetType
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
@@ -37,7 +37,7 @@ class LunarSixQuery(AbstractQuery):
         day_number: int,
         six: LunarSix,
         value_us: float,
-        time_precision: Precision = Precision.REGULAR,
+        time_confidence: Confidence = Confidence.REGULAR,
     ):
         assert value_us >= 0
         assert 1 <= day_number <= 30
@@ -63,11 +63,11 @@ class LunarSixQuery(AbstractQuery):
         self.actual_us = actual * 360
         self.moon_time = moon_time
 
-        self.score = self.calculate_score(self.actual_us, value_us, time_precision)
+        self.score = self.calculate_score(self.actual_us, value_us, time_confidence)
 
     @staticmethod
     def calculate_score(
-        actual_us: float, tablet_us: float, confidence: Precision
+        actual_us: float, tablet_us: float, confidence: Confidence
     ) -> float:
         """
         Calculates score based on the actual time between the two events, compared to the expected time according

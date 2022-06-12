@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import Precision
+from astro_tablets.constants import Confidence
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 
@@ -21,12 +21,12 @@ def plot_separation_score(angle: float, dest: str):
                 tablet_position=None,
                 actual=x,
                 actual_position=EclipticPosition.BEHIND.value,
-                precision=Precision.REGULAR,
+                confidence=Confidence.REGULAR,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Regular Precision", color="b")
+    ax1.plot(xs, ys, label="Regular Confidence", color="b")
 
     ys = list(
         map(
@@ -35,12 +35,12 @@ def plot_separation_score(angle: float, dest: str):
                 tablet_position=None,
                 actual=x,
                 actual_position=EclipticPosition.BEHIND.value,
-                precision=Precision.LOW,
+                confidence=Confidence.LOW,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Low Precision", color="g")
+    ax1.plot(xs, ys, label="Low Confidence", color="g")
 
     ax1.axvline(x=angle, color="r", label="Expected Separation")
     ax1.legend()

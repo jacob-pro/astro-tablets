@@ -9,7 +9,7 @@ from astro_tablets.constants import (
     PISCES,
     SATURN,
     VENUS,
-    Precision,
+    Confidence,
     Radius,
 )
 from astro_tablets.data import AstroData
@@ -63,7 +63,7 @@ class BM32312(AbstractTablet):
         # it came close to the bright star of the Scorpion's head
         res.append(
             WithinRadiusQuery(
-                self.db, MARS, ANTARES, Radius.SMALL.value, None, day17, Precision.LOW
+                self.db, MARS, ANTARES, Radius.SMALL.value, None, day17, Confidence.LOW
             )
         )
 

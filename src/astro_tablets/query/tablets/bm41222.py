@@ -12,7 +12,7 @@ from astro_tablets.constants import (
     PISCES,
     PLEIADES,
     REGULUS,
-    Precision,
+    Confidence,
     Radius,
 )
 from astro_tablets.data import AstroData
@@ -57,7 +57,7 @@ class BM41222(AbstractTablet):
         )
         # to the right of Mercury
         res2 = WithinRadiusQuery(
-            self.db, MARS, MERCURY, Radius.SMALL.value, None, day19, Precision.LOW
+            self.db, MARS, MERCURY, Radius.SMALL.value, None, day19, Confidence.LOW
         )
         return [res1, res2]
 
@@ -94,7 +94,7 @@ class BM41222(AbstractTablet):
             Radius.SMALL.value,
             EclipticPosition.BEHIND,
             day28,
-            Precision.LOW,
+            Confidence.LOW,
         )
         day29 = SearchRange.for_night(month, 29)
         # Mercury in the area of the Lion
@@ -194,7 +194,7 @@ class BM41222(AbstractTablet):
             Radius.SMALL.value,
             EclipticPosition.ABOVE,
             day1,
-            Precision.LOW,
+            Confidence.LOW,
         )
         return [res1]
 
@@ -202,7 +202,13 @@ class BM41222(AbstractTablet):
         day3 = SearchRange.for_night(month, 3)
         # Mars ... it was with β Virginis
         res1 = WithinRadiusQuery(
-            self.db, MARS, BETA_VIRGINIS, Radius.MEDIUM.value, None, day3, Precision.LOW
+            self.db,
+            MARS,
+            BETA_VIRGINIS,
+            Radius.MEDIUM.value,
+            None,
+            day3,
+            Confidence.LOW,
         )
         return [res1]
 

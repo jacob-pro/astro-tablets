@@ -2,7 +2,7 @@ from typing import Optional
 
 import numpy as np
 
-from astro_tablets.constants import MOON, Body, Precision
+from astro_tablets.constants import MOON, Body, Confidence
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
@@ -19,19 +19,16 @@ class AngularSeparationQuery(AbstractQuery):
         target_angle: float,
         target_position: Optional[EclipticPosition],
         target_time: SearchRange,
-        angle_precision: Precision = Precision.REGULAR,
+        angle_confidence: Confidence = Confidence.REGULAR,
     ):
         # The moon moves relatively quick, so our ephemeris which
         # are computed every few hours aren't super accurate
         if from_body == MOON or to_body == MOON:
-            angle_precision = Precision.LOW
+            angle_confidence = Confidence.LOW
 
         self.target_time = target_time
         self.from_body = from_body
         self.to_body = to_body
-        self.target_angle = target_angle
-        self.target_position = target_position
-        self.precision = angle_precision
         sep = db.separations_in_range(
             from_body.name, to_body.name, target_time.start, target_time.end
         )
@@ -44,7 +41,7 @@ class AngularSeparationQuery(AbstractQuery):
         results = ScoredResult.score_results(
             sep,
             lambda x: self.calculate_score(
-                target_angle, target_position, x.angle, x.position, angle_precision
+                target_angle, target_position, x.angle, x.position, angle_confidence
             ),
         )
         self.best = results[0].result
@@ -56,7 +53,7 @@ class AngularSeparationQuery(AbstractQuery):
         tablet_position: Optional[EclipticPosition],
         actual: float,
         actual_position: str,
-        precision: Precision,
+        confidence: Confidence,
     ) -> float:
         """
         Calculates score based on the actual angle between two bodies, and the angle that is described on the tablet.
@@ -66,10 +63,10 @@ class AngularSeparationQuery(AbstractQuery):
         @param tablet_position: The expected position of the two bodies relative to the ecliptic.
         @param actual: The actual angular separation.
         @param actual_position: The actual position of the two bodies relative to the ecliptic.
-        @param precision: How confident we are in reading the angle value
+        @param confidence: How confident we are in reading the angle value
         @return: A score value (between 0 and 1)
         """
-        angle_score = Scorer.score_separation(actual, tablet_angle, precision)
+        angle_score = Scorer.score_separation(actual, tablet_angle, confidence)
         if tablet_position is not None:
             position_score = 1 if actual_position == tablet_position.value else 0
             return float(np.average([angle_score, position_score], weights=[0.8, 0.2]))

@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import Precision
+from astro_tablets.constants import Confidence
 from astro_tablets.query.database import LunarEclipse
 from astro_tablets.query.lunar_eclipse_query import (
     CompositePhaseTiming,
@@ -37,12 +37,12 @@ def plot_eclipse_time_of_day_score(dest: str):
                     sunset=0,
                 ),
                 first_contact,
-                Precision.REGULAR,
+                Confidence.REGULAR,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Regular Precision", color="b")
+    ax1.plot(xs, ys, label="Regular Confidence", color="b")
 
     ys = list(
         map(
@@ -62,12 +62,12 @@ def plot_eclipse_time_of_day_score(dest: str):
                     sunset=0,
                 ),
                 first_contact,
-                Precision.LOW,
+                Confidence.LOW,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Low Precision", color="g")
+    ax1.plot(xs, ys, label="Low Confidence", color="g")
 
     ax1.axvline(x=first_contact.time_degrees, color="r", label="Expected Time")
     ax1.legend()

@@ -18,9 +18,9 @@ MAX_NISAN_EQUINOX_DIFF_DAYS = 34
 
 
 @unique
-class Precision(Enum):
+class Confidence(Enum):
     REGULAR = 0
-    # Low precision is useful when the text is damaged  / unclear / or is a prediction
+    # Low confidence is useful when the text is damaged  / unclear / or is a prediction
     LOW = 1
 
 
@@ -127,7 +127,7 @@ PRAESEPE = Circle(FORTY_TWO_CANCRI, 3)  # Beehive Cluster
 
 
 # Useful constants when the text doesn't specify precisely how close two bodies are.
-# Should be used in conjunction with Precision.LOW to reflect this is not exactly known.
+# Should be used in conjunction with Confidence.LOW to reflect this is not exactly known.
 @unique
 class Radius(Enum):
     SMALL = 5

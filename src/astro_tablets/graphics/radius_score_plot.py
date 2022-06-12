@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import HALO, Precision
+from astro_tablets.constants import HALO, Confidence
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.radius_query import WithinRadiusQuery
 
@@ -21,12 +21,12 @@ def plot_radius_score(dest: str):
                 actual_angle=x,
                 tablet_position=None,
                 actual_position=EclipticPosition.BEHIND.value,
-                precision=Precision.REGULAR,
+                confidence=Confidence.REGULAR,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Regular Precision", color="b")
+    ax1.plot(xs, ys, label="Regular Confidence", color="b")
 
     ys = list(
         map(
@@ -35,12 +35,12 @@ def plot_radius_score(dest: str):
                 actual_angle=x,
                 tablet_position=None,
                 actual_position=EclipticPosition.BEHIND.value,
-                precision=Precision.LOW,
+                confidence=Confidence.LOW,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Low Precision", color="g")
+    ax1.plot(xs, ys, label="Low Confidence", color="g")
 
     ax1.axvline(x=HALO, color="r", label="Within Radius")
     ax1.legend()

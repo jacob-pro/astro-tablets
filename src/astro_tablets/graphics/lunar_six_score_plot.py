@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import Precision
+from astro_tablets.constants import Confidence
 from astro_tablets.query.lunar_six_query import LunarSixQuery
 
 
@@ -18,24 +18,24 @@ def plot_lunar_six_score(expected_us: float, dest: str):
             lambda x: LunarSixQuery.calculate_score(
                 actual_us=x,
                 tablet_us=expected_us,
-                confidence=Precision.REGULAR,
+                confidence=Confidence.REGULAR,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Regular Precision", color="b")
+    ax1.plot(xs, ys, label="Regular Confidence", color="b")
 
     ys = list(
         map(
             lambda x: LunarSixQuery.calculate_score(
                 actual_us=x,
                 tablet_us=expected_us,
-                confidence=Precision.LOW,
+                confidence=Confidence.LOW,
             ),
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Low Precision", color="g")
+    ax1.plot(xs, ys, label="Low Confidence", color="g")
 
     ax1.axvline(x=expected_us, color="r", label="Expected Time")
     ax1.legend()

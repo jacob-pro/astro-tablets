@@ -2,7 +2,7 @@ from typing import Optional
 
 import numpy as np
 
-from astro_tablets.constants import Body, Precision
+from astro_tablets.constants import Body, Confidence
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
@@ -19,7 +19,7 @@ class WithinRadiusQuery(AbstractQuery):
         radius: float,
         target_position: Optional[EclipticPosition],
         target_time: SearchRange,
-        precision: Precision = Precision.REGULAR,
+        confidence: Confidence = Confidence.REGULAR,
     ):
         self.target_time = target_time
         self.from_body = from_body
@@ -38,7 +38,7 @@ class WithinRadiusQuery(AbstractQuery):
         results = ScoredResult.score_results(
             sep,
             lambda x: self.calculate_score(
-                radius, target_position, x.angle, x.position, precision
+                radius, target_position, x.angle, x.position, confidence
             ),
         )
 
@@ -56,7 +56,7 @@ class WithinRadiusQuery(AbstractQuery):
         tablet_position: Optional[EclipticPosition],
         actual_angle: float,
         actual_position: str,
-        precision: Precision,
+        confidence: Confidence,
     ) -> float:
         """
         Calculates score based on the actual angle between two bodies, and the angle it is expected to be less than.
@@ -66,7 +66,7 @@ class WithinRadiusQuery(AbstractQuery):
         @param tablet_position: The expected position of the two bodies relative to the ecliptic.
         @param actual_angle: The actual angular separation.
         @param actual_position: The actual position of the two bodies relative to the ecliptic.
-        @param precision: How confident that the radius value is correct / precise
+        @param confidence: How confident that the radius value is correct / precise
         @return: A score value (between 0 and 1)
         """
         # If the angle is within the radius, then it is an exact match
@@ -74,7 +74,7 @@ class WithinRadiusQuery(AbstractQuery):
             angle_score = 1.0
         else:
             # Otherwise, score based on how far outside the radius
-            angle_score = Scorer.score_separation(actual_angle, radius, precision)
+            angle_score = Scorer.score_separation(actual_angle, radius, confidence)
 
         assert 0 <= angle_score <= 1
 

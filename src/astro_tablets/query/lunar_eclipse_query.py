@@ -5,7 +5,7 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 
-from astro_tablets.constants import Body, Precision
+from astro_tablets.constants import Body, Confidence
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
@@ -61,15 +61,6 @@ class EclipsePosition:
     target_angle: float
     tolerance: float
     target_position: Optional[EclipticPosition]
-
-
-def eclipse_time_tolerance(precision: Precision) -> float:
-    if precision == Precision.REGULAR:
-        return 5.0
-    elif precision == Precision.LOW:
-        return 1.5
-    else:
-        raise ValueError
 
 
 class LunarEclipseQuery(AbstractQuery):
@@ -129,22 +120,22 @@ class LunarEclipseQuery(AbstractQuery):
                     location.target_position,
                     eclipse.angle,
                     eclipse.position,
-                    Precision.REGULAR,
+                    Confidence.REGULAR,
                 )
             )
             weights.append(0.25)
         if first_contact is not None:
             if type == ExpectedEclipseType.UNKNOWN:
-                # If the eclipse is a prediction then assume low time precision
+                # If the eclipse is a prediction then assume low time confidence
                 scores.append(
                     LunarEclipseQuery.eclipse_time_of_day_score(
-                        eclipse, first_contact, Precision.LOW
+                        eclipse, first_contact, Confidence.LOW
                     )
                 )
             else:
                 scores.append(
                     LunarEclipseQuery.eclipse_time_of_day_score(
-                        eclipse, first_contact, Precision.REGULAR
+                        eclipse, first_contact, Confidence.REGULAR
                     )
                 )
             weights.append(0.25)
@@ -185,7 +176,7 @@ class LunarEclipseQuery(AbstractQuery):
     def eclipse_time_of_day_score(
         eclipse: LunarEclipse,
         first_contact: FirstContactTime,
-        time_precision: Precision,
+        time_confidence: Confidence,
     ) -> float:
         if eclipse.partial_eclipse_begin is None:
             return 0
@@ -207,7 +198,7 @@ class LunarEclipseQuery(AbstractQuery):
             )
         else:
             raise ValueError("Invalid FirstContactRelative")
-        score = Scorer.score_time(actual, first_contact.time_degrees, time_precision)
+        score = Scorer.score_time(actual, first_contact.time_degrees, time_confidence)
         return score
 
     @staticmethod
@@ -230,7 +221,7 @@ class LunarEclipseQuery(AbstractQuery):
             raise RuntimeError
         score = 0.0
         for (tablet, actual) in time_pairs:
-            score += Scorer.score_time(actual, tablet, Precision.REGULAR)
+            score += Scorer.score_time(actual, tablet, Confidence.REGULAR)
         score = score / len(time_pairs)
         assert 0 <= score <= 1
         return score

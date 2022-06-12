@@ -29,7 +29,7 @@ from astro_tablets.constants import (
     TAURUS,
     THETA_LEONIS,
     VENUS,
-    Precision,
+    Confidence,
     Radius,
     Watch,
 )
@@ -139,7 +139,7 @@ class VAT4956(AbstractTablet):
                     Radius.SMALL.value,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 1),
-                    Precision.LOW,
+                    Confidence.LOW,
                 )
             )
 
@@ -206,7 +206,7 @@ class VAT4956(AbstractTablet):
         #  The 26th (KUR) (moonrise to sunrise) was 23, I did not observe Sîn.
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_SIX_ONLY:
             res.append(
-                LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, Precision.LOW)
+                LunarSixQuery(self.db, month, 26, LunarSix.KUR, 23, Confidence.LOW)
             )
 
         return res
@@ -261,7 +261,7 @@ class VAT4956(AbstractTablet):
                     Radius.SMALL.value,
                     EclipticPosition.ABOVE,
                     SearchRange.for_night(month, 1),
-                    Precision.LOW,
+                    Confidence.LOW,
                 )
             )
 
@@ -276,7 +276,7 @@ class VAT4956(AbstractTablet):
                         Radius.SMALL.value,
                         EclipticPosition.ABOVE,
                         SearchRange.for_night(month, 1),
-                        Precision.LOW,
+                        Confidence.LOW,
                     )
                 )
             )
@@ -291,7 +291,7 @@ class VAT4956(AbstractTablet):
                     Radius.MEDIUM.value,
                     None,
                     SearchRange.for_night(month, 1),
-                    Precision.LOW,
+                    Confidence.LOW,
                 )
             )
 
@@ -378,7 +378,7 @@ class VAT4956(AbstractTablet):
                     Radius.SMALL.value,
                     EclipticPosition.BELOW,
                     SearchRange.for_night(month, 19),
-                    Precision.LOW,
+                    Confidence.LOW,
                 )
             )
         return res
