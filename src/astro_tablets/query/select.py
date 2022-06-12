@@ -12,7 +12,7 @@ def setup_select_subparsers(subparsers):
     months_parser.set_defaults(func=months)
 
     events_parser = subparsers.add_parser("events")
-    events_parser.add_argument("year", type=int, help="the year to get months within")
+    events_parser.add_argument("year", type=int, help="the year to get events within")
     events_parser.add_argument("body", type=str, help="body to get events for")
     events_parser.set_defaults(func=events)
 
@@ -88,9 +88,9 @@ def separations(
     days: int,
 ) -> None:
     t0 = data.timescale.ut1(year, month, day, 12).tt
-    day_list = db.days_starting_from(t0, days + 1)
+    day_list = db.days_starting_from(t0, days)
     start_t = day_list[0].sunset
-    end_t = day_list[len(day_list) - 1].sunset
+    end_t = day_list[len(day_list) - 1].sunrise
     results = db.separations_in_range(from_body, to_body, start_t, end_t)
     formatted = list(
         map(

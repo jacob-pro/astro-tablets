@@ -1,6 +1,6 @@
 {
   "base_year": -567,
-  "best_score": 39.32235212907783,
+  "best_score": 39.04651482690704,
   "years": [
     {
       "name": "Nebuchadnezzar 37",
@@ -9,7 +9,7 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 39.32235212907783,
+          "score": 39.04651482690704,
           "nisan_1": "-567-04-22 18:29",
           "next_nisan": "-566-04-12 18:23",
           "best_compatible_path": true,
@@ -162,7 +162,7 @@
               ]
             },
             {
-              "score": 10.950535806335564,
+              "score": 10.775932135611294,
               "name": "III",
               "actual_month": 3,
               "month_sunset_1": "-567-06-20 19:05",
@@ -259,13 +259,13 @@
                 {
                   "from_body": "moon",
                   "to_body": "beta librae",
-                  "angle": 5.456116278787386,
+                  "angle": 4.5052839984629225,
                   "position": "below",
-                  "at_time": "-567-06-28 02:23",
-                  "score": 0.9908420053538809,
+                  "at_time": "-567-06-27 21:33",
+                  "score": 0.8162383346296096,
                   "search_start": "-567-06-27 19:08",
-                  "search_end": "-567-06-28 04:48",
-                  "date": "Night of the 8th"
+                  "search_end": "-567-06-27 22:21",
+                  "date": "First part of the night on the 8th"
                 },
                 {
                   "from_body": "moon",
@@ -275,8 +275,8 @@
                   "at_time": "-567-06-29 19:08",
                   "score": 0.842100753061064,
                   "search_start": "-567-06-29 19:08",
-                  "search_end": "-567-06-30 04:49",
-                  "date": "Night of the 10th"
+                  "search_end": "-567-06-29 22:22",
+                  "date": "First part of the night on the 10th"
                 },
                 {
                   "from_body": "mars",
@@ -396,8 +396,8 @@
                   "at_time": "-566-02-17 17:47",
                   "score": 1.0,
                   "search_start": "-566-02-17 17:47",
-                  "search_end": "-566-02-18 06:52",
-                  "date": "Night of the 6th"
+                  "search_end": "-566-02-17 22:09",
+                  "date": "First part of the night on the 6th"
                 },
                 {
                   "from_body": "moon",
@@ -407,19 +407,19 @@
                   "at_time": "-566-02-17 17:47",
                   "score": 1.0,
                   "search_start": "-566-02-17 17:47",
-                  "search_end": "-566-02-18 06:52",
-                  "date": "Night of the 6th"
+                  "search_end": "-566-02-17 22:09",
+                  "date": "First part of the night on the 6th"
                 },
                 {
                   "from_body": "moon",
                   "to_body": "nu aurigae",
-                  "angle": 19.160223587472643,
+                  "angle": 20.67754156128069,
                   "position": "below",
-                  "at_time": "-566-02-18 03:36",
+                  "at_time": "-566-02-17 21:04",
                   "score": 1.0,
                   "search_start": "-566-02-17 17:47",
-                  "search_end": "-566-02-18 06:52",
-                  "date": "Night of the 6th"
+                  "search_end": "-566-02-17 22:09",
+                  "date": "First part of the night on the 6th"
                 },
                 {
                   "from_body": "moon",
@@ -457,7 +457,7 @@
               ]
             },
             {
-              "score": 8.308242825797443,
+              "score": 8.20700919435093,
               "name": "XII",
               "actual_month": 12,
               "month_sunset_1": "-566-03-14 18:05",
@@ -488,13 +488,13 @@
                 {
                   "from_body": "moon",
                   "to_body": "alcyone",
-                  "angle": 9.30731373872193,
+                  "angle": 7.697574346478209,
                   "position": "below",
-                  "at_time": "-566-03-16 03:17",
-                  "score": 0.9003013425411108,
+                  "at_time": "-566-03-15 18:06",
+                  "score": 0.7990677110945981,
                   "search_start": "-566-03-15 18:06",
-                  "search_end": "-566-03-16 06:21",
-                  "date": "Night of the 2nd"
+                  "search_end": "-566-03-15 22:11",
+                  "date": "First part of the night on the 2nd"
                 },
                 {
                   "from_body": "moon",

@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Callable, Generic, List, TypeVar
 
-from astro_tablets.constants import INFLECT_ENGINE
+from astro_tablets.constants import INFLECT_ENGINE, Watch
 from astro_tablets.query.database import BabylonianDay
 from astro_tablets.util import TimeValue
 
@@ -53,6 +53,28 @@ class SearchRange:
             month[day_number - 1].sunset,
             month[day_number - 1].sunrise,
             "Night of the {}".format(INFLECT_ENGINE.ordinal(day_number)),
+        )
+
+    @staticmethod
+    def for_night_watch(
+        month: List[BabylonianDay], day_number: int, watch: Watch
+    ) -> SearchRange:
+        assert 1 <= day_number <= 30
+        sunset = month[day_number - 1].sunset
+        sunrise = month[day_number - 1].sunrise
+        chunks = (sunrise - sunset) / 3.0
+        if watch == Watch.FIRST:
+            index = 0
+        elif watch == Watch.MIDDLE:
+            index = 1
+        elif watch == Watch.LAST:
+            index = 2
+        else:
+            raise ValueError("Invalid watch")
+        return SearchRange(
+            sunset + (index * chunks),
+            sunset + ((index + 1) * chunks),
+            f"{watch.value} on the {INFLECT_ENGINE.ordinal(day_number)}",
         )
 
     @staticmethod

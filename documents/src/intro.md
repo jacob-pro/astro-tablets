@@ -169,5 +169,17 @@ about the missing text from its surroundings, for example:
   number will fit within the range of adjacent lines
 - [BM76738](./bm76738_76813.md) follows a consistent pattern where every other line is the last/first appearance, 
   and every two lines spans a year.
-  
+ 
+## Three Watches
+
+According to Hunger [@sachs1988adt, 15]:
+
+> In the diaries, the night is divided into three parts which correspond to the three watches of the night, as can be 
+> seen from the abbreviated terminology. These technical terms are: <br><br>
+> USAN "first part of the night"<br>
+> MURUB₄ "middle part of the night"<br>
+> ZALÁG "last part of the night"<br>
+ 
+The first part of the night is also referred to as the 'evening watch' [@ossendrijver2016translating, 152].
+
 ## References

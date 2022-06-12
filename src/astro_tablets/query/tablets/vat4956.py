@@ -31,6 +31,7 @@ from astro_tablets.constants import (
     VENUS,
     Precision,
     Radius,
+    Watch,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -317,7 +318,7 @@ class VAT4956(AbstractTablet):
                     BETA_LIBRAE,
                     2.5 * CUBIT,
                     EclipticPosition.BELOW,
-                    SearchRange.for_night(month, 8),
+                    SearchRange.for_night_watch(month, 8, Watch.FIRST),
                 )
             )
 
@@ -330,7 +331,7 @@ class VAT4956(AbstractTablet):
                     ANTARES,
                     3.5 * CUBIT,
                     EclipticPosition.ABOVE,
-                    SearchRange.for_night(month, 10),
+                    SearchRange.for_night_watch(month, 10, Watch.FIRST),
                 )
             )
 
@@ -432,7 +433,12 @@ class VAT4956(AbstractTablet):
         if self.mode == VAT4956Mode.ALL or self.mode == VAT4956Mode.LUNAR_ONLY:
             res.append(
                 WithinRadiusQuery(
-                    self.db, MOON, ALCYONE, HALO, None, SearchRange.for_night(month, 6)
+                    self.db,
+                    MOON,
+                    ALCYONE,
+                    HALO,
+                    None,
+                    SearchRange.for_night_watch(month, 6, Watch.FIRST),
                 )
             )
             res.append(
@@ -442,7 +448,7 @@ class VAT4956(AbstractTablet):
                     TAURUS.central_star,
                     TAURUS.radius,
                     None,
-                    SearchRange.for_night(month, 6),
+                    SearchRange.for_night_watch(month, 6, Watch.FIRST),
                 )
             )
             res.append(
@@ -452,7 +458,7 @@ class VAT4956(AbstractTablet):
                     AURIGA.central_star,
                     AURIGA.radius,
                     None,
-                    SearchRange.for_night(month, 6),
+                    SearchRange.for_night_watch(month, 6, Watch.FIRST),
                 )
             )
 
@@ -521,7 +527,7 @@ class VAT4956(AbstractTablet):
                     ALCYONE,
                     4 * CUBIT,
                     EclipticPosition.BELOW,
-                    SearchRange.for_night(month, 2),
+                    SearchRange.for_night_watch(month, 2, Watch.FIRST),
                 )
             )
 

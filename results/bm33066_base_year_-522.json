@@ -1,6 +1,6 @@
 {
   "base_year": -522,
-  "best_score": 70.44354641254591,
+  "best_score": 70.32838362873478,
   "years": [
     {
       "name": "Cambyses 7",
@@ -9,7 +9,7 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 64.54574307512104,
+          "score": 64.43058029130991,
           "nisan_1": "-522-04-05 18:19",
           "next_nisan": "-521-04-24 18:30",
           "best_compatible_path": true,
@@ -583,7 +583,7 @@
               ]
             },
             {
-              "score": 7.1387085543869,
+              "score": 7.023545770575765,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-522-09-30 17:58",
@@ -672,20 +672,20 @@
                   "position": "behind",
                   "at_time": "-522-10-23 03:01",
                   "score": 0.013960139324966729,
-                  "search_start": "-522-10-22 17:31",
+                  "search_start": "-522-10-23 01:57",
                   "search_end": "-522-10-23 06:11",
-                  "date": "Night of the 23rd"
+                  "date": "Last part of the night on the 23rd"
                 },
                 {
                   "from_body": "venus",
                   "to_body": "jupiter",
-                  "angle": 0.518614882867278,
+                  "angle": 0.7101263093667258,
                   "position": "above",
-                  "at_time": "-522-10-28 17:24",
-                  "score": 0.7460632707749062,
-                  "search_start": "-522-10-28 17:24",
+                  "at_time": "-522-10-29 03:03",
+                  "score": 0.6309004869637714,
+                  "search_start": "-522-10-29 01:59",
                   "search_end": "-522-10-29 06:16",
-                  "date": "Night of the 29th"
+                  "date": "Last part of the night on the 29th"
                 },
                 {
                   "from_body": "saturn",

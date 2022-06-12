@@ -132,3 +132,10 @@ PRAESEPE = Circle(FORTY_TWO_CANCRI, 3)  # Beehive Cluster
 class Radius(Enum):
     SMALL = 5
     MEDIUM = 10
+
+
+@unique
+class Watch(Enum):
+    FIRST = "First part of the night"
+    MIDDLE = "Middle part of the night"
+    LAST = "Last part of the night"

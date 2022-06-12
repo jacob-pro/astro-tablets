@@ -20,6 +20,7 @@ from astro_tablets.constants import (
     VIRGO,
     Precision,
     Radius,
+    Watch,
 )
 from astro_tablets.data import AstroData
 from astro_tablets.generate.angular_separation import EclipticPosition
@@ -351,7 +352,7 @@ class BM33066(AbstractTablet):
                     MOON,
                     3 * CUBIT,
                     EclipticPosition.ABOVE,
-                    SearchRange.for_night(month, 23),
+                    SearchRange.for_night_watch(month, 23, Watch.LAST),
                 )
             )
 
@@ -363,7 +364,7 @@ class BM33066(AbstractTablet):
                     JUPITER,
                     2 * FINGER,
                     None,
-                    SearchRange.for_night(month, 29),
+                    SearchRange.for_night_watch(month, 29, Watch.LAST),
                 )
             )
 

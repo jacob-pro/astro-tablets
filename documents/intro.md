@@ -305,6 +305,20 @@ example:
     every other line is the last/first appearance, and every two lines
     spans a year.
 
+Three Watches
+-------------
+
+According to Hunger \[2, p. 15\]:
+
+> In the diaries, the night is divided into three parts which correspond
+> to the three watches of the night, as can be seen from the abbreviated
+> terminology. These technical terms are: <br><br> USAN “first part of
+> the night”<br> MURUB₄ “middle part of the night”<br> ZALÁG “last part
+> of the night”<br>
+
+The first part of the night is also referred to as the ‘evening watch’
+\[3, p. 152\].
+
 References
 ----------
 
