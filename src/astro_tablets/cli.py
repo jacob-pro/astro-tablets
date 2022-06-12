@@ -106,16 +106,23 @@ def graphs(path: str) -> None:
     if path.endswith("/"):
         path = path[:-1]
     data = AstroData()
+
     plot_eclipse(data, data.timescale.ut1(-554, 10, 7), f"{path}/total_eclipse.png")
     plot_eclipse(data, data.timescale.ut1(-153, 3, 21), f"{path}/partial_eclipse.png")
+
     plot_eclipse_time_of_day_score(f"{path}/eclipse_time_of_day_score.png")
     plot_eclipse_phase_length_score(f"{path}/eclipse_phase_length_score.png")
+
     plot_radius_score(f"{path}/radius_score.png")
-    plot_separation_score(1 * CUBIT, f"{path}/separation_score_cubit.png")
-    plot_separation_score(1 * FINGER, f"{path}/separation_score_finger.png")
+    plot_separation_score(1 * FINGER, f"{path}/separation_score_sm.png")
+    plot_separation_score(1 * CUBIT, f"{path}/separation_score_md.png")
+    plot_separation_score(10 * CUBIT, f"{path}/separation_score_lg.png")
+
     plot_planetary_event_score(f"{path}/planetary_event_score.png")
-    plot_lunar_six_score(2, f"{path}/lunar_six_score_close.png")
-    plot_lunar_six_score(15, f"{path}/lunar_six_score_far.png")
+
+    plot_lunar_six_score(2, f"{path}/lunar_six_score_sm.png")
+    plot_lunar_six_score(15, f"{path}/lunar_six_score_md.png")
+    plot_lunar_six_score(60, f"{path}/lunar_six_score_lg.png")
 
 
 def cli():

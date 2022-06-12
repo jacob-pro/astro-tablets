@@ -7,7 +7,8 @@ from astro_tablets.query.lunar_six_query import LunarSixQuery
 
 def plot_lunar_six_score(expected_us: float, dest: str):
 
-    xs = np.arange(expected_us - 20, expected_us + 20, 0.0001)
+    sides = expected_us + 5
+    xs = np.arange(expected_us - sides, expected_us + sides, expected_us * 0.0001)
     f, ax1 = plt.subplots()
     ax1.set_xlabel("Time (UŠ)")
     ax1.set_ylabel("Score")
@@ -17,7 +18,7 @@ def plot_lunar_six_score(expected_us: float, dest: str):
             lambda x: LunarSixQuery.calculate_score(
                 actual_us=x,
                 tablet_us=expected_us,
-                time_precision=Precision.REGULAR,
+                confidence=Precision.REGULAR,
             ),
             xs,
         )
@@ -29,7 +30,7 @@ def plot_lunar_six_score(expected_us: float, dest: str):
             lambda x: LunarSixQuery.calculate_score(
                 actual_us=x,
                 tablet_us=expected_us,
-                time_precision=Precision.LOW,
+                confidence=Precision.LOW,
             ),
             xs,
         )

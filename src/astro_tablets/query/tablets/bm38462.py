@@ -299,13 +299,12 @@ class BM38462(AbstractTablet):
     def year_12_month_12(self, month: List[BabylonianDay]) -> List[AbstractQuery]:
         # 6  Month XII, the 15th. 10? [....nn]° after sunset [....]
         # 7  1 bēru 6° onset [and clearing.]
-        length = (1 * BERU_US) + 6
         return [
             LunarEclipseQuery(
                 self.db,
                 None,
                 ExpectedEclipseType.PARTIAL_OR_TOTAL,
-                CompositePhaseTiming(length),
+                CompositePhaseTiming((1 * BERU_US) + 6),
                 None,
                 SearchRange.for_night_and_day(month, 15),
             )

@@ -1,6 +1,6 @@
 {
   "base_year": -603,
-  "best_score": 34.8808486015939,
+  "best_score": 34.35132638678879,
   "years": [
     {
       "name": "Nebuchadnezzar 1",
@@ -74,7 +74,7 @@
       "intercalary": "Ululu II",
       "potentials": [
         {
-          "score": 1.7730885713769475,
+          "score": 1.6370801255026053,
           "nisan_1": "-602-03-21 18:10",
           "next_nisan": "-601-04-09 18:21",
           "best_compatible_path": true,
@@ -107,7 +107,7 @@
               ]
             },
             {
-              "score": 0.7730885713769474,
+              "score": 0.6370801255026053,
               "name": "Unknown month between 8 and 13",
               "actual_month": 8,
               "month_sunset_1": "-602-10-14 17:41",
@@ -125,7 +125,7 @@
                   "sum_us": 38.92410356551409,
                   "after_sunrise_us": -135.68813731893897,
                   "after_sunset_us": 56.51076486334205,
-                  "score": 0.7730885713769474,
+                  "score": 0.6370801255026053,
                   "search_start": "-602-10-14 17:41",
                   "search_end": "-602-11-13 06:30",
                   "date": "Any day"
@@ -212,14 +212,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 1.9847072880304384,
+          "score": 1.997135085464445,
           "nisan_1": "-600-03-29 18:15",
           "next_nisan": "-599-03-18 18:08",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9847072880304385,
+              "score": 0.9971350854644448,
               "name": "I",
               "actual_month": 1,
               "month_sunset_1": "-600-03-29 18:15",
@@ -237,7 +237,7 @@
                   "sum_us": 45.36205639131367,
                   "after_sunrise_us": -78.46421993337572,
                   "after_sunset_us": 92.30646983720362,
-                  "score": 0.9847072880304385,
+                  "score": 0.9971350854644448,
                   "search_start": "-600-04-10 18:22",
                   "search_end": "-600-04-11 18:22",
                   "date": "Night and day of the 13th"
@@ -281,7 +281,7 @@
       "intercalary": "Ululu II",
       "potentials": [
         {
-          "score": 2.904671267285381,
+          "score": 2.908452276731503,
           "nisan_1": "-599-03-18 18:08",
           "next_nisan": "-598-04-05 18:19",
           "best_compatible_path": true,
@@ -336,7 +336,7 @@
               ]
             },
             {
-              "score": 0.906671267285381,
+              "score": 0.9104522767315029,
               "name": "Unknown month between 8 and 13",
               "actual_month": 12,
               "month_sunset_1": "-598-02-05 17:37",
@@ -354,7 +354,7 @@
                   "sum_us": 43.78326751291752,
                   "after_sunrise_us": -108.23243513703346,
                   "after_sunset_us": 87.20212172716856,
-                  "score": 0.906671267285381,
+                  "score": 0.9104522767315029,
                   "search_start": "-598-02-05 17:37",
                   "search_end": "-598-03-07 06:33",
                   "date": "Any day"
@@ -415,14 +415,14 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 1.8027526458233085,
+          "score": 1.6672024661092388,
           "nisan_1": "-593-04-10 18:21",
           "next_nisan": "-592-04-29 18:33",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.8027526458233086,
+              "score": 0.6672024661092388,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-593-05-10 18:40",
@@ -440,7 +440,7 @@
                   "sum_us": 54.32861030101776,
                   "after_sunrise_us": -129.69835312105715,
                   "after_sunset_us": 22.554357396438718,
-                  "score": 0.8027526458233086,
+                  "score": 0.6672024661092388,
                   "search_start": "-593-05-10 18:40",
                   "search_end": "-593-06-09 04:49",
                   "date": "Any day"
@@ -771,7 +771,7 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 1.84773244046408,
+          "score": 1.6960331032276819,
           "nisan_1": "-588-04-14 18:24",
           "next_nisan": "-587-04-03 18:18",
           "best_compatible_path": true,
@@ -802,7 +802,7 @@
               ]
             },
             {
-              "score": 0.8487324404640799,
+              "score": 0.6970331032276817,
               "name": "Unknown month between 5 and 12",
               "actual_month": 10,
               "month_sunset_1": "-587-01-05 17:12",
@@ -820,7 +820,7 @@
                   "sum_us": 42.206517197191715,
                   "after_sunrise_us": -32.03936068341136,
                   "after_sunset_us": -184.92349396459758,
-                  "score": 0.8487324404640799,
+                  "score": 0.6970331032276817,
                   "search_start": "-587-01-18 17:22",
                   "search_end": "-587-01-19 17:23",
                   "date": "Night and day of the 14th"
@@ -838,7 +838,7 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 1.9822874073813557,
+          "score": 1.9969713348722609,
           "nisan_1": "-587-04-03 18:18",
           "next_nisan": "-586-04-22 18:29",
           "best_compatible_path": true,
@@ -871,7 +871,7 @@
               ]
             },
             {
-              "score": 0.9822874073813556,
+              "score": 0.9969713348722609,
               "name": "X",
               "actual_month": 10,
               "month_sunset_1": "-587-12-26 17:06",
@@ -889,7 +889,7 @@
                   "sum_us": 57.6680342014879,
                   "after_sunrise_us": -33.851554384455085,
                   "after_sunset_us": -184.40580314956605,
-                  "score": 0.9822874073813556,
+                  "score": 0.9969713348722609,
                   "search_start": "-586-01-07 17:13",
                   "search_end": "-586-01-08 17:14",
                   "date": "Night and day of the 13th"
@@ -907,14 +907,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 0.8888888888888888,
+          "score": 0.6666666666666666,
           "nisan_1": "-580-04-16 18:26",
           "next_nisan": "-579-04-05 18:19",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.8888888888888888,
+              "score": 0.6666666666666666,
               "name": "Unknown month between 1 and 12",
               "actual_month": 5,
               "month_sunset_1": "-580-08-12 18:55",
@@ -932,7 +932,7 @@
                   "sum_us": 34.86515471711755,
                   "after_sunrise_us": 54.70155185088515,
                   "after_sunset_us": -144.64928523637354,
-                  "score": 0.8888888888888888,
+                  "score": 0.6666666666666666,
                   "search_start": "-580-08-12 18:55",
                   "search_end": "-580-09-11 05:38",
                   "date": "Any day"
@@ -950,14 +950,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 1.8164959203227498,
+          "score": 1.870732437295712,
           "nisan_1": "-579-04-05 18:19",
           "next_nisan": "-578-03-25 18:12",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9919315955653337,
+              "score": 0.9982854950613457,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-579-08-02 19:02",
@@ -975,7 +975,7 @@
                   "sum_us": 53.33155014552176,
                   "after_sunrise_us": -108.01492005586624,
                   "after_sunset_us": 47.894339729100466,
-                  "score": 0.9919315955653337,
+                  "score": 0.9982854950613457,
                   "search_start": "-579-08-02 19:02",
                   "search_end": "-579-09-01 05:30",
                   "date": "Any day"
@@ -983,7 +983,7 @@
               ]
             },
             {
-              "score": 0.824564324757416,
+              "score": 0.8724469422343663,
               "name": "XI",
               "actual_month": 11,
               "month_sunset_1": "-578-01-25 17:28",
@@ -1001,7 +1001,7 @@
                   "sum_us": 33.39727208018303,
                   "after_sunrise_us": -191.35692056268454,
                   "after_sunset_us": 8.79410999827087,
-                  "score": 0.824564324757416,
+                  "score": 0.8724469422343663,
                   "search_start": "-578-01-25 17:28",
                   "search_end": "-578-02-24 06:46",
                   "date": "Any day"
@@ -1153,7 +1153,7 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 1.9824477746019973,
+          "score": 1.995638399047941,
           "nisan_1": "-576-04-02 18:17",
           "next_nisan": "-575-04-21 18:28",
           "best_compatible_path": true,
@@ -1186,7 +1186,7 @@
               ]
             },
             {
-              "score": 0.9824477746019973,
+              "score": 0.9956383990479409,
               "name": "Unknown month between 4 and 13",
               "actual_month": 9,
               "month_sunset_1": "-576-11-24 17:04",
@@ -1204,7 +1204,7 @@
                   "sum_us": 52.80909446999431,
                   "after_sunrise_us": -99.64861166663468,
                   "after_sunset_us": 108.65182181820273,
-                  "score": 0.9824477746019973,
+                  "score": 0.9956383990479409,
                   "search_start": "-576-11-24 17:04",
                   "search_end": "-576-12-24 07:06",
                   "date": "Any day"
@@ -1222,14 +1222,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 0.9047763974187523,
+          "score": 0.922414491870747,
           "nisan_1": "-575-04-21 18:28",
           "next_nisan": "-574-04-10 18:22",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.9047763974187523,
+              "score": 0.922414491870747,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-575-05-20 18:47",
@@ -1247,7 +1247,7 @@
                   "sum_us": 56.26723579131067,
                   "after_sunrise_us": -33.084533885121346,
                   "after_sunset_us": 115.84430350922048,
-                  "score": 0.9047763974187523,
+                  "score": 0.922414491870747,
                   "search_start": "-575-06-02 18:56",
                   "search_end": "-575-06-03 18:56",
                   "date": "Night and day of the 14th"

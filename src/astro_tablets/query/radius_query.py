@@ -1,4 +1,3 @@
-import math
 from typing import Optional
 
 import numpy as np
@@ -7,16 +6,8 @@ from astro_tablets.constants import Body, Precision
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
+from astro_tablets.query.scorer import Scorer
 from astro_tablets.util import TimeValue
-
-
-def radius_tolerance(precision: Precision) -> float:
-    if precision == Precision.REGULAR:
-        return 8
-    elif precision == Precision.LOW:
-        return 2.5
-    else:
-        raise ValueError
 
 
 class WithinRadiusQuery(AbstractQuery):
@@ -79,13 +70,11 @@ class WithinRadiusQuery(AbstractQuery):
         @return: A score value (between 0 and 1)
         """
         # If the angle is within the radius, then it is an exact match
-        t = radius_tolerance(precision)
         if actual_angle <= radius:
             angle_score = 1.0
         else:
             # Otherwise, score based on how far outside the radius
-            diff = abs(actual_angle - radius) / radius
-            angle_score = math.pow(t, -diff)
+            angle_score = Scorer.score_separation(actual_angle, radius, precision)
 
         assert 0 <= angle_score <= 1
 

@@ -1,4 +1,3 @@
-import math
 from typing import Union
 
 from astro_tablets.constants import Planet
@@ -8,6 +7,7 @@ from astro_tablets.generate.planet_events import (
 )
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
 from astro_tablets.query.database import Database
+from astro_tablets.query.scorer import Scorer
 from astro_tablets.util import TimeValue
 
 
@@ -56,8 +56,8 @@ class PlanetaryEventQuery(AbstractQuery):
             diff = expected_start - time
         else:
             return 1.0
-        theta = 1 + event_frequency / 40
-        score = math.pow(theta, -diff)
+        variance = 40 / event_frequency
+        score = Scorer.score(diff, 0, 0, variance)
         return score
 
     def quality_score(self) -> float:

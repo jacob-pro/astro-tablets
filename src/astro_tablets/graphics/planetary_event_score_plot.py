@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 
-from astro_tablets.constants import MARS, MERCURY
+from astro_tablets.constants import MARS, MERCURY, SATURN
 from astro_tablets.query.planetary_event_query import PlanetaryEventQuery
 
 
@@ -24,7 +24,7 @@ def plot_planetary_event_score(dest: str):
             xs,
         )
     )
-    ax1.plot(xs, ys, label="Mars", color="b")
+    ax1.plot(xs, ys, label="Mars", color="r")
 
     ys = list(
         map(
@@ -39,7 +39,20 @@ def plot_planetary_event_score(dest: str):
     )
     ax1.plot(xs, ys, label="Mercury", color="g")
 
-    ax1.axvline(x=0, color="r", label="Event")
+    ys = list(
+        map(
+            lambda x: PlanetaryEventQuery.calculate_score(
+                time=x,
+                expected_start=0,
+                expected_end=0,
+                event_frequency=SATURN.event_frequency,
+            ),
+            xs,
+        )
+    )
+    ax1.plot(xs, ys, label="Saturn", color="y")
+
+    ax1.axvline(x=0, color="b", label="Event")
 
     ax1.legend()
 

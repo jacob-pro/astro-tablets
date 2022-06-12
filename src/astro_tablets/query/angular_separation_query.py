@@ -1,4 +1,3 @@
-import math
 from typing import Optional
 
 import numpy as np
@@ -7,16 +6,8 @@ from astro_tablets.constants import MOON, Body, Precision
 from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.database import Database
+from astro_tablets.query.scorer import Scorer
 from astro_tablets.util import TimeValue
-
-
-def angular_separation_tolerance(precision: Precision) -> float:
-    if precision == Precision.REGULAR:
-        return 2.4
-    elif precision == Precision.LOW:
-        return 1.3
-    else:
-        raise ValueError
 
 
 class AngularSeparationQuery(AbstractQuery):
@@ -75,14 +66,10 @@ class AngularSeparationQuery(AbstractQuery):
         @param tablet_position: The expected position of the two bodies relative to the ecliptic.
         @param actual: The actual angular separation.
         @param actual_position: The actual position of the two bodies relative to the ecliptic.
-        @param precision: How accurately the observation is expected to match the data.
+        @param precision: How confident we are in reading the angle value
         @return: A score value (between 0 and 1)
         """
-        t = angular_separation_tolerance(precision)
-        diff = abs(actual - tablet_angle)
-        angle_score = math.pow(t, -diff)
-        assert 0 <= angle_score <= 1
-
+        angle_score = Scorer.score_separation(actual, tablet_angle, precision)
         if tablet_position is not None:
             position_score = 1 if actual_position == tablet_position.value else 0
             return float(np.average([angle_score, position_score], weights=[0.8, 0.2]))

@@ -1,4 +1,3 @@
-import math
 from abc import ABC
 from dataclasses import dataclass
 from enum import Enum, unique
@@ -11,6 +10,7 @@ from astro_tablets.generate.angular_separation import EclipticPosition
 from astro_tablets.query.abstract_query import AbstractQuery, ScoredResult, SearchRange
 from astro_tablets.query.angular_separation_query import AngularSeparationQuery
 from astro_tablets.query.database import Database, LunarEclipse
+from astro_tablets.query.scorer import Scorer
 from astro_tablets.util import TimeValue, diff_time_degrees_signed
 
 ECLIPSE_SEARCH_TOLERANCE_DAYS = 6 / 24
@@ -51,7 +51,7 @@ class SeparatePhaseTimings(PhaseTiming):
 
 @dataclass
 class CompositePhaseTiming(PhaseTiming):
-    sum: Optional[float]
+    sum: float
 
 
 # Position of the moon relative to a Normal Star
@@ -187,7 +187,6 @@ class LunarEclipseQuery(AbstractQuery):
         first_contact: FirstContactTime,
         time_precision: Precision,
     ) -> float:
-        t = eclipse_time_tolerance(time_precision)
         if eclipse.partial_eclipse_begin is None:
             return 0
         if first_contact.relative == FirstContactRelative.BEFORE_SUNRISE:
@@ -207,39 +206,32 @@ class LunarEclipseQuery(AbstractQuery):
                 eclipse.partial_eclipse_begin, eclipse.sunset
             )
         else:
-            raise RuntimeError("Invalid FirstContactRelative")
-        err = abs(first_contact.time_degrees - actual)
-        percent_err = err / abs(actual)
-        score = math.pow(t, -percent_err)
-        assert 0 <= score <= 1
+            raise ValueError("Invalid FirstContactRelative")
+        score = Scorer.score_time(actual, first_contact.time_degrees, time_precision)
         return score
 
     @staticmethod
     def eclipse_phase_length_score(
         eclipse: LunarEclipse, timings: PhaseTiming
     ) -> float:
-        t = eclipse_time_tolerance(Precision.REGULAR)
         if eclipse.sum_us == 0:
             return 0
-        diffs: List[Tuple[float, float]] = []
+        time_pairs: List[Tuple[float, float]] = []
         if isinstance(timings, CompositePhaseTiming):
-            assert timings.sum is not None
-            diffs.append((timings.sum, eclipse.sum_us))
+            time_pairs.append((timings.sum, eclipse.sum_us))
         elif isinstance(timings, SeparatePhaseTimings):
             if timings.onset is not None:
-                diffs.append((timings.onset, eclipse.onset_us))
+                time_pairs.append((timings.onset, eclipse.onset_us))
             if timings.maximal is not None:
-                diffs.append((timings.maximal, eclipse.maximal_us))
+                time_pairs.append((timings.maximal, eclipse.maximal_us))
             if timings.clearing is not None:
-                diffs.append((timings.clearing, eclipse.clearing_us))
+                time_pairs.append((timings.clearing, eclipse.clearing_us))
         else:
             raise RuntimeError
         score = 0.0
-        for (observed, actual) in diffs:
-            if actual != 0:
-                percent_err = abs(actual - observed) / abs(actual)
-                score = score + math.pow(t, -percent_err)
-        score = score / len(diffs)
+        for (tablet, actual) in time_pairs:
+            score += Scorer.score_time(actual, tablet, Precision.REGULAR)
+        score = score / len(time_pairs)
         assert 0 <= score <= 1
         return score
 

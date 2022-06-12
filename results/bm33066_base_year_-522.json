@@ -1,6 +1,6 @@
 {
   "base_year": -522,
-  "best_score": 70.32838362873478,
+  "best_score": 77.75086041684081,
   "years": [
     {
       "name": "Cambyses 7",
@@ -9,14 +9,14 @@
       "intercalary": "Addaru II",
       "potentials": [
         {
-          "score": 64.43058029130991,
+          "score": 71.1883047217173,
           "nisan_1": "-522-04-05 18:19",
           "next_nisan": "-521-04-24 18:30",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 3.956045435387053,
+              "score": 4.695304131898276,
               "name": "I",
               "actual_month": 1,
               "month_sunset_1": "-522-04-06 18:20",
@@ -28,7 +28,7 @@
                   "time_us": 28.928161589428782,
                   "six": "sunset to moonset",
                   "moonset": "-522-04-06 20:15",
-                  "score": 0.7872780184357134,
+                  "score": 0.9898400747238695,
                   "search_start": "-522-04-06 18:20",
                   "search_end": "-522-04-06 18:20",
                   "date": "Sunset of the 1st"
@@ -37,7 +37,7 @@
                   "time_us": 4.435296468436718,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-04-18 18:09",
-                  "score": 0.3611058476896192,
+                  "score": 0.3841657102316718,
                   "search_start": "-522-04-18 18:27",
                   "search_end": "-522-04-18 18:27",
                   "date": "Sunset of the 13th"
@@ -46,7 +46,7 @@
                   "time_us": 3.6101468838751316,
                   "six": "moonset to sunrise",
                   "moonset": "-522-04-19 05:20",
-                  "score": 0.7805768212758988,
+                  "score": 0.8572263613716223,
                   "search_start": "-522-04-19 05:34",
                   "search_end": "-522-04-19 05:34",
                   "date": "Sunrise of the 13th"
@@ -55,7 +55,7 @@
                   "time_us": 9.996501300483942,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-04-19 19:07",
-                  "score": 0.6899575488963995,
+                  "score": 0.8711655387920664,
                   "search_start": "-522-04-19 18:27",
                   "search_end": "-522-04-19 18:27",
                   "date": "Sunset of the 14th"
@@ -64,7 +64,7 @@
                   "time_us": 4.646067135035992,
                   "six": "sunrise to moonset",
                   "moonset": "-522-04-20 05:51",
-                  "score": 0.5096519146473428,
+                  "score": 0.6090768341291872,
                   "search_start": "-522-04-20 05:33",
                   "search_end": "-522-04-20 05:33",
                   "date": "Sunrise of the 14th"
@@ -73,7 +73,7 @@
                   "time_us": 15.151326404884458,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-05-03 04:16",
-                  "score": 0.8274752844420793,
+                  "score": 0.9838296126498577,
                   "search_start": "-522-05-03 05:17",
                   "search_end": "-522-05-03 05:17",
                   "date": "Sunrise of the 27th"
@@ -81,7 +81,7 @@
               ]
             },
             {
-              "score": 5.941820006750143,
+              "score": 6.59645257393019,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-522-05-05 18:37",
@@ -93,7 +93,7 @@
                   "time_us": 25.503592556342483,
                   "six": "sunset to moonset",
                   "moonset": "-522-05-05 20:19",
-                  "score": 0.571974691582647,
+                  "score": 0.9192250102502416,
                   "search_start": "-522-05-05 18:37",
                   "search_end": "-522-05-05 18:37",
                   "date": "Sunset of the 1st"
@@ -102,7 +102,7 @@
                   "time_us": 8.81433142349124,
                   "six": "moonset to sunrise",
                   "moonset": "-522-05-18 04:27",
-                  "score": 0.9675865136895214,
+                  "score": 0.9989576913990234,
                   "search_start": "-522-05-18 05:02",
                   "search_end": "-522-05-18 05:02",
                   "date": "Sunrise of the 13th"
@@ -111,7 +111,7 @@
                   "time_us": -2.5105533376336098,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-05-18 18:56",
-                  "score": 0.4568695676243358,
+                  "score": 0.11857883207260589,
                   "search_start": "-522-05-18 18:46",
                   "search_end": "-522-05-18 18:46",
                   "date": "Sunset of the 14th"
@@ -120,7 +120,7 @@
                   "time_us": 0.9364182595163584,
                   "six": "sunrise to moonset",
                   "moonset": "-522-05-19 05:05",
-                  "score": 0.8496334796415937,
+                  "score": 0.9237365741354069,
                   "search_start": "-522-05-19 05:01",
                   "search_end": "-522-05-19 05:01",
                   "date": "Sunrise of the 14th"
@@ -129,7 +129,7 @@
                   "time_us": 16.517014112323523,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-05-19 19:53",
-                  "score": 0.637574789431873,
+                  "score": 0.9002606759995674,
                   "search_start": "-522-05-19 18:47",
                   "search_end": "-522-05-19 18:47",
                   "date": "Sunset of the 15th"
@@ -138,7 +138,7 @@
                   "time_us": 21.198693607002497,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-06-01 03:28",
-                  "score": 0.9566313297809708,
+                  "score": 0.9993926260549978,
                   "search_start": "-522-06-01 04:52",
                   "search_end": "-522-06-01 04:52",
                   "date": "Sunrise of the 27th"
@@ -147,7 +147,7 @@
                   "planet": "mars",
                   "event": "last_appearance",
                   "nearest_time": "-522-06-09 20:11",
-                  "score": 0.7015496349992015,
+                  "score": 0.9363011640183464,
                   "search_start": "-522-06-01 18:55",
                   "search_end": "-522-06-02 04:52",
                   "date": "Night of the 28th"
@@ -166,7 +166,7 @@
               ]
             },
             {
-              "score": 7.29874641392786,
+              "score": 8.041186309278974,
               "name": "III",
               "actual_month": 3,
               "month_sunset_1": "-522-06-03 18:56",
@@ -178,7 +178,7 @@
                   "time_us": 20.082719642668962,
                   "six": "sunset to moonset",
                   "moonset": "-522-06-03 20:17",
-                  "score": 0.7024551791018567,
+                  "score": 0.9547361175322773,
                   "search_start": "-522-06-03 18:56",
                   "search_end": "-522-06-03 18:56",
                   "date": "Sunset of the 1st"
@@ -187,7 +187,7 @@
                   "time_us": 5.374982412904501,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-06-16 18:42",
-                  "score": 0.398331353488772,
+                  "score": 0.4790375868991198,
                   "search_start": "-522-06-16 19:04",
                   "search_end": "-522-06-16 19:04",
                   "date": "Sunset of the 14th"
@@ -196,7 +196,7 @@
                   "time_us": 3.745682928711176,
                   "six": "moonset to sunrise",
                   "moonset": "-522-06-17 04:33",
-                  "score": 0.9448309896192113,
+                  "score": 0.9939054929864883,
                   "search_start": "-522-06-17 04:48",
                   "search_end": "-522-06-17 04:48",
                   "date": "Sunrise of the 14th"
@@ -205,7 +205,7 @@
                   "time_us": 7.355256825685501,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-06-17 19:33",
-                  "score": 0.5912239659646734,
+                  "score": 0.6416073433046583,
                   "search_start": "-522-06-17 19:04",
                   "search_end": "-522-06-17 19:04",
                   "date": "Sunset of the 15th"
@@ -214,7 +214,7 @@
                   "time_us": 9.139419430866838,
                   "six": "sunrise to moonset",
                   "moonset": "-522-06-18 05:24",
-                  "score": 0.8670294608299077,
+                  "score": 0.9802342248877018,
                   "search_start": "-522-06-18 04:47",
                   "search_end": "-522-06-18 04:47",
                   "date": "Sunrise of the 15th"
@@ -223,7 +223,7 @@
                   "time_us": 28.256688667461276,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-06-30 02:56",
-                  "score": 0.05191515186730513,
+                  "score": 0.01304625468976349,
                   "search_start": "-522-06-30 04:49",
                   "search_end": "-522-06-30 04:49",
                   "date": "Sunrise of the 27th"
@@ -232,7 +232,7 @@
                   "planet": "venus",
                   "event": "evening_last",
                   "nearest_time": "-522-06-14 19:28",
-                  "score": 0.9001006884790128,
+                  "score": 0.99410285746754,
                   "search_start": "-522-06-12 19:02",
                   "search_end": "-522-06-13 04:48",
                   "date": "Night of the 10th"
@@ -252,7 +252,7 @@
                   "planet": "venus",
                   "event": "morning_first",
                   "nearest_time": "-522-06-27 04:19",
-                  "score": 0.8428596245771216,
+                  "score": 0.984516431511423,
                   "search_start": "-522-06-29 19:08",
                   "search_end": "-522-06-30 04:49",
                   "date": "Night of the 27th"
@@ -271,7 +271,7 @@
               ]
             },
             {
-              "score": 5.943599526903401,
+              "score": 7.017567243080032,
               "name": "IV",
               "actual_month": 4,
               "month_sunset_1": "-522-07-03 19:09",
@@ -283,7 +283,7 @@
                   "time_us": 23.758771754801273,
                   "six": "sunset to moonset",
                   "moonset": "-522-07-03 20:44",
-                  "score": 0.4851684245310551,
+                  "score": 0.8955391424993194,
                   "search_start": "-522-07-03 19:09",
                   "search_end": "-522-07-03 19:09",
                   "date": "Sunset of the 1st"
@@ -292,7 +292,7 @@
                   "time_us": 10.551309362053871,
                   "six": "moonset to sunrise",
                   "moonset": "-522-07-16 04:13",
-                  "score": 0.9047266524544373,
+                  "score": 0.9926740342915238,
                   "search_start": "-522-07-16 04:55",
                   "search_end": "-522-07-16 04:55",
                   "date": "Sunrise of the 13th"
@@ -301,7 +301,7 @@
                   "time_us": 1.858242955058813,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-07-16 19:01",
-                  "score": 0.6200722514967846,
+                  "score": 0.6481938192397377,
                   "search_start": "-522-07-16 19:09",
                   "search_end": "-522-07-16 19:09",
                   "date": "Sunset of the 14th"
@@ -310,7 +310,7 @@
                   "time_us": 3.571613598614931,
                   "six": "sunrise to moonset",
                   "moonset": "-522-07-17 05:10",
-                  "score": 0.9088350513429154,
+                  "score": 0.9828041118555875,
                   "search_start": "-522-07-17 04:56",
                   "search_end": "-522-07-17 04:56",
                   "date": "Sunrise of the 14th"
@@ -319,7 +319,7 @@
                   "time_us": 7.809373838827014,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-07-17 19:40",
-                  "score": 0.85717877697486,
+                  "score": 0.976979820255348,
                   "search_start": "-522-07-17 19:08",
                   "search_end": "-522-07-17 19:08",
                   "date": "Sunset of the 15th"
@@ -328,7 +328,7 @@
                   "time_us": 17.195747941732407,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-07-30 03:56",
-                  "score": 0.6126466151656702,
+                  "score": 0.8877681457146726,
                   "search_start": "-522-07-30 05:05",
                   "search_end": "-522-07-30 05:05",
                   "date": "Sunrise of the 27th"
@@ -343,7 +343,7 @@
                   "sum_us": 41.623306553810835,
                   "after_sunrise_us": -102.06461923196912,
                   "after_sunset_us": 44.78205693885684,
-                  "score": 0.6096682291144758,
+                  "score": 0.63406116369012,
                   "search_start": "-522-07-16 19:09",
                   "search_end": "-522-07-17 04:56",
                   "date": "Night of the 14th"
@@ -354,7 +354,7 @@
                   "angle": 6.330069279093274,
                   "position": "behind",
                   "at_time": "-522-07-03 23:59",
-                  "score": 0.9453035258232021,
+                  "score": 0.9995470055337226,
                   "search_start": "-522-07-03 19:09",
                   "search_end": "-522-07-04 04:50",
                   "date": "Night of the 1st"
@@ -362,7 +362,7 @@
               ]
             },
             {
-              "score": 6.784310083235647,
+              "score": 7.6396546723707495,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-522-08-01 19:02",
@@ -374,7 +374,7 @@
                   "time_us": 12.794381249696016,
                   "six": "sunset to moonset",
                   "moonset": "-522-08-01 19:54",
-                  "score": 0.7661839615831006,
+                  "score": 0.9329445791364872,
                   "search_start": "-522-08-01 19:02",
                   "search_end": "-522-08-01 19:02",
                   "date": "Sunset of the 1st"
@@ -383,7 +383,7 @@
                   "time_us": 4.337245719507337,
                   "six": "moonset to sunrise",
                   "moonset": "-522-08-15 05:00",
-                  "score": 0.8295880861114564,
+                  "score": 0.9301444986193261,
                   "search_start": "-522-08-15 05:17",
                   "search_end": "-522-08-15 05:17",
                   "date": "Sunrise of the 14th"
@@ -392,7 +392,7 @@
                   "time_us": 1.1515989806503057,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-08-15 18:47",
-                  "score": 0.8793991897501217,
+                  "score": 0.9039237269942497,
                   "search_start": "-522-08-15 18:52",
                   "search_end": "-522-08-15 18:52",
                   "date": "Sunset of the 15th"
@@ -401,7 +401,7 @@
                   "time_us": 10.244743600487709,
                   "six": "sunrise to moonset",
                   "moonset": "-522-08-16 05:59",
-                  "score": 0.8449054130241289,
+                  "score": 0.979382340066369,
                   "search_start": "-522-08-16 05:18",
                   "search_end": "-522-08-16 05:18",
                   "date": "Sunrise of the 15th"
@@ -410,7 +410,7 @@
                   "time_us": 6.575057627633214,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-08-16 19:17",
-                  "score": 0.8135117361173534,
+                  "score": 0.9535830099597233,
                   "search_start": "-522-08-16 18:51",
                   "search_end": "-522-08-16 18:51",
                   "date": "Sunset of the 16th"
@@ -419,7 +419,7 @@
                   "time_us": 22.193176997825503,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-08-28 03:58",
-                  "score": 0.9338256071222689,
+                  "score": 0.998693349486262,
                   "search_start": "-522-08-28 05:27",
                   "search_end": "-522-08-28 05:27",
                   "date": "Sunrise of the 27th"
@@ -428,7 +428,7 @@
                   "planet": "jupiter",
                   "event": "last_appearance",
                   "nearest_time": "-522-08-26 19:15",
-                  "score": 0.7168960895272177,
+                  "score": 0.9409831681083317,
                   "search_start": "-522-08-22 18:45",
                   "search_end": "-522-08-23 05:23",
                   "date": "Night of the 22nd"
@@ -447,7 +447,7 @@
               ]
             },
             {
-              "score": 8.833545680754813,
+              "score": 9.836422102808278,
               "name": "VI",
               "actual_month": 6,
               "month_sunset_1": "-522-08-31 18:36",
@@ -459,7 +459,7 @@
                   "time_us": 12.393142143264413,
                   "six": "sunset to moonset",
                   "moonset": "-522-08-31 19:25",
-                  "score": 0.4816845270232265,
+                  "score": 0.7791260091586302,
                   "search_start": "-522-08-31 18:36",
                   "search_end": "-522-08-31 18:36",
                   "date": "Sunset of the 1st"
@@ -468,7 +468,7 @@
                   "time_us": 13.028779663145542,
                   "six": "moonset to sunrise",
                   "moonset": "-522-09-13 04:47",
-                  "score": 0.6359030916518466,
+                  "score": 0.8604267701158692,
                   "search_start": "-522-09-13 05:39",
                   "search_end": "-522-09-13 05:39",
                   "date": "Sunrise of the 13th"
@@ -477,7 +477,7 @@
                   "time_us": 1.818520613014698,
                   "six": "sunrise to moonset",
                   "moonset": "-522-09-14 05:47",
-                  "score": 0.6146003514007894,
+                  "score": 0.6377575999093342,
                   "search_start": "-522-09-14 05:40",
                   "search_end": "-522-09-14 05:40",
                   "date": "Sunrise of the 14th"
@@ -486,7 +486,7 @@
                   "time_us": 0.35276614129543304,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-09-14 18:17",
-                  "score": 0.8034765769271858,
+                  "score": 0.8572432092985177,
                   "search_start": "-522-09-14 18:19",
                   "search_end": "-522-09-14 18:19",
                   "date": "Sunset of the 15th"
@@ -495,7 +495,7 @@
                   "time_us": 7.5077456049621105,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-09-15 18:47",
-                  "score": 0.7721273654583513,
+                  "score": 0.937783896844784,
                   "search_start": "-522-09-15 18:17",
                   "search_end": "-522-09-15 18:17",
                   "date": "Sunset of the 16th"
@@ -504,7 +504,7 @@
                   "time_us": -3.3336620964109898,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-09-28 06:04",
-                  "score": 0.0011147906273209463,
+                  "score": 1.6578769451210507e-05,
                   "search_start": "-522-09-28 05:51",
                   "search_end": "-522-09-28 05:51",
                   "date": "Sunrise of the 28th"
@@ -513,7 +513,7 @@
                   "planet": "jupiter",
                   "event": "first_appearance",
                   "nearest_time": "-522-09-21 05:03",
-                  "score": 0.9504397452803041,
+                  "score": 0.9985821553012671,
                   "search_start": "-522-09-21 18:10",
                   "search_end": "-522-09-22 05:46",
                   "date": "Night of the 22nd"
@@ -553,7 +553,7 @@
                   "planet": "mars",
                   "event": "first_appearance",
                   "nearest_time": "-522-09-07 04:26",
-                  "score": 0.7718690548799646,
+                  "score": 0.9654858834104206,
                   "search_start": "-522-09-12 18:21",
                   "search_end": "-522-09-13 05:39",
                   "date": "Night of the 13th"
@@ -575,7 +575,7 @@
                   "angle": 24.454049316071135,
                   "position": "ahead",
                   "at_time": "-522-09-24 02:52",
-                  "score": 0.0023301775058256753,
+                  "score": 3.791928167713893e-15,
                   "search_start": "-522-09-23 18:07",
                   "search_end": "-522-09-24 05:48",
                   "date": "Night of the 24th"
@@ -583,7 +583,7 @@
               ]
             },
             {
-              "score": 7.023545770575765,
+              "score": 7.345425786709851,
               "name": "VII",
               "actual_month": 7,
               "month_sunset_1": "-522-09-30 17:58",
@@ -595,7 +595,7 @@
                   "time_us": 15.026316605508327,
                   "six": "sunset to moonset",
                   "moonset": "-522-09-30 18:58",
-                  "score": 0.693479542871378,
+                  "score": 0.9440366091410322,
                   "search_start": "-522-09-30 17:58",
                   "search_end": "-522-09-30 17:58",
                   "date": "Sunset of the 1st"
@@ -604,7 +604,7 @@
                   "time_us": 6.529239797964692,
                   "six": "moonset to sunrise",
                   "moonset": "-522-10-13 05:36",
-                  "score": 0.9934965670985324,
+                  "score": 0.9999454756073624,
                   "search_start": "-522-10-13 06:02",
                   "search_end": "-522-10-13 06:02",
                   "date": "Sunrise of the 13th"
@@ -613,7 +613,7 @@
                   "time_us": 5.781890787184238,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-10-13 17:18",
-                  "score": 0.6815504577781472,
+                  "score": 0.848746771681956,
                   "search_start": "-522-10-13 17:41",
                   "search_end": "-522-10-13 17:41",
                   "date": "Sunset of the 14th"
@@ -622,7 +622,7 @@
                   "time_us": 9.674421306699514,
                   "six": "sunrise to moonset",
                   "moonset": "-522-10-14 06:42",
-                  "score": 0.5951523305432342,
+                  "score": 0.8371197282772329,
                   "search_start": "-522-10-14 06:03",
                   "search_end": "-522-10-14 06:03",
                   "date": "Sunrise of the 14th"
@@ -631,7 +631,7 @@
                   "time_us": 3.456405848264694,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-10-14 17:54",
-                  "score": 0.9031704155582636,
+                  "score": 0.976659216190865,
                   "search_start": "-522-10-14 17:40",
                   "search_end": "-522-10-14 17:40",
                   "date": "Sunset of the 15th"
@@ -640,7 +640,7 @@
                   "time_us": 20.079439636319876,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-10-26 04:53",
-                  "score": 0.6514460725945749,
+                  "score": 0.9483978290274608,
                   "search_start": "-522-10-26 06:13",
                   "search_end": "-522-10-26 06:13",
                   "date": "Sunrise of the 26th"
@@ -649,7 +649,7 @@
                   "planet": "saturn",
                   "event": "first_appearance",
                   "nearest_time": "-522-10-03 04:55",
-                  "score": 0.4119383785482581,
+                  "score": 0.6492512116094844,
                   "search_start": "-522-10-12 17:43",
                   "search_end": "-522-10-13 06:02",
                   "date": "Night of the 13th"
@@ -671,7 +671,7 @@
                   "angle": 22.030476624939354,
                   "position": "behind",
                   "at_time": "-522-10-23 03:01",
-                  "score": 0.013960139324966729,
+                  "score": 0.12567818310743947,
                   "search_start": "-522-10-23 01:57",
                   "search_end": "-522-10-23 06:11",
                   "date": "Last part of the night on the 23rd"
@@ -682,7 +682,7 @@
                   "angle": 0.7101263093667258,
                   "position": "above",
                   "at_time": "-522-10-29 03:03",
-                  "score": 0.6309004869637714,
+                  "score": 0.010127354051515844,
                   "search_start": "-522-10-29 01:59",
                   "search_end": "-522-10-29 06:16",
                   "date": "Last part of the night on the 29th"
@@ -693,7 +693,7 @@
                   "angle": 5.294858122514769,
                   "position": "behind",
                   "at_time": "-522-10-12 02:57",
-                  "score": 0.053258647984082114,
+                  "score": 0.005463400120424293,
                   "search_start": "-522-10-11 17:44",
                   "search_end": "-522-10-12 06:02",
                   "date": "Night of the 12th"
@@ -704,7 +704,7 @@
                   "angle": 1.2444395863596407,
                   "position": "ahead",
                   "at_time": "-522-10-11 02:57",
-                  "score": 0.39519273131055765,
+                  "score": 7.89507733264148e-09,
                   "search_start": "-522-10-10 17:45",
                   "search_end": "-522-10-11 06:01",
                   "date": "Night of the 11th"
@@ -712,7 +712,7 @@
               ]
             },
             {
-              "score": 4.689530733867395,
+              "score": 4.8290394799750676,
               "name": "VIII",
               "actual_month": 8,
               "month_sunset_1": "-522-10-29 17:23",
@@ -724,7 +724,7 @@
                   "time_us": 11.702116085216403,
                   "six": "sunset to moonset",
                   "moonset": "-522-10-29 18:10",
-                  "score": 0.8063533426410378,
+                  "score": 0.9718098598945262,
                   "search_start": "-522-10-29 17:23",
                   "search_end": "-522-10-29 17:23",
                   "date": "Sunset of the 1st"
@@ -733,7 +733,7 @@
                   "time_us": 15.046182554215193,
                   "six": "moonset to sunrise",
                   "moonset": "-522-11-11 05:28",
-                  "score": 0.9897475789156637,
+                  "score": 0.9999473389591391,
                   "search_start": "-522-11-11 06:28",
                   "search_end": "-522-11-11 06:28",
                   "date": "Sunrise of the 13th"
@@ -742,7 +742,7 @@
                   "time_us": 2.3557075671851635,
                   "six": "sunrise to moonset",
                   "moonset": "-522-11-12 06:39",
-                  "score": 0.5542957975266166,
+                  "score": 0.5715618385754592,
                   "search_start": "-522-11-12 06:29",
                   "search_end": "-522-11-12 06:29",
                   "date": "Sunrise of the 14th"
@@ -751,7 +751,7 @@
                   "time_us": -0.31602323055267334,
                   "six": "moonrise to sunset",
                   "moonrise": "-522-11-12 17:12",
-                  "score": 0.7455283649507212,
+                  "score": 0.7410852269456264,
                   "search_start": "-522-11-12 17:11",
                   "search_end": "-522-11-12 17:11",
                   "date": "Sunset of the 15th"
@@ -760,7 +760,7 @@
                   "time_us": 14.000973394140601,
                   "six": "sunset to moonrise",
                   "moonrise": "-522-11-13 18:06",
-                  "score": 0.999782816962289,
+                  "score": 0.9999999743781466,
                   "search_start": "-522-11-13 17:10",
                   "search_end": "-522-11-13 17:10",
                   "date": "Sunset of the 16th"
@@ -769,7 +769,7 @@
                   "time_us": 0.04621261730790138,
                   "six": "moonrise to sunrise",
                   "moonrise": "-522-11-26 06:43",
-                  "score": 0.0030536420480726588,
+                  "score": 0.0005515520571653643,
                   "search_start": "-522-11-26 06:43",
                   "search_end": "-522-11-26 06:43",
                   "date": "Sunrise of the 28th"
@@ -780,7 +780,7 @@
                   "angle": 1.0823131390864462,
                   "position": "behind",
                   "at_time": "-522-10-31 03:04",
-                  "score": 0.5907691908229938,
+                  "score": 0.5440836891650047,
                   "search_start": "-522-10-30 17:22",
                   "search_end": "-522-10-31 06:18",
                   "date": "Night of the 2nd"
@@ -788,7 +788,7 @@
               ]
             },
             {
-              "score": 3.2350711568313955,
+              "score": 3.176303396700667,
               "name": "X",
               "actual_month": 10,
               "month_sunset_1": "-522-12-27 17:06",
@@ -806,7 +806,7 @@
                   "sum_us": 52.78635730035603,
                   "after_sunrise_us": -64.47769266553223,
                   "after_sunset_us": 144.79384792037308,
-                  "score": 0.9230039289332375,
+                  "score": 0.9386667573267662,
                   "search_start": "-521-01-09 17:14",
                   "search_end": "-521-01-10 07:12",
                   "date": "Night of the 14th"
@@ -815,7 +815,7 @@
                   "planet": "jupiter",
                   "event": "stationary",
                   "nearest_time": "-521-01-20 22:23",
-                  "score": 0.846371941930827,
+                  "score": 0.9848383092314744,
                   "search_start": "-521-01-22 17:25",
                   "search_end": "-521-01-23 07:10",
                   "date": "Night of the 27th"
@@ -837,7 +837,7 @@
                   "angle": 2.3590530877529226,
                   "position": "behind",
                   "at_time": "-522-12-31 17:08",
-                  "score": 0.46569528596733106,
+                  "score": 0.25279833014242614,
                   "search_start": "-522-12-31 17:08",
                   "search_end": "-521-01-01 07:10",
                   "date": "Night of the 5th"
@@ -845,7 +845,7 @@
               ]
             },
             {
-              "score": 4.292406076118398,
+              "score": 5.341713324347227,
               "name": "XI",
               "actual_month": 11,
               "month_sunset_1": "-521-01-26 17:29",
@@ -857,7 +857,7 @@
                   "time_us": 21.017715828493237,
                   "six": "sunset to moonset",
                   "moonset": "-521-01-26 18:53",
-                  "score": 0.803168797583187,
+                  "score": 0.9862363301393343,
                   "search_start": "-521-01-26 17:29",
                   "search_end": "-521-01-26 17:29",
                   "date": "Sunset of the 1st"
@@ -866,7 +866,7 @@
                   "time_us": 15.469228355214,
                   "six": "moonrise to sunset",
                   "moonrise": "-521-02-07 16:37",
-                  "score": 0.6597046759129533,
+                  "score": 0.9319894972111518,
                   "search_start": "-521-02-07 17:39",
                   "search_end": "-521-02-07 17:39",
                   "date": "Sunset of the 13th"
@@ -875,7 +875,7 @@
                   "time_us": 5.46109976246953,
                   "six": "moonset to sunrise",
                   "moonset": "-521-02-08 06:39",
-                  "score": 0.8375514182191287,
+                  "score": 0.9481008652559825,
                   "search_start": "-521-02-08 07:01",
                   "search_end": "-521-02-08 07:01",
                   "date": "Sunrise of the 13th"
@@ -884,7 +884,7 @@
                   "time_us": 2.6015570014715195,
                   "six": "sunset to moonrise",
                   "moonrise": "-521-02-08 17:50",
-                  "score": 0.8117078863672311,
+                  "score": 0.8780783126822537,
                   "search_start": "-521-02-08 17:40",
                   "search_end": "-521-02-08 17:40",
                   "date": "Sunset of the 14th"
@@ -893,7 +893,7 @@
                   "time_us": 4.549415996298194,
                   "six": "sunrise to moonset",
                   "moonset": "-521-02-09 07:18",
-                  "score": 0.5787804755791938,
+                  "score": 0.6997466224732813,
                   "search_start": "-521-02-09 07:00",
                   "search_end": "-521-02-09 07:00",
                   "date": "Sunrise of the 14th"
@@ -902,7 +902,7 @@
                   "time_us": 14.721911866217852,
                   "six": "moonrise to sunrise",
                   "moonrise": "-521-02-22 05:49",
-                  "score": 0.6014928224567035,
+                  "score": 0.8975616965852233,
                   "search_start": "-521-02-22 06:48",
                   "search_end": "-521-02-22 06:48",
                   "date": "Sunrise of the 27th"
@@ -910,7 +910,7 @@
               ]
             },
             {
-              "score": 2.6841435864896637,
+              "score": 2.9128325765763328,
               "name": "XII",
               "actual_month": 12,
               "month_sunset_1": "-521-02-24 17:53",
@@ -922,7 +922,7 @@
                   "time_us": 11.573155308142304,
                   "six": "sunset to moonset",
                   "moonset": "-521-02-24 18:39",
-                  "score": 0.41634123854762073,
+                  "score": 0.6946346112872832,
                   "search_start": "-521-02-24 17:53",
                   "search_end": "-521-02-24 17:53",
                   "date": "Sunset of the 1st"
@@ -931,7 +931,7 @@
                   "time_us": 20.068683810532093,
                   "six": "moonset to sunrise",
                   "moonset": "-521-03-08 05:11",
-                  "score": 0.11822211576692447,
+                  "score": 0.029234779083364977,
                   "search_start": "-521-03-08 06:32",
                   "search_end": "-521-03-08 06:32",
                   "date": "Sunrise of the 12th"
@@ -940,7 +940,7 @@
                   "time_us": 21.03002993389964,
                   "six": "moonrise to sunset",
                   "moonrise": "-521-03-08 16:37",
-                  "score": 0.030118471530058824,
+                  "score": 7.561035422407569e-09,
                   "search_start": "-521-03-08 18:02",
                   "search_end": "-521-03-08 18:02",
                   "date": "Sunset of the 13th"
@@ -949,7 +949,7 @@
                   "time_us": -4.039651360362768,
                   "six": "sunset to moonrise",
                   "moonrise": "-521-03-09 17:46",
-                  "score": 0.004359304482281403,
+                  "score": 3.2057957993898966e-05,
                   "search_start": "-521-03-09 18:02",
                   "search_end": "-521-03-09 18:02",
                   "date": "Sunset of the 14th"
@@ -958,7 +958,7 @@
                   "time_us": 36.422946844249964,
                   "six": "moonrise to sunrise",
                   "moonrise": "-521-03-21 03:49",
-                  "score": 0.050024418241874286,
+                  "score": 0.08882715173179552,
                   "search_start": "-521-03-21 06:14",
                   "search_end": "-521-03-21 06:14",
                   "date": "Sunrise of the 25th"
@@ -967,7 +967,7 @@
                   "time_us": 20.277777509763837,
                   "six": "moonrise to sunrise",
                   "moonrise": "-521-03-23 04:50",
-                  "score": 0.15768866406339727,
+                  "score": 0.10513415300188561,
                   "search_start": "-521-03-23 06:12",
                   "search_end": "-521-03-23 06:12",
                   "date": "Sunrise of the 27th"
@@ -976,7 +976,7 @@
                   "planet": "venus",
                   "event": "morning_last",
                   "nearest_time": "-521-03-01 06:15",
-                  "score": 0.9073893738575067,
+                  "score": 0.9949698159529742,
                   "search_start": "-521-03-02 17:57",
                   "search_end": "-521-03-03 06:38",
                   "date": "Night of the 7th"
@@ -995,7 +995,7 @@
               ]
             },
             {
-              "score": 3.74781582046837,
+              "score": 3.7564031240416496,
               "name": "XII2",
               "actual_month": 13,
               "month_sunset_1": "-521-03-26 18:13",
@@ -1007,7 +1007,7 @@
                   "time_us": 18.486794969066978,
                   "six": "sunset to moonset",
                   "moonset": "-521-03-26 19:27",
-                  "score": 0.8917955353340192,
+                  "score": 0.9953228375155183,
                   "search_start": "-521-03-26 18:13",
                   "search_end": "-521-03-26 18:13",
                   "date": "Sunset of the 1st"
@@ -1016,7 +1016,7 @@
                   "time_us": 10.0662016030401,
                   "six": "moonrise to sunset",
                   "moonrise": "-521-04-07 17:40",
-                  "score": 0.44199963839048495,
+                  "score": 0.0017125442216989152,
                   "search_start": "-521-04-07 18:20",
                   "search_end": "-521-04-07 18:20",
                   "date": "Sunset of the 13th"
@@ -1025,7 +1025,7 @@
                   "time_us": 6.1883557587862015,
                   "six": "moonset to sunrise",
                   "moonset": "-521-04-08 05:25",
-                  "score": 0.8263038297492019,
+                  "score": 0.9460249468011407,
                   "search_start": "-521-04-08 05:49",
                   "search_end": "-521-04-08 05:49",
                   "date": "Sunrise of the 13th"
@@ -1034,7 +1034,7 @@
                   "time_us": 5.853637279942632,
                   "six": "sunset to moonrise",
                   "moonrise": "-521-04-08 18:44",
-                  "score": 0.5289979317805813,
+                  "score": 0.39721781735933265,
                   "search_start": "-521-04-08 18:21",
                   "search_end": "-521-04-08 18:21",
                   "date": "Sunset of the 14th"
@@ -1043,7 +1043,7 @@
                   "time_us": 2.6672478206455708,
                   "six": "sunrise to moonset",
                   "moonset": "-521-04-09 05:59",
-                  "score": 0.5120664008558728,
+                  "score": 0.5227337277018427,
                   "search_start": "-521-04-09 05:48",
                   "search_end": "-521-04-09 05:48",
                   "date": "Sunrise of the 14th"
@@ -1052,7 +1052,7 @@
                   "time_us": 18.293482214212418,
                   "six": "moonrise to sunrise",
                   "moonrise": "-521-04-22 04:17",
-                  "score": 0.5466524843582092,
+                  "score": 0.8933912504421162,
                   "search_start": "-521-04-22 05:31",
                   "search_end": "-521-04-22 05:31",
                   "date": "Sunrise of the 27th"
@@ -1070,14 +1070,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 5.629088500436905,
+          "score": 6.211677158777714,
           "nisan_1": "-521-04-24 18:30",
           "next_nisan": "-520-04-13 18:24",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 1.878564899551515,
+              "score": 1.9910903944554672,
               "name": "I",
               "actual_month": 1,
               "month_sunset_1": "-521-04-24 18:30",
@@ -1089,7 +1089,7 @@
                   "planet": "venus",
                   "event": "evening_first",
                   "nearest_time": "-521-05-04 19:04",
-                  "score": 0.878564899551515,
+                  "score": 0.9910903944554673,
                   "search_start": "-521-05-06 18:38",
                   "search_end": "-521-05-07 05:13",
                   "date": "Night of the 13th"
@@ -1108,7 +1108,7 @@
               ]
             },
             {
-              "score": 1.1049328905016875,
+              "score": 1.061358607955906,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-521-05-24 18:50",
@@ -1120,7 +1120,7 @@
                   "planet": "jupiter",
                   "event": "stationary",
                   "nearest_time": "-521-05-24 13:30",
-                  "score": 0.10493289050168755,
+                  "score": 0.06135860795590617,
                   "search_start": "-521-06-17 19:04",
                   "search_end": "-521-06-18 04:47",
                   "date": "Night of the 25th"
@@ -1139,7 +1139,7 @@
               ]
             },
             {
-              "score": 0.9786563020328188,
+              "score": 1.370362539761936,
               "name": "V",
               "actual_month": 5,
               "month_sunset_1": "-521-08-21 18:47",
@@ -1151,7 +1151,7 @@
                   "planet": "saturn",
                   "event": "last_appearance",
                   "nearest_time": "-521-09-14 19:04",
-                  "score": 0.6915242822031077,
+                  "score": 0.9280085610557178,
                   "search_start": "-521-09-18 18:14",
                   "search_end": "-521-09-19 05:44",
                   "date": "Night of the 29th"
@@ -1160,7 +1160,7 @@
                   "planet": "mars",
                   "event": "stationary",
                   "nearest_time": "-521-08-05 21:15",
-                  "score": 0.28713201982971115,
+                  "score": 0.442353978706218,
                   "search_start": "-521-09-01 18:35",
                   "search_end": "-521-09-02 05:31",
                   "date": "Night of the 12th"
@@ -1168,7 +1168,7 @@
               ]
             },
             {
-              "score": 1.6669344083508837,
+              "score": 1.7888656166044052,
               "name": "VI",
               "actual_month": 6,
               "month_sunset_1": "-521-09-20 18:11",
@@ -1180,7 +1180,7 @@
                   "planet": "jupiter",
                   "event": "last_appearance",
                   "nearest_time": "-521-09-25 18:37",
-                  "score": 0.8669344083508835,
+                  "score": 0.9888656166044053,
                   "search_start": "-521-09-23 18:07",
                   "search_end": "-521-09-24 05:47",
                   "date": "Night of the 4th"
@@ -1209,14 +1209,14 @@
       "intercalary": "false",
       "potentials": [
         {
-          "score": 0.2687148369879631,
+          "score": 0.35087853634579447,
           "nisan_1": "-520-04-13 18:24",
           "next_nisan": "-519-04-02 18:17",
           "best_compatible_path": true,
           "month_lengths_compatible": true,
           "months": [
             {
-              "score": 0.2687148369879631,
+              "score": 0.35087853634579447,
               "name": "II",
               "actual_month": 2,
               "month_sunset_1": "-520-05-13 18:43",
@@ -1228,7 +1228,7 @@
                   "planet": "mars",
                   "event": "last_appearance",
                   "nearest_time": "-520-07-07 20:22",
-                  "score": 0.11481372263727525,
+                  "score": 0.08593927662358408,
                   "search_start": "-520-05-21 18:48",
                   "search_end": "-520-05-22 04:58",
                   "date": "Night of the 9th"
@@ -1239,7 +1239,7 @@
                   "angle": 27.98884773976387,
                   "position": "ahead",
                   "at_time": "-520-05-22 02:26",
-                  "score": 0.15390111435068787,
+                  "score": 0.2649392597222104,
                   "search_start": "-520-05-21 18:48",
                   "search_end": "-520-05-22 04:58",
                   "date": "Night of the 9th"

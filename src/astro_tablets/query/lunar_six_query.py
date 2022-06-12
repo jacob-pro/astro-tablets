@@ -1,4 +1,3 @@
-import math
 from enum import Enum, unique
 from typing import Any, Dict, List
 
@@ -7,6 +6,7 @@ from astro_tablets.data import MOON
 from astro_tablets.generate.risings_settings import RiseSetType
 from astro_tablets.query.abstract_query import AbstractQuery, SearchRange
 from astro_tablets.query.database import BabylonianDay, Database
+from astro_tablets.query.scorer import Scorer
 from astro_tablets.util import TimeValue
 
 
@@ -27,15 +27,6 @@ class LunarSix(Enum):
 
     def sun_first(self) -> bool:
         return self == LunarSix.NA1 or self == LunarSix.NA or self == LunarSix.GI6
-
-
-def lunar_six_tolerance(precision: Precision) -> float:
-    if precision == Precision.REGULAR:
-        return 1.25
-    elif precision == Precision.LOW:
-        return 1.1
-    else:
-        raise ValueError
 
 
 class LunarSixQuery(AbstractQuery):
@@ -76,7 +67,7 @@ class LunarSixQuery(AbstractQuery):
 
     @staticmethod
     def calculate_score(
-        actual_us: float, tablet_us: float, time_precision: Precision
+        actual_us: float, tablet_us: float, confidence: Precision
     ) -> float:
         """
         Calculates score based on the actual time between the two events, compared to the expected time according
@@ -85,12 +76,10 @@ class LunarSixQuery(AbstractQuery):
         score if they match.
         @param actual_us: The actual time difference in UŠ (can be negative if the events happen in the wrong order).
         @param tablet_us: The expected time difference in UŠ (should always be positive).
-        @param time_precision: How precise the time difference is expected to be.
+        @param confidence: How confident we are in reading the tablet's text.
         @return: A score value (between 0 and 1).
         """
-        t = lunar_six_tolerance(time_precision)
-        diff = abs(tablet_us - actual_us)
-        score = math.pow(t, -diff)
+        score = Scorer.score_time(actual_us, tablet_us, confidence)
         if actual_us < 0:
             # Reduce score when they are in the wrong order, proportional to how close the expected is to 0
             score *= 1 / tablet_us
