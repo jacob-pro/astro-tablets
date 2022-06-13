@@ -1,8 +1,11 @@
 from typing import Optional
 
 from astro_tablets.cli_util import query_database_decorator
+from astro_tablets.constants import MOON
 from astro_tablets.data import AstroData
+from astro_tablets.generate.risings_settings import RiseSetType
 from astro_tablets.query import Database
+from astro_tablets.query.lunar_six_query import LunarSix
 from astro_tablets.util import TimeValue
 
 
@@ -28,16 +31,30 @@ def setup_select_subparsers(subparsers):
     events_parser.set_defaults(func=separations)
 
     events_parser = subparsers.add_parser("eclipses")
-    events_parser.add_argument("year", type=int, help="the year to get separations for")
+    events_parser.add_argument("year", type=int, help="the year to get eclipses for")
     events_parser.add_argument(
-        "month", type=int, help="the month to get separations for"
+        "month", type=int, help="the eclipses to get separations for"
     )
-    events_parser.add_argument("day", type=int, help="the day to get separations for")
+    events_parser.add_argument("day", type=int, help="the day to get eclipses for")
     events_parser.add_argument(
         "--range", type=int, help="number of days before and after", default=100
     )
     events_parser.add_argument("--body", type=str, help="body to compare position to")
     events_parser.set_defaults(func=eclipses)
+
+    events_parser = subparsers.add_parser("six")
+    events_parser.add_argument("year", type=int, help="the year to get lunar six for")
+    events_parser.add_argument(
+        "month", type=int, help="the month to get separations for"
+    )
+    events_parser.add_argument("day", type=int, help="the day to get separations for")
+    events_parser.add_argument(
+        "six",
+        type=str,
+        help="lunar six",
+        choices=list(map(lambda x: x.value, LunarSix)),
+    )
+    events_parser.set_defaults(func=lunar_six)
 
     pass
 
@@ -148,3 +165,23 @@ def eclipses(
         )
     )
     print("\n".join(formatted))
+
+
+@query_database_decorator
+def lunar_six(
+    data: AstroData,
+    _tablet: str,
+    db: Database,
+    year: int,
+    month: int,
+    day: int,
+    six: str,
+) -> None:
+    type = LunarSix(six)
+    t0 = data.timescale.ut1(year, month, day, 12).tt
+    day = db.days_starting_from(t0, 1)[0]
+    sun_time = day.sunset if type.contains_sunset() else day.sunrise
+    moon_query = RiseSetType.SET if type.lunar_set() else RiseSetType.RISE
+    moon_time = db.nearest_rising_setting(MOON, moon_query, sun_time)
+    actual = moon_time - sun_time if type.sun_first() else sun_time - moon_time
+    print(actual * 360)
